@@ -1,12 +1,14 @@
 package Command;
 
+import java.util.ArrayList;
+
 public class Command {
     private final String command;
-    private final String argument;
+    private final ArrayList<String> arguments;
 
-    Command(String w1, String w2){
+    Command(String w1, ArrayList<String> args){
         this.command = w1;
-        this.argument = w2;
+        this.arguments = args;
     }
 
     public boolean isValid(){
@@ -17,7 +19,11 @@ public class Command {
         return command;
     }
 
-    public String getArgument(){
-        return argument;
+    public ArrayList<String> getArguments(){
+        return arguments;
+    }
+
+    public String getArgument(int index){
+        return arguments.get(index);
     }
 }
