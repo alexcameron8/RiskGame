@@ -2,40 +2,26 @@ package Map;
 
 import java.util.HashMap;
 
-public class Territory {
+public class Continent {
 
     private String name;
-    private HashMap<String, Territory> neighbours;
-    private int soldiers;
+    private HashMap<String, Territory> territories;
 
-    public Territory(String name){
+    public Continent(String name){
         this.name = name;
-        neighbours = new  HashMap<>();
-        soldiers = 0;
+        territories = new HashMap<>();
     }
 
-    public void addNeighbours(Territory neighbour){
-        neighbours.put(neighbour.getName(), neighbour);
+    public void addTerritory(Territory territory){
+        territories.put(territory.getName(),territory);
     }
 
-    public String getName() {
+    public Territory getTerritory(String territoryName) {
+        return territories.get(territoryName);
+    }
+
+    public String getName(){
         return name;
-    }
-
-    public Territory getNeighbour(String territoryName) {
-        return neighbours.get(territoryName);
-    }
-
-    public int getSoldiers() {
-        return soldiers;
-    }
-
-    public int addSoldiers(int add) {
-        return soldiers + add;
-    }
-
-    public int removeSoldiers(int remove) {
-        return soldiers - remove;
     }
 
     @Override
@@ -44,7 +30,9 @@ public class Territory {
     }
 
     public static void main(String[] args) {
-        Territory easternAustralia = new Territory("easternAustralia");
+        Continent australia = new Continent("Australia");
+
+        Territory easternAustralia = new Territory("Eastern Australia");
         Territory indonesia  = new Territory("Indonesia");
         Territory newGuinea = new Territory("New Guinea");
         Territory westernAustralia = new Territory("Western Australia");
@@ -65,6 +53,12 @@ public class Territory {
         westernAustralia.addNeighbours(indonesia);
         westernAustralia.addNeighbours(newGuinea);
         westernAustralia.addNeighbours(westernAustralia);
-    }
 
+        australia.addTerritory(easternAustralia);
+        australia.addTerritory(indonesia);
+        australia.addTerritory(newGuinea);
+        australia.addTerritory(westernAustralia);
+
+        System.out.println(australia.getTerritory("Western Australia"));
+    }
 }
