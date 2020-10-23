@@ -8,25 +8,26 @@ import java.util.LinkedList;
 
 public class Attack {
     private Player attacker;
+    private Player defender;
     private Territory attackerTerritory;
     private Territory defenderTerritory;
     private int numOfAttackArmy;
 
 
-    public Attack(Player attacker, Territory attackerTerritory, Territory defenderTerritory, int numOfAttackArmy){
+    public Attack(Player attacker, Territory attackerTerritory, Player defender, Territory defenderTerritory, int numOfAttackArmy){
+        this.defender = defender;
         this.attackerTerritory = attackerTerritory;
         this.defenderTerritory = defenderTerritory;
         this.attacker = attacker;
         this.numOfAttackArmy = numOfAttackArmy;
 
         //Checks to see if the attack is valid
-        isTerritoryOccupied();
-        isTerritoryAdjacent();
-        isNumOfSoldiersAllowed();
-        isNumOfSoldiersAllowed();
-        //If valid
-        attack(numOfAttackArmy, defenderTerritory.getSoldiers());
 
+        if(isTerritoryOccupied() && isTerritoryAdjacent() && isNumOfSoldiersAllowed() && isNumOfSoldiersAllowed()) {
+            if(attack(numOfAttackArmy, defenderTerritory.getSoldiers())==true){
+                defender.transferTerritory(attacker,defenderTerritory);
+            }
+        }
     }
 
     /**
@@ -58,11 +59,14 @@ public class Attack {
     /**
      * Makes sure that there is at least 1 person left in the territory.
      */
-    public boolean isNumOfSoldiersAllowed(){
-        if(attackerTerritory.getSoldiers() - numOfAttackArmy < 1){
+    public boolean isNumOfSoldiersAllowed() {
+        if (attackerTerritory.getSoldiers() - numOfAttackArmy < 1) {
             System.out.println("Cannot attack with this many soldiers because your territory must be occupied at all times");
             return false;
-        }else{
+        } else if(numOfAttackArmy>attackerTerritory.getSoldiers()){
+            System.out.println("Cannot attack with more troops than there are in this territory.");
+            return false;
+         }else{
             return true;
         }
     }
