@@ -1,4 +1,11 @@
 package Map;
+/**
+ * WorldMap is a default map for the game of Risk
+ *
+ * @version 1.9
+ * Thomas Dunnigan
+ * 101115382
+ */
 
 public class WorldMap {
 
@@ -22,6 +29,10 @@ public class WorldMap {
     //The territories located in North America
     private Territory alaska, alberta, centralAmerica, easterUnitedStates, greenland, northwestTerritory, ontario, quebec, westernUnitedStates;
 
+
+    /**
+     * create a defult preset world map
+     */
     public WorldMap(){
         worldMap = new Map();
         createTerritory();
@@ -33,6 +44,18 @@ public class WorldMap {
         worldMap.addContinent(createSouthAmerica());
     }
 
+    /**
+     * return the map
+     *
+     * @return Map
+     */
+    public Map getWorldMap(){
+        return worldMap;
+    }
+
+    /**
+     * create all the territories
+     */
     private void createTerritory(){
         //Australia
         easternAustralia = new Territory("Eastern Australia");
@@ -89,6 +112,12 @@ public class WorldMap {
         westernUnitedStates = new Territory("Western United States");
     }
 
+    /**
+     * create a continent asia
+     * add all the neighbours for each territory in asia
+     *
+     * @return asia
+     */
     private Continent createAsia(){
         Continent asia = new Continent("Asia");
 
@@ -110,6 +139,12 @@ public class WorldMap {
         return asia;
     }
 
+    /**
+     * create a continent Australia
+     * add all the neighbours for each territory in Australia
+     *
+     * @return Australia
+     */
     private Continent createAustralia(){
         Continent australia = new Continent("Australia");
 
@@ -122,6 +157,12 @@ public class WorldMap {
         return australia;
     }
 
+    /**
+     * create a continent Africa
+     * add all the neighbours for each territory in Africa
+     *
+     * @return Africa
+     */
     private Continent createAfrica(){
         Continent africa = new Continent("Africa");
 
@@ -137,6 +178,12 @@ public class WorldMap {
         return africa;
     }
 
+    /**
+     * create a continent South America
+     * add all the neighbours for each territory in South America
+     *
+     * @return South America
+     */
     private Continent createSouthAmerica(){
         Continent southAmerica = new Continent("South America");
 
@@ -149,6 +196,12 @@ public class WorldMap {
         return southAmerica;
     }
 
+    /**
+     * create a continent Europe
+     * add all the neighbours for each territory in Europe
+     *
+     * @return Europe
+     */
     private Continent createEurope(){
         Continent europe = new Continent("Europe");
 
@@ -164,6 +217,12 @@ public class WorldMap {
         return europe;
     }
 
+    /**
+     * create a continent North America
+     * add all the neighbours for each territory in North America
+     *
+     * @return North America
+     */
     private Continent createNorthAmerica(){
         Continent NorthAmerica = new Continent("North America");
 
@@ -179,9 +238,5 @@ public class WorldMap {
 
         NorthAmerica.addTerritories(alaska, alberta, centralAmerica, easterUnitedStates, greenland, northwestTerritory, ontario, quebec, westernUnitedStates);
         return NorthAmerica;
-    }
-
-    public static void main(String[] args) {
-        WorldMap m = new WorldMap();
     }
 }
