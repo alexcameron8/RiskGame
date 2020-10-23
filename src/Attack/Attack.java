@@ -2,6 +2,8 @@ package Attack;
 import Player.Player;
 import Map.Territory;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 
 public class Attack {
@@ -21,10 +23,9 @@ public class Attack {
         isTerritoryOccupied();
         isTerritoryAdjacent();
         isNumOfSoldiersAllowed();
-
+        isNumOfSoldiersAllowed();
         //If valid
-        doAttack();
-
+        attack(numOfAttackArmy, defenderTerritory.getSoldiers());
 
     }
 
@@ -65,56 +66,22 @@ public class Attack {
             return true;
         }
     }
-
+    /**
+     *  Makes sure you do not attack your own Territory.
+     *
+     */
+    public boolean isTerritoryEnemy() {
+        for (Territory ter : attacker.getListOfTerritories()) {
+            if (ter.equals(defenderTerritory)) {
+                System.out.println("You cannot attack your own territory");
+                return false;
+            }
+        }
+        return true;
+    }
     /**
      * Simulates the attack of the attacker vs defender.
      */
-    public void getNumberOfDice(){
-        int numOfAttackerDice = 0;
-        int numOfDefenderDice = 0;
-        //Determines the number of dice the attacker gets to roll based on number of soldiers they choose to attack with.
-        for (int i = 0; i<numOfAttackArmy || i<3; i++){
-            numOfAttackerDice++;
-        }
-        //Determines how many dice the defender can roll
-        if(defenderTerritory.getSoldiers()==1) {
-            numOfDefenderDice = 1;
-        }else{
-            numOfDefenderDice = 2;
-        }
-    }
-
-    public boolean doAttack(int numOfAttackerDice, int numOfDefenderDice){
-        LinkedList<Integer> red = new LinkedList<Integer>();
-        LinkedList<Integer> white = new LinkedList<Integer>();
-        for(int i=0; i<numOfAttackerDice; i++){
-            Dice die1 = new Dice();
-            red.add(die1.roll());
-        }
-        for(int i=0; i<numOfDefenderDice; i++){
-            Dice die1 = new Dice();
-            white.add(die1.roll());
-        }
-        while(red.size() != 0 || white.size() != 0){
-            //compare the first dice
-            if(red.peek() > white.peek()){
-                //red won remove the first die of white
-                white.removeFirst();
-            }
-            else{
-                //white won or die remove the first die of red
-                red.removeFirst();
-            }
-        }
-        //attacking was not successful
-        if(red.size() == 0){
-            return false;
-        }
-        //attacking was successful
-        else{
-            return true;
-        }
-    }
 
     public boolean attack(int attackerArmySize, int defenderArmySize){
         LinkedList<Integer> attacker = new LinkedList<Integer>();
@@ -131,6 +98,14 @@ public class Attack {
         for(int i=0; i<defenderNumberOfDice; i++){
             defender.add((new Dice()).roll());
         }
+        //Sorting Lists in ascending order.
+        ArrayList<Integer> attackerSort = new ArrayList<>(attacker);
+        Collections.sort(attackerSort);
+        ArrayList<Integer> defenderSort = new ArrayList<>(defender);
+        Collections.sort(defenderSort);
+        attacker = new LinkedList<Integer>(attackerSort);
+        defender = new LinkedList<Integer>(defenderSort);
+
         while(attacker.size() != 0 || defender.size() != 0){
             //compare the first dice
             if(attacker.peek() > defender.peek()){
@@ -158,6 +133,7 @@ public class Attack {
             return attack(attackerArmySize,defenderArmySize);
         }
     }
+
 
     public static void main(String[] args) {
         Player attacker = new Player("Alex");
