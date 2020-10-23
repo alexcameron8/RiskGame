@@ -12,7 +12,6 @@ public class Player {
         this.listOfContinents = new ArrayList<>();
         this.listOfTerritories = new ArrayList<>();
     }
-
     public String getName() {
         return name;
     }
