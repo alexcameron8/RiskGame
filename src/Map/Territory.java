@@ -18,6 +18,12 @@ public class Territory {
         neighbours.put(neighbour.getName(), neighbour);
     }
 
+    public void addNeighbours(Territory... args){
+        for(Territory arg: args){
+            addNeighbour(arg);
+        }
+    }
+
     public String getName() {
         return name;
     }
