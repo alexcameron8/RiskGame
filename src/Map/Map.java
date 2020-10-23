@@ -13,4 +13,8 @@ public class Map {
     public void addContinent(Continent continent){
         continents.put(continent.getName(), continent);
     }
+
+    public Continent getContinent(String name){
+        return continents.get(name);
+    }
 }

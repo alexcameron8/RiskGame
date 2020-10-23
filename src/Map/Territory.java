@@ -28,6 +28,12 @@ public class Territory {
         return name;
     }
 
+    public boolean isNeighbour(String territoryName){
+        if(getNeighbour(territoryName) == null)
+            return false;
+        return true;
+    }
+
     public Territory getNeighbour(String territoryName) {
         return neighbours.get(territoryName);
     }

@@ -30,6 +30,18 @@ public class Continent {
         return name;
     }
 
+    public void viewTerritories(){
+        for(String key: territories.keySet()){
+            System.out.println(getTerritory(key));
+        }
+    }
+
+    public boolean isTerritory(String territoryName){
+        if(getTerritory(territoryName) == null)
+            return false;
+        return true;
+    }
+
     @Override
     public String toString() {
         return name;
