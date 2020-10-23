@@ -1,7 +1,8 @@
 package Command;
 
-import java.util.ArrayList;
 import java.util.Scanner;
+
+import Command.Validators.*;
 import Main.Risk;
 import Main.GameState;
 
@@ -55,7 +56,7 @@ public class Parser {
             }
         }
 
-        if(state == GameState.MAIN_MENU && commandValidator.isCommand(command)){
+        if(commandValidator.isCommand(command)){
             return new Command(command, argument);
         } else {
             return new Command(null, null);

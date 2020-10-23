@@ -1,5 +1,6 @@
-package Command;
+package Command.Processors;
 
+import Command.Command;
 import Main.GameState;
 import Main.Risk;
 

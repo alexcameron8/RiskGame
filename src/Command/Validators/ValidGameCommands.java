@@ -1,15 +1,16 @@
-package Command;
+package Command.Validators;
 
 import java.util.ArrayList;
 
-public class ValidQuitCommands implements ValidCommands{
+public class ValidGameCommands implements ValidCommands{
     private static ArrayList<String> validCommands;
 
-    ValidQuitCommands(){
+    public ValidGameCommands(){
         validCommands = new ArrayList<String>();
-        validCommands.add("yes");
-        validCommands.add("no");
+        validCommands.add("home");
+        validCommands.add("quit");
     }
+
     @Override
     public boolean isCommand(String command) {
         for (String cmd: validCommands) {

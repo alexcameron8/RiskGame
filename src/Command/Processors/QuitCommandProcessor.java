@@ -1,9 +1,10 @@
-package Command;
+package Command.Processors;
 
+import Command.Command;
 import Main.Risk;
 
-public class NewGameCommandProcessor extends CommandProcessor{
-    public NewGameCommandProcessor(Risk game, Command command) {
+public class QuitCommandProcessor extends CommandProcessor{
+    public QuitCommandProcessor(Risk game, Command command) {
         super(game, command);
     }
 

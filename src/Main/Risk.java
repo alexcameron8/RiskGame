@@ -1,5 +1,6 @@
 package Main;
 import Command.*;
+import Command.Processors.*;
 
 public class Risk {
     private static GameState state;
@@ -33,7 +34,7 @@ public class Risk {
         if(state == GameState.MAIN_MENU){
             cp = new MenuCommandProcessor(this, command);
         } else if(state == GameState.NEW_GAME_SETTINGS){
-            cp = new NewGameCommandProcessor(this, command);
+            cp = new CreateGameCommandProcessor(this, command);
         } else if(state == GameState.IN_GAME){
             cp = new GameCommandProcessor(this, command);
         } else if(state == GameState.QUIT){
@@ -43,8 +44,6 @@ public class Risk {
         if(cp != null){
             cp.processCommand();
         }
-
-
     }
 
     public void play(){

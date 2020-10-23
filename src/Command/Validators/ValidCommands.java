@@ -1,4 +1,6 @@
-package Command;
+package Command.Validators;
+
+import Command.Command;
 
 import java.util.ArrayList;
 

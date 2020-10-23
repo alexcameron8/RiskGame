@@ -1,11 +1,11 @@
-package Command;
+package Command.Validators;
 
 import java.util.ArrayList;
 
 public class ValidMenuCommands implements ValidCommands{
     private static ArrayList<String> validCommands;
 
-    ValidMenuCommands(){
+    public ValidMenuCommands(){
         validCommands = new ArrayList<String>();
         validCommands.add("start");
         validCommands.add("quit");
