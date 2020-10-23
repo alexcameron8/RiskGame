@@ -12,6 +12,26 @@ public class Player {
         this.listOfContinents = new ArrayList<>();
         this.listOfTerritories = new ArrayList<>();
     }
+
+    public void addTerritory(Territory territory){
+        listOfTerritories.add(territory);
+    }
+
+    public Territory removeTerritory(String name) {
+        for (Territory ter : listOfTerritories) {
+            if (ter.getName() == name) {
+                listOfTerritories.remove(ter);
+                return ter;
+            }
+        }
+        return null;
+    }
+
+    public void transferTerritory(Player giverPlayer,Territory territory){
+        giverPlayer.removeTerritory(territory.getName());
+
+    }
+
     public String getName() {
         return name;
     }
