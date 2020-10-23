@@ -9,6 +9,7 @@ public class ValidQuitCommands implements ValidCommands{
         validCommands = new ArrayList<String>();
         validCommands.add("yes");
         validCommands.add("no");
+        validCommands.add("help");
     }
     @Override
     public boolean isCommand(String command) {

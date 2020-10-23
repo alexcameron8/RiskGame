@@ -8,6 +8,7 @@ public class ValidMenuCommands implements ValidCommands{
     public ValidMenuCommands(){
         validCommands = new ArrayList<String>();
         validCommands.add("start");
+        validCommands.add("help");
         validCommands.add("quit");
     }
 

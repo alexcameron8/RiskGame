@@ -19,8 +19,9 @@ public class Risk {
     private void printMenu(){
         System.out.println("Welcome to Main.Risk: Global Domination!");
         System.out.println("To get started, please select and option:");
-        System.out.println("1. Start new game.");
-        System.out.println("2. Quit");
+        System.out.println("(start) Start new game.");
+        System.out.println("(help) Display help menu. Available anywhere.");
+        System.out.println("(quit) Quit");
     }
 
     public GameState getState(){

@@ -30,6 +30,17 @@ public class CreateGameCommandProcessor extends CommandProcessor{
         } else if(commandWord.equals("quit")){
             game.setState(GameState.QUIT);
             return;
+        } else if(commandWord.equals("help")){
+            System.out.println("Help:");
+            System.out.println("You are currently creating a new game of Risk: Global Domination.");
+            System.out.println("Available Commands:");
+            System.out.println("(two <PLAYER 1 NAME> <PLAYER 2 NAME>) Create game with 2 players.");
+            System.out.println("(three <PLAYER 1 NAME> <PLAYER 2 NAME> <PLAYER 3 NAME>) Create game with 3 players.");
+            System.out.println("(four <PLAYER 1 NAME> <PLAYER 2 NAME> <PLAYER 3 NAME> <PLAYER 4 NAME>) Create game with 4 players.");
+            System.out.println("(five <PLAYER 1 NAME> <PLAYER 2 NAME> <PLAYER 3 NAME> <PLAYER 4 NAME> <PLAYER 5 NAME>) Create game with 5 players.");
+            System.out.println("(six <PLAYER 1 NAME> <PLAYER 2 NAME> <PLAYER 3 NAME> <PLAYER 4 NAME> <PLAYER 5 NAME> <PLAYER 6 NAME>) Create game with 6 players.");
+            System.out.println("(help) Info for available commands.");
+            System.out.println("(quit) Quits the game.");
         }
 
         for(int i = 0; i < 2; i++){

@@ -13,6 +13,7 @@ public class ValidCreateGameCommands implements ValidCommands{
         validCommands.add("four");
         validCommands.add("five");
         validCommands.add("six");
+        validCommands.add("help");
         validCommands.add("quit");
     }
     @Override
