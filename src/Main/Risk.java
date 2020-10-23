@@ -1,7 +1,14 @@
 package Main;
+import Command.*;
+import Command.Processors.*;
 
 public class Risk {
-    static GameState state;
+    private static GameState state;
+    private Parser parser;
+
+    Risk(){
+        parser = new Parser(this);
+    }
 
     private void printMenu(){
         System.out.println("Welcome to Main.Risk: Global Domination!");
@@ -14,12 +21,43 @@ public class Risk {
         return state;
     }
 
-    public static void main(String[] args) {
-        state = GameState.MAIN_MENU;
+    public void setState(GameState state){
+        this.state = state;
+    }
 
-        while(state != GameState.QUIT){
-
+    private void processCommand(Command command){
+        CommandProcessor cp = null;
+        if(!command.isValid()){
+            System.out.println("I'm not sure what you mean!");
         }
+
+        if(state == GameState.MAIN_MENU){
+            cp = new MenuCommandProcessor(this, command);
+        } else if(state == GameState.NEW_GAME_SETTINGS){
+            cp = new CreateGameCommandProcessor(this, command);
+        } else if(state == GameState.IN_GAME){
+            cp = new GameCommandProcessor(this, command);
+        } else if(state == GameState.QUIT){
+            cp = new QuitCommandProcessor(this, command);
+        }
+
+        if(cp != null){
+            cp.processCommand();
+        }
+    }
+
+    public void play(){
+        state = GameState.MAIN_MENU;
+        printMenu();
+        while(state != GameState.QUIT){
+            Command command = parser.getCommand();
+            processCommand(command);
+        }
+    }
+
+    public static void main(String[] args) {
+        Risk game = new Risk();
+        game.play();
 
     }
 }
