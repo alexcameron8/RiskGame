@@ -4,7 +4,7 @@ import Map.*;
 
 public class Player {
     private ArrayList<Territory> listOfTerritories;
-    private ArrayList<String> listOfContinents;
+    private ArrayList<Continent> listOfContinents;
     private String name;
 
     public Player(String name){
@@ -16,7 +16,7 @@ public class Player {
     public String getName() {
         return name;
     }
-    public ArrayList<String> getListOfContinents() {
+    public ArrayList<Continent> getListOfContinents() {
         return listOfContinents;
     }
 
