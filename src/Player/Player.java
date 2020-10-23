@@ -27,9 +27,9 @@ public class Player {
         return null;
     }
 
-    public void transferTerritory(Player giverPlayer,Territory territory){
-        giverPlayer.removeTerritory(territory.getName());
-
+    public void transferTerritory(Player receiver,Territory territory){
+        receiver.addTerritory(territory);
+        removeTerritory(territory.getName());
     }
 
     public String getName() {
