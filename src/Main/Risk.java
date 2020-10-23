@@ -1,6 +1,5 @@
 package Main;
-import Command.Parser;
-import Command.Command;
+import Command.*;
 
 public class Risk {
     private static GameState state;
@@ -21,19 +20,31 @@ public class Risk {
         return state;
     }
 
+    public void setState(GameState state){
+        this.state = state;
+    }
+
     private void processCommand(Command command){
+        CommandProcessor cp = null;
         if(!command.isValid()){
             System.out.println("I'm not sure what you mean!");
         }
 
-        String commandWord = command.getCommand();
-
-        if(commandWord.equals("start")){
-            state = GameState.NEW_GAME_SETTINGS;
-            System.out.println("Starting Game!");
-        } else if(commandWord.equals("quit")){
-            state = GameState.QUIT;
+        if(state == GameState.MAIN_MENU){
+            cp = new MenuCommandProcessor(this, command);
+        } else if(state == GameState.NEW_GAME_SETTINGS){
+            cp = new NewGameCommandProcessor(this, command);
+        } else if(state == GameState.IN_GAME){
+            cp = new GameCommandProcessor(this, command);
+        } else if(state == GameState.QUIT){
+            cp = new QuitCommandProcessor(this, command);
         }
+
+        if(cp != null){
+            cp.processCommand();
+        }
+
+
     }
 
     public void play(){
