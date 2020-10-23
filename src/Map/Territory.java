@@ -45,13 +45,7 @@ public class Territory {
     }
 
     public static void main(String[] args) {
-        Territory argentina = new Territory("Argentina");
-        Territory Peru = new Territory("Peru");
-        Territory Brazil = new Territory("Brazil");
 
-        argentina.addNeighbours(Peru);
-        argentina.addNeighbours(Brazil);
-        System.out.println(argentina.getNeighbours());
 
     }
 
