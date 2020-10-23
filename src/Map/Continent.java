@@ -1,23 +1,27 @@
 package Map;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 
 public class Continent {
 
     private String name;
-    private LinkedList<Territory> territories;
+    private HashMap<String, Territory> territories;
 
     public Continent(String name){
         this.name = name;
-        territories = new LinkedList<>();
+        territories = new HashMap<>();
     }
 
     public void addTerritory(Territory territory){
-        territories.add(territory);
+        territories.put(territory.getName(),territory);
     }
 
-    public LinkedList<Territory> getTerritories() {
-        return territories;
+    public Territory getTerritory(String territoryName) {
+        return territories.get(territoryName);
+    }
+
+    public String getName(){
+        return name;
     }
 
     @Override
@@ -55,6 +59,6 @@ public class Continent {
         australia.addTerritory(newGuinea);
         australia.addTerritory(westernAustralia);
 
-        System.out.println(australia.getTerritories());
+        System.out.println(australia.getTerritory("Western Australia"));
     }
 }

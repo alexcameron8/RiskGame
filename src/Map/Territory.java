@@ -1,29 +1,29 @@
 package Map;
 
-import java.util.LinkedList;
+import java.util.HashMap;
 
 public class Territory {
 
     private String name;
-    private LinkedList<Territory> neighbours;
+    private HashMap<String, Territory> neighbours;
     private int soldiers;
 
     public Territory(String name){
         this.name = name;
-        neighbours = new LinkedList<>();
+        neighbours = new  HashMap<>();
         soldiers = 0;
     }
 
     public void addNeighbours(Territory neighbour){
-        neighbours.add(neighbour);
+        neighbours.put(neighbour.getName(), neighbour);
     }
 
     public String getName() {
         return name;
     }
 
-    public LinkedList<Territory> getNeighbours() {
-        return neighbours;
+    public Territory getNeighbour(String territoryName) {
+        return neighbours.get(territoryName);
     }
 
     public int getSoldiers() {
@@ -65,8 +65,6 @@ public class Territory {
         westernAustralia.addNeighbours(indonesia);
         westernAustralia.addNeighbours(newGuinea);
         westernAustralia.addNeighbours(westernAustralia);
-
-        System.out.println(easternAustralia.getNeighbours());
     }
 
 }
