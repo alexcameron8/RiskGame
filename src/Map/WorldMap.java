@@ -25,7 +25,12 @@ public class WorldMap {
     public WorldMap(){
         worldMap = new Map();
         createTerritory();
-        createAustralia();
+        worldMap.addContinent(createAustralia());
+        worldMap.addContinent(createAsia());
+        worldMap.addContinent(createAfrica());
+        worldMap.addContinent(createEurope());
+        worldMap.addContinent(createNorthAmerica());
+        worldMap.addContinent(createSouthAmerica());
     }
 
     private void createTerritory(){
@@ -84,29 +89,99 @@ public class WorldMap {
         westernUnitedStates = new Territory("Western United States");
     }
 
-    private void createAustralia(){
+    private Continent createAsia(){
+        Continent asia = new Continent("Asia");
+
+        afghanistan.addNeighbours(ukraine,ural,china,india,middleEast);
+        china.addNeighbours(siam,india,afghanistan,ural,siberia,mongolia);
+        india.addNeighbours(middleEast,afghanistan,china,siam);
+        irkutsk.addNeighbours(yakutsk,kamchatka,mongolia,siberia);
+        japan.addNeighbours(kamchatka,mongolia);
+        kamchatka.addNeighbours(yakutsk,irkutsk,mongolia,japan,alaska);
+        middleEast.addNeighbours(eastAfrica,egypt,southernEurope,ukraine,afghanistan,india);
+        mongolia.addNeighbours(japan,kamchatka,irkutsk,siberia,china);
+        siam.addNeighbours(india,china,indonesia);
+        siberia.addNeighbours(ural,china,mongolia,irkutsk,yakutsk);
+        ural.addNeighbours(ukraine,afghanistan,china,siberia);
+        yakutsk.addNeighbours(siberia,irkutsk,kamchatka);
+
+        asia.addTerritories(afghanistan,china,india,irkutsk,japan,kamchatka,middleEast,mongolia,siam,siberia,ural,yakutsk);
+
+        return asia;
+    }
+
+    private Continent createAustralia(){
         Continent australia = new Continent("Australia");
 
-        easternAustralia.addNeighbour(westernAustralia);
-        easternAustralia.addNeighbour(newGuinea);
+        easternAustralia.addNeighbours(westernAustralia,newGuinea);
+        indonesia.addNeighbours(siam,newGuinea,westernAustralia);
+        newGuinea.addNeighbours(indonesia,easternAustralia,westernAustralia);
+        westernAustralia.addNeighbours(indonesia,newGuinea,westernAustralia);
 
-        indonesia.addNeighbour(siam);
-        indonesia.addNeighbour(newGuinea);
-        indonesia.addNeighbour(westernAustralia);
+        australia.addTerritories(easternAustralia,indonesia,newGuinea,westernAustralia);
+        return australia;
+    }
 
-        newGuinea.addNeighbour(indonesia);
-        newGuinea.addNeighbour(easternAustralia);
-        newGuinea.addNeighbour(westernAustralia);
+    private Continent createAfrica(){
+        Continent africa = new Continent("Africa");
 
-        westernAustralia.addNeighbour(indonesia);
-        westernAustralia.addNeighbour(newGuinea);
-        westernAustralia.addNeighbour(westernAustralia);
+        congo.addNeighbours(eastAfrica,southAfrica,northAfrica);
+        eastAfrica.addNeighbours(egypt,northAfrica,congo,southAfrica,madagascar,middleEast);
+        egypt.addNeighbours(southernEurope,northAfrica,eastAfrica,middleEast);
+        madagascar.addNeighbours(southAfrica,eastAfrica);
+        northAfrica.addNeighbours(brazil,westernEurope,southernEurope,egypt,eastAfrica,congo);
+        southAfrica.addNeighbours(congo,eastAfrica,madagascar);
 
-        australia.addTerritory(easternAustralia);
-        australia.addTerritory(indonesia);
-        australia.addTerritory(newGuinea);
-        australia.addTerritory(westernAustralia);
+        africa.addTerritories(congo,eastAfrica,egypt,madagascar,northAfrica,southAfrica);
 
-        worldMap.addContinent(australia);
+        return africa;
+    }
+
+    private Continent createSouthAmerica(){
+        Continent southAmerica = new Continent("South America");
+
+        argentina.addNeighbours(peru,brazil);
+        brazil.addNeighbours(peru,venezuela,argentina,northAfrica);
+        peru.addNeighbours(venezuela,brazil,peru);
+        venezuela.addNeighbours(centralAmerica,brazil,peru);
+
+        southAmerica.addTerritories(argentina, brazil, peru, venezuela);
+        return southAmerica;
+    }
+
+    private Continent createEurope(){
+        Continent europe = new Continent("Europe");
+
+        greatBritain.addNeighbours(iceland,scandinavia,northernEurope,westernEurope);
+        iceland.addNeighbours(greatBritain, greenland, scandinavia);
+        northernEurope.addNeighbours(ukraine,scandinavia,greatBritain,westernEurope,southernEurope);
+        scandinavia.addNeighbours(greatBritain,iceland,northernEurope,ukraine);
+        southernEurope.addNeighbours(westernEurope,northernEurope,ukraine,middleEast,egypt,northAfrica);
+        ukraine.addNeighbours(scandinavia,northernEurope,southernEurope,middleEast,argentina,ural);
+        westernEurope.addNeighbours(greatBritain,northernEurope,southernEurope,northAfrica);
+
+        europe.addTerritories(greatBritain,iceland,northernEurope,scandinavia,southernEurope,ukraine,westernEurope);
+        return europe;
+    }
+
+    private Continent createNorthAmerica(){
+        Continent NorthAmerica = new Continent("North America");
+
+        alaska.addNeighbours(northwestTerritory,alberta,kamchatka);
+        alberta.addNeighbours(ontario,northwestTerritory,westernUnitedStates,alaska);
+        centralAmerica.addNeighbours(westernUnitedStates,venezuela,easterUnitedStates);
+        easterUnitedStates.addNeighbours(quebec,ontario,westernUnitedStates,centralAmerica);
+        greenland.addNeighbours(quebec,northwestTerritory,ontario,iceland);
+        northwestTerritory.addNeighbours(alaska,alberta,ontario,greenland);
+        ontario.addNeighbours(northwestTerritory,alberta,westernUnitedStates,easterUnitedStates,quebec,greenland);
+        quebec.addNeighbours(easterUnitedStates,ontario,greenland);
+        westernUnitedStates.addNeighbours(alberta,ontario,easterUnitedStates,centralAmerica);
+
+        NorthAmerica.addTerritories(alaska, alberta, centralAmerica, easterUnitedStates, greenland, northwestTerritory, ontario, quebec, westernUnitedStates);
+        return NorthAmerica;
+    }
+
+    public static void main(String[] args) {
+        WorldMap m = new WorldMap();
     }
 }
