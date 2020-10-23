@@ -41,6 +41,8 @@ public class CreateGameCommandProcessor extends CommandProcessor{
             System.out.println("(six <PLAYER 1 NAME> <PLAYER 2 NAME> <PLAYER 3 NAME> <PLAYER 4 NAME> <PLAYER 5 NAME> <PLAYER 6 NAME>) Create game with 6 players.");
             System.out.println("(help) Info for available commands.");
             System.out.println("(quit) Quits the game.");
+
+            return;
         }
 
         for(int i = 0; i < 2; i++){
