@@ -1,13 +1,19 @@
 package Main;
 import Command.*;
 import Command.Processors.*;
+import Player.Player;
+
+import java.util.ArrayList;
 
 public class Risk {
     private static GameState state;
     private Parser parser;
 
+    private ArrayList<Player> players;
+
     Risk(){
         parser = new Parser(this);
+        players = new ArrayList<Player>();
     }
 
     private void printMenu(){
@@ -23,6 +29,14 @@ public class Risk {
 
     public void setState(GameState state){
         this.state = state;
+    }
+
+    public ArrayList<Player> getPlayers(){
+        return players;
+    }
+
+    public void addPlayer(Player newPlayer){
+        players.add(newPlayer);
     }
 
     private void processCommand(Command command){

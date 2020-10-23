@@ -8,6 +8,7 @@ public class ValidGameCommands implements ValidCommands{
     public ValidGameCommands(){
         validCommands = new ArrayList<String>();
         validCommands.add("home");
+        validCommands.add("players");
         validCommands.add("quit");
     }
 

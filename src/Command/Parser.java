@@ -1,5 +1,6 @@
 package Command;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Command.Validators.*;
@@ -27,7 +28,7 @@ public class Parser {
         String prompt = ">";
         GameState state = game.getState();
         String command = null;
-        String argument = null;
+        ArrayList<String> arguments = new ArrayList<>();
 
         if(state == GameState.MAIN_MENU){
             prompt = MAIN_MENU_PROMPT;
@@ -50,19 +51,17 @@ public class Parser {
         Scanner tokenizer = new Scanner(inputLine);
         if(tokenizer.hasNext()) {
             command = tokenizer.next();
-            if(tokenizer.hasNext()){
-                argument = tokenizer.next();
-                // Note rest of line is ignored
+            while(tokenizer.hasNext()){
+                arguments.add(tokenizer.next());
             }
         }
 
         if(commandValidator.isCommand(command)){
-            return new Command(command, argument);
+            return new Command(command, arguments);
         } else {
             return new Command(null, null);
         }
 
     }
-
 
 }
