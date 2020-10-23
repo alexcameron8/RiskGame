@@ -16,6 +16,12 @@ public class Continent {
         territories.put(territory.getName(),territory);
     }
 
+    public void addTerritories(Territory... args){
+        for(Territory arg : args) {
+            addTerritory(arg);
+        }
+    }
+
     public Territory getTerritory(String territoryName) {
         return territories.get(territoryName);
     }
