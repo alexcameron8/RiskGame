@@ -16,6 +16,12 @@ public class Continent {
         territories.put(territory.getName(),territory);
     }
 
+    public void addTerritories(Territory... args){
+        for(Territory arg : args) {
+            addTerritory(arg);
+        }
+    }
+
     public Territory getTerritory(String territoryName) {
         return territories.get(territoryName);
     }
@@ -24,41 +30,20 @@ public class Continent {
         return name;
     }
 
+    public void viewTerritories(){
+        for(String key: territories.keySet()){
+            System.out.println(getTerritory(key));
+        }
+    }
+
+    public boolean isTerritory(String territoryName){
+        if(getTerritory(territoryName) == null)
+            return false;
+        return true;
+    }
+
     @Override
     public String toString() {
         return name;
-    }
-
-    public static void main(String[] args) {
-        Continent australia = new Continent("Australia");
-
-        Territory easternAustralia = new Territory("Eastern Australia");
-        Territory indonesia  = new Territory("Indonesia");
-        Territory newGuinea = new Territory("New Guinea");
-        Territory westernAustralia = new Territory("Western Australia");
-        Territory Siam = new Territory("Siam");
-
-
-        easternAustralia.addNeighbours(westernAustralia);
-        easternAustralia.addNeighbours(newGuinea);
-
-        indonesia.addNeighbours(Siam);
-        indonesia.addNeighbours(newGuinea);
-        indonesia.addNeighbours(westernAustralia);
-
-        newGuinea.addNeighbours(indonesia);
-        newGuinea.addNeighbours(easternAustralia);
-        newGuinea.addNeighbours(westernAustralia);
-
-        westernAustralia.addNeighbours(indonesia);
-        westernAustralia.addNeighbours(newGuinea);
-        westernAustralia.addNeighbours(westernAustralia);
-
-        australia.addTerritory(easternAustralia);
-        australia.addTerritory(indonesia);
-        australia.addTerritory(newGuinea);
-        australia.addTerritory(westernAustralia);
-
-        System.out.println(australia.getTerritory("Western Australia"));
     }
 }

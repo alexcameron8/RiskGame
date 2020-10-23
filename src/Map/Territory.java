@@ -14,12 +14,24 @@ public class Territory {
         soldiers = 0;
     }
 
-    public void addNeighbours(Territory neighbour){
+    public void addNeighbour(Territory neighbour){
         neighbours.put(neighbour.getName(), neighbour);
+    }
+
+    public void addNeighbours(Territory... args){
+        for(Territory arg: args){
+            addNeighbour(arg);
+        }
     }
 
     public String getName() {
         return name;
+    }
+
+    public boolean isNeighbour(String territoryName){
+        if(getNeighbour(territoryName) == null)
+            return false;
+        return true;
     }
 
     public Territory getNeighbour(String territoryName) {
@@ -42,29 +54,4 @@ public class Territory {
     public String toString() {
         return name;
     }
-
-    public static void main(String[] args) {
-        Territory easternAustralia = new Territory("easternAustralia");
-        Territory indonesia  = new Territory("Indonesia");
-        Territory newGuinea = new Territory("New Guinea");
-        Territory westernAustralia = new Territory("Western Australia");
-        Territory Siam = new Territory("Siam");
-
-
-        easternAustralia.addNeighbours(westernAustralia);
-        easternAustralia.addNeighbours(newGuinea);
-
-        indonesia.addNeighbours(Siam);
-        indonesia.addNeighbours(newGuinea);
-        indonesia.addNeighbours(westernAustralia);
-
-        newGuinea.addNeighbours(indonesia);
-        newGuinea.addNeighbours(easternAustralia);
-        newGuinea.addNeighbours(westernAustralia);
-
-        westernAustralia.addNeighbours(indonesia);
-        westernAustralia.addNeighbours(newGuinea);
-        westernAustralia.addNeighbours(westernAustralia);
-    }
-
 }
