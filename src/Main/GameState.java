@@ -5,5 +5,6 @@ public enum GameState {
     NEW_GAME_SETTINGS,
     IN_GAME,
     QUIT,
-    ATTACK
+    ATTACK,
+    GENERATE_GAME
 }

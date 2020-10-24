@@ -1,5 +1,6 @@
 package Map;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -15,6 +16,7 @@ public class Continent {
 
     private String name;
     private HashMap<String, Territory> territories;
+    private int numberOfReinforcement;
 
     /**
      * Constructor for Continent. Creates a Continent
@@ -25,6 +27,25 @@ public class Continent {
     public Continent(String name){
         this.name = name;
         territories = new HashMap<>();
+        numberOfReinforcement = 0;
+    }
+
+    /**
+     * Set the number of reinforcement gained when owning this continent
+     *
+     * @param numb
+     */
+    public void setnumberOfReinforcement(int numb){
+        numberOfReinforcement = numb;
+    }
+
+    /**
+     * return the number of reinforcement gained when owning this continen
+     *
+     * @return
+     */
+    public int getNumberOfReinforcement(){
+        return numberOfReinforcement;
     }
 
     /**
@@ -59,6 +80,19 @@ public class Continent {
     }
 
     /**
+     * Get list of territories
+     *
+     * @return ArrayList
+     */
+    public ArrayList<Territory> getTerritories(){
+        ArrayList<Territory> territories = new ArrayList<Territory>();
+        for(Territory terr: this.territories.values()){
+            territories.add(terr);
+        }
+        return territories;
+    }
+
+    /**
      * get the name of the continent
      *
      * @return name
@@ -79,6 +113,7 @@ public class Continent {
             return false;
         return true;
     }
+
 
     @Override
     public String toString() {
