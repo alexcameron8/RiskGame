@@ -7,7 +7,7 @@ import Map.Territory;
 import Player.Player;
 
 import java.util.ArrayList;
-
+import Main.*;
 public class GameCommandProcessor extends CommandProcessor{
 
     public GameCommandProcessor(Risk game, Command command) {
@@ -28,6 +28,7 @@ public class GameCommandProcessor extends CommandProcessor{
             System.out.println("Available Commands:");
             System.out.println("(players) List player names.");
             System.out.println("(countries) List countries occupied by the active player.");
+            System.out.println("(place <Number of Reinforcements> <Territory>) Places certain number of reinforcements in territory.");
             System.out.println("(turn) Advance to next players turn.");
             System.out.println("(neighbors <TERRITORY>) List the neighbors of a Territory.");
             System.out.println("(quit) Quits the game.");
@@ -36,6 +37,17 @@ public class GameCommandProcessor extends CommandProcessor{
             game.setState(GameState.QUIT);
         } else if(commandWord.equals("turn")){
             game.advanceTurn();
+        }else if(commandWord.equals("place")){
+            int numOfReinforcements = Integer.parseInt(command.getArgument(0));
+            String territoryName = command.getArgument(1);
+            for(Territory findTerr: game.getMap().getWorldMap().getTerritories()) {
+                if (findTerr.getName().equals(territoryName)) {
+                    Territory territory = findTerr;
+                    game.getActivePlayer().placeReinforcement(territory, numOfReinforcements);
+                    game.getActivePlayerTurn().setNumberOfReinforcements(game.getActivePlayerTurn().getNumberOfReinforcements()-numOfReinforcements);
+                    System.out.println(game.getActivePlayer().getName() + "placed " + numOfReinforcements + " soldiers in " + territoryName);
+                }
+            }
         } else if(commandWord.equals("countries")){
             
             System.out.println(game.getActivePlayer().getName() 

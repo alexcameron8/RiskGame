@@ -4,6 +4,7 @@ import Command.Processors.*;
 import Map.Territory;
 import Map.WorldMap;
 import Player.Player;
+import Main.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +16,7 @@ public class Risk {
     private ArrayList<Player> players;
     private int activePlayerID;
     private WorldMap map;
+    private Turn currentTurn;
 
 
     Risk(){
@@ -32,11 +34,25 @@ public class Risk {
         System.out.println("(quit) Quit");
     }
 
-    public void advanceTurn(){
-        if(activePlayerID + 1 < players.size()){
+    public void advanceAutoTurn() {
+        if (activePlayerID + 1 < players.size()) {
             activePlayerID++;
         } else {
             activePlayerID = 0;
+        }
+    }
+
+    public void advanceTurn(){
+        if(currentTurn.isTurnComplete()){
+            if (activePlayerID + 1 < players.size()) {
+                activePlayerID++;
+                currentTurn = new Turn(players.get(activePlayerID));
+            } else {
+                activePlayerID = 0;
+                currentTurn = new Turn(players.get(0));
+            }
+        }else{
+            System.out.println(players.get(activePlayerID).getName() + " turn is not complete. There are " + players.get(activePlayerID).getReinforcement() + " soldiers left to place.");
         }
     }
 
@@ -44,6 +60,10 @@ public class Risk {
         activePlayerID = 0;
     }
 
+    public Turn getActivePlayerTurn(){
+        return currentTurn;
+
+    }
     public Player getActivePlayer(){
         return players.get(activePlayerID);
     }
@@ -124,7 +144,7 @@ public class Risk {
         for(Territory terr: territories){
             terr.addSoldiers(1);
             players.get(activePlayerID).addTerritory(terr);
-            advanceTurn();
+            advanceAutoTurn();
         }
 
         Random randomGenerator = new Random();
@@ -149,6 +169,7 @@ public class Risk {
             if(state == GameState.GENERATE_GAME){
                 Random r = new Random();
                 activePlayerID = r.nextInt(players.size());
+                currentTurn = new Turn(players.get(activePlayerID));
                 assignTroopsRandom();
                 setState(GameState.IN_GAME);
             }

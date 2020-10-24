@@ -71,7 +71,7 @@ public class Player {
         removeTerritory(territory.getName());
     }
 
-    public int reinforcement(){
+    public int getReinforcement(){
         int numberOfReinforcement = (int) listOfTerritories.size()/3;
         for (Continent continent: listOfContinents) {
             numberOfReinforcement += continent.getNumberOfReinforcement();
