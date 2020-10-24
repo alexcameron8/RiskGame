@@ -1,5 +1,6 @@
 package Map;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -80,6 +81,19 @@ public class Territory {
      */
     public Territory getNeighbour(String territoryName) {
         return neighbours.get(territoryName);
+    }
+
+    /**
+     * Get list of neighbours
+     *
+     * @return ArrayList
+     */
+    public ArrayList<Territory> getNeighbours(){
+        ArrayList<Territory> neighbours = new ArrayList<Territory>();
+        for(Territory terr: this.neighbours.values()){
+            neighbours.add(terr);
+        }
+        return neighbours;
     }
 
     /**

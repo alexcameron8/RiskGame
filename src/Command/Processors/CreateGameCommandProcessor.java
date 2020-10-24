@@ -45,11 +45,11 @@ public class CreateGameCommandProcessor extends CommandProcessor{
             return;
         }
 
-        for(int i = 0; i < 2; i++){
+        for(int i = 0; i < players; i++){
             game.addPlayer(new Player(command.getArgument(i)));
         }
         System.out.println("Playing with " + players + " players.");
-        game.setState(GameState.IN_GAME);
+        game.setState(GameState.GENERATE_GAME);
 
         // ADD COMMANDS HERE
     }

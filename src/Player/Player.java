@@ -48,4 +48,8 @@ public class Player {
         return listOfTerritories;
     }
 
+    public boolean removeTerritory(Territory terr){
+        return listOfTerritories.remove(terr);
+    }
+
 }
