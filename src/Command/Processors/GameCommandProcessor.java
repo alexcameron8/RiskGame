@@ -31,7 +31,7 @@ public class GameCommandProcessor extends CommandProcessor{
             System.out.println("(turn) Advance to next players turn.");
             System.out.println("(home) Return to main menu of the game.");
             System.out.println("(neighbors <TERRITORY>) List the neighbors of a Territory.");
-            System.out.println("(attack <NUMBER OF TROOPS> <ATTACK TERRITORY> <DEFENDING TERRITORY>) List the neighbors of a Territory.");
+            System.out.println("(attack <NUMBER OF TROOPS> <ATTACK TERRITORY> <DEFENDING TERRITORY>) Attack a Territory.");
             System.out.println("(quit) Quits the game.");
 
         } else if(commandWord.equals("quit")){
@@ -72,13 +72,14 @@ public class GameCommandProcessor extends CommandProcessor{
             for(Player player: game.getPlayers()){
                 if(player.hasTerritory(defendName)){
                     defender = player;
+                    break;
                 }
             }
 
             Territory attackTerritory = attacker.getTerritory(attackName);
             Territory defendTerritory = defender.getTerritory(defendName);
 
-            // IMPLEMENT ATTACK HERE
+            attacker.attack(attackTerritory, defender, defendTerritory, numTroops);
 
         }
 
