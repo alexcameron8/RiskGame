@@ -8,12 +8,13 @@ import java.util.ArrayList;
 public class Risk {
     private static GameState state;
     private Parser parser;
-
     private ArrayList<Player> players;
+    private int activePlayerID;
 
     Risk(){
         parser = new Parser(this);
         players = new ArrayList<Player>();
+        activePlayerID = 0;
     }
 
     private void printMenu(){
@@ -22,6 +23,18 @@ public class Risk {
         System.out.println("(start) Start new game.");
         System.out.println("(help) Display help menu. Available anywhere.");
         System.out.println("(quit) Quit");
+    }
+
+    public void advanceTurn(){
+        if(activePlayerID + 1 < players.size()){
+            activePlayerID++;
+        } else {
+            activePlayerID = 0;
+        }
+    }
+
+    public Player getActivePlayer(){
+        return players.get(activePlayerID);
     }
 
     public GameState getState(){
@@ -38,6 +51,16 @@ public class Risk {
 
     public void addPlayer(Player newPlayer){
         players.add(newPlayer);
+    }
+
+    public Player getPlayer(String name){
+        for (Player player: players) {
+            if(player.getName().equals(name)){
+                return player;
+            }
+        }
+
+        return null;
     }
 
     private void processCommand(Command command){

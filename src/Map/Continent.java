@@ -1,6 +1,8 @@
 package Map;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Continent models a continent in the game of risk.
@@ -56,6 +58,19 @@ public class Continent {
      */
     public Territory getTerritory(String territoryName) {
         return territories.get(territoryName);
+    }
+
+    /**
+     * Get list of territories
+     *
+     * @return ArrayList
+     */
+    public ArrayList<Territory> getTerritories(){
+        ArrayList<Territory> territories = new ArrayList<Territory>();
+        for(Territory terr: this.territories.values()){
+            territories.add(terr);
+        }
+        return territories;
     }
 
     /**
