@@ -249,7 +249,7 @@ public class Player {
      */
     public boolean hasTerritory(String name){
         for (Territory ter : listOfTerritories) {
-            if (ter.getName() == name) {
+            if (ter.getName().equals(name)) {
                 return true;
             }
         }
@@ -265,7 +265,7 @@ public class Player {
      */
     public Territory getTerritory(String name){
         for (Territory ter : listOfTerritories) {
-            if (ter.getName() == name) {
+            if (ter.getName().equals(name)) {
                 return ter;
             }
         }
