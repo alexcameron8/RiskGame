@@ -20,11 +20,27 @@ public class Player {
 
     public void addTerritory(Territory territory){
         listOfTerritories.add(territory);
+        WorldMap map = new WorldMap();
+        for(Continent continent : map.getWorldMap().getContinents()){
+            int sizeControlsContinent = 0;
+            for(Territory terr : continent.getTerritories()){
+                if(hasTerritory(terr)){
+                    sizeControlsContinent+=1;
+                }
+            }
+            if(sizeControlsContinent == continent.getTerritories().size())
+            addContinent(continent);
+        }
     }
 
     public Territory removeTerritory(String name) {
         for (Territory ter : listOfTerritories) {
             if (ter.getName() == name) {
+                for(Continent continent : listOfContinents){
+                    if(continent.isTerritory(ter.getName()));
+                        removeContinent(continent);
+                        break;
+                }
                 listOfTerritories.remove(ter);
                 return ter;
             }
@@ -32,9 +48,41 @@ public class Player {
         return null;
     }
 
+    public Territory removeTerritory(Territory territory) {
+        return removeTerritory(territory.getName());
+    }
+
+    public Continent removeContinent(String name){
+        for (Continent cont : listOfContinents) {
+            if (cont.getName() == name) {
+                listOfContinents.remove(cont);
+                return cont;
+            }
+        }
+        return null;
+    }
+
+    public Continent removeContinent(Continent continent) {
+        return removeContinent(continent.getName());
+    }
+
     public void transferTerritory(Player receiver,Territory territory){
         receiver.addTerritory(territory);
         removeTerritory(territory.getName());
+    }
+
+    public int reinforcement(){
+        int numberOfReinforcement = (int) listOfTerritories.size()/3;
+        for (Continent continent: listOfContinents) {
+            numberOfReinforcement += continent.getNumberOfReinforcement();
+        }
+        return numberOfReinforcement;
+    }
+
+    public void placeReinforcement(Territory territory, int numberOfReinforcement){
+        if(hasTerritory(territory)){
+            territory.addSoldiers(numberOfReinforcement);
+        }
     }
 
     public String getName() {
@@ -48,4 +96,52 @@ public class Player {
         return listOfTerritories;
     }
 
+    public void addContinent(Continent continent){
+        if(!hasContinent(continent)){
+            listOfContinents.add(continent);
+        }
+    }
+
+    public boolean hasContinent(Continent continent){
+        return hasContinent(continent.getName());
+    }
+
+    public boolean hasContinent(String name){
+        for (Continent cont : listOfContinents) {
+            if (cont.getName() == name) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasTerritory(Territory territory){
+        return hasTerritory(territory.getName());
+    }
+
+    public boolean hasTerritory(String name){
+        for (Territory ter : listOfTerritories) {
+            if (ter.getName() == name) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        Player player = new Player("");
+
+        Territory argentina = new Territory("Argentina");
+        Territory brazil = new Territory("Brazil");
+        Territory peru = new Territory("Peru");
+        Territory venezuela = new Territory("Venezuela");
+        player.addTerritory(argentina);
+        player.addTerritory(brazil);
+        player.addTerritory(peru);
+        System.out.println(player.getListOfContinents());
+        player.addTerritory(venezuela);
+        System.out.println(player.getListOfContinents());
+        player.removeTerritory(venezuela);
+        System.out.println(player.getListOfContinents());
+    }
 }
