@@ -171,7 +171,7 @@ public class Risk {
     private void processCommand(Command command){
         CommandProcessor cp = null;
         if(!command.isValid()){
-            System.out.println("I'm not sure what you mean! Type the command 'help' for list of valid commands.");
+            System.out.println("Invalid command or wrong number of arguments. Type the command 'help' for list of valid commands.");
             return;
         }
 

@@ -2,27 +2,12 @@ package Command.Validators;
 
 import java.util.ArrayList;
 
-public class ValidQuitCommands implements ValidCommands{
-    private static ArrayList<String> validCommands;
-
+public class ValidQuitCommands extends ValidCommands{
     public ValidQuitCommands(){
-        validCommands = new ArrayList<String>();
-        validCommands.add("yes");
-        validCommands.add("no");
-        validCommands.add("help");
-    }
-    @Override
-    public boolean isCommand(String command) {
-        for (String cmd: validCommands) {
-            if(command.equals(cmd)){
-                return true;
-            }
-        }
-        return false;
+        super();
+        validCommands.put("yes", 0);
+        validCommands.put("no", 0);
+        validCommands.put("help", 0);
     }
 
-    @Override
-    public ArrayList<String> getCommands() {
-        return validCommands;
-    }
 }
