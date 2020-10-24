@@ -3,6 +3,7 @@ package Command.Processors;
 import Command.Command;
 import Main.GameState;
 import Main.Risk;
+import Map.Territory;
 import Player.Player;
 
 public class GameCommandProcessor extends CommandProcessor{
@@ -24,6 +25,7 @@ public class GameCommandProcessor extends CommandProcessor{
             System.out.println("You are currently in a game of Risk: Global Domination.");
             System.out.println("Available Commands:");
             System.out.println("(players) List player names.");
+            System.out.println("(countries) List countries occupied by the active player.");
             System.out.println("(turn) Advance to next players turn.");
             System.out.println("(quit) Quits the game.");
 
@@ -31,6 +33,17 @@ public class GameCommandProcessor extends CommandProcessor{
             game.setState(GameState.QUIT);
         } else if(commandWord.equals("turn")){
             game.advanceTurn();
+        } else if(commandWord.equals("countries")){
+            
+            System.out.println(game.getActivePlayer().getName() 
+                    + " occupies " + game.getActivePlayer().getListOfTerritories().size()
+                    + " territories:");
+            
+            for(Territory terr: game.getActivePlayer().getListOfTerritories()){
+                System.out.println(terr.getName() + " - " + terr.getSoldiers());
+            }
+            System.out.print("\n");
+
         }
 
     }
