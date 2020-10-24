@@ -24,10 +24,13 @@ public class GameCommandProcessor extends CommandProcessor{
             System.out.println("You are currently in a game of Risk: Global Domination.");
             System.out.println("Available Commands:");
             System.out.println("(players) List player names.");
+            System.out.println("(turn) Advance to next players turn.");
             System.out.println("(quit) Quits the game.");
 
         } else if(commandWord.equals("quit")){
             game.setState(GameState.QUIT);
+        } else if(commandWord.equals("turn")){
+            game.advanceTurn();
         }
 
     }

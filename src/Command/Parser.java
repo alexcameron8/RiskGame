@@ -13,10 +13,10 @@ public class Parser {
 
     private ValidCommands commandValidator;
 
-    private static final String MAIN_MENU_PROMPT = "Main Menu >";
-    private static final String NEW_GAME_PROMPT = "New Game >";
-    private static final String IN_GAME_PROMPT = "Risk Game >";
-    private static final String QUIT_PROMPT = "Quit >";
+    private static final String MAIN_MENU_PROMPT = "Main Menu";
+    private static final String NEW_GAME_PROMPT = "New Game";
+    private static final String IN_GAME_PROMPT = "Risk Game";
+    private static final String QUIT_PROMPT = "Quit";
 
     public Parser(Risk game){
         this.game = game;
@@ -37,14 +37,14 @@ public class Parser {
             prompt = NEW_GAME_PROMPT;
             commandValidator = new ValidCreateGameCommands();
         } else if(state == GameState.IN_GAME){
-            prompt = IN_GAME_PROMPT;
+            prompt = IN_GAME_PROMPT + " (" + game.getActivePlayer().getName() + ")";
             commandValidator = new ValidGameCommands();
         } else if(state == GameState.QUIT){
             prompt = QUIT_PROMPT;
             commandValidator = new ValidQuitCommands();
         }
 
-        System.out.print(prompt);
+        System.out.print(prompt + "> ");
 
         inputLine = reader.nextLine();
 
