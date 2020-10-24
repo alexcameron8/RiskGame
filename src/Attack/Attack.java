@@ -13,7 +13,6 @@ import java.util.LinkedList;
  */
 public class Attack {
     private Player attacker;
-    private Player defender;
     private Territory attackerTerritory;
     private Territory defenderTerritory;
     private int numOfAttackArmy;
@@ -29,7 +28,6 @@ public class Attack {
      * @param numOfAttackArmy number of soldiers the attacker sends to attack.
      */
     public Attack(Player attacker, Territory attackerTerritory, Player defender, Territory defenderTerritory, int numOfAttackArmy){
-        this.defender = defender;
         this.attackerTerritory = attackerTerritory;
         this.defenderTerritory = defenderTerritory;
         this.attacker = attacker;
@@ -184,25 +182,5 @@ public class Attack {
         else{
             return attackerArmySize;
         }
-    }
-
-
-    public static void main(String[] args) {
-
-        //Testing the attacking
-        Player attacker = new Player("Alex");
-        Player defender = new Player("Thomas");
-        Territory greatBritain = new Territory("Great Britain");
-        Territory iceland = new Territory("Iceland");
-        greatBritain.addNeighbours(iceland);
-        iceland.addNeighbours(greatBritain);
-        greatBritain.addSoldiers(4);
-        iceland.addSoldiers(3);
-
-        attacker.addTerritory(greatBritain);
-        defender.addTerritory(iceland);
-
-
-        attacker.attack(greatBritain,defender,iceland,3);
     }
 }
