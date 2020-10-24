@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * This class is the attack class in the game of Risk. This class has several methods which check to see if the attack is valid
+ * and simulates an attack between 2 players and upon attacking will update the game with the results and consequences of the attack.
+ *
+ */
 public class Attack {
     private Player attacker;
     private Player defender;
@@ -23,7 +28,7 @@ public class Attack {
 
         //Checks to see if the attack is valid
 
-        if(isTerritoryOccupied() && isTerritoryAdjacent() && isNumOfSoldiersAllowed() && isNumOfSoldiersAllowed()) {
+        if(isTerritoryOccupied() && isTerritoryAdjacent() && isNumOfSoldiersAllowed() && isNumOfSoldiersAllowed() && isTerritoryEnemy()) {
             attackerTerritory.removeSoldiers(numOfAttackArmy);
             int returningArmy = attack(numOfAttackArmy);
             if(returningArmy != 0){
@@ -39,7 +44,7 @@ public class Attack {
 
     /**
      * If attacker territory is neighboring the attackers desired attack Territory then return true, false otherwise
-     * @return
+     * @return Boolean value true if territory is a neighbor, false otherwise
      */
     public boolean isTerritoryAdjacent(){
         if(attackerTerritory.isNeighbour(defenderTerritory.getName())){
@@ -52,7 +57,7 @@ public class Attack {
 
     /**
      * Checks to see if attacker has more than 1 person in their territory
-     * @return
+     * @return Boolean value of true if more than 1 person is in territory, false otherwise.
      */
     public boolean isTerritoryOccupied(){
         if(attackerTerritory.getSoldiers() <=1){
@@ -65,6 +70,8 @@ public class Attack {
 
     /**
      * Makes sure that there is at least 1 person left in the territory.
+     *
+     * @return Boolean true if at least one person in territory remains.
      */
     public boolean isNumOfSoldiersAllowed() {
         if (attackerTerritory.getSoldiers() - numOfAttackArmy < 1) {
@@ -80,6 +87,7 @@ public class Attack {
     /**
      *  Makes sure you do not attack your own Territory.
      *
+     * @return Boolean of true if Territory doesn't belong to you.
      */
     public boolean isTerritoryEnemy() {
         for (Territory ter : attacker.getListOfTerritories()) {
@@ -91,6 +99,14 @@ public class Attack {
         return true;
     }
 
+    /**
+     * This method determines the number of dice required for the attackers and defenders and returns an ArrayList where the
+     * first index is the attackers LinkedList of sorted dice rolls from highest to lowest and the second index is the defenders LinkedList of sorted
+     * dice rolls in ascending order.
+     * @param attackerArmy Number of troops sent to battle from attackers
+     * @param defenderArmy Number of troops who are sacrificing their life for their territory.
+     * @return an ArrayList containing the dice rolls for the attacker and defender
+     */
     public ArrayList<LinkedList<Integer>> attackRoll(int attackerArmy, int defenderArmy){
 
         LinkedList<Integer> attacker = new LinkedList<Integer>();
