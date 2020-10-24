@@ -18,7 +18,16 @@ public class Attack {
     private Territory defenderTerritory;
     private int numOfAttackArmy;
 
-
+    /**
+     *  Constructor for attack class. This requires knowing who the attacking player is, the defending player, and their territories in the attack.
+     *  As well, the number of soldiers the attacker chooses to use in his attack against the enemy is required. This constructor checks to see if the
+     *  attacker is allowed to attack the territory he has chosen and simulates the attack.
+     * @param attacker The attacking player
+     * @param attackerTerritory the attacking player's territory
+     * @param defender The defending player
+     * @param defenderTerritory the defending players territory
+     * @param numOfAttackArmy number of soldiers the attacker sends to attack.
+     */
     public Attack(Player attacker, Territory attackerTerritory, Player defender, Territory defenderTerritory, int numOfAttackArmy){
         this.defender = defender;
         this.attackerTerritory = attackerTerritory;
@@ -32,12 +41,12 @@ public class Attack {
             attackerTerritory.removeSoldiers(numOfAttackArmy);
             int returningArmy = attack(numOfAttackArmy);
             if(returningArmy != 0){
-                System.out.println("Attack was successful");
+                System.out.println(attacker.getName() + ", conquered " + defender.getName() + "'s territory, " + defenderTerritory.getName() + ".");
                 attackerTerritory.addSoldiers(returningArmy);
                 defender.transferTerritory(attacker,defenderTerritory);
             }
             else{
-                System.out.println("Attack was not successful");
+                System.out.println(attacker.getName() + ", failed to conquer " + defender.getName() + "'s territory, " + defenderTerritory.getName() + ".");
             }
         }
     }
@@ -138,7 +147,9 @@ public class Attack {
     }
 
     /**
-     * Simulates the attack of the attacker vs defender.
+     * Simulates the attack of the attacker vs defender using the input of how many soldiers the attacker chooses to send to attack.
+     * @param attackerArmySize number of soldiers attacker uses.
+     * @return the remaining soldiers of the attacker after the attack.
      */
 
     public int attack(int attackerArmySize){
@@ -177,19 +188,21 @@ public class Attack {
 
 
     public static void main(String[] args) {
+
+        //Testing the attacking
         Player attacker = new Player("Alex");
         Player defender = new Player("Thomas");
         Territory greatBritain = new Territory("Great Britain");
         Territory iceland = new Territory("Iceland");
         greatBritain.addNeighbours(iceland);
         iceland.addNeighbours(greatBritain);
-        greatBritain.addSoldiers(12);
-        iceland.addSoldiers(5);
+        greatBritain.addSoldiers(4);
+        iceland.addSoldiers(3);
 
         attacker.addTerritory(greatBritain);
         defender.addTerritory(iceland);
 
 
-        attacker.attack(greatBritain,defender,iceland,9);
+        attacker.attack(greatBritain,defender,iceland,3);
     }
 }
