@@ -6,8 +6,6 @@ import Main.Risk;
 import Map.Territory;
 import Player.Player;
 
-import java.util.ArrayList;
-
 import Main.*;
 
 public class GameCommandProcessor extends CommandProcessor{
