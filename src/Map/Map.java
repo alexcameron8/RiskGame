@@ -54,4 +54,17 @@ public class Map {
     public Continent getContinent(String name){
         return continents.get(name);
     }
+
+    /**
+     * Get list of continents
+     *
+     * @return ArrayList
+     */
+    public ArrayList<Continent> getContinents(){
+        ArrayList<Continent> continents = new ArrayList<Continent>();
+        for(Continent continent: this.continents.values()){
+            continents.add(continent);
+        }
+        return continents;
+    }
 }

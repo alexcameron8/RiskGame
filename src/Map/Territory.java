@@ -1,5 +1,6 @@
 package Map;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -83,6 +84,19 @@ public class Territory {
     }
 
     /**
+     * Get list of neighbours
+     *
+     * @return ArrayList
+     */
+    public ArrayList<Territory> getNeighbours(){
+        ArrayList<Territory> neighbours = new ArrayList<Territory>();
+        for(Territory terr: this.neighbours.values()){
+            neighbours.add(terr);
+        }
+        return neighbours;
+    }
+
+    /**
      * return the number of soldier on the territory
      *
      * @return int
@@ -95,21 +109,18 @@ public class Territory {
      * territory gains soldiers
      *
      * @param add
-     * @return int
      */
-    public int addSoldiers(int add) {
+    public void addSoldiers(int add) {
         soldiers += add;
-        return soldiers;
     }
 
     /**
      * territory loses soldiers
      *
      * @param remove
-     * @return int
      */
-    public int removeSoldiers(int remove) {
-        return soldiers - remove;
+    public void removeSoldiers(int remove) {
+        soldiers -= remove;
     }
 
     @Override
