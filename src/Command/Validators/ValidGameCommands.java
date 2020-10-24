@@ -9,6 +9,8 @@ public class ValidGameCommands implements ValidCommands{
         validCommands = new ArrayList<String>();
         validCommands.add("home");
         validCommands.add("players");
+        validCommands.add("attack");
+        validCommands.add("turn");
         validCommands.add("help");
         validCommands.add("turn");
         validCommands.add("reinforcements");

@@ -4,7 +4,9 @@ import Command.Processors.*;
 import Map.Territory;
 import Map.WorldMap;
 import Player.Player;
+
 import Main.*;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +19,7 @@ public class Risk {
     private int activePlayerID;
     private WorldMap map;
     private Turn currentTurn;
+
 
 
     Risk(){
@@ -145,6 +148,8 @@ public class Risk {
             terr.addSoldiers(1);
             players.get(activePlayerID).addTerritory(terr);
             advanceAutoTurn();
+            advanceTurn();
+
         }
 
         Random randomGenerator = new Random();
@@ -167,10 +172,12 @@ public class Risk {
             processCommand(command);
 
             if(state == GameState.GENERATE_GAME){
+
                 Random r = new Random();
                 activePlayerID = r.nextInt(players.size());
                 assignTroopsRandom();
                 currentTurn = new Turn(players.get(activePlayerID));
+                assignTroopsRandom();
                 setState(GameState.IN_GAME);
             }
 

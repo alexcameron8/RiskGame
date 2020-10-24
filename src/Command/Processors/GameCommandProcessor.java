@@ -7,7 +7,9 @@ import Map.Territory;
 import Player.Player;
 
 import java.util.ArrayList;
+
 import Main.*;
+
 public class GameCommandProcessor extends CommandProcessor{
 
     public GameCommandProcessor(Risk game, Command command) {
@@ -32,6 +34,10 @@ public class GameCommandProcessor extends CommandProcessor{
             System.out.println("(place <Number of Reinforcements> <Territory>) Places certain number of reinforcements in territory.");
             System.out.println("(turn) Advance to next players turn.");
             System.out.println("(neighbors <TERRITORY>) List the neighbors of a Territory.");
+            System.out.println("(turn) Advance to next players turn.");
+            System.out.println("(home) Return to main menu of the game.");
+            System.out.println("(neighbors <TERRITORY>) List the neighbors of a Territory.");
+            System.out.println("(attack <NUMBER OF TROOPS> <ATTACK TERRITORY> <DEFENDING TERRITORY>) Attack a Territory.");
             System.out.println("(quit) Quits the game.");
 
         } else if(commandWord.equals("quit")){
@@ -61,7 +67,6 @@ public class GameCommandProcessor extends CommandProcessor{
                 }else{
                     System.out.println("This territory cannot be found.");
                 }
-
         } else if(commandWord.equals("countries")){
             
             System.out.println(game.getActivePlayer().getName() 
@@ -83,6 +88,27 @@ public class GameCommandProcessor extends CommandProcessor{
                     }
                 }
             }
+        } else if(commandWord.equals("home")){
+            game.setState(GameState.MAIN_MENU);
+        } else if(commandWord.equals("attack")){
+            int numTroops = Integer.parseInt(command.getArgument(0));
+            String attackName = command.getArgument(1);
+            String defendName = command.getArgument(2);
+
+            Player attacker = game.getActivePlayer();
+            Player defender = null;
+
+            for(Player player: game.getPlayers()){
+                if(player.hasTerritory(defendName)){
+                    defender = player;
+                    break;
+                }
+            }
+
+            Territory attackTerritory = attacker.getTerritory(attackName);
+            Territory defendTerritory = defender.getTerritory(defendName);
+
+            attacker.attack(attackTerritory, defender, defendTerritory, numTroops);
 
         }
 

@@ -2,7 +2,6 @@ package Map;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 /**
  * Continent models a continent in the game of risk.
