@@ -95,20 +95,18 @@ public class Territory {
      * territory gains soldiers
      *
      * @param add
-     * @return int
      */
-    public int addSoldiers(int add) {
-        return soldiers + add;
+    public void addSoldiers(int add) {
+        soldiers += add;
     }
 
     /**
      * territory loses soldiers
      *
      * @param remove
-     * @return int
      */
-    public int removeSoldiers(int remove) {
-        return soldiers - remove;
+    public void removeSoldiers(int remove) {
+        soldiers -= remove;
     }
 
     @Override
