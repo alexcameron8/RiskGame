@@ -152,6 +152,8 @@ public class Player {
      *
      * @param territory
      * @param numberOfReinforcement
+    *
+    * @return boolean
      */
     public boolean placeReinforcement(Territory territory, int numberOfReinforcement){
         if(numberOfReinforcement <=0 ){
@@ -177,11 +179,11 @@ public class Player {
      *
      * @param nameTerritory
      * @param numberOfReinforcement
+     *
+     * @return boolean
      */
-    public void placeReinforcement(String nameTerritory, int numberOfReinforcement){
-        if(hasTerritory(nameTerritory)){
-            getTerritory(nameTerritory).addSoldiers(numberOfReinforcement);
-        }
+    public boolean placeReinforcement(String nameTerritory, int numberOfReinforcement){
+        return placeReinforcement(getTerritory(nameTerritory),numberOfReinforcement);
     }
 
     /**
