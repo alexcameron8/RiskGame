@@ -139,7 +139,13 @@ public class Player {
      * @return int
      */
     public int getReinforcement(){
-        int numberOfReinforcement = (int) listOfTerritories.size()/3;
+        int numberOfReinforcement = 0;
+        if(listOfTerritories.size() <= 9){
+            numberOfReinforcement = 3;
+        }
+        else {
+            numberOfReinforcement = (int) listOfTerritories.size() / 3;
+        }
         for (Continent continent: listOfContinents) {
             numberOfReinforcement += continent.getNumberOfReinforcement();
         }
