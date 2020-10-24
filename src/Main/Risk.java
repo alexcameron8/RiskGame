@@ -74,6 +74,10 @@ public class Risk {
         return null;
     }
 
+    public WorldMap getMap(){
+        return this.map;
+    }
+
     private void processCommand(Command command){
         CommandProcessor cp = null;
         if(!command.isValid()){
