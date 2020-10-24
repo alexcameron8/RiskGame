@@ -2,36 +2,20 @@ package Command.Validators;
 
 import java.util.ArrayList;
 
-public class ValidGameCommands implements ValidCommands{
-    private static ArrayList<String> validCommands;
+public class ValidGameCommands extends ValidCommands{
 
     public ValidGameCommands(){
-        validCommands = new ArrayList<String>();
-        validCommands.add("home");
-        validCommands.add("players");
-        validCommands.add("attack");
-        validCommands.add("turn");
-        validCommands.add("help");
-        validCommands.add("turn");
-        validCommands.add("reinforcements");
-        validCommands.add("place");
-        validCommands.add("countries");
-        validCommands.add("neighbors");
-        validCommands.add("quit");
+        super();
+        validCommands.put("home", 0);
+        validCommands.put("players", 0);
+        validCommands.put("attack", 3);
+        validCommands.put("turn", 0);
+        validCommands.put("help", 0);
+        validCommands.put("reinforcements", 0);
+        validCommands.put("place", 2);
+        validCommands.put("countries", 0);
+        validCommands.put("neighbors", 1);
+        validCommands.put("quit", 0);
     }
 
-    @Override
-    public boolean isCommand(String command) {
-        for (String cmd: validCommands) {
-            if(command.equals(cmd)){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public ArrayList<String> getCommands() {
-        return validCommands;
-    }
 }
