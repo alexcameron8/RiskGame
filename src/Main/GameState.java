@@ -6,5 +6,6 @@ public enum GameState {
     IN_GAME,
     QUIT,
     ATTACK,
+
     GENERATE_GAME
 }

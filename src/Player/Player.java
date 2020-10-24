@@ -131,12 +131,14 @@ public class Player {
         removeTerritory(territory.getName());
     }
 
+
+
     /**
      * get the number of reinforcements the player gets
      *
      * @return int
      */
-    public int reinforcement(){
+    public int getReinforcement(){
         int numberOfReinforcement = (int) listOfTerritories.size()/3;
         for (Continent continent: listOfContinents) {
             numberOfReinforcement += continent.getNumberOfReinforcement();
@@ -144,15 +146,29 @@ public class Player {
         return numberOfReinforcement;
     }
 
-    /**
+
+   /**
      * place a certain number of Reinforcements on a territory
      *
      * @param territory
      * @param numberOfReinforcement
      */
-    public void placeReinforcement(Territory territory, int numberOfReinforcement){
-        if(hasTerritory(territory)){
+    public boolean placeReinforcement(Territory territory, int numberOfReinforcement){
+        if(numberOfReinforcement <=0 ){
+            System.out.println("Cannot place 0 or less reinforcements.");
+            return false;
+        }
+        else if(numberOfReinforcement > getReinforcement() ){
+            System.out.println("Cannot place more than "+ getReinforcement() + " reinforcements.");
+            return false;
+        }
+        else if(hasTerritory(territory)){
             territory.addSoldiers(numberOfReinforcement);
+            return true;
+        }
+        else{
+            System.out.println("You do not own this territory");
+            return false;
         }
     }
 

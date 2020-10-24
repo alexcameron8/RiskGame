@@ -8,6 +8,8 @@ import Player.Player;
 
 import java.util.ArrayList;
 
+import Main.*;
+
 public class GameCommandProcessor extends CommandProcessor{
 
     public GameCommandProcessor(Risk game, Command command) {
@@ -28,6 +30,10 @@ public class GameCommandProcessor extends CommandProcessor{
             System.out.println("Available Commands:");
             System.out.println("(players) List player names.");
             System.out.println("(countries) List countries occupied by the active player.");
+            System.out.println("(reinforcements) Number of reinforcements the player has left to place.");
+            System.out.println("(place <Number of Reinforcements> <Territory>) Places certain number of reinforcements in territory.");
+            System.out.println("(turn) Advance to next players turn.");
+            System.out.println("(neighbors <TERRITORY>) List the neighbors of a Territory.");
             System.out.println("(turn) Advance to next players turn.");
             System.out.println("(home) Return to main menu of the game.");
             System.out.println("(neighbors <TERRITORY>) List the neighbors of a Territory.");
@@ -36,8 +42,31 @@ public class GameCommandProcessor extends CommandProcessor{
 
         } else if(commandWord.equals("quit")){
             game.setState(GameState.QUIT);
-        } else if(commandWord.equals("turn")){
+        } else if(commandWord.equals("turn")) {
             game.advanceTurn();
+        } else if(commandWord.equals("reinforcements")){
+                System.out.println(game.getActivePlayer().getName() + " has " + game.getActivePlayerTurn().getNumberOfReinforcements() + " reinforcements.");
+        }else if(commandWord.equals("place")){
+            int numOfReinforcements = Integer.parseInt(command.getArgument(0));
+            String territoryName = command.getArgument(1);
+            Territory territory = null;
+            //Finds territory
+            for(Territory findTerr: game.getMap().getWorldMap().getTerritories()) {
+                if (findTerr.getName().equals(territoryName)) {
+                    territory = findTerr;
+                }
+            }
+            //if territory exists
+            if(territory!=null) {
+                //if activeplayer owns territory
+                if (game.getActivePlayer().placeReinforcement(territory, numOfReinforcements)) {
+                    game.getActivePlayer().placeReinforcement(territory, numOfReinforcements);
+                    game.getActivePlayerTurn().setNumberOfReinforcements(game.getActivePlayerTurn().getNumberOfReinforcements() - numOfReinforcements);
+                    System.out.println(game.getActivePlayer().getName() + " placed " + numOfReinforcements + " soldiers in " + territoryName);
+                }
+                }else{
+                    System.out.println("This territory cannot be found.");
+                }
         } else if(commandWord.equals("countries")){
             
             System.out.println(game.getActivePlayer().getName() 
