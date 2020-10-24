@@ -98,7 +98,8 @@ public class Territory {
      * @return int
      */
     public int addSoldiers(int add) {
-        return soldiers + add;
+        soldiers += add;
+        return soldiers;
     }
 
     /**

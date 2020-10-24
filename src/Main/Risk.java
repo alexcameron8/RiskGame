@@ -1,20 +1,27 @@
 package Main;
 import Command.*;
 import Command.Processors.*;
+import Map.Territory;
+import Map.WorldMap;
 import Player.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public class Risk {
     private static GameState state;
     private Parser parser;
     private ArrayList<Player> players;
     private int activePlayerID;
+    private WorldMap map;
+
 
     Risk(){
         parser = new Parser(this);
         players = new ArrayList<Player>();
         activePlayerID = 0;
+        map = new WorldMap();
     }
 
     private void printMenu(){
@@ -31,6 +38,10 @@ public class Risk {
         } else {
             activePlayerID = 0;
         }
+    }
+
+    public void resetTurns(){
+        activePlayerID = 0;
     }
 
     public Player getActivePlayer(){
@@ -53,7 +64,7 @@ public class Risk {
         players.add(newPlayer);
     }
 
-    public Player getPlayer(String name){
+    public Player getPlayerByName(String name){
         for (Player player: players) {
             if(player.getName().equals(name)){
                 return player;
@@ -84,12 +95,57 @@ public class Risk {
         }
     }
 
+    private int getNumberOfInitialTroops(){
+        switch (players.size()){
+            case 2:
+                return 50;
+            case 3:
+                return 35;
+            case 4:
+                return 30;
+            case 5:
+                return 25;
+            case 6:
+                return 20;
+            default:
+                return 0;
+        }
+    }
+
+    public void assignTroopsRandom(){
+        ArrayList<Territory> territories = map.getWorldMap().getTerritories();
+        Collections.shuffle(territories);
+
+        for(Territory terr: territories){
+            terr.addSoldiers(1);
+            players.get(activePlayerID).addTerritory(terr);
+            advanceTurn();
+        }
+
+        Random randomGenerator = new Random();
+
+        for (Player player: players) {
+            int numTerritories = player.getListOfTerritories().size();
+
+            for(int i = 0; i < getNumberOfInitialTroops()-numTerritories; i++){
+                player.getListOfTerritories().get(randomGenerator.nextInt(numTerritories)).addSoldiers(1);
+            }
+        }
+
+    }
+
     public void play(){
         state = GameState.MAIN_MENU;
         printMenu();
         while(state != GameState.QUIT){
             Command command = parser.getCommand();
             processCommand(command);
+
+            if(state == GameState.GENERATE_GAME){
+                assignTroopsRandom();
+                setState(GameState.IN_GAME);
+            }
+
         }
     }
 

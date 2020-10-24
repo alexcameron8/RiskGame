@@ -24,4 +24,12 @@ public class Player {
         return listOfTerritories;
     }
 
+    public void addTerritory(Territory terr){
+        listOfTerritories.add(terr);
+    }
+
+    public boolean removeTerritory(Territory terr){
+        return listOfTerritories.remove(terr);
+    }
+
 }
