@@ -6,8 +6,6 @@ import Main.Risk;
 import Map.Territory;
 import Player.Player;
 
-import java.util.ArrayList;
-
 import Main.*;
 
 public class GameCommandProcessor extends CommandProcessor{
@@ -29,14 +27,12 @@ public class GameCommandProcessor extends CommandProcessor{
             System.out.println("You are currently in a game of Risk: Global Domination.");
             System.out.println("Available Commands:");
             System.out.println("(players) List player names.");
-            System.out.println("(countries) List countries occupied by the active player.");
+            System.out.println("(territories) List territories occupied by the active player.");
             System.out.println("(reinforcements) Number of reinforcements the player has left to place.");
             System.out.println("(place <Number of Reinforcements> <Territory>) Places certain number of reinforcements in territory.");
             System.out.println("(turn) Advance to next players turn.");
             System.out.println("(neighbors <TERRITORY>) List the neighbors of a Territory.");
-            System.out.println("(turn) Advance to next players turn.");
             System.out.println("(home) Return to main menu of the game.");
-            System.out.println("(neighbors <TERRITORY>) List the neighbors of a Territory.");
             System.out.println("(attack <NUMBER OF TROOPS> <ATTACK TERRITORY> <DEFENDING TERRITORY>) Attack a Territory.");
             System.out.println("(quit) Quits the game.");
 
@@ -65,9 +61,9 @@ public class GameCommandProcessor extends CommandProcessor{
                     System.out.println(game.getActivePlayer().getName() + " placed " + numOfReinforcements + " soldiers in " + territoryName);
                 }
                 }else{
-                    System.out.println("This territory cannot be found.");
+                    System.out.println("This territory cannot be found. If territory is 2 words then use quotation marks e.g.\"South Africa\"");
                 }
-        } else if(commandWord.equals("countries")){
+        } else if(commandWord.equals("territories")){
             
             System.out.println(game.getActivePlayer().getName() 
                     + " occupies " + game.getActivePlayer().getListOfTerritories().size()
@@ -78,13 +74,16 @@ public class GameCommandProcessor extends CommandProcessor{
             }
             System.out.print("\n");
 
-        }  else if(commandWord.equals("neighbors")){
+        }  else if(commandWord.equals("neighbours")){
             String territory = command.getArgument(0);
-            System.out.println("Neighbors of " + territory + ":");
+            System.out.println("Neighbours of " + territory + ":");
             for(Territory findTerr: game.getMap().getWorldMap().getTerritories()){
                 if(findTerr.getName().equals(territory)){
                     for(Territory terr: findTerr.getNeighbours()){
-                        System.out.println(terr.getName());
+                        for(Player player : game.getPlayers()) {
+                            if(player.hasTerritory(terr))
+                            System.out.println(terr.getName() + "\tOwner: " + player.getName());
+                        }
                     }
                 }
             }

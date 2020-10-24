@@ -13,8 +13,8 @@ public class ValidGameCommands extends ValidCommands{
         validCommands.put("help", 0);
         validCommands.put("reinforcements", 0);
         validCommands.put("place", 2);
-        validCommands.put("countries", 0);
-        validCommands.put("neighbors", 1);
+        validCommands.put("territories", 0);
+        validCommands.put("neighbours", 1);
         validCommands.put("quit", 0);
     }
 
