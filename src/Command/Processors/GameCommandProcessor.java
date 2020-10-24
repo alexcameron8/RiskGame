@@ -78,13 +78,16 @@ public class GameCommandProcessor extends CommandProcessor{
             }
             System.out.print("\n");
 
-        }  else if(commandWord.equals("neighbors")){
+        }  else if(commandWord.equals("neighbours")){
             String territory = command.getArgument(0);
-            System.out.println("Neighbors of " + territory + ":");
+            System.out.println("Neighbours of " + territory + ":");
             for(Territory findTerr: game.getMap().getWorldMap().getTerritories()){
                 if(findTerr.getName().equals(territory)){
                     for(Territory terr: findTerr.getNeighbours()){
-                        System.out.println(terr.getName());
+                        for(Player player : game.getPlayers()) {
+                            if(player.hasTerritory(terr))
+                            System.out.println(terr.getName() + "\tOwner: " + player.getName());
+                        }
                     }
                 }
             }
