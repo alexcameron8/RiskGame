@@ -1,3 +1,6 @@
+/**
+ * Command Processor used while on the main menu of the game.
+ */
 package Command.Processors;
 
 import Command.Command;
@@ -6,10 +9,19 @@ import Main.Risk;
 
 public class MenuCommandProcessor extends CommandProcessor{
 
+    /**
+     * Create a new main menu state command processor.
+     *
+     * @param game Game state to interact with.
+     * @param command Command being executed by the player.
+     */
     public MenuCommandProcessor(Risk game, Command command) {
         super(game, command);
     }
 
+    /**
+     * Process the given command.
+     */
     public void processCommand() {
         String commandWord = command.getCommand();
 

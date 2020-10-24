@@ -1,3 +1,6 @@
+/**
+ * Command Processor used during a game.
+ */
 package Command.Processors;
 
 import Command.Command;
@@ -10,10 +13,19 @@ import java.util.ArrayList;
 
 public class GameCommandProcessor extends CommandProcessor{
 
+    /**
+     * Create a new game state command processor.
+     *
+     * @param game Game state to interact with.
+     * @param command Command being executed by the player.
+     */
     public GameCommandProcessor(Risk game, Command command) {
         super(game, command);
     }
 
+    /**
+     * Process the given command.
+     */
     public void processCommand() {
         String commandWord = command.getCommand();
 
