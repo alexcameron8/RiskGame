@@ -135,6 +135,7 @@ public class WorldMap {
         yakutsk.addNeighbours(siberia,irkutsk,kamchatka);
 
         asia.addTerritories(afghanistan,china,india,irkutsk,japan,kamchatka,middleEast,mongolia,siam,siberia,ural,yakutsk);
+        asia.setnumberOfReinforcement(7);
 
         return asia;
     }
@@ -154,6 +155,7 @@ public class WorldMap {
         westernAustralia.addNeighbours(indonesia,newGuinea,westernAustralia);
 
         australia.addTerritories(easternAustralia,indonesia,newGuinea,westernAustralia);
+        australia.setnumberOfReinforcement(2);
         return australia;
     }
 
@@ -174,7 +176,7 @@ public class WorldMap {
         southAfrica.addNeighbours(congo,eastAfrica,madagascar);
 
         africa.addTerritories(congo,eastAfrica,egypt,madagascar,northAfrica,southAfrica);
-
+        africa.setnumberOfReinforcement(3);
         return africa;
     }
 
@@ -193,6 +195,7 @@ public class WorldMap {
         venezuela.addNeighbours(centralAmerica,brazil,peru);
 
         southAmerica.addTerritories(argentina, brazil, peru, venezuela);
+        southAmerica.setnumberOfReinforcement(2);
         return southAmerica;
     }
 
@@ -214,6 +217,7 @@ public class WorldMap {
         westernEurope.addNeighbours(greatBritain,northernEurope,southernEurope,northAfrica);
 
         europe.addTerritories(greatBritain,iceland,northernEurope,scandinavia,southernEurope,ukraine,westernEurope);
+        europe.setnumberOfReinforcement(5);
         return europe;
     }
 
@@ -237,6 +241,7 @@ public class WorldMap {
         westernUnitedStates.addNeighbours(alberta,ontario,easterUnitedStates,centralAmerica);
 
         NorthAmerica.addTerritories(alaska, alberta, centralAmerica, easterUnitedStates, greenland, northwestTerritory, ontario, quebec, westernUnitedStates);
+        NorthAmerica.setnumberOfReinforcement(5);
         return NorthAmerica;
     }
 }
