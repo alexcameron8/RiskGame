@@ -10,6 +10,7 @@ public class ValidGameCommands implements ValidCommands{
         validCommands.add("home");
         validCommands.add("players");
         validCommands.add("help");
+        validCommands.add("turn");
         validCommands.add("quit");
     }
 
