@@ -79,9 +79,22 @@ public class Player {
         return numberOfReinforcement;
     }
 
-    public void placeReinforcement(Territory territory, int numberOfReinforcement){
-        if(hasTerritory(territory)){
+    public boolean placeReinforcement(Territory territory, int numberOfReinforcement){
+        if(numberOfReinforcement <=0 ){
+            System.out.println("Cannot place 0 or less reinforcements.");
+            return false;
+        }
+        else if(numberOfReinforcement > getReinforcement() ){
+            System.out.println("Cannot place more than "+ getReinforcement() + " reinforcements.");
+            return false;
+        }
+        else if(hasTerritory(territory)){
             territory.addSoldiers(numberOfReinforcement);
+            return true;
+        }
+        else{
+            System.out.println("You do not own this territory");
+            return false;
         }
     }
 

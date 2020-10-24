@@ -169,8 +169,8 @@ public class Risk {
             if(state == GameState.GENERATE_GAME){
                 Random r = new Random();
                 activePlayerID = r.nextInt(players.size());
-                currentTurn = new Turn(players.get(activePlayerID));
                 assignTroopsRandom();
+                currentTurn = new Turn(players.get(activePlayerID));
                 setState(GameState.IN_GAME);
             }
 
