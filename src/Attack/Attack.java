@@ -24,8 +24,15 @@ public class Attack {
         //Checks to see if the attack is valid
 
         if(isTerritoryOccupied() && isTerritoryAdjacent() && isNumOfSoldiersAllowed() && isNumOfSoldiersAllowed()) {
-            if(attack(numOfAttackArmy, defenderTerritory.getSoldiers())==true){
+            attackerTerritory.removeSoldiers(numOfAttackArmy);
+            int returningArmy = attack(numOfAttackArmy);
+            if(returningArmy != 0){
+                System.out.println("Attack was successful");
+                attackerTerritory.addSoldiers(returningArmy);
                 defender.transferTerritory(attacker,defenderTerritory);
+            }
+            else{
+                System.out.println("Attack was not successful");
             }
         }
     }
@@ -83,18 +90,16 @@ public class Attack {
         }
         return true;
     }
-    /**
-     * Simulates the attack of the attacker vs defender.
-     */
 
-    public boolean attack(int attackerArmySize, int defenderArmySize){
+    public ArrayList<LinkedList<Integer>> attackRoll(int attackerArmy, int defenderArmy){
+
         LinkedList<Integer> attacker = new LinkedList<Integer>();
         LinkedList<Integer> defender = new LinkedList<Integer>();
 
-        int attackerNumberOfDice = attackerArmySize;
-        if(attackerArmySize > 3){attackerNumberOfDice= 3;}
-        int defenderNumberOfDice = defenderArmySize;
-        if(defenderArmySize > 3){defenderNumberOfDice= 2;}
+        int attackerNumberOfDice = attackerArmy;
+        int defenderNumberOfDice = defenderArmy;
+        if(attackerArmy > 3)attackerNumberOfDice = 3;
+        if(defenderArmy > 2)defenderNumberOfDice = 2;
 
         for(int i=0; i<attackerNumberOfDice; i++){
             attacker.add((new Dice()).roll());
@@ -104,44 +109,71 @@ public class Attack {
         }
         //Sorting Lists in ascending order.
         ArrayList<Integer> attackerSort = new ArrayList<>(attacker);
-        Collections.sort(attackerSort);
+        Collections.sort(attackerSort, Collections.reverseOrder());
         ArrayList<Integer> defenderSort = new ArrayList<>(defender);
-        Collections.sort(defenderSort);
+        Collections.sort(defenderSort, Collections.reverseOrder());
         attacker = new LinkedList<Integer>(attackerSort);
         defender = new LinkedList<Integer>(defenderSort);
 
-        while(attacker.size() != 0 || defender.size() != 0){
+        ArrayList<LinkedList<Integer>> output = new ArrayList<>();
+        output.add(attacker);
+        output.add(defender);
+        return output;
+    }
+
+    /**
+     * Simulates the attack of the attacker vs defender.
+     */
+
+    public int attack(int attackerArmySize){
+
+        while(attackerArmySize > 0 && defenderTerritory.getSoldiers() > 0){
+            ArrayList<LinkedList<Integer>> rolls = attackRoll(attackerArmySize,defenderTerritory.getSoldiers());
             //compare the first dice
-            if(attacker.peek() > defender.peek()){
-                //attacker won remove the first die of white
-                defenderArmySize -= 1;
-                defender.removeFirst();
-                attacker.removeFirst();
-                attacker.add((new Dice()).roll());
+            int lowestNumberOfDice = 2;
+            if(rolls.get(0).size() > rolls.get(1).size()){
+                lowestNumberOfDice = rolls.get(1).size();
             }
             else{
-                //white won or die remove the first die of red
-                attackerArmySize -= 1;
-                defender.removeFirst();
-                attacker.removeFirst();
-                defender.add((new Dice()).roll());
+                lowestNumberOfDice = rolls.get(0).size();
+            }
+            for (int i = 0; i < lowestNumberOfDice; i++) {
+                if(rolls.get(0).get(i) > rolls.get(1).get(i)){
+                    //attacker won remove the first die of white
+                    defenderTerritory.removeSoldiers(1);
+                }
+                else{
+                    //white won or die remove the first die of red
+                    attackerArmySize -= 1;
+                }
             }
         }
         if(attackerArmySize == 0){
-            return false;
+            return attackerArmySize;
         }
-        else if(defenderArmySize == 0){
-            return true;
+        else if(defenderTerritory.getSoldiers() == 0){
+            return attackerArmySize;
         }
         else{
-            return attack(attackerArmySize,defenderArmySize);
+            return attackerArmySize;
         }
     }
 
 
     public static void main(String[] args) {
         Player attacker = new Player("Alex");
+        Player defender = new Player("Thomas");
+        Territory greatBritain = new Territory("Great Britain");
+        Territory iceland = new Territory("Iceland");
+        greatBritain.addNeighbours(iceland);
+        iceland.addNeighbours(greatBritain);
+        greatBritain.addSoldiers(12);
+        iceland.addSoldiers(5);
+
+        attacker.addTerritory(greatBritain);
+        defender.addTerritory(iceland);
 
 
+        attacker.attack(greatBritain,defender,iceland,9);
     }
 }
