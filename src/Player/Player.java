@@ -1,6 +1,7 @@
 package Player;
 import java.util.*;
 import Map.*;
+import Attack.*;
 
 public class Player {
     private ArrayList<Territory> listOfTerritories;
@@ -11,6 +12,10 @@ public class Player {
         this.name = name;
         this.listOfContinents = new ArrayList<>();
         this.listOfTerritories = new ArrayList<>();
+    }
+
+    public void attack(Territory attackerTerritory, Player defender, Territory defenderTerritory, int numOfAttackArmy){
+        Attack attack = new Attack(this, attackerTerritory, defender, defenderTerritory,  numOfAttackArmy);
     }
 
     public void addTerritory(Territory territory){
