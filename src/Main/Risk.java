@@ -148,7 +148,6 @@ public class Risk {
             terr.addSoldiers(1);
             players.get(activePlayerID).addTerritory(terr);
             advanceAutoTurn();
-            advanceTurn();
 
         }
 
@@ -174,10 +173,11 @@ public class Risk {
             if(state == GameState.GENERATE_GAME){
 
                 Random r = new Random();
+
                 activePlayerID = r.nextInt(players.size());
                 assignTroopsRandom();
                 currentTurn = new Turn(players.get(activePlayerID));
-                assignTroopsRandom();
+
                 setState(GameState.IN_GAME);
             }
 
