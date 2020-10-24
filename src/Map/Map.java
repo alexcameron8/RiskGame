@@ -1,5 +1,6 @@
 package Map;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 /**
  * Map models a map in the game of risk. A Map has a group of continents
@@ -28,6 +29,19 @@ public class Map {
      */
     public void addContinent(Continent continent){
         continents.put(continent.getName(), continent);
+    }
+
+    /**
+     * Gets list of territories from all continents
+     *
+     * @return ArrayList
+     */
+    public ArrayList<Territory> getTerritories(){
+        ArrayList<Territory> territories = new ArrayList<Territory>();
+        for(Continent cont: this.continents.values()){
+            territories.addAll(cont.getTerritories());
+        }
+        return territories;
     }
 
     /**
