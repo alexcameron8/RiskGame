@@ -147,6 +147,8 @@ public class Risk {
             processCommand(command);
 
             if(state == GameState.GENERATE_GAME){
+                Random r = new Random();
+                activePlayerID = r.nextInt(players.size());
                 assignTroopsRandom();
                 setState(GameState.IN_GAME);
             }
