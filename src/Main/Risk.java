@@ -45,16 +45,33 @@ public class Risk {
         }
     }
 
+    /**
+     *
+     */
     public void advanceTurn(){
         if(currentTurn.isTurnComplete()){
-            if (activePlayerID + 1 < players.size()) {
-                activePlayerID++;
-                currentTurn = new Turn(players.get(activePlayerID));
-            } else {
-                activePlayerID = 0;
-                currentTurn = new Turn(players.get(0));
+            if(players.get(activePlayerID).getListOfTerritories().size()==0){
+                //They have no territories, therefore have been eliminated
+                System.out.println(getActivePlayer().getName() + " has no more continents and has been eliminated from the game!");
+                if (activePlayerID + 1 < players.size()) {
+                    players.remove(activePlayerID);
+                    activePlayerID++;
+                    currentTurn = new Turn(players.get(activePlayerID));
+                }else{
+                    players.remove(activePlayerID);
+                    activePlayerID = 0;
+                    currentTurn = new Turn(players.get(0));
+                }
+            }else {
+                if (activePlayerID + 1 < players.size()) {
+                    activePlayerID++;
+                    currentTurn = new Turn(players.get(activePlayerID));
+                } else {
+                    activePlayerID = 0;
+                    currentTurn = new Turn(players.get(0));
+                }
             }
-        }else{
+        } else{
             System.out.println(players.get(activePlayerID).getName() + " turn is not complete. There are " + players.get(activePlayerID).getReinforcement() + " soldiers left to place.");
         }
     }
