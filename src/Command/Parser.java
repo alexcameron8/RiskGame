@@ -54,7 +54,7 @@ public class Parser {
             parsedCommand.add(matcher.group(1).replace("\"", ""));
         }
 
-        if(!parsedCommand.isEmpty() && commandValidator.isCommand(parsedCommand.get(0))){
+        if(commandValidator.isCommand(parsedCommand)){
             String command = parsedCommand.get(0);
             parsedCommand.remove(0);
             return new Command(command, parsedCommand);
