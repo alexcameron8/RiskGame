@@ -57,7 +57,7 @@ public class Attack {
         if(attackerTerritory.isNeighbour(defenderTerritory.getName())){
             return true;
         }else{
-            System.out.println("You cannot attack" + defenderTerritory.getName() + " as this territory is not neighbouring" + attackerTerritory.getName());
+            System.out.println("You cannot attack " + defenderTerritory.getName() + " as this territory is not neighbouring " + attackerTerritory.getName());
             return false;
         }
     }

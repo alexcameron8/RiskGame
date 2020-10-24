@@ -65,7 +65,7 @@ public class GameCommandProcessor extends CommandProcessor{
                     System.out.println(game.getActivePlayer().getName() + " placed " + numOfReinforcements + " soldiers in " + territoryName);
                 }
                 }else{
-                    System.out.println("This territory cannot be found.");
+                    System.out.println("This territory cannot be found. If territory is 2 words then use quotation marks e.g.\"South Africa\"");
                 }
         } else if(commandWord.equals("countries")){
             
