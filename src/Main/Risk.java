@@ -2,7 +2,6 @@ package Main;
 import Command.*;
 import Command.Processors.*;
 import Player.Player;
-
 import java.util.ArrayList;
 
 public class Risk {

@@ -28,6 +28,8 @@ public class GameCommandProcessor extends CommandProcessor{
 
         } else if(commandWord.equals("quit")){
             game.setState(GameState.QUIT);
+        } else if(commandWord.equals("attack")){
+            
         }
 
     }
