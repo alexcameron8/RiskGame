@@ -66,6 +66,18 @@ public class GameCommandProcessor extends CommandProcessor{
             String attackName = command.getArgument(1);
             String defendName = command.getArgument(2);
 
+            Player attacker = game.getActivePlayer();
+            Player defender = null;
+
+            for(Player player: game.getPlayers()){
+                if(player.hasTerritory(defendName)){
+                    defender = player;
+                }
+            }
+
+            Territory attackTerritory = attacker.getTerritory(attackName);
+            Territory defendTerritory = defender.getTerritory(defendName);
+
             // IMPLEMENT ATTACK HERE
 
         }
