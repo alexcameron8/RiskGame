@@ -29,6 +29,7 @@ public class GameCommandProcessor extends CommandProcessor{
             System.out.println("(players) List player names.");
             System.out.println("(countries) List countries occupied by the active player.");
             System.out.println("(turn) Advance to next players turn.");
+            System.out.println("(home) Return to main menu of the game.");
             System.out.println("(neighbors <TERRITORY>) List the neighbors of a Territory.");
             System.out.println("(quit) Quits the game.");
 
@@ -57,7 +58,8 @@ public class GameCommandProcessor extends CommandProcessor{
                     }
                 }
             }
-
+        } else if(commandWord.equals("home")){
+            game.setState(GameState.MAIN_MENU);
         }
 
     }
