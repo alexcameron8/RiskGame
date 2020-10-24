@@ -27,7 +27,7 @@ public class GameCommandProcessor extends CommandProcessor{
             System.out.println("You are currently in a game of Risk: Global Domination.");
             System.out.println("Available Commands:");
             System.out.println("(players) List player names.");
-            System.out.println("(countries) List countries occupied by the active player.");
+            System.out.println("(territories) List territories occupied by the active player.");
             System.out.println("(reinforcements) Number of reinforcements the player has left to place.");
             System.out.println("(place <Number of Reinforcements> <Territory>) Places certain number of reinforcements in territory.");
             System.out.println("(turn) Advance to next players turn.");
@@ -65,7 +65,7 @@ public class GameCommandProcessor extends CommandProcessor{
                 }else{
                     System.out.println("This territory cannot be found. If territory is 2 words then use quotation marks e.g.\"South Africa\"");
                 }
-        } else if(commandWord.equals("countries")){
+        } else if(commandWord.equals("territories")){
             
             System.out.println(game.getActivePlayer().getName() 
                     + " occupies " + game.getActivePlayer().getListOfTerritories().size()
