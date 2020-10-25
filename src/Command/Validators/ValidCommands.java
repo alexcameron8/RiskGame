@@ -3,12 +3,27 @@ package Command.Validators;
 import Command.Command;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
-/**
- * ValidCommands is an interface to be used by other command validators
- */
+public abstract class ValidCommands {
+    protected HashMap<String, Integer> validCommands;
 
-public interface ValidCommands {
-    public boolean isCommand(String command);
-    public ArrayList<String> getCommands();
+    ValidCommands(){
+        this.validCommands = new HashMap<>();
+    }
+
+    public boolean isCommand(ArrayList<String> command){
+        if(!command.isEmpty()){
+            if(validCommands.containsKey(command.get(0))){
+                if(command.size()-1 == validCommands.get(command.get(0))){
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+
+    public HashMap<String, Integer> getCommands(){
+        return validCommands;
+    };
 }

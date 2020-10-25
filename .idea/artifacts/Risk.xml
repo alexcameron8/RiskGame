@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Risk">
+    <output-path>$PROJECT_DIR$/out/artifacts/Risk</output-path>
+    <root id="archive" name="Risk.jar">
+      <element id="module-source" name="Risk" />
+      <element id="module-output" name="Risk" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

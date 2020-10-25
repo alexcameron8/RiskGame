@@ -2,6 +2,8 @@ package Command;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import Command.Validators.*;
 import Main.Risk;
@@ -27,8 +29,7 @@ public class Parser {
         String inputLine;
         String prompt = ">";
         GameState state = game.getState();
-        String command = null;
-        ArrayList<String> arguments = new ArrayList<>();
+        ArrayList<String> parsedCommand = new ArrayList<>();
 
         if(state == GameState.MAIN_MENU){
             prompt = MAIN_MENU_PROMPT;
@@ -48,16 +49,15 @@ public class Parser {
 
         inputLine = reader.nextLine();
 
-        Scanner tokenizer = new Scanner(inputLine);
-        if(tokenizer.hasNext()) {
-            command = tokenizer.next();
-            while(tokenizer.hasNext()){
-                arguments.add(tokenizer.next());
-            }
+        Matcher matcher = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(inputLine);
+        while(matcher.find()){
+            parsedCommand.add(matcher.group(1).replace("\"", ""));
         }
 
-        if(commandValidator.isCommand(command)){
-            return new Command(command, arguments);
+        if(commandValidator.isCommand(parsedCommand)){
+            String command = parsedCommand.get(0);
+            parsedCommand.remove(0);
+            return new Command(command, parsedCommand);
         } else {
             return new Command(null, null);
         }

@@ -1,25 +1,29 @@
 package Attack;
 
+/**
+ * This is a Dice class.
+ */
 public class Dice {
     private int value;
     private final int max = 6;
     public Dice(){
         value = 1;
     }
+
+    /**
+     * Rolls a number between 1-6
+     * @return
+     */
     public int roll(){
         value = (int)(Math.random() * max + 1);
         return value;
     }
+
+    /**
+     * gets the value of the dice.
+     * @return
+     */
     public int getValue(){
         return value;
-    }
-
-    public static void main(String[] args) {
-        Dice die1 = new Dice();
-        Dice die2 = new Dice();
-        die1.roll();
-        die2.roll();
-        System.out.println(die1.getValue());
-        System.out.println(die2.getValue());
     }
 }

@@ -27,7 +27,7 @@ public class WorldMap {
     private Territory greatBritain, iceland, northernEurope, scandinavia, southernEurope, ukraine, westernEurope;
 
     //The territories located in North America
-    private Territory alaska, alberta, centralAmerica, easterUnitedStates, greenland, northwestTerritory, ontario, quebec, westernUnitedStates;
+    private Territory alaska, alberta, centralAmerica, easternUnitedStates, greenland, northwestTerritory, ontario, quebec, westernUnitedStates;
 
 
     /**
@@ -104,7 +104,7 @@ public class WorldMap {
         alaska = new Territory("Alaska");
         alberta = new Territory("Alberta");
         centralAmerica = new Territory("Central America");
-        easterUnitedStates = new Territory("Easter United States");
+        easternUnitedStates = new Territory("Eastern United States");
         greenland = new Territory("Greenland");
         northwestTerritory = new Territory("Northwest Territory");
         ontario = new Territory("Ontario");
@@ -135,6 +135,7 @@ public class WorldMap {
         yakutsk.addNeighbours(siberia,irkutsk,kamchatka);
 
         asia.addTerritories(afghanistan,china,india,irkutsk,japan,kamchatka,middleEast,mongolia,siam,siberia,ural,yakutsk);
+        asia.setnumberOfReinforcement(7);
 
         return asia;
     }
@@ -154,6 +155,7 @@ public class WorldMap {
         westernAustralia.addNeighbours(indonesia,newGuinea,westernAustralia);
 
         australia.addTerritories(easternAustralia,indonesia,newGuinea,westernAustralia);
+        australia.setnumberOfReinforcement(2);
         return australia;
     }
 
@@ -174,7 +176,7 @@ public class WorldMap {
         southAfrica.addNeighbours(congo,eastAfrica,madagascar);
 
         africa.addTerritories(congo,eastAfrica,egypt,madagascar,northAfrica,southAfrica);
-
+        africa.setnumberOfReinforcement(3);
         return africa;
     }
 
@@ -193,6 +195,7 @@ public class WorldMap {
         venezuela.addNeighbours(centralAmerica,brazil,peru);
 
         southAmerica.addTerritories(argentina, brazil, peru, venezuela);
+        southAmerica.setnumberOfReinforcement(2);
         return southAmerica;
     }
 
@@ -214,6 +217,7 @@ public class WorldMap {
         westernEurope.addNeighbours(greatBritain,northernEurope,southernEurope,northAfrica);
 
         europe.addTerritories(greatBritain,iceland,northernEurope,scandinavia,southernEurope,ukraine,westernEurope);
+        europe.setnumberOfReinforcement(5);
         return europe;
     }
 
@@ -228,15 +232,16 @@ public class WorldMap {
 
         alaska.addNeighbours(northwestTerritory,alberta,kamchatka);
         alberta.addNeighbours(ontario,northwestTerritory,westernUnitedStates,alaska);
-        centralAmerica.addNeighbours(westernUnitedStates,venezuela,easterUnitedStates);
-        easterUnitedStates.addNeighbours(quebec,ontario,westernUnitedStates,centralAmerica);
+        centralAmerica.addNeighbours(westernUnitedStates,venezuela,easternUnitedStates);
+        easternUnitedStates.addNeighbours(quebec,ontario,westernUnitedStates,centralAmerica);
         greenland.addNeighbours(quebec,northwestTerritory,ontario,iceland);
         northwestTerritory.addNeighbours(alaska,alberta,ontario,greenland);
-        ontario.addNeighbours(northwestTerritory,alberta,westernUnitedStates,easterUnitedStates,quebec,greenland);
-        quebec.addNeighbours(easterUnitedStates,ontario,greenland);
-        westernUnitedStates.addNeighbours(alberta,ontario,easterUnitedStates,centralAmerica);
+        ontario.addNeighbours(northwestTerritory,alberta,westernUnitedStates,easternUnitedStates,quebec,greenland);
+        quebec.addNeighbours(easternUnitedStates,ontario,greenland);
+        westernUnitedStates.addNeighbours(alberta,ontario,easternUnitedStates,centralAmerica);
 
-        NorthAmerica.addTerritories(alaska, alberta, centralAmerica, easterUnitedStates, greenland, northwestTerritory, ontario, quebec, westernUnitedStates);
+        NorthAmerica.addTerritories(alaska, alberta, centralAmerica, easternUnitedStates, greenland, northwestTerritory, ontario, quebec, westernUnitedStates);
+        NorthAmerica.setnumberOfReinforcement(5);
         return NorthAmerica;
     }
 }
