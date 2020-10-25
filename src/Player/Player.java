@@ -161,7 +161,7 @@ public class Player {
     *
     * @return boolean
      */
-    public boolean placeReinforcement(Territory territory, int numberOfReinforcement){
+    public boolean canPlaceReinforcement(Territory territory, int numberOfReinforcement){
         if(numberOfReinforcement <=0 ){
             System.out.println("Cannot place 0 or less reinforcements.");
             return false;
@@ -171,7 +171,6 @@ public class Player {
             return false;
         }
         else if(hasTerritory(territory)){
-            territory.addSoldiers(numberOfReinforcement);
             return true;
         }
         else{
@@ -183,13 +182,15 @@ public class Player {
     /**
      * place a certain number of Reinforcements on a territory
      *
-     * @param nameTerritory
-     * @param numberOfReinforcement
+     * @param territory The territory adding troops to
+     * @param numberOfReinforcement the number of troops adding to territory.
      *
      * @return boolean
      */
-    public boolean placeReinforcement(String nameTerritory, int numberOfReinforcement){
-        return placeReinforcement(getTerritory(nameTerritory),numberOfReinforcement);
+    public void placeReinforcement(Territory territory, int numberOfReinforcement) {
+        if (hasTerritory(territory)) {
+            territory.addSoldiers(numberOfReinforcement);
+        }
     }
 
     /**

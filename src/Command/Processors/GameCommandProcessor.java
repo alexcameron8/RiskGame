@@ -55,7 +55,7 @@ public class GameCommandProcessor extends CommandProcessor{
             //if territory exists
             if(territory!=null) {
                 //if activeplayer owns territory
-                if (game.getActivePlayer().placeReinforcement(territory, numOfReinforcements)) {
+                if (game.getActivePlayer().canPlaceReinforcement(territory, numOfReinforcements)) {
                     game.getActivePlayer().placeReinforcement(territory, numOfReinforcements);
                     game.getActivePlayerTurn().setNumberOfReinforcements(game.getActivePlayerTurn().getNumberOfReinforcements() - numOfReinforcements);
                     System.out.println(game.getActivePlayer().getName() + " placed " + numOfReinforcements + " soldiers in " + territoryName);
