@@ -15,6 +15,7 @@ Alex Cameron
 - Implemented commands to place troops in territories
 - Designed methods to determine if reinforcements can be placed in Player class.
 - Added UML Diagrams entries for map related classes. 
+- Created sequence diagrams.
 
 Benjamin Munro
 - Implemented command validation and processing (CommandProcessors and ValidCommands)
