@@ -22,7 +22,7 @@ public class Continent {
      * Constructor for Continent. Creates a Continent
      * with a name and a group of territories which is empty
      *
-     * @param name
+     * @param name Continent name
      */
     public Continent(String name){
         this.name = name;
@@ -33,7 +33,7 @@ public class Continent {
     /**
      * Set the number of reinforcement gained when owning this continent
      *
-     * @param numb
+     * @param numb Number of reinforcements to set.
      */
     public void setnumberOfReinforcement(int numb){
         numberOfReinforcement = numb;
@@ -42,7 +42,7 @@ public class Continent {
     /**
      * return the number of reinforcement gained when owning this continen
      *
-     * @return
+     * @return Return reinforcements to gain.
      */
     public int getNumberOfReinforcement(){
         return numberOfReinforcement;
@@ -51,7 +51,7 @@ public class Continent {
     /**
      * adds a territory to the continent
      *
-     * @param territory
+     * @param territory Territory to add.
      */
     public void addTerritory(Territory territory){
         territories.put(territory.getName(),territory);
@@ -60,7 +60,7 @@ public class Continent {
     /**
      * adds multiple territory to the continent
      *
-     * @param args
+     * @param args Territories to add
      */
     public void addTerritories(Territory... args){
         for(Territory arg : args) {
@@ -72,8 +72,8 @@ public class Continent {
      * get a territory from the continent
      * if not there return null
      *
-     * @param territoryName
-     * @return Territory
+     * @param territoryName Name of Territory to retrieve.
+     * @return Territory Territory with territoryName
      */
     public Territory getTerritory(String territoryName) {
         return territories.get(territoryName);
@@ -82,7 +82,7 @@ public class Continent {
     /**
      * Get list of territories
      *
-     * @return ArrayList
+     * @return ArrayList of territories.
      */
     public ArrayList<Territory> getTerritories(){
         ArrayList<Territory> territories = new ArrayList<Territory>();
@@ -95,7 +95,7 @@ public class Continent {
     /**
      * get the name of the continent
      *
-     * @return name
+     * @return name Name of Continent
      */
     public String getName(){
         return name;
@@ -105,8 +105,8 @@ public class Continent {
      * checks to see if territory is in the continent
      * returns null otherwise
      *
-     * @param territoryName
-     * @return boolean
+     * @param territoryName Name to check.
+     * @return boolean true if territory is in continent, false otherwise
      */
     public boolean isTerritory(String territoryName){
         if(getTerritory(territoryName) == null)

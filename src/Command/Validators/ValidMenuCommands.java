@@ -7,6 +7,9 @@ package Command.Validators;
  */
 public class ValidMenuCommands extends ValidCommands{
 
+    /**
+     * Create new ValidMenuCommands
+     */
     public ValidMenuCommands(){
         super();
         validCommands.put("start", 0);
