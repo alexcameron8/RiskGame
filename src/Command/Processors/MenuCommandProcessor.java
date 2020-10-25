@@ -1,6 +1,3 @@
-/**
- * Command Processor used while on the main menu of the game.
- */
 package Command.Processors;
 
 import Command.Command;
@@ -9,6 +6,7 @@ import Main.Risk;
 
 /**
  * This class processes all commands entered in the main menu state.
+ * @author Benjamin Munro
  */
 public class MenuCommandProcessor extends CommandProcessor{
 

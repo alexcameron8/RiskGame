@@ -1,13 +1,14 @@
-/**
- * Command Processor used during the creation of a game.
- */
 package Command.Processors;
 
 import Command.Command;
 import Main.GameState;
 import Main.Risk;
 import Player.Player;
-
+/**
+ * Command Processor used during the creation of a game.
+ *
+ * @author Benjamin Munro
+ */
 public class CreateGameCommandProcessor extends CommandProcessor{
 
     /**

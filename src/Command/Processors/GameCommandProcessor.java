@@ -1,6 +1,3 @@
-/**
- * Command Processor used during a game.
- */
 package Command.Processors;
 
 import Command.Command;
@@ -9,8 +6,12 @@ import Main.Risk;
 import Map.Territory;
 import Player.Player;
 
-import Main.*;
-
+/**
+ * Command Processor used during a game.
+ *
+ * @author Benjamin Munro
+ * @author Alex Cameron
+ */
 public class GameCommandProcessor extends CommandProcessor{
 
     /**

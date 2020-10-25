@@ -1,13 +1,13 @@
-/**
- * CommandProcessor is an abstract class for other CommandProcessors.
- * A command processor is responsible for the execution of player commands.
- * Each "Stage" of the game, where different commands are valid have their own CommandProcessors.
- */
-
 package Command.Processors;
 import Command.Command;
 import Main.Risk;
 
+/**
+ * Command processors are responsible for matching commands with their functions.
+ * Each "area" or "state" of the game has a different command processor.
+ *
+ * @author Benjamin Munro
+ */
 abstract public class CommandProcessor {
     protected Risk game;
     protected Command command;

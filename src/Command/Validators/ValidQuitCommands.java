@@ -1,7 +1,10 @@
 package Command.Validators;
 
-import java.util.ArrayList;
-
+/**
+ * Define valid commands while prompting to quit a game
+ *
+ * @author Benjamin Munro
+ */
 public class ValidQuitCommands extends ValidCommands{
     public ValidQuitCommands(){
         super();
