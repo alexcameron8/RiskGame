@@ -41,7 +41,8 @@ public class Attack {
             int returningArmy = attack(numOfAttackArmy);
             if(returningArmy != 0){
                 System.out.println(attacker.getName() + ", conquered " + defender.getName() + "'s territory, " + defenderTerritory.getName() + ".");
-                attackerTerritory.addSoldiers(returningArmy);
+
+                defenderTerritory.addSoldiers(returningArmy);
                 defender.transferTerritory(attacker,defenderTerritory);
             }
             else{
