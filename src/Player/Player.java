@@ -23,7 +23,7 @@ public class Player {
      * a name and create a list of territories
      * and continents controlled by the player
      *
-     * @param name
+     * @param name Player name.
      */
     public Player(String name){
         this.name = name;
@@ -34,10 +34,10 @@ public class Player {
     /**
      * Player attacks another player
      *
-     * @param attackerTerritory
-     * @param defender
-     * @param defenderTerritory
-     * @param numOfAttackArmy
+     * @param attackerTerritory Territory attacking.
+     * @param defender Player defending attack
+     * @param defenderTerritory Territory defending.
+     * @param numOfAttackArmy Number of troops attacking
      */
     public void attack(Territory attackerTerritory, Player defender, Territory defenderTerritory, int numOfAttackArmy){
         Attack attack = new Attack(this, attackerTerritory, defender, defenderTerritory,  numOfAttackArmy);
@@ -46,7 +46,7 @@ public class Player {
     /**
      * adds territory to the player
      *
-     * @param territory
+     * @param territory Territory to add to a player
      */
     public void addTerritory(Territory territory){
         listOfTerritories.add(territory);
@@ -66,7 +66,7 @@ public class Player {
     /**
      * removes a territory from the player
      *
-     * @param name
+     * @param name Name of territory to remove
      * @return the removed territory
      */
     public Territory removeTerritory(String name) {
@@ -87,8 +87,8 @@ public class Player {
     /**
      * removes a territory from the player
      *
-     * @param territory
-     * @returnthe removed territory
+     * @param territory Territory to remove.
+     * @return the removed territory
      */
     public Territory removeTerritory(Territory territory) {
         return removeTerritory(territory.getName());
@@ -97,7 +97,7 @@ public class Player {
     /**
      * removes a continent from the player
      *
-     * @param name
+     * @param name Name of continent to remove.
      * @return removed continent
      */
     public Continent removeContinent(String name){
@@ -113,7 +113,7 @@ public class Player {
     /**
      * removes a continent from the player
      *
-     * @param continent
+     * @param continent Continent to remove.
      * @return removed continent
      */
     public Continent removeContinent(Continent continent) {
@@ -123,8 +123,8 @@ public class Player {
     /**
      * gives a territory to another player
      *
-     * @param receiver
-     * @param territory
+     * @param receiver Player to receive a territory.
+     * @param territory Territory to transfer.
      */
     public void transferTerritory(Player receiver,Territory territory){
         receiver.addTerritory(territory);
@@ -156,8 +156,8 @@ public class Player {
    /**
      * place a certain number of Reinforcements on a territory
      *
-     * @param territory
-     * @param numberOfReinforcement
+     * @param territory Territory to place troops
+     * @param numberOfReinforcement Number of troops to place
     *
     * @return boolean
      */
@@ -185,7 +185,6 @@ public class Player {
      * @param territory The territory adding troops to
      * @param numberOfReinforcement the number of troops adding to territory.
      *
-     * @return boolean
      */
     public void placeReinforcement(Territory territory, int numberOfReinforcement) {
         if (hasTerritory(territory)) {
@@ -223,7 +222,7 @@ public class Player {
     /**
      * the player controls a new continent
      *
-     * @param continent
+     * @param continent Continent to add.
      */
     public void addContinent(Continent continent){
         if(!hasContinent(continent)){
@@ -234,7 +233,7 @@ public class Player {
     /**
      * check to see if player controls a continent
      *
-     * @param continent
+     * @param continent Continent to check.
      * @return boolean
      */
     public boolean hasContinent(Continent continent){
@@ -244,7 +243,7 @@ public class Player {
     /**
      * check to see if player controls a continent
      *
-     * @param name
+     * @param name Name of continent.
      * @return boolean
      */
     public boolean hasContinent(String name){
@@ -259,7 +258,7 @@ public class Player {
     /**
      * check to see if player controls a territory
      *
-     * @param territory
+     * @param territory Territory to check.
      * @return boolean
      */
     public boolean hasTerritory(Territory territory){
@@ -269,7 +268,7 @@ public class Player {
     /**
      * check to see if player controls a territory
      *
-     * @param name
+     * @param name Name of territory to check.
      * @return boolean
      */
     public boolean hasTerritory(String name){
@@ -285,7 +284,7 @@ public class Player {
      * get a territory from the player
      * if they don't have it return null
      *
-     * @param name
+     * @param name Name of territory to retrieve.
      * @return Territory
      */
     public Territory getTerritory(String name){
@@ -300,7 +299,7 @@ public class Player {
      * get a territory from the player
      * if they don't have it return null
      *
-     * @param territory
+     * @param territory Territory to retrieve
      * @return Territory
      */
     public Territory getTerritory(Territory territory){
