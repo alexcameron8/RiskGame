@@ -28,6 +28,7 @@ Thomas Dunnigan
 - Worked on Player class adding and removing Territories and Continents
 - Worked on designing Attacking between 2 players
 - Added Command to view the entire Map
+- Added ability to skip elimited players and display winner
 - Added UML Diagram entries for classes relating to Attack and Player, and Command and Parser
 
 ### Known Issues
