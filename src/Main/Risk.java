@@ -181,8 +181,6 @@ public class Risk {
             cp = new CreateGameCommandProcessor(this, command);
         } else if(state == GameState.IN_GAME){
             cp = new GameCommandProcessor(this, command);
-        } else if(state == GameState.QUIT){
-            cp = new QuitCommandProcessor(this, command);
         }
 
         if(cp != null){
