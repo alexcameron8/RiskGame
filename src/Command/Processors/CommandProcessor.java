@@ -9,7 +9,13 @@ import Main.Risk;
  * @author Benjamin Munro
  */
 abstract public class CommandProcessor {
+    /**
+     * Game state to run command in.
+     */
     protected Risk game;
+    /**
+     * Command to run.
+     */
     protected Command command;
 
     /**
@@ -23,5 +29,8 @@ abstract public class CommandProcessor {
         this.command = command;
     }
 
+    /**
+     * Handle processing the command.
+     */
     public abstract void processCommand();
 }

@@ -7,6 +7,9 @@ package Command.Validators;
  */
 public class ValidGameCommands extends ValidCommands{
 
+    /**
+     * Create new ValidGameCommands
+     */
     public ValidGameCommands(){
         super();
         validCommands.put("home", 0);

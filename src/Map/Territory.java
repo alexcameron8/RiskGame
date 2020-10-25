@@ -23,7 +23,7 @@ public class Territory {
      * Constructor for Territory. Creates a territory
      * with a name, neighbours and soldiers
      *
-     * @param name
+     * @param name Name of territory.
      */
     public Territory(String name){
         this.name = name;
@@ -34,7 +34,7 @@ public class Territory {
     /**
      * addNeighbour adds a neighbour that's a territory
      *
-     * @param neighbour
+     * @param neighbour Territory to add as neighbour.
      */
     public void addNeighbour(Territory neighbour){
         neighbours.put(neighbour.getName(), neighbour);
@@ -43,7 +43,7 @@ public class Territory {
     /**
      * addNeighbours adds multiple neighbour
      *
-     * @param args
+     * @param args Territories to add as neighbours.
      */
     public void addNeighbours(Territory... args){
         for(Territory arg: args){
@@ -64,7 +64,7 @@ public class Territory {
      * if the territory is a neighbour return true,
      * false otherwise
      *
-     * @param territoryName
+     * @param territoryName Name to check if neighbour.
      * @return boolean
      */
     public boolean isNeighbour(String territoryName){
@@ -76,7 +76,7 @@ public class Territory {
     /**
      * get neighbour through the key
      *
-     * @param territoryName
+     * @param territoryName Neighbour territory name.
      * @return neighbour
      */
     public Territory getNeighbour(String territoryName) {
@@ -108,7 +108,7 @@ public class Territory {
     /**
      * territory gains soldiers
      *
-     * @param add
+     * @param add Number of soldiers to add to territory
      */
     public void addSoldiers(int add) {
         soldiers += add;
@@ -117,7 +117,7 @@ public class Territory {
     /**
      * territory loses soldiers
      *
-     * @param remove
+     * @param remove Number of soldiers to remove from territory
      */
     public void removeSoldiers(int remove) {
         soldiers -= remove;

@@ -87,6 +87,9 @@ public class Risk {
         }
     }
 
+    /**
+     * Reset the turns to the first player.
+     */
     public void resetTurns(){
         activePlayerID = 0;
     }
@@ -260,6 +263,10 @@ public class Risk {
         }
     }
 
+    /**
+     * Run a game of Risk
+     * @param args Command Args
+     */
     public static void main(String[] args) {
         Risk game = new Risk();
         game.play();

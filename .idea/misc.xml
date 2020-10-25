@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="$USER_HOME$/Insync/ben.munro2000@gmail.com/Google Drive/Carleton/Year 3/Semester 1/SYSC 3110 A - Software Development Project/Final Project/JavaDoc" />
+    <option name="OPTION_DOCUMENT_TAG_AUTHOR" value="true" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_14" default="false" project-jdk-name="openjdk-15" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>

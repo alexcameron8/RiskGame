@@ -25,7 +25,7 @@ public class Map {
     /**
      * Add a continent to the map
      *
-     * @param continent
+     * @param continent Continent to add
      */
     public void addContinent(Continent continent){
         continents.put(continent.getName(), continent);
@@ -48,7 +48,7 @@ public class Map {
      * get a continent that's in the map
      * if not return null
      *
-     * @param name
+     * @param name Name of continent
      * @return Continent
      */
     public Continent getContinent(String name){
