@@ -31,7 +31,7 @@ public class GameCommandProcessor extends CommandProcessor{
             System.out.println("(reinforcements) Number of reinforcements the player has left to place.");
             System.out.println("(place <Number of Reinforcements> <Territory>) Places certain number of reinforcements in territory.");
             System.out.println("(turn) Advance to next players turn.");
-            System.out.println("(neighbors <TERRITORY>) List the neighbors of a Territory.");
+            System.out.println("(neighbours <TERRITORY>) List the neighbours of a Territory.");
             System.out.println("(home) Return to main menu of the game.");
             System.out.println("(attack <NUMBER OF TROOPS> <ATTACK TERRITORY> <DEFENDING TERRITORY>) Attack a Territory.");
             System.out.println("(quit) Quits the game.");
