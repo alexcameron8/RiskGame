@@ -100,7 +100,7 @@ public class GameCommandProcessor extends CommandProcessor{
                 }
             }
 
-        } else if(commandWord.equals("neighbours")){
+        }else if(commandWord.equals("neighbours")){
             String territory = command.getArgument(0);
             System.out.println("Neighbours of " + territory + ":");
             for(Territory findTerr: game.getMap().getWorldMap().getTerritories()){

@@ -17,6 +17,8 @@ public class Player {
     private ArrayList<Continent> listOfContinents;
     //the name of the player
     private String name;
+    //number of Reinfocements
+    private int reinfocements;
 
     /**
      * Constructor for a player. Gives them
@@ -29,6 +31,7 @@ public class Player {
         this.name = name;
         this.listOfContinents = new ArrayList<>();
         this.listOfTerritories = new ArrayList<>();
+        this.reinfocements = 0;
     }
 
     /**
@@ -78,6 +81,8 @@ public class Player {
                         break;
                 }
                 listOfTerritories.remove(ter);
+                if(listOfTerritories.size() == 0)
+                    System.out.println(this.name + " has no more territories and has been eliminated from the game!");
                 return ter;
             }
         }
@@ -131,6 +136,13 @@ public class Player {
         removeTerritory(territory.getName());
     }
 
+    public void transferAllTerritory(Player receiver){
+        int size = listOfTerritories.size();
+        for(int i = 0; i <  size; i ++){
+            transferTerritory(receiver, listOfTerritories.get(0));
+        }
+    }
+
 
 
     /**
@@ -139,6 +151,9 @@ public class Player {
      * @return int
      */
     public int getReinforcement(){
+        if(reinfocements != 0){
+            return reinfocements;
+        }
         int numberOfReinforcement = 0;
         if(listOfTerritories.size() <= 9){
             numberOfReinforcement = 3;
@@ -149,6 +164,7 @@ public class Player {
         for (Continent continent: listOfContinents) {
             numberOfReinforcement += continent.getNumberOfReinforcement();
         }
+        reinfocements = numberOfReinforcement;
         return numberOfReinforcement;
     }
 
@@ -189,6 +205,7 @@ public class Player {
     public void placeReinforcement(Territory territory, int numberOfReinforcement) {
         if (hasTerritory(territory)) {
             territory.addSoldiers(numberOfReinforcement);
+            reinfocements -= numberOfReinforcement;
         }
     }
 
