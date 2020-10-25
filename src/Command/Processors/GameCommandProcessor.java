@@ -6,14 +6,27 @@ import Main.Risk;
 import Map.*;
 import Player.Player;
 
-import Main.*;
-
+/**
+ * Command Processor used during a game.
+ *
+ * @author Benjamin Munro
+ * @author Alex Cameron
+ */
 public class GameCommandProcessor extends CommandProcessor{
 
+    /**
+     * Create a new game state command processor.
+     *
+     * @param game Game state to interact with.
+     * @param command Command being executed by the player.
+     */
     public GameCommandProcessor(Risk game, Command command) {
         super(game, command);
     }
 
+    /**
+     * Process the given command.
+     */
     public void processCommand() {
         String commandWord = command.getCommand();
 
@@ -33,6 +46,7 @@ public class GameCommandProcessor extends CommandProcessor{
             System.out.println("(turn) Advance to next players turn.");
             System.out.println("(neighbours <TERRITORY>) List the neighbours of a Territory.");
             System.out.println("(home) Return to main menu of the game.");
+            System.out.println("(map) List current map state including player occupancy and troop numbers.");
             System.out.println("(attack <NUMBER OF TROOPS> <ATTACK TERRITORY> <DEFENDING TERRITORY>) Attack a Territory.");
             System.out.println("(quit) Quits the game.");
 

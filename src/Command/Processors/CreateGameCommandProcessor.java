@@ -4,12 +4,26 @@ import Command.Command;
 import Main.GameState;
 import Main.Risk;
 import Player.Player;
-
+/**
+ * Command Processor used during the creation of a game.
+ *
+ * @author Benjamin Munro
+ */
 public class CreateGameCommandProcessor extends CommandProcessor{
+
+    /**
+     * Create a new create game state command processor.
+     *
+     * @param game Game state to interact with.
+     * @param command Command being executed by the player.
+     */
     public CreateGameCommandProcessor(Risk game, Command command) {
         super(game, command);
     }
 
+    /**
+     * Process the given command.
+     */
     public void processCommand() {
         String commandWord = command.getCommand();
         int players = 0;
@@ -51,6 +65,5 @@ public class CreateGameCommandProcessor extends CommandProcessor{
         System.out.println("Playing with " + players + " players.");
         game.setState(GameState.GENERATE_GAME);
 
-        // ADD COMMANDS HERE
     }
 }

@@ -91,6 +91,9 @@ public class Risk {
         }
     }
 
+    /**
+     * Reset the turns to the first player.
+     */
     public void resetTurns(){
         activePlayerID = 0;
     }
@@ -185,8 +188,6 @@ public class Risk {
             cp = new CreateGameCommandProcessor(this, command);
         } else if(state == GameState.IN_GAME){
             cp = new GameCommandProcessor(this, command);
-        } else if(state == GameState.QUIT){
-            cp = new QuitCommandProcessor(this, command);
         }
 
         if(cp != null){
@@ -266,6 +267,10 @@ public class Risk {
         }
     }
 
+    /**
+     * Run a game of Risk
+     * @param args Command Args
+     */
     public static void main(String[] args) {
         Risk game = new Risk();
         game.play();
