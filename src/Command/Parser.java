@@ -23,7 +23,6 @@ public class Parser {
     private static final String MAIN_MENU_PROMPT = "Main Menu";
     private static final String NEW_GAME_PROMPT = "New Game";
     private static final String IN_GAME_PROMPT = "Risk Game";
-    private static final String QUIT_PROMPT = "Quit";
 
     /**
      * Creates a new Parser to handle a command.
@@ -53,9 +52,6 @@ public class Parser {
         } else if(state == GameState.IN_GAME){
             prompt = IN_GAME_PROMPT + " (" + game.getActivePlayer().getName() + ")";
             commandValidator = new ValidGameCommands();
-        } else if(state == GameState.QUIT){
-            prompt = QUIT_PROMPT;
-            commandValidator = new ValidQuitCommands();
         }
 
         System.out.print(prompt + "> ");
