@@ -1,5 +1,10 @@
 package Main;
 import Player.*;
+
+/**
+ * Class to represent a players turn.
+ * @author Alex Cameron
+ */
 public class Turn {
 
     private int numberOfReinforcements;
