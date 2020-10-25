@@ -9,6 +9,11 @@ import Command.Validators.*;
 import Main.Risk;
 import Main.GameState;
 
+/**
+ * Command input processing and parsing.
+ *
+ * @author Benjamin Munro
+ */
 public class Parser {
     private Scanner reader;
     private Risk game;
@@ -20,11 +25,19 @@ public class Parser {
     private static final String IN_GAME_PROMPT = "Risk Game";
     private static final String QUIT_PROMPT = "Quit";
 
+    /**
+     * Creates a new Parser to handle a command.
+     * @param game Risk game used to reference state of current game.
+     */
     public Parser(Risk game){
         this.game = game;
         reader = new Scanner(System.in);
     }
 
+    /**
+     * Prompt user for input and retrieve the parsed command.
+     * @return Command entered by the user.
+     */
     public Command getCommand(){
         String inputLine;
         String prompt = ">";
@@ -49,6 +62,11 @@ public class Parser {
 
         inputLine = reader.nextLine();
 
+        /*
+        Referenced
+        https://stackoverflow.com/questions/7804335/split-string-on-spaces-in-java-except-if-between-quotes-i-e-treat-hello-wor
+        For regex pattern
+         */
         Matcher matcher = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(inputLine);
         while(matcher.find()){
             parsedCommand.add(matcher.group(1).replace("\"", ""));

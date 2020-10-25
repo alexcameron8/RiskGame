@@ -1,10 +1,13 @@
 package Command.Validators;
 
-import Command.Command;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Abstract class used by command validators.
+ *
+ * @author Benjamin Munro
+ */
 public abstract class ValidCommands {
     protected HashMap<String, Integer> validCommands;
 

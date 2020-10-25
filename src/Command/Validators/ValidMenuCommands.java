@@ -1,7 +1,10 @@
 package Command.Validators;
 
-import java.util.ArrayList;
-
+/**
+ * Define valid commands while on the main menu
+ *
+ * @author Benjamin Munro
+ */
 public class ValidMenuCommands extends ValidCommands{
 
     public ValidMenuCommands(){

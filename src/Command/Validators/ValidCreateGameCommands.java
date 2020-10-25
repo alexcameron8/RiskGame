@@ -1,7 +1,10 @@
 package Command.Validators;
 
-import java.util.ArrayList;
-
+/**
+ * Define valid commands while creating a game
+ *
+ * @author Benjamin Munro
+ */
 public class ValidCreateGameCommands extends ValidCommands{
 
     public ValidCreateGameCommands(){
