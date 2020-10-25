@@ -32,6 +32,10 @@ Thomas Dunnigan
 - Added ability to skip elimited players and display winner
 - Added UML Diagram entries for classes relating to Attack and Player, and Command and Parser
 
+### Description of the choice of data structures and relevant operations:
+Hashmaps were used for the Territories so the Territory can be found using its name easily. 
+As well, Arraylists were used to store lists of players in a game, number of territories and continents a player has because these lists should be regularly changed in size throughout the game and this can be easily done through this data structure. 
+
 ### Known Issues
 Several of these issues will be fixed in later Milestones as the player who is playing the game of Risk will not be typing in console the commands to play the game.
 Our known issues can be found at: https://github.com/computebender/Risk/issues
