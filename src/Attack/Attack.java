@@ -10,6 +10,7 @@ import java.util.LinkedList;
  * This class is the attack class in the game of Risk. This class has several methods which check to see if the attack is valid
  * and simulates an attack between 2 players and upon attacking will update the game with the results and consequences of the attack.
  *
+ * @author Alex Cameron and Thomas Dunnigan
  */
 public class Attack {
     private Player attacker;

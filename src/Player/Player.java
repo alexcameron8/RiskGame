@@ -8,7 +8,7 @@ import Attack.*;
  * The player controls territories and continents
  * The player can attack another player
  *
- * Alex Cameron and Thomas Dunnigan
+ * @author Alex Cameron and Thomas Dunnigan
  */
 public class Player {
     //the territories controlled by the player

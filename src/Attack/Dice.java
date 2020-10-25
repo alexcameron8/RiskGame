@@ -2,6 +2,8 @@ package Attack;
 
 /**
  * This is a Dice class.
+ *
+ * @author Alex Cameron
  */
 public class Dice {
     private int value;
