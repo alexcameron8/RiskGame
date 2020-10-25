@@ -105,7 +105,7 @@ public class GameCommandProcessor extends CommandProcessor{
 
             boolean hasTerritory = false;
             for(Territory findTerr: game.getMap().getWorldMap().getTerritories()){
-                if(findTerr.getName() == territory){
+                if(findTerr.getName().equals(territory)){
                     hasTerritory = true;
                     break;
                 }
