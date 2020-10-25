@@ -46,6 +46,7 @@ public class GameCommandProcessor extends CommandProcessor{
             System.out.println("(turn) Advance to next players turn.");
             System.out.println("(neighbours <TERRITORY>) List the neighbours of a Territory.");
             System.out.println("(home) Return to main menu of the game.");
+            System.out.println("(map) List current map state including player occupancy and troop numbers.");
             System.out.println("(attack <NUMBER OF TROOPS> <ATTACK TERRITORY> <DEFENDING TERRITORY>) Attack a Territory.");
             System.out.println("(quit) Quits the game.");
 
