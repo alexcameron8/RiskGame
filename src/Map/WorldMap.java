@@ -152,7 +152,7 @@ public class WorldMap {
         easternAustralia.addNeighbours(westernAustralia,newGuinea);
         indonesia.addNeighbours(siam,newGuinea,westernAustralia);
         newGuinea.addNeighbours(indonesia,easternAustralia,westernAustralia);
-        westernAustralia.addNeighbours(indonesia,newGuinea,westernAustralia);
+        westernAustralia.addNeighbours(indonesia,newGuinea,easternAustralia);
 
         australia.addTerritories(easternAustralia,indonesia,newGuinea,westernAustralia);
         australia.setnumberOfReinforcement(2);
@@ -191,7 +191,7 @@ public class WorldMap {
 
         argentina.addNeighbours(peru,brazil);
         brazil.addNeighbours(peru,venezuela,argentina,northAfrica);
-        peru.addNeighbours(venezuela,brazil,peru);
+        peru.addNeighbours(venezuela,brazil,argentina);
         venezuela.addNeighbours(centralAmerica,brazil,peru);
 
         southAmerica.addTerritories(argentina, brazil, peru, venezuela);
