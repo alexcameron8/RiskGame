@@ -61,15 +61,19 @@ public class Risk {
      */
     public void advanceTurn(){
         if(currentTurn.isTurnComplete()){
+            if(players.size() == 1){
+                System.out.println(players.get(0).getName() + " has won");
+                state = GameState.MAIN_MENU;
+                printMenu();
+                return;
+            }
             if(players.get(activePlayerID).getListOfTerritories().size()==0){
                 //They have no territories, therefore have been eliminated
-                System.out.println(getActivePlayer().getName() + " has no more continents and has been eliminated from the game!");
+                players.remove(activePlayerID);
                 if (activePlayerID + 1 < players.size()) {
-                    players.remove(activePlayerID);
                     activePlayerID++;
                     currentTurn = new Turn(players.get(activePlayerID));
                 }else{
-                    players.remove(activePlayerID);
                     activePlayerID = 0;
                     currentTurn = new Turn(players.get(0));
                 }
