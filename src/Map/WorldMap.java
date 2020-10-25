@@ -94,7 +94,7 @@ public class WorldMap {
         //Europe
         greatBritain = new Territory("Great Britain");
         iceland = new Territory("Iceland");
-        northernEurope = new Territory("NorthernEurope");
+        northernEurope = new Territory("Northern Europe");
         scandinavia = new Territory("Scandinavia");
         southernEurope = new Territory("Southern Europe");
         ukraine = new Territory("Ukraine");
