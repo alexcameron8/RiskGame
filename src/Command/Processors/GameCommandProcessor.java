@@ -3,7 +3,7 @@ package Command.Processors;
 import Command.Command;
 import Main.GameState;
 import Main.Risk;
-import Map.Territory;
+import Map.*;
 import Player.Player;
 
 /**
@@ -87,7 +87,19 @@ public class GameCommandProcessor extends CommandProcessor{
             }
             System.out.print("\n");
 
-        }  else if(commandWord.equals("neighbours")){
+        } else if(commandWord.equals("map")){
+            System.out.println("World Map:");
+            for(Continent continent : game.getMap().getWorldMap().getContinents()){
+                System.out.println(continent.getName()+":");
+                for(Territory territory : continent.getTerritories()){
+                    for(Player player : game.getPlayers()) {
+                        if(player.hasTerritory(territory))
+                            System.out.println("\t"+territory.getName() + "\t\t Troops: "+ territory.getSoldiers()+"\tOwner: " + player.getName());
+                    }
+                }
+            }
+
+        } else if(commandWord.equals("neighbours")){
             String territory = command.getArgument(0);
             System.out.println("Neighbours of " + territory + ":");
             for(Territory findTerr: game.getMap().getWorldMap().getTerritories()){

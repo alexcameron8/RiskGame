@@ -17,6 +17,7 @@ public class ValidGameCommands extends ValidCommands{
         validCommands.put("reinforcements", 0);
         validCommands.put("place", 2);
         validCommands.put("territories", 0);
+        validCommands.put("map", 0);
         validCommands.put("neighbours", 1);
         validCommands.put("quit", 0);
     }
