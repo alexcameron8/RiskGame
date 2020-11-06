@@ -1,25 +1,28 @@
 package Main;
 
+import Map.*;
+import Map.Territory;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MapModel {
-    private MapTerritory activeTerritory;
-    private ArrayList<MapTerritory> territoryList;
+    private Territory activeTerritory;
+    private ArrayList<Territory> territoryList;
 
     private List<MapViewListener> mapViewListenerList;
 
 
 
     MapModel(){
-        MapImport mapImport = new MapImport("src/Main/worldmap.json");
+        MapImport mapImport = new MapImport("src/Map/worldmap.json");
         this.territoryList = mapImport.getTerritories();
         this.activeTerritory = null;
         this.mapViewListenerList = new ArrayList<>();
     }
 
     public void setActiveTerritoryByID(String id){
-        for(MapTerritory terr: territoryList){
+        for(Territory terr: territoryList){
             if(terr.getId().equals(id)){
                 System.out.println(terr.getId());
                 activeTerritory = terr;
@@ -29,11 +32,11 @@ public class MapModel {
         }
     }
 
-    public ArrayList<MapTerritory> getTerritoryList(){
+    public ArrayList<Territory> getTerritoryList(){
         return this.territoryList;
     }
 
-    public MapTerritory getActiveTerritory() {
+    public Territory getActiveTerritory() {
         return this.activeTerritory;
     }
 
@@ -41,7 +44,7 @@ public class MapModel {
         mapViewListenerList.add(mvl);
     }
 
-    private void updateMapListeners(MapTerritory mapTerritory){
+    private void updateMapListeners(Territory mapTerritory){
         for(MapViewListener mvl: mapViewListenerList){
             mvl.handleMapUpdate(new MapEvent(this, mapTerritory));
         }

@@ -1,4 +1,4 @@
-package Main;
+package Map;
 
 import org.apache.batik.parser.AWTPathProducer;
 import org.apache.batik.parser.PathParser;

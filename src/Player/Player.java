@@ -17,8 +17,8 @@ public class Player {
     private ArrayList<Continent> listOfContinents;
     //the name of the player
     private String name;
-    //number of Reinfocements
-    private int reinfocements;
+    //number of Reinforcements
+    private int reinforcements;
 
     /**
      * Constructor for a player. Gives them
@@ -31,7 +31,7 @@ public class Player {
         this.name = name;
         this.listOfContinents = new ArrayList<>();
         this.listOfTerritories = new ArrayList<>();
-        this.reinfocements = 0;
+        this.reinforcements = 0;
     }
 
     /**
@@ -54,17 +54,14 @@ public class Player {
     public void addTerritory(Territory territory){
         listOfTerritories.add(territory);
         territory.setOwner(this);
-        WorldMap map = new WorldMap();
-        for(Continent continent : map.getWorldMap().getContinents()){
-            int sizeControlsContinent = 0;
-            for(Territory terr : continent.getTerritories()){
-                if(hasTerritory(terr)){
-                    sizeControlsContinent+=1;
-                }
+        int sizeControlsContinent = 0;
+        for(Territory terr : territory.getContinent().getTerritories()){
+            if(hasTerritory(terr)){
+                sizeControlsContinent+=1;
             }
-            if(sizeControlsContinent == continent.getTerritories().size())
-            addContinent(continent);
         }
+        if(sizeControlsContinent == territory.getContinent().getTerritories().size())
+        addContinent(territory.getContinent());
     }
 
     /**
@@ -152,8 +149,8 @@ public class Player {
      * @return int
      */
     public int getReinforcement(){
-        if(reinfocements != 0){
-            return reinfocements;
+        if(reinforcements != 0){
+            return reinforcements;
         }
         int numberOfReinforcement = 0;
         if(listOfTerritories.size() <= 9){
@@ -165,7 +162,7 @@ public class Player {
         for (Continent continent: listOfContinents) {
             numberOfReinforcement += continent.getNumberOfReinforcement();
         }
-        reinfocements = numberOfReinforcement;
+        reinforcements = numberOfReinforcement;
         return numberOfReinforcement;
     }
 
@@ -206,7 +203,7 @@ public class Player {
     public void placeReinforcement(Territory territory, int numberOfReinforcement) {
         if (hasTerritory(territory)) {
             territory.addSoldiers(numberOfReinforcement);
-            reinfocements -= numberOfReinforcement;
+            reinforcements -= numberOfReinforcement;
         }
     }
 

@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class Continent {
 
     private String name;
+    private String id;
     private HashMap<String, Territory> territories;
     private int numberOfReinforcement;
 
@@ -24,10 +25,11 @@ public class Continent {
      *
      * @param name Continent name
      */
-    public Continent(String name){
+    public Continent(String name, String id, int numberOfReinforcement){
         this.name = name;
+        this.id = id;
+        this.numberOfReinforcement = numberOfReinforcement;
         territories = new HashMap<>();
-        numberOfReinforcement = 0;
     }
 
     /**
@@ -37,6 +39,15 @@ public class Continent {
      */
     public void setnumberOfReinforcement(int numb){
         numberOfReinforcement = numb;
+    }
+
+    /**
+     * return the number of reinforcement gained when owning this continen
+     *
+     * @return Return reinforcements to gain.
+     */
+    public String getId(){
+        return id;
     }
 
     /**

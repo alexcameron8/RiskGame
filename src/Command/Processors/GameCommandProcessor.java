@@ -61,7 +61,7 @@ public class GameCommandProcessor extends CommandProcessor{
             String territoryName = command.getArgument(1);
             Territory territory = null;
             //Finds territory
-            for(Territory findTerr: game.getMap().getWorldMap().getTerritories()) {
+            for(Territory findTerr: game.getMap().getTerritories()) {
                 if (findTerr.getName().equals(territoryName)) {
                     territory = findTerr;
                 }
@@ -90,7 +90,7 @@ public class GameCommandProcessor extends CommandProcessor{
 
         } else if(commandWord.equals("map")){
             System.out.println("World Map:");
-            for(Continent continent : game.getMap().getWorldMap().getContinents()){
+            for(Continent continent : game.getMap().getContinents()){
                 System.out.println(continent.getName()+":");
                 for(Territory territory : continent.getTerritories()){
                     for(Player player : game.getPlayers()) {
@@ -104,7 +104,7 @@ public class GameCommandProcessor extends CommandProcessor{
             String territory = command.getArgument(0);
 
             boolean hasTerritory = false;
-            for(Territory findTerr: game.getMap().getWorldMap().getTerritories()){
+            for(Territory findTerr: game.getMap().getTerritories()){
                 if(findTerr.getName().equals(territory)){
                     hasTerritory = true;
                     break;
@@ -112,7 +112,7 @@ public class GameCommandProcessor extends CommandProcessor{
             }
             if(hasTerritory) {
                 System.out.println("Neighbours of " + territory + ":");
-                for (Territory findTerr : game.getMap().getWorldMap().getTerritories()) {
+                for (Territory findTerr : game.getMap().getTerritories()) {
                     if (findTerr.getName().equals(territory)) {
                         for (Territory terr : findTerr.getNeighbours()) {
                             for (Player player : game.getPlayers()) {

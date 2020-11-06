@@ -10,11 +10,12 @@ public class RiskGame extends JFrame {
       this.setJMenuBar(new MenuBarView());
 
         MapView mapView = new MapView();
-        //THOMAS: mapView.getMapModel().addMapListener(MapViewListener);
+        TerritoryInfoView territoryInfoView = new TerritoryInfoView();
+       mapView.getMapModel().addMapListener(territoryInfoView);
         
         this.add(new ActionBarView(), BorderLayout.PAGE_START);
         this.add(mapView, BorderLayout.CENTER);
-        this.add(new TerritoryInfoView(), BorderLayout.LINE_END);
+        this.add(territoryInfoView, BorderLayout.LINE_END);
         this.add(new PlayerBarView(), BorderLayout.PAGE_END);
 
         this.setVisible(true);

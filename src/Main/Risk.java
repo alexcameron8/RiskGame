@@ -1,8 +1,7 @@
 package Main;
 import Command.*;
 import Command.Processors.*;
-import Map.Territory;
-import Map.WorldMap;
+import Map.*;
 import Player.Player;
 
 import Main.*;
@@ -20,18 +19,20 @@ public class Risk {
     private Parser parser;
     private ArrayList<Player> players;
     private int activePlayerID;
-    private WorldMap map;
+    private Map map;
     private Turn currentTurn;
+    private MapImport mapImport;
 
 
     /**
      * This class creates a new Risk game.
      */
     Risk(){
+        MapImport mapImport = new MapImport("src/Map/worldmap.json");
         parser = new Parser(this);
         players = new ArrayList<Player>();
         activePlayerID = 0;
-        map = new WorldMap();
+        map = mapImport.getMap();
     }
 
     /**
@@ -167,7 +168,7 @@ public class Risk {
      *
      * @return The map of game of Risk
      */
-    public WorldMap getMap(){
+    public Map getMap(){
         return this.map;
     }
 
@@ -221,7 +222,7 @@ public class Risk {
      * This method is the auto-setup functionality of Risk where the players are
      */
     public void assignTroopsRandom(){
-        ArrayList<Territory> territories = map.getWorldMap().getTerritories();
+        ArrayList<Territory> territories = map.getTerritories();
         Collections.shuffle(territories);
 
         for(Territory terr: territories){
@@ -240,7 +241,6 @@ public class Risk {
                 player.getListOfTerritories().get(randomGenerator.nextInt(numTerritories)).addSoldiers(1);
             }
         }
-
     }
 
     /**

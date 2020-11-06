@@ -1,6 +1,11 @@
 package Map;
 
 import Player.Player;
+import org.apache.batik.parser.AWTPathProducer;
+import org.apache.batik.parser.PathParser;
+
+import java.awt.*;
+import java.awt.geom.Point2D;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,8 +22,15 @@ import java.util.HashMap;
 
 public class Territory {
 
-    private Player owner;
+    private static PathParser pathParser = new PathParser();
+    private static AWTPathProducer pathProducer = new AWTPathProducer();
+
     private String name;
+    private String id;
+    private Shape territoryShape;
+    private Continent continent;
+
+    private Player owner;
     private HashMap<String, Territory> neighbours;
     private int soldiers;
 
@@ -28,11 +40,38 @@ public class Territory {
      *
      * @param name Name of territory.
      */
-    public Territory(String name){
+    public Territory(String name, String id,Continent continent, String path){
         this.name = name;
+        this.id = id;
+        this.continent = continent;
         neighbours = new  HashMap<>();
         soldiers = 0;
         owner = null;
+
+        // Shape generation
+        pathParser.setPathHandler(pathProducer);
+        pathParser.parse(path);
+        this.territoryShape = pathProducer.getShape();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public Shape getShape() {
+        return territoryShape;
+    }
+
+    public Continent getContinent(){
+        return this.continent;
+    }
+
+    public boolean contains(Point2D point){
+        if(this.territoryShape.contains(point)){
+            return true;
+        } else{
+            return false;
+        }
     }
 
     /**
