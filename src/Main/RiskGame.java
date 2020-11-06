@@ -9,7 +9,7 @@ public class RiskGame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.add(new ActionBarView(), BorderLayout.PAGE_START);
-        this.add(new RiskGameMap(), BorderLayout.CENTER);
+        this.add(new MapView(), BorderLayout.CENTER);
         this.add(new TerritoryInfoView(), BorderLayout.LINE_END);
         this.add(new PlayerBarView(), BorderLayout.PAGE_END);
 
