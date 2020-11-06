@@ -14,11 +14,11 @@ import java.util.Random;
  */
 public class Risk {
     private static GameState state;
+    private Parser parser;
     private ArrayList<Player> players;
     private int activePlayerID;
-    private Map map;
+    private WorldMap map;
     private Turn currentTurn;
-    private MapImport mapImport;
 
 
     /**
@@ -28,7 +28,7 @@ public class Risk {
         MapImport mapImport = new MapImport("src/Map/worldmap.json");
         players = new ArrayList<Player>();
         activePlayerID = 0;
-        map = mapImport.getMap();
+        map = new WorldMap();
     }
 
     /**
@@ -164,8 +164,32 @@ public class Risk {
      *
      * @return The map of game of Risk
      */
-    public Map getMap(){
+    public WorldMap getMap(){
         return this.map;
+    }
+
+    /**
+     * This method processes all potential commands entered when trying to perform actions in Risk.
+     * @param command The command being processed
+     */
+    private void processCommand(Command command){
+        CommandProcessor cp = null;
+        if(!command.isValid()){
+            System.out.println("Invalid command or wrong number of arguments. Type the command 'help' for list of valid commands.");
+            return;
+        }
+
+        if(state == GameState.MAIN_MENU){
+            cp = new MenuCommandProcessor(this, command);
+        } else if(state == GameState.NEW_GAME_SETTINGS){
+            cp = new CreateGameCommandProcessor(this, command);
+        } else if(state == GameState.IN_GAME){
+            cp = new GameCommandProcessor(this, command);
+        }
+
+        if(cp != null){
+            cp.processCommand();
+        }
     }
 
     /**
@@ -194,7 +218,7 @@ public class Risk {
      * This method is the auto-setup functionality of Risk where the players are
      */
     public void assignTroopsRandom(){
-        ArrayList<Territory> territories = map.getTerritories();
+        ArrayList<Territory> territories = map.getWorldMap().getTerritories();
         Collections.shuffle(territories);
 
         for(Territory terr: territories){
@@ -213,6 +237,7 @@ public class Risk {
                 player.getListOfTerritories().get(randomGenerator.nextInt(numTerritories)).addSoldiers(1);
             }
         }
+
     }
 
     /**
@@ -222,7 +247,6 @@ public class Risk {
         state = GameState.MAIN_MENU;
         printMenu();
         while(state != GameState.QUIT){
-
             if(state == GameState.GENERATE_GAME){
 
                 Random r = new Random();

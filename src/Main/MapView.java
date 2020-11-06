@@ -86,7 +86,7 @@ public class MapView extends JPanel implements MapViewListener{
 
             // Draw Background
             graphics.setColor(Color.CYAN);
-            g.fillRect(0,0, getWidth(), getHeight());
+            graphics.fillRect(0,0, getWidth(), getHeight());
 
             AffineTransform tx2 = new AffineTransform();
             Double scale2 = (double) this.getWidth() /600;
@@ -106,7 +106,27 @@ public class MapView extends JPanel implements MapViewListener{
                     graphics.draw(territoryShape);
                 }
             }
+
+            for(MapTerritory terr: MapView.this.mapModel.getTerritoryList()){
+                Shape territoryShape = tx2.createTransformedShape(terr.getShape());
+
+                FontMetrics fontMetrics = graphics.getFontMetrics();
+
+
+
+                String[] nameArr = terr.getName().split(" ");
+                graphics.setColor(Color.BLACK);
+
+                for(int i = 0; i < nameArr.length; i++){
+                    float centerX = (float) territoryShape.getBounds2D().getCenterX() - fontMetrics.stringWidth(nameArr[i]) / 2;
+                    float centerY = (float) territoryShape.getBounds2D().getCenterY() - fontMetrics.getHeight() + fontMetrics.getAscent() + i*fontMetrics.getAscent();
+                    graphics.drawString(nameArr[i], centerX, centerY);
+                }
+
+            }
         }
+
+
 
         private Color getContinentColor(String continent){
             if(continent.equals("northAmerica")){

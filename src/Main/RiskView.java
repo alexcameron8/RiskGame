@@ -15,7 +15,7 @@ public class RiskGame extends JFrame {
         
         this.add(new ActionBarView(), BorderLayout.PAGE_START);
         this.add(mapView, BorderLayout.CENTER);
-        this.add(territoryInfoView, BorderLayout.LINE_END);
+        this.add(new TerritoryInfoView(), BorderLayout.LINE_END);
         this.add(new PlayerBarView(), BorderLayout.PAGE_END);
 
         this.setVisible(true);
