@@ -7,10 +7,11 @@ public class RiskGame extends JFrame {
     RiskGame(){
         this.setSize(new Dimension(800, 600));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      this.setJMenuBar(new MenuBarView());
 
         MapView mapView = new MapView();
         //THOMAS: mapView.getMapModel().addMapListener(MapViewListener);
-
+        
         this.add(new ActionBarView(), BorderLayout.PAGE_START);
         this.add(mapView, BorderLayout.CENTER);
         this.add(new TerritoryInfoView(), BorderLayout.LINE_END);
