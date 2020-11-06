@@ -19,15 +19,15 @@ public class MapImport {
 
     private void populate(){
         Gson gson = new Gson();
-        MapImportJSONModel mapmodel = null;
+        MapImportJSONModel mapImportJSONModel = null;
         try {
             JsonReader reader = new JsonReader(new FileReader(path));
-            mapmodel = gson.fromJson(reader, MapImportJSONModel.class);
+            mapImportJSONModel = gson.fromJson(reader, MapImportJSONModel.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        for (MapModelTerritory mmt: mapmodel.getTerritories()) {
-            territories.add(new MapTerritory(mmt.getId(), mmt.getId(), mmt.getContinent(), mmt.getPathData()));
+        for (MapModelTerritory mmt: mapImportJSONModel.getTerritories()) {
+            territories.add(new MapTerritory(mmt.getName(), mmt.getId(), mmt.getContinent(), mmt.getPathData()));
         }
     }
 
