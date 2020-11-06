@@ -107,7 +107,7 @@ public class MapView extends JPanel implements MapViewListener{
                 }
             }
 
-            for(MapTerritory terr: MapView.this.mapModel.getTerritoryList()){
+            for(Territory terr: MapView.this.mapModel.getTerritoryList()){
                 Shape territoryShape = tx2.createTransformedShape(terr.getShape());
 
                 FontMetrics fontMetrics = graphics.getFontMetrics();

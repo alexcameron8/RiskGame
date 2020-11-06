@@ -14,34 +14,21 @@ import java.util.Random;
  */
 public class Risk {
     private static GameState state;
-    private Parser parser;
     private ArrayList<Player> players;
     private int activePlayerID;
-    private WorldMap map;
+    private Map map;
     private Turn currentTurn;
 
 
     /**
      * This class creates a new Risk game.
      */
-    Risk(){
+    public Risk(){
         MapImport mapImport = new MapImport("src/Map/worldmap.json");
         players = new ArrayList<Player>();
         activePlayerID = 0;
-        map = new WorldMap();
+        map = mapImport.getMap();
     }
-
-    /**
-     * the printMenu method prints all possible commands when in the opening menu when launching the game.
-     */
-    private void printMenu(){
-        System.out.println("Welcome to Main.Risk: Global Domination!");
-        System.out.println("To get started, please select and option:");
-        System.out.println("(start) Start new game.");
-        System.out.println("(help) Display help menu. Available anywhere.");
-        System.out.println("(quit) Quit");
-    }
-
     /**
      * This method is used to advance the turns in the auto setup phase.
      */
@@ -61,7 +48,6 @@ public class Risk {
             if(players.size() == 1){
                 System.out.println(players.get(0).getName() + " has won");
                 state = GameState.MAIN_MENU;
-                printMenu();
                 return;
             }
             if(players.get(activePlayerID).getListOfTerritories().size()==0){
@@ -164,32 +150,8 @@ public class Risk {
      *
      * @return The map of game of Risk
      */
-    public WorldMap getMap(){
+    public Map getMap(){
         return this.map;
-    }
-
-    /**
-     * This method processes all potential commands entered when trying to perform actions in Risk.
-     * @param command The command being processed
-     */
-    private void processCommand(Command command){
-        CommandProcessor cp = null;
-        if(!command.isValid()){
-            System.out.println("Invalid command or wrong number of arguments. Type the command 'help' for list of valid commands.");
-            return;
-        }
-
-        if(state == GameState.MAIN_MENU){
-            cp = new MenuCommandProcessor(this, command);
-        } else if(state == GameState.NEW_GAME_SETTINGS){
-            cp = new CreateGameCommandProcessor(this, command);
-        } else if(state == GameState.IN_GAME){
-            cp = new GameCommandProcessor(this, command);
-        }
-
-        if(cp != null){
-            cp.processCommand();
-        }
     }
 
     /**
@@ -218,7 +180,7 @@ public class Risk {
      * This method is the auto-setup functionality of Risk where the players are
      */
     public void assignTroopsRandom(){
-        ArrayList<Territory> territories = map.getWorldMap().getTerritories();
+        ArrayList<Territory> territories = map.getTerritories();
         Collections.shuffle(territories);
 
         for(Territory terr: territories){
@@ -245,7 +207,6 @@ public class Risk {
      */
     public void play(){
         state = GameState.MAIN_MENU;
-        printMenu();
         while(state != GameState.QUIT){
             if(state == GameState.GENERATE_GAME){
 
@@ -259,15 +220,5 @@ public class Risk {
             }
 
         }
-    }
-
-    /**
-     * Run a game of Risk
-     * @param args Command Args
-     */
-    public static void main(String[] args) {
-        Risk game = new Risk();
-        game.play();
-
     }
 }
