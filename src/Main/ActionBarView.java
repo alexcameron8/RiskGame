@@ -4,11 +4,13 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
 //import Resources.*;
-public class ActionBarView extends JPanel {
+public class ActionBarView extends JPanel implements ActionBarViewListener{
 
     private JButton placeTroops;
     private JButton attack;
@@ -17,13 +19,20 @@ public class ActionBarView extends JPanel {
     private Image nextTurnImg;
     private Image attackImg;
     private Color darkBlue = new Color(102,178,255);
+    private ActionBarController abc;
 
-    ActionBarView(){
+    public ActionBarView(){
         // JPanel Config
-        this.setLayout(new FlowLayout());
+        this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.setBackground(new Color(153,204,255));
+
+        ActionBarModel abm = new ActionBarModel();
+        abm.addActionBarModelViews(this);
+        abc = new ActionBarController(this, abm);
+
         initActionPanel();
         initActionButtons();
+
     }
 
     public void initActionPanel(){
@@ -49,5 +58,17 @@ public class ActionBarView extends JPanel {
         this.add(placeTroops);
         this.add(attack);
         this.add(nextTurn);
+
+        //adding Action Listeners
+        placeTroops.addActionListener(abc);
+        placeTroops.setActionCommand("place");
+        attack.addActionListener(abc);
+        attack.setActionCommand("attack");
+        nextTurn.addActionListener(abc);
+        nextTurn.setActionCommand("next");
+    }
+    @Override
+    public void handleActionBarUpdate(ActionBarEvent e){
+
     }
 }
