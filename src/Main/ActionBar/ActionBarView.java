@@ -1,16 +1,13 @@
-package Main;
+package Main.ActionBar;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
 //import Resources.*;
-public class ActionBarView extends JPanel implements ActionBarViewListener{
+public class ActionBarView extends JPanel implements ActionBarViewListener {
 
     private JButton placeTroops;
     private JButton attack;

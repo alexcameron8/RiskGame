@@ -1,5 +1,8 @@
 package Main;
 
+import Main.ActionBar.ActionBarView;
+import Main.PlayerBar.PlayerBarView;
+
 import javax.swing.*;
 import java.awt.*;
 
