@@ -53,6 +53,7 @@ public class Player {
      */
     public void addTerritory(Territory territory){
         listOfTerritories.add(territory);
+        territory.setOwner(this);
         WorldMap map = new WorldMap();
         for(Continent continent : map.getWorldMap().getContinents()){
             int sizeControlsContinent = 0;
