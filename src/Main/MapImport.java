@@ -9,18 +9,20 @@ import java.util.ArrayList;
 
 public class MapImport {
     private ArrayList<MapTerritory> territories;
+    String path;
 
-    MapImport(){
+    MapImport(String path){
         this.territories = new ArrayList<>();
+        this.path = path;
         populate();
     }
 
     private void populate(){
         Gson gson = new Gson();
-        MapModel mapmodel = null;
+        MapImportJSONModel mapmodel = null;
         try {
-            JsonReader reader = new JsonReader(new FileReader("src/Main/worldmap.json"));
-            mapmodel = gson.fromJson(reader, MapModel.class);
+            JsonReader reader = new JsonReader(new FileReader(path));
+            mapmodel = gson.fromJson(reader, MapImportJSONModel.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

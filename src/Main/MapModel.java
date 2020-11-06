@@ -1,37 +1,49 @@
 package Main;
 
 import java.util.ArrayList;
+import java.util.List;
 
-class MapModel {
-    private String name;
-    private ArrayList<MapModelTerritory> territories = new ArrayList<>();
+public class MapModel {
+    private MapTerritory activeTerritory;
+    private ArrayList<MapTerritory> territoryList;
 
-    MapModel(){}
+    private List<MapViewListener> mapViewListenerList;
 
-    public String getName() {
-        return name;
+
+
+    MapModel(){
+        MapImport mapImport = new MapImport("src/Main/worldmap.json");
+        this.territoryList = mapImport.getTerritories();
+        this.activeTerritory = null;
+        this.mapViewListenerList = new ArrayList<>();
     }
 
-    public ArrayList<MapModelTerritory> getTerritories() {
-        return territories;
+    public void setActiveTerritoryByID(String id){
+        for(MapTerritory terr: territoryList){
+            if(terr.getId().equals(id)){
+                System.out.println(terr.getId());
+                activeTerritory = terr;
+                updateMapListeners(terr);
+                break;
+            }
+        }
     }
 
-}
-
-class MapModelTerritory {
-    private String pathData;
-    private String id;
-    private String continent;
-
-    public String getPathData() {
-        return pathData;
+    public ArrayList<MapTerritory> getTerritoryList(){
+        return this.territoryList;
     }
 
-    public String getId() {
-        return id;
+    public MapTerritory getActiveTerritory() {
+        return this.activeTerritory;
     }
 
-    public String getContinent() {
-        return continent;
+    public void addMapListener(MapViewListener mvl){
+        mapViewListenerList.add(mvl);
+    }
+
+    private void updateMapListeners(MapTerritory mapTerritory){
+        for(MapViewListener mvl: mapViewListenerList){
+            mvl.handleMapUpdate(new MapEvent(this, mapTerritory));
+        }
     }
 }

@@ -2,33 +2,34 @@ package Main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-public class RiskGameMap extends JPanel {
-    private Point2D mouseClickPosition;
-    private ArrayList<MapTerritory> territories;
+public class MapView extends JPanel implements MapViewListener{
+    private MapModel mapModel;
+    private MapController mapController;
+    private DrawMap drawMap;
 
-    RiskGameMap(){
-        MapImport mapImport = new MapImport();
-        this.mouseClickPosition = new Point2D.Double(0,0);
-        this.territories = mapImport.getTerritories();
+    MapView(){
+        this.mapModel = new MapModel();
+        this.mapModel.addMapListener(this);
+        this.mapController = new MapController(this.mapModel);
+        this.drawMap = new DrawMap();
 
         // JPanel Config
         this.setLayout(new BorderLayout());
         this.setSize(new Dimension(600, 500));
-        this.add(new DrawMap(), BorderLayout.CENTER);
+        this.add(drawMap, BorderLayout.CENTER);
 
         // Mouse Listener
         MouseAdapter mouseListener = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                mouseClickPosition = e.getPoint();
-                RiskGameMap.this.repaint();
-                RiskGameMap.this.revalidate();
+                MapView.this.drawMap.mouseClickHandler(e.getPoint());
             }
         };
 
@@ -38,15 +39,43 @@ public class RiskGameMap extends JPanel {
 
     }
 
-    public Point2D getMouseClickPosition() {
-        return mouseClickPosition;
+    MapModel getMapModel(){
+        return this.mapModel;
     }
 
-    public ArrayList<MapTerritory> getTerritories() {
-        return territories;
+    @Override
+    public void handleMapUpdate(MapEvent e) {
+        MapView.this.repaint();
+        MapView.this.revalidate();
     }
 
     private class DrawMap extends JComponent {
+        AffineTransform tx;
+        Double scale;
+
+        DrawMap(){
+            super();
+            tx = new AffineTransform();
+            scale = (double) this.getWidth() /600;
+            tx.scale(scale, scale);
+        }
+
+        void mouseClickHandler(Point2D point){
+            AffineTransform tx2 = new AffineTransform();
+            Double scale2 = (double) this.getWidth() /600;
+            tx2.scale(scale2, scale2);
+
+            for(MapTerritory terr: MapView.this.mapModel.getTerritoryList()){
+                Shape territoryShape = tx2.createTransformedShape(terr.getShape());
+                //Shape territoryShape = terr.getShape();
+                if(territoryShape.contains(point)){
+                    MapView.this.mapController.actionPerformed(
+                            new ActionEvent(MapView.this, ActionEvent.ACTION_PERFORMED, terr.getId()));
+                    break;
+                }
+            }
+        }
+
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -58,26 +87,24 @@ public class RiskGameMap extends JPanel {
             graphics.setColor(Color.CYAN);
             g.fillRect(0,0, getWidth(), getHeight());
 
-            AffineTransform tx = new AffineTransform();
+            AffineTransform tx2 = new AffineTransform();
+            Double scale2 = (double) this.getWidth() /600;
+            tx2.scale(scale2, scale2);
 
-            Double scale = Double.valueOf(this.getWidth())/600;
-            tx.scale(scale, scale);
 
-            for(MapTerritory terr: RiskGameMap.this.getTerritories()){
-                Shape territoryShape = tx.createTransformedShape(terr.getShape());
-                if(territoryShape.contains(RiskGameMap.this.getMouseClickPosition())){
+            for(MapTerritory terr: MapView.this.mapModel.getTerritoryList()){
+                Shape territoryShape = tx2.createTransformedShape(terr.getShape());
+                //Shape territoryShape = terr.getShape();
+                if(terr == MapView.this.mapModel.getActiveTerritory()){
                     graphics.setColor(Color.RED);
                     graphics.fill(territoryShape);
-                    System.out.println(terr.getName());
                 } else {
                     graphics.setColor(getContinentColor(terr.getContinent()));
                     graphics.fill(territoryShape);
                     graphics.setColor(Color.BLACK);
                     graphics.draw(territoryShape);
                 }
-
             }
-
         }
 
         private Color getContinentColor(String continent){
