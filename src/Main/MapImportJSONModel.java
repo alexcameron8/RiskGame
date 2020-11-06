@@ -20,6 +20,7 @@ class MapModelTerritory {
     private String pathData;
     private String id;
     private String continent;
+    private String name;
 
     public String getPathData() {
         return pathData;
@@ -31,5 +32,9 @@ class MapModelTerritory {
 
     public String getContinent() {
         return continent;
+    }
+
+    public String getName(){
+        return name;
     }
 }
