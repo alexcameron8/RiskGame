@@ -23,10 +23,6 @@ public class RiskView extends JFrame {
 
         initSetup();
 
-
-public class RiskView extends JFrame {
-    RiskView(){
-
         this.setSize(new Dimension(800, 600));
 
         RiskModel rm = new RiskModel();
