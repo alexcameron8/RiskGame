@@ -13,7 +13,7 @@ public class PlayerBarView extends JPanel {
     private JList<Player> playersList;
     private Player[] players = {new Player("Alex"), new Player("Ben"), new Player("Thomas")};
 
-    PlayerBarView(){
+    public PlayerBarView(){
         // JPanel Config
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.setBackground(darkBlue);
