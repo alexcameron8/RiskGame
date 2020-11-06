@@ -108,13 +108,20 @@ public class MapView extends JPanel implements MapViewListener{
 
             for(MapTerritory terr: MapView.this.mapModel.getTerritoryList()){
                 Shape territoryShape = tx2.createTransformedShape(terr.getShape());
-                territoryShape.getBounds2D().getCenterX();
-                FontMetrics fontMetrics = graphics.getFontMetrics();
-                float centerX = (float) territoryShape.getBounds2D().getCenterX() - fontMetrics.stringWidth(terr.getName()) / 2;
-                float centerY = (float) territoryShape.getBounds2D().getCenterY() - fontMetrics.getHeight() + fontMetrics.getAscent();
 
+                FontMetrics fontMetrics = graphics.getFontMetrics();
+
+
+
+                String[] nameArr = terr.getName().split(" ");
                 graphics.setColor(Color.BLACK);
-                graphics.drawString(terr.getName(), centerX, centerY);
+
+                for(int i = 0; i < nameArr.length; i++){
+                    float centerX = (float) territoryShape.getBounds2D().getCenterX() - fontMetrics.stringWidth(nameArr[i]) / 2;
+                    float centerY = (float) territoryShape.getBounds2D().getCenterY() - fontMetrics.getHeight() + fontMetrics.getAscent() + i*fontMetrics.getAscent();
+                    graphics.drawString(nameArr[i], centerX, centerY);
+                }
+
             }
         }
 
