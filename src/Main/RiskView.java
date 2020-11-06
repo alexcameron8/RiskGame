@@ -9,6 +9,8 @@ import Main.PlayerBar.PlayerBarView;
 import javax.imageio.ImageIO;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -16,10 +18,12 @@ import java.io.IOException;
 public class RiskView extends JFrame {
     private RiskModel riskModel;
     private RiskController riskController;
+    private final Integer[] numSetupPlayers = {null,2,3,4,5,6};
+    private JComboBox<Integer> comboBox;
 
     RiskView(){
         this.riskModel = new RiskModel();
-        this.riskController = new RiskController(riskModel);
+        this.riskController = new RiskController(riskModel,this);
 
         initSetup();
 
@@ -43,7 +47,7 @@ public class RiskView extends JFrame {
         this.setVisible(true);
     }
     public void initSetup(){
-
+        //Welcome Screen
         ImageIcon icon = new ImageIcon("src/Main/Resources/Risk.png");
         JLabel labelIcon = new JLabel(icon);
         JPanel panel = new JPanel(new GridBagLayout());
@@ -55,7 +59,31 @@ public class RiskView extends JFrame {
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
         panel2.add(panel);
         panel2.add(text);
-        JOptionPane.showMessageDialog(this,panel2, "Welcome to Risk",JOptionPane.DEFAULT_OPTION);
+        JOptionPane startGame = new JOptionPane();
+        startGame.showMessageDialog(this,panel2, "Welcome to Risk",JOptionPane.DEFAULT_OPTION);
+
+        //Setup Screen
+        JPanel setupScreen = new JPanel();
+        setupScreen.setLayout(new BorderLayout());
+
+        //Total possible options for number of players
+        comboBox = new JComboBox<>(numSetupPlayers);
+        TitledBorder comboBoxTitle = BorderFactory.createTitledBorder("Select number of Players:");
+        comboBox.setBorder(comboBoxTitle);
+
+        //adding to panel
+        setupScreen.add(comboBox);
+
+        //ActionListener
+        comboBox.addActionListener(riskController);
+        comboBox.setActionCommand("numPlayers");
+
+        JOptionPane.showMessageDialog(this,setupScreen,"Select Number of Players.", JOptionPane.DEFAULT_OPTION );
+
+    }
+
+    public JComboBox<Integer> getComboBox(){
+        return comboBox;
     }
 
     public static void main(String[] args) {
