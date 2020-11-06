@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 public class RiskController implements ActionListener {
     private RiskModel rm;
     private RiskView rv;
-
+    private int numOfPlayers;
     public RiskController(RiskModel rm, RiskView rv){
         this.rv = rv;
         this.rm = rm;
@@ -17,7 +17,9 @@ public class RiskController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
         if(o instanceof JComboBox){
-            System.out.println("USer chose " + rv.getComboBox().getSelectedItem() + "players");
+            numOfPlayers = (Integer)rv.getPlayerBox().getSelectedItem();
+            rv.setupPlayers(numOfPlayers);
+            System.out.println("USer chose " + rv.getPlayerBox().getSelectedItem() + "players");
         }
     }
 }
