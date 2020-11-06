@@ -1,5 +1,7 @@
 package Main.PlayerBar;
 
+import Main.ActionBar.ActionBarController;
+import Main.ActionBar.ActionBarModel;
 import Player.Player;
 
 import javax.swing.*;
@@ -12,11 +14,18 @@ public class PlayerBarView extends JPanel {
     private Color darkBlue = new Color(102,178,255);
     private JList<Player> playersList;
     private Player[] players = {new Player("Alex"), new Player("Ben"), new Player("Thomas")};
+    private PlayerBarController pbc;
+    private PlayerBarModel pbm;
 
     public PlayerBarView(){
         // JPanel Config
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.setBackground(darkBlue);
+
+        pbm = new PlayerBarModel();
+        pbm.addPlayerBarModelViews(this);
+        pbc = new PlayerBarController(this, pbm);
+
         initPlayerPanel();
         initPlayersList();
     }
@@ -27,6 +36,7 @@ public class PlayerBarView extends JPanel {
         this.add(playersPanel);
     }
     public void initPlayersList(){
+        //playersList = new JList(pbm.getPlayers().toArray());          This one works but not yet cuz game doesnt work
         playersList = new JList<>(players);
         playersList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         playersList.setVisibleRowCount(1);
