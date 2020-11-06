@@ -49,6 +49,7 @@ public class RiskView extends JFrame {
         panel2.add(text);
         JOptionPane.showMessageDialog(this,panel2, "Welcome to Risk",JOptionPane.DEFAULT_OPTION);
     }
+
     public static void main(String[] args) {
         new RiskView();
     }
