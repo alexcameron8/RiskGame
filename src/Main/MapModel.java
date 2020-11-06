@@ -23,10 +23,10 @@ public class MapModel {
             if(terr.getId().equals(id)){
                 System.out.println(terr.getId());
                 activeTerritory = terr;
+                updateMapListeners(terr);
                 break;
             }
         }
-        updateMapListeners();
     }
 
     public ArrayList<MapTerritory> getTerritoryList(){
@@ -41,9 +41,9 @@ public class MapModel {
         mapViewListenerList.add(mvl);
     }
 
-    private void updateMapListeners(){
+    private void updateMapListeners(MapTerritory mapTerritory){
         for(MapViewListener mvl: mapViewListenerList){
-            mvl.handleMapUpdate(new MapEvent(this));
+            mvl.handleMapUpdate(new MapEvent(this, mapTerritory));
         }
     }
 }
