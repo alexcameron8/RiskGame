@@ -1,6 +1,4 @@
 package Main;
-import Command.*;
-import Command.Processors.*;
 import Map.*;
 import Player.Player;
 
@@ -16,7 +14,6 @@ import java.util.Random;
  */
 public class Risk {
     private static GameState state;
-    private Parser parser;
     private ArrayList<Player> players;
     private int activePlayerID;
     private Map map;
@@ -29,7 +26,6 @@ public class Risk {
      */
     Risk(){
         MapImport mapImport = new MapImport("src/Map/worldmap.json");
-        parser = new Parser(this);
         players = new ArrayList<Player>();
         activePlayerID = 0;
         map = mapImport.getMap();
@@ -173,30 +169,6 @@ public class Risk {
     }
 
     /**
-     * This method processes all potential commands entered when trying to perform actions in Risk.
-     * @param command The command being processed
-     */
-    private void processCommand(Command command){
-        CommandProcessor cp = null;
-        if(!command.isValid()){
-            System.out.println("Invalid command or wrong number of arguments. Type the command 'help' for list of valid commands.");
-            return;
-        }
-
-        if(state == GameState.MAIN_MENU){
-            cp = new MenuCommandProcessor(this, command);
-        } else if(state == GameState.NEW_GAME_SETTINGS){
-            cp = new CreateGameCommandProcessor(this, command);
-        } else if(state == GameState.IN_GAME){
-            cp = new GameCommandProcessor(this, command);
-        }
-
-        if(cp != null){
-            cp.processCommand();
-        }
-    }
-
-    /**
      * Getter method returning number of troops each player has at beginning of game based on how many players
      * there are.
      * @return The number of troops each player has
@@ -250,8 +222,6 @@ public class Risk {
         state = GameState.MAIN_MENU;
         printMenu();
         while(state != GameState.QUIT){
-            Command command = parser.getCommand();
-            processCommand(command);
 
             if(state == GameState.GENERATE_GAME){
 
