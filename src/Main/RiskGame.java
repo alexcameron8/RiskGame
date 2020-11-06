@@ -7,7 +7,7 @@ public class RiskGame extends JFrame {
     RiskGame(){
         this.setSize(new Dimension(800, 600));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        this.setJMenuBar(new MenuBarView());
         this.add(new ActionBarView(), BorderLayout.PAGE_START);
         this.add(new RiskGameMap(), BorderLayout.CENTER);
         this.add(new TerritoryInfoView(), BorderLayout.LINE_END);
