@@ -323,5 +323,8 @@ public class Player {
     public Territory getTerritory(Territory territory){
         return getTerritory(territory.getName());
     }
-
+    @Override
+    public String toString(){
+      return name;
+    }
 }
