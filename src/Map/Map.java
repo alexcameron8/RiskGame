@@ -45,6 +45,24 @@ public class Map {
     }
 
     /**
+     * Gets list of territories from all continents
+     *
+     * @return ArrayList
+     */
+    public Territory getTerritory(String name){
+        ArrayList<Territory> territories = new ArrayList<Territory>();
+        for(Continent cont: this.continents.values()){
+            territories.addAll(cont.getTerritories());
+        }
+        for(Territory terr: territories){
+            if(terr.getName().equals(name)){
+                return terr;
+            }
+        }
+        return null;
+    }
+
+    /**
      * get a continent that's in the map
      * if not return null
      *

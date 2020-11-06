@@ -1,5 +1,7 @@
 package Main;
 
+import Map.Territory;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,7 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 
 public class MapView extends JPanel implements MapViewListener{
     private MapModel mapModel;
@@ -65,7 +66,7 @@ public class MapView extends JPanel implements MapViewListener{
             Double scale2 = (double) this.getWidth() /600;
             tx2.scale(scale2, scale2);
 
-            for(MapTerritory terr: MapView.this.mapModel.getTerritoryList()){
+            for(Territory terr: MapView.this.mapModel.getTerritoryList()){
                 Shape territoryShape = tx2.createTransformedShape(terr.getShape());
                 //Shape territoryShape = terr.getShape();
                 if(territoryShape.contains(point)){
@@ -92,14 +93,14 @@ public class MapView extends JPanel implements MapViewListener{
             tx2.scale(scale2, scale2);
 
 
-            for(MapTerritory terr: MapView.this.mapModel.getTerritoryList()){
+            for(Territory terr: MapView.this.mapModel.getTerritoryList()){
                 Shape territoryShape = tx2.createTransformedShape(terr.getShape());
                 //Shape territoryShape = terr.getShape();
                 if(terr == MapView.this.mapModel.getActiveTerritory()){
                     graphics.setColor(Color.RED);
                     graphics.fill(territoryShape);
                 } else {
-                    graphics.setColor(getContinentColor(terr.getContinent()));
+                    graphics.setColor(getContinentColor(terr.getContinent().getId()));
                     graphics.fill(territoryShape);
                     graphics.setColor(Color.BLACK);
                     graphics.draw(territoryShape);
@@ -128,10 +129,10 @@ public class MapView extends JPanel implements MapViewListener{
 
 
         private Color getContinentColor(String continent){
-            if(continent.equals("northamerica")){
+            if(continent.equals("northAmerica")){
                 return Color.YELLOW;
             }
-            if(continent.equals("southamerica")){
+            if(continent.equals("southAmerica")){
                 return Color.MAGENTA;
             }
             if(continent.equals("europe")){

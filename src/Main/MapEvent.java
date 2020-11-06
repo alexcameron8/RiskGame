@@ -1,9 +1,11 @@
 package Main;
 
+import Map.Territory;
+
 import java.util.EventObject;
 
 public class MapEvent extends EventObject {
-    private MapTerritory mapTerritory;
+    private Territory territory;
 
     /**
      * Constructs a prototypical Event.
@@ -11,16 +13,17 @@ public class MapEvent extends EventObject {
      * @param source the object on which the Event initially occurred
      * @throws IllegalArgumentException if source is null
      */
-    public MapEvent(Object source, MapTerritory mapTerritory) {
+    public MapEvent(Object source, Territory territory) {
         super(source);
-        this.mapTerritory = mapTerritory;
+        this.territory = territory;
     }
 
     /**
      * Returns the Territory which the click action that generated the event was on.
      * @return Territory that was selected.
      */
-    public MapTerritory getMapTerritory(){
-        return this.mapTerritory;
+    public Territory getMapTerritory(){
+        return this.territory;
     }
 }
+

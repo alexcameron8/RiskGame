@@ -1,7 +1,10 @@
 package Main;
-import Map.Territory;
-import Map.WorldMap;
+import Map.*;
 import Player.Player;
+
+import Main.*;
+
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -11,6 +14,7 @@ import java.util.Random;
  */
 public class Risk {
     private static GameState state;
+    private Parser parser;
     private ArrayList<Player> players;
     private int activePlayerID;
     private WorldMap map;
@@ -21,9 +25,21 @@ public class Risk {
      * This class creates a new Risk game.
      */
     Risk(){
+        MapImport mapImport = new MapImport("src/Map/worldmap.json");
         players = new ArrayList<Player>();
         activePlayerID = 0;
         map = new WorldMap();
+    }
+
+    /**
+     * the printMenu method prints all possible commands when in the opening menu when launching the game.
+     */
+    private void printMenu(){
+        System.out.println("Welcome to Main.Risk: Global Domination!");
+        System.out.println("To get started, please select and option:");
+        System.out.println("(start) Start new game.");
+        System.out.println("(help) Display help menu. Available anywhere.");
+        System.out.println("(quit) Quit");
     }
 
     /**
@@ -45,6 +61,7 @@ public class Risk {
             if(players.size() == 1){
                 System.out.println(players.get(0).getName() + " has won");
                 state = GameState.MAIN_MENU;
+                printMenu();
                 return;
             }
             if(players.get(activePlayerID).getListOfTerritories().size()==0){
@@ -152,6 +169,30 @@ public class Risk {
     }
 
     /**
+     * This method processes all potential commands entered when trying to perform actions in Risk.
+     * @param command The command being processed
+     */
+    private void processCommand(Command command){
+        CommandProcessor cp = null;
+        if(!command.isValid()){
+            System.out.println("Invalid command or wrong number of arguments. Type the command 'help' for list of valid commands.");
+            return;
+        }
+
+        if(state == GameState.MAIN_MENU){
+            cp = new MenuCommandProcessor(this, command);
+        } else if(state == GameState.NEW_GAME_SETTINGS){
+            cp = new CreateGameCommandProcessor(this, command);
+        } else if(state == GameState.IN_GAME){
+            cp = new GameCommandProcessor(this, command);
+        }
+
+        if(cp != null){
+            cp.processCommand();
+        }
+    }
+
+    /**
      * Getter method returning number of troops each player has at beginning of game based on how many players
      * there are.
      * @return The number of troops each player has
@@ -204,6 +245,7 @@ public class Risk {
      */
     public void play(){
         state = GameState.MAIN_MENU;
+        printMenu();
         while(state != GameState.QUIT){
             if(state == GameState.GENERATE_GAME){
 
