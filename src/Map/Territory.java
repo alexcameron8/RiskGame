@@ -1,5 +1,7 @@
 package Map;
 
+import Player.Player;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,6 +17,7 @@ import java.util.HashMap;
 
 public class Territory {
 
+    private Player owner;
     private String name;
     private HashMap<String, Territory> neighbours;
     private int soldiers;
@@ -29,6 +32,25 @@ public class Territory {
         this.name = name;
         neighbours = new  HashMap<>();
         soldiers = 0;
+        owner = null;
+    }
+
+    /**
+     * setOwner sets a owner for the territory
+     *
+     * @param owner new owner of territory.
+     */
+    public void setOwner(Player owner){
+        this.owner=owner;
+    }
+
+    /**
+     * getOwner owner for the territory
+     *
+     * @return player
+     */
+    public Player getOwner(){
+        return owner;
     }
 
     /**
