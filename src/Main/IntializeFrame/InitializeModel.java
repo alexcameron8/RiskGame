@@ -31,7 +31,6 @@ public class InitializeModel {
             for(String playerName :iv.getNameOfPlayers()){
                 playerNames.add(playerName);
             }
-           iv.dispose();
         }
     }
 
@@ -41,11 +40,5 @@ public class InitializeModel {
 
     public int getNumberOfPlayers(){
         return numberOfPlayers;
-    }
-
-    public void cancel() {
-        for(InitializeView iv: initializeViews){
-            iv.dispose();
-        }
     }
 }
