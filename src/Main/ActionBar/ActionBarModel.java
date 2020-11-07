@@ -40,7 +40,12 @@ public class ActionBarModel {
         return;
     }
     public void deployTroops(Territory territory, int numOfTroops){
-        riskModel.getActivePlayer().placeReinforcement(territory, numOfTroops);
+        for(ActionBarView actionBarView : actionBarViews){
+            actionBarView.handleTroopDeployment(new ActionBarEvent(this,riskModel.getActivePlayer().getReinforcements()));
+        }
+        if(numOfTroops>0) {
+            riskModel.getActivePlayer().placeReinforcement(territory, numOfTroops);
+        }
     }
 
     public void nextTurn(){

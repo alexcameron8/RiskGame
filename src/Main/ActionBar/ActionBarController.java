@@ -14,7 +14,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
     private ActionBarView abv;
     private ActionBarModel abm;
     private Territory territory;
-    private int numOfTroops = 0;
+    private int numOfTroops;
 
     public ActionBarController(ActionBarView abv, ActionBarModel abm) {
         this.abv = abv;
@@ -46,12 +46,16 @@ public class ActionBarController implements ActionListener, MapViewListener {
                 abm.getRiskModel().play();
                 System.out.println("Test: play()");
             } else if(e.getActionCommand().equals("numTroops")) {
-                //if(numOfTroops!=0 && abv.getNumberOfTroops().getSelectedItem()!=null) {
-                numOfTroops = (Integer) abv.getNumberOfTroops().getSelectedItem();
-                System.out.println("Number of troops to deploy : " + numOfTroops);
-              //  }
+                if((Integer) abv.getNumberOfTroops().getSelectedItem()!=null) {
+                    numOfTroops = (Integer) abv.getNumberOfTroops().getSelectedItem();
+                    System.out.println("Number of troops to deploy : " + numOfTroops);
+                }else{
+                    System.out.println("error");
+                }
             } else if (e.getActionCommand().equals("deploy")) {
                 abm.deployTroops(territory, numOfTroops);
+                abv.removeDeployTroopsBar();
+                abv.updateUI();
                  System.out.println("place troops");
          }
     }
@@ -62,7 +66,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
     @Override
     public void handleMapUpdate(MapEvent e){
         territory = e.getMapTerritory();
-        System.out.println("This is a tes for " + territory.getName());3
+        System.out.println("This is a test for mapevent handler:" + territory.getName());
         setTerritory(territory);
     }
     public Territory getTerritory() {

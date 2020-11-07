@@ -141,7 +141,9 @@ public class Player {
         }
     }
 
-
+    public int getReinforcements() {
+        return reinforcements;
+    }
 
     /**
      * get the number of reinforcements the player gets

@@ -35,11 +35,11 @@ public class RiskView extends JFrame implements RiskViewListener{
         MapView mapView = new MapView();
         TerritoryInfoView territoryInfoView = new TerritoryInfoView(riskModel);
         mapView.getMapModel().addMapListener(territoryInfoView);
+        ActionBarView actionBarView = new ActionBarView(this, riskModel);
 
-        ActionBarViewListener actionBarViewListener = new ActionBarViewListener(riskModel);
-        mapView.getMapModel().addMapListener(actionBarViewListener);
+        mapView.getMapModel().addMapListener(actionBarView.getAbc());
 
-        this.add(new ActionBarView(this, riskModel), BorderLayout.PAGE_START);
+        this.add(actionBarView, BorderLayout.PAGE_START);
         this.add(mapView, BorderLayout.CENTER);
         this.add(territoryInfoView, BorderLayout.LINE_END);
         this.add(new PlayerBarView(riskModel), BorderLayout.PAGE_END);

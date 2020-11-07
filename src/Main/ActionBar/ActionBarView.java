@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 //import Resources.*;
-public class ActionBarView extends JPanel {
+public class ActionBarView extends JPanel implements ActionBarViewListener {
 
     private JButton placeTroops;
     private JButton attack;
@@ -25,6 +25,8 @@ public class ActionBarView extends JPanel {
     private RiskView riskView;
     private JComboBox numberOfTroops;
     private JButton deployButton;
+    private JPanel deployPanel;
+    private int reinforcements;
 
     public ActionBarView(RiskView riskView, RiskModel riskModel){
         this.riskView = riskView;
@@ -81,17 +83,23 @@ public class ActionBarView extends JPanel {
         testStart.addActionListener(abc);
         testStart.setActionCommand("setup");
     }
-    public void enableDeployButton(){
-        deployButton.setEnabled(true);
-    }
+
     public void deployTroopsInfo(){
-        JPanel deployPanel = new JPanel();
+        deployPanel = new JPanel();
         JLabel deployInfo = new JLabel("Click Country. Choose reinforcements:");
         numberOfTroops = new JComboBox<Integer>();
         deployButton= new JButton("Deploy Troops");
         deployButton.setEnabled(true);
-        for(int i=1; i<= riskModel.getActivePlayer().getReinforcement();i++){
-            numberOfTroops.addItem(i);
+        if(riskModel.getActivePlayer().getReinforcement()>0) {
+            for (int i = 1; i <= riskModel.getActivePlayer().getReinforcement(); i++) {
+                numberOfTroops.addItem(i);
+            }
+        }else{
+            numberOfTroops.setEnabled(false);
+        }
+        if(reinforcements==0){
+          //  deployButton.setEnabled(false);
+            updateUI();
         }
         deployPanel.add(deployInfo);
         deployPanel.add(numberOfTroops);
@@ -106,8 +114,26 @@ public class ActionBarView extends JPanel {
         deployButton.setActionCommand("deploy");
         updateUI();
     }
+    public void removeDeployTroopsBar(){
+        this.remove(deployPanel);
+    }
     public JComboBox<Integer> getNumberOfTroops(){
         return numberOfTroops;
     }
+    public ActionBarController getAbc(){
+        return abc;
+    }
 
+    @Override
+    public void handleTroopDeployment(ActionBarEvent e){
+        if(reinforcements>=0) {
+            reinforcements = e.getReinforcements();
+            System.out.println("The (1) reinforcements are: " + reinforcements);
+        }else if(reinforcements<0){
+            reinforcements =0;
+            System.out.println("The (2) reinforcements are: " + reinforcements);
+        }else{
+            System.out.println("different error (3).");
+        }
+    }
 }
