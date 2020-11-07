@@ -7,6 +7,7 @@ class MapImportJSONModel {
     private ArrayList<ArrayList<String>> neighbours = new ArrayList<>();
     private ArrayList<MapModelTerritory> territories = new ArrayList<>();
     private ArrayList<MapModelContinent> continents = new ArrayList<>();
+    private ArrayList<String> waterCrossings = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -23,6 +24,8 @@ class MapImportJSONModel {
     public ArrayList<MapModelContinent> getContinents() {
         return continents;
     }
+
+    public ArrayList<String> getWaterCrossings(){return waterCrossings; }
 
 }
 

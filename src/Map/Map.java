@@ -1,5 +1,9 @@
 package Map;
 
+import org.apache.batik.parser.AWTPathProducer;
+import org.apache.batik.parser.PathParser;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 /**
@@ -13,6 +17,9 @@ import java.util.HashMap;
 public class Map {
 
     private HashMap<String, Continent> continents;
+    private ArrayList<String> waterCrossings;
+
+
 
     /**
      * Constructor of map creates a map with a
@@ -20,6 +27,16 @@ public class Map {
      */
     public Map() {
         continents = new HashMap<>();
+        waterCrossings = new ArrayList<>();
+    }
+
+    public void addWaterCrossing(String path){
+
+        waterCrossings.add(path);
+    }
+
+    public ArrayList<String> getWaterCrossings(){
+        return this.waterCrossings;
     }
 
     /**
