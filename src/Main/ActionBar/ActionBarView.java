@@ -1,5 +1,9 @@
 package Main.ActionBar;
 
+import Main.RiskController;
+import Main.RiskModel;
+import Main.RiskView;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -17,13 +21,17 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
     private Image attackImg;
     private Color darkBlue = new Color(102,178,255);
     private ActionBarController abc;
+    private RiskModel riskModel;
+    private RiskView riskView;
 
-    public ActionBarView(){
+    public ActionBarView(RiskView riskView, RiskModel riskModel){
+        this.riskView = riskView;
+        this.riskModel = riskModel;
         // JPanel Config
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.setBackground(new Color(153,204,255));
 
-        ActionBarModel abm = new ActionBarModel();
+        ActionBarModel abm = new ActionBarModel(this.riskModel,this.riskView);
         abm.addActionBarModelViews(this);
         abc = new ActionBarController(this, abm);
 

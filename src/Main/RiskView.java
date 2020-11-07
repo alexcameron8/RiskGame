@@ -30,18 +30,17 @@ public class RiskView extends JFrame {
         riskModel.addRiskView(this);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      this.setJMenuBar(new MenuBarView());
+        this.setJMenuBar(new MenuBarView());
 
         MapView mapView = new MapView();
         TerritoryInfoView territoryInfoView = new TerritoryInfoView(riskModel);
-       mapView.getMapModel().addMapListener(territoryInfoView);
+        mapView.getMapModel().addMapListener(territoryInfoView);
 
-        this.add(new ActionBarView(), BorderLayout.PAGE_START);
+        this.add(new ActionBarView(this, riskModel), BorderLayout.PAGE_START);
         this.add(mapView, BorderLayout.CENTER);
         this.add(territoryInfoView, BorderLayout.LINE_END);
         this.add(new PlayerBarView(riskModel), BorderLayout.PAGE_END);
 
-      //  this.setVisible(true);
     }
 
     public void welcomeScreen(){
@@ -100,6 +99,11 @@ public class RiskView extends JFrame {
         //sets GUI visible
         this.setVisible(true);
     }
+    public RiskModel getRiskModel(){
+        return riskModel;
+    }
+
+
 
     public JComboBox<Integer> getPlayerBox(){
         return playerBox;
