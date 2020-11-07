@@ -21,7 +21,6 @@ public class TerritoryInfoView extends JPanel implements MapViewListener{
     }
 
     public void setInfo(Territory territory){
-        System.out.println("Updating");
         String info = territory.getName();
         info += "\n\tOwner: "+(territory.getOwner()==null? "none":territory.getOwner().getName());
         info += "\n\tTroops: "+territory.getSoldiers();
