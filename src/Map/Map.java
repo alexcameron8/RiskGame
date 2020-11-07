@@ -18,6 +18,7 @@ public class Map {
 
     private HashMap<String, Continent> continents;
     private ArrayList<String> waterCrossings;
+    private ArrayList<Integer> backgroundColor;
 
 
 
@@ -28,6 +29,7 @@ public class Map {
     public Map() {
         continents = new HashMap<>();
         waterCrossings = new ArrayList<>();
+        backgroundColor = new ArrayList<>(3);
     }
 
     public void addWaterCrossing(String path){
@@ -102,4 +104,11 @@ public class Map {
         }
         return continents;
     }
+
+    public ArrayList<Integer> getBackgroundColor(){ return backgroundColor; }
+
+    public void setBackgroundColor(ArrayList<Integer> backgroundColor){
+        this.backgroundColor = backgroundColor;
+    }
+
 }

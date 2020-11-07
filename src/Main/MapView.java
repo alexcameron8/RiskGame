@@ -85,7 +85,7 @@ public class MapView extends JPanel implements MapViewListener{
             graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             // Draw Background
-            graphics.setColor(Color.CYAN);
+            graphics.setColor(MapView.this.mapModel.getBackgroundColor());
             graphics.fillRect(0,0, getWidth(), getHeight());
 
             AffineTransform tx2 = new AffineTransform();
@@ -108,7 +108,11 @@ public class MapView extends JPanel implements MapViewListener{
                     graphics.setColor(Color.RED);
                     graphics.fill(territoryShape);
                 } else {
-                    graphics.setColor(getContinentColor(terr.getContinent().getId()));
+                    Color terrColor = new Color(
+                            terr.getContinent().getColor().get(0),
+                            terr.getContinent().getColor().get(1),
+                            terr.getContinent().getColor().get(2));
+                    graphics.setColor(terrColor);
                     graphics.fill(territoryShape);
                     graphics.setColor(Color.BLACK);
                     graphics.draw(territoryShape);
@@ -117,6 +121,7 @@ public class MapView extends JPanel implements MapViewListener{
 
             for(Territory terr: MapView.this.mapModel.getTerritoryList()){
                 Shape territoryShape = tx2.createTransformedShape(terr.getShape());
+                graphics.setFont(new Font("default", Font.BOLD, 14));
                 FontMetrics fontMetrics = graphics.getFontMetrics();
                 String[] nameArr = terr.getName().split(" ");
                 graphics.setColor(Color.BLACK);
@@ -128,31 +133,6 @@ public class MapView extends JPanel implements MapViewListener{
                 }
 
             }
-        }
-
-
-
-        private Color getContinentColor(String continent){
-            if(continent.equals("northAmerica")){
-                return Color.YELLOW;
-            }
-            if(continent.equals("southAmerica")){
-                return Color.MAGENTA;
-            }
-            if(continent.equals("europe")){
-                return Color.BLUE;
-            }
-            if(continent.equals("africa")){
-                return Color.ORANGE;
-            }
-            if(continent.equals("asia")){
-                return Color.GREEN;
-            }
-            if(continent.equals("australia")){
-                return Color.PINK;
-            }
-
-            return Color.WHITE;
         }
     }
 }
