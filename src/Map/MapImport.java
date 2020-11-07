@@ -71,6 +71,9 @@ public class MapImport {
         for(Continent continent: continents){
             map.addContinent(continent);
         }
+        for(String waterCrossingPath: mapImportJSONModel.getWaterCrossings()){
+            map.addWaterCrossing(waterCrossingPath);
+        }
     }
 
     public ArrayList<Territory> getTerritories(){

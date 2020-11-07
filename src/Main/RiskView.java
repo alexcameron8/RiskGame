@@ -32,7 +32,7 @@ public class RiskView extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setJMenuBar(new MenuBarView());
 
-        MapView mapView = new MapView();
+        MapView mapView = new MapView(this.riskModel);
         TerritoryInfoView territoryInfoView = new TerritoryInfoView(riskModel);
         mapView.getMapModel().addMapListener(territoryInfoView);
 

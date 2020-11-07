@@ -15,8 +15,8 @@ public class MapView extends JPanel implements MapViewListener{
     private MapController mapController;
     private DrawMap drawMap;
 
-    MapView(){
-        this.mapModel = new MapModel();
+    MapView(RiskModel riskModel){
+        this.mapModel = new MapModel(riskModel);
         this.mapModel.addMapListener(this);
         this.mapController = new MapController(this.mapModel);
         this.drawMap = new DrawMap();
@@ -93,9 +93,17 @@ public class MapView extends JPanel implements MapViewListener{
             tx2.scale(scale2, scale2);
 
 
+            graphics.setColor(Color.BLACK);
+            graphics.setStroke(new BasicStroke(2));
+            for(Shape waterCrossing: MapView.this.getMapModel().getWaterCrossings()){
+                Shape waterCrossingScaledShape = tx2.createTransformedShape(waterCrossing);
+                graphics.draw(waterCrossingScaledShape);
+            }
+
+
+            graphics.setStroke(new BasicStroke(1));
             for(Territory terr: MapView.this.mapModel.getTerritoryList()){
                 Shape territoryShape = tx2.createTransformedShape(terr.getShape());
-                //Shape territoryShape = terr.getShape();
                 if(terr == MapView.this.mapModel.getActiveTerritory()){
                     graphics.setColor(Color.RED);
                     graphics.fill(territoryShape);
@@ -109,11 +117,7 @@ public class MapView extends JPanel implements MapViewListener{
 
             for(Territory terr: MapView.this.mapModel.getTerritoryList()){
                 Shape territoryShape = tx2.createTransformedShape(terr.getShape());
-
                 FontMetrics fontMetrics = graphics.getFontMetrics();
-
-
-
                 String[] nameArr = terr.getName().split(" ");
                 graphics.setColor(Color.BLACK);
 
