@@ -15,15 +15,6 @@ public class RiskController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Object o = e.getSource();
-        if (o instanceof JComboBox) {
-            if (riskView.getPlayerBox().getSelectedItem() != null) {
-                riskView.setNumOfPlayers((Integer) riskView.getPlayerBox().getSelectedItem());
-            }
-        }else if(o instanceof JButton){
-            if(e.getActionCommand().equals("setup")){
-                riskModel.play();
-            }
-        }
+
     }
 }

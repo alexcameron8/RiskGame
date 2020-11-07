@@ -7,6 +7,9 @@ class MapImportJSONModel {
     private ArrayList<ArrayList<String>> neighbours = new ArrayList<>();
     private ArrayList<MapModelTerritory> territories = new ArrayList<>();
     private ArrayList<MapModelContinent> continents = new ArrayList<>();
+    private ArrayList<String> waterCrossings = new ArrayList<>();
+    private ArrayList<Integer> backgroundColor = new ArrayList<>(3);
+
 
     public String getName() {
         return name;
@@ -23,6 +26,10 @@ class MapImportJSONModel {
     public ArrayList<MapModelContinent> getContinents() {
         return continents;
     }
+
+    public ArrayList<String> getWaterCrossings(){return waterCrossings; }
+
+    public ArrayList<Integer> getBackgroundColor(){ return backgroundColor; }
 
 }
 
@@ -53,6 +60,7 @@ class MapModelContinent {
     private String id;
     private String name;
     private int numberOfReinforcement;
+    private ArrayList<Integer> color = new ArrayList<>(3);
 
 
     public String getId() {
@@ -67,4 +75,6 @@ class MapModelContinent {
     public String getName(){
         return name;
     }
+
+    public ArrayList<Integer> getColor(){ return color; }
 }

@@ -1,6 +1,7 @@
 package Main;
 
 import Main.ActionBar.*;
+import Main.IntializeFrame.InitializeView;
 import Main.PlayerBar.*;
 import Player.Player;
 
@@ -11,28 +12,33 @@ import java.awt.*;
 public class RiskView extends JFrame implements RiskViewListener{
     private RiskModel riskModel;
     private RiskController riskController;
-    private final Integer[] numSetupPlayers = {null,2,3,4,5,6};
-    private JComboBox<Integer> playerBox;
-    private int numofPlayers;
 
     RiskView(){
+        super("Risk");
         this.riskModel = new RiskModel();
         this.riskController = new RiskController(riskModel,this);
+        riskModel.setState(GameState.MAIN_MENU);
         welcomeScreen();
-        initSetup();
-        if(numofPlayers>1 || numofPlayers < 7) {
-            setupPlayers(numofPlayers);
-        }else{
-            initSetup();
-        }
-        this.setSize(new Dimension(1000, 800));
 
+
+        InitializeView initializeGame = new InitializeView();
+        JOptionPane.showConfirmDialog(this, initializeGame, "Initialize Game ", JOptionPane.OK_CANCEL_OPTION);
+        riskModel.setState(GameState.GENERATE_GAME);
+
+
+        for(String playerName: initializeGame.getNameOfPlayers()){
+            riskModel.addPlayer(new Player(playerName));
+        }
+        riskModel.play();
+
+        this.setSize(new Dimension(800, 600));
+        this.setVisible(true);
         riskModel.addRiskView(this);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setJMenuBar(new MenuBarView());
 
-        MapView mapView = new MapView();
+        MapView mapView = new MapView(this.riskModel);
         TerritoryInfoView territoryInfoView = new TerritoryInfoView(riskModel);
         mapView.getMapModel().addMapListener(territoryInfoView);
         ActionBarView actionBarView = new ActionBarView(this, riskModel);
@@ -62,60 +68,11 @@ public class RiskView extends JFrame implements RiskViewListener{
         startGame.showMessageDialog(this,panel2, "Welcome to Risk",JOptionPane.DEFAULT_OPTION);
 
     }
-    public void initSetup(){
 
-        //Setup panel
-        JPanel setupScreen = new JPanel();
-        setupScreen.setLayout(new BorderLayout());
-
-        //Total possible options for number of players
-        playerBox = new JComboBox<>(numSetupPlayers);
-        TitledBorder comboBoxTitle = BorderFactory.createTitledBorder("Select number of Players:");
-        playerBox.setBorder(comboBoxTitle);
-
-        //adding to panel
-        setupScreen.add(playerBox);
-
-        //ActionListener
-        playerBox.addActionListener(riskController);
-        playerBox.setActionCommand("numPlayers");
-
-        JOptionPane selectPlayers = new JOptionPane();
-        selectPlayers.showMessageDialog(this,setupScreen,"Select Number of Players.", JOptionPane.DEFAULT_OPTION );
-
-    }
-
-    public void setNumOfPlayers(int numOfPlayers){
-        this.numofPlayers=numOfPlayers;
-    }
-
-    public void setupPlayers(int numOfPlayers){
-        for(int i=0;i<numOfPlayers;i++){
-            String s= "Enter player name (" + (i+1) + "/" + numOfPlayers + ")";
-
-            String name = "";
-            while(name.isEmpty()){
-                name =JOptionPane.showInputDialog(this,s);
-            }
-            riskModel.addPlayer( new Player(name));
-        }
-        //sets GUI visible
-        this.setVisible(true);
-    }
     public RiskModel getRiskModel(){
         return riskModel;
     }
 
-
-
-    public JComboBox<Integer> getPlayerBox(){
-        return playerBox;
-    }
-
-    @Override
-    public void handleTurnUpdate(RiskEvent event){
-        Turn currentTurn = event.getCurrentTurn();
-    }
 
     public static void main(String[] args) {
         new RiskView();

@@ -18,6 +18,7 @@ public class Continent {
     private String id;
     private HashMap<String, Territory> territories;
     private int numberOfReinforcement;
+    private ArrayList<Integer> color = new ArrayList<>(3);
 
     /**
      * Constructor for Continent. Creates a Continent
@@ -25,10 +26,11 @@ public class Continent {
      *
      * @param name Continent name
      */
-    public Continent(String name, String id, int numberOfReinforcement){
+    public Continent(String name, String id, int numberOfReinforcement, ArrayList<Integer> color){
         this.name = name;
         this.id = id;
         this.numberOfReinforcement = numberOfReinforcement;
+        this.color = color;
         territories = new HashMap<>();
     }
 
@@ -123,6 +125,10 @@ public class Continent {
         if(getTerritory(territoryName) == null)
             return false;
         return true;
+    }
+
+    public ArrayList<Integer> getColor(){
+        return this.color;
     }
 
 

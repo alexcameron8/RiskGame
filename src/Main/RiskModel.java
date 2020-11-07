@@ -9,11 +9,12 @@ import java.util.List;
 import java.util.Random;
 
 public class RiskModel {
+    private static GameState state;
     private ArrayList<Player> players;
     private int activePlayerID;
     private Turn currentTurn;
     private Map map;
-    private List<RiskViewListener> riskViewListeners;
+
     RiskModel(){
         MapImport mapImport = new MapImport("src/Map/worldmap.json");
         players = new ArrayList<Player>();
@@ -46,6 +47,7 @@ public class RiskModel {
         if(currentTurn.isTurnComplete()){
             if(players.size() == 1){
                 System.out.println(players.get(0).getName() + " has won");
+                state = GameState.MAIN_MENU;
                 return;
             }
             if(players.get(activePlayerID).getListOfTerritories().size()==0){

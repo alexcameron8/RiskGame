@@ -52,7 +52,7 @@ public class MapImport {
             e.printStackTrace();
         }
         for(MapModelContinent mmc: mapImportJSONModel.getContinents()) {
-            continents.add(new Continent(mmc.getName(), mmc.getId(), mmc.getNumberOfReinforcement()));
+            continents.add(new Continent(mmc.getName(), mmc.getId(), mmc.getNumberOfReinforcement(), mmc.getColor()));
         }
         for (MapModelTerritory mmt: mapImportJSONModel.getTerritories()) {
             territories.add(new Territory(mmt.getName(), mmt.getId(), getContinent(mmt.getContinent()), mmt.getPathData()));
@@ -71,6 +71,11 @@ public class MapImport {
         for(Continent continent: continents){
             map.addContinent(continent);
         }
+        for(String waterCrossingPath: mapImportJSONModel.getWaterCrossings()){
+            map.addWaterCrossing(waterCrossingPath);
+        }
+
+        map.setBackgroundColor(mapImportJSONModel.getBackgroundColor());
     }
 
     public ArrayList<Territory> getTerritories(){
