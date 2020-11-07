@@ -12,7 +12,7 @@ public class TerritoryInfoView extends JPanel implements MapViewListener{
     TerritoryInfoView(RiskModel rm){
         // JPanel Config
         this.setLayout(new BorderLayout());
-        Color background = new Color(0,50,255,50);
+        Color background = new Color(174,187,239,255);
         info1.setEditable(false);
         info1.setTabSize(4);
         info1.setBackground(background);
@@ -21,6 +21,7 @@ public class TerritoryInfoView extends JPanel implements MapViewListener{
     }
 
     public void setInfo(Territory territory){
+        System.out.println("Updating");
         String info = territory.getName();
         info += "\n\tOwner: "+(territory.getOwner()==null? "none":territory.getOwner().getName());
         info += "\n\tTroops: "+territory.getSoldiers();
