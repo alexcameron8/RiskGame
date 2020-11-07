@@ -20,6 +20,10 @@ public class RiskController implements ActionListener {
             if (riskView.getPlayerBox().getSelectedItem() != null) {
                 riskView.setNumOfPlayers((Integer) riskView.getPlayerBox().getSelectedItem());
             }
+        }else if(o instanceof JButton){
+            if(e.getActionCommand().equals("setup")){
+                riskModel.play();
+            }
         }
     }
 }

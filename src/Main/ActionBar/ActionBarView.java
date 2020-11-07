@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 //import Resources.*;
-public class ActionBarView extends JPanel implements ActionBarViewListener {
+public class ActionBarView extends JPanel {
 
     private JButton placeTroops;
     private JButton attack;
@@ -23,6 +23,8 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
     private ActionBarController abc;
     private RiskModel riskModel;
     private RiskView riskView;
+    private JComboBox numberOfTroops;
+    private JButton deployButton;
 
     public ActionBarView(RiskView riskView, RiskModel riskModel){
         this.riskView = riskView;
@@ -71,9 +73,41 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         attack.setActionCommand("attack");
         nextTurn.addActionListener(abc);
         nextTurn.setActionCommand("next");
-    }
-    @Override
-    public void handleActionBarUpdate(ActionBarEvent e){
 
+
+        //delete this
+        JButton testStart = new JButton("Test Start");
+        this.add(testStart);
+        testStart.addActionListener(abc);
+        testStart.setActionCommand("setup");
     }
+    public void enableDeployButton(){
+        deployButton.setEnabled(true);
+    }
+    public void deployTroopsInfo(){
+        JPanel deployPanel = new JPanel();
+        JLabel deployInfo = new JLabel("Click Country. Choose reinforcements:");
+        numberOfTroops = new JComboBox<Integer>();
+        deployButton= new JButton("Deploy Troops");
+        deployButton.setEnabled(true);
+        for(int i=1; i<= riskModel.getActivePlayer().getReinforcement();i++){
+            numberOfTroops.addItem(i);
+        }
+        deployPanel.add(deployInfo);
+        deployPanel.add(numberOfTroops);
+        deployPanel.add(deployButton);
+        deployPanel.setBackground(darkBlue);
+        this.add(deployPanel);
+
+        //adding Actionlisteners
+        numberOfTroops.addActionListener(abc);
+        numberOfTroops.setActionCommand("numTroops");
+        deployButton.addActionListener(abc);
+        deployButton.setActionCommand("deploy");
+        updateUI();
+    }
+    public JComboBox<Integer> getNumberOfTroops(){
+        return numberOfTroops;
+    }
+
 }

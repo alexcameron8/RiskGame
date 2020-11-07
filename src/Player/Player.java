@@ -203,6 +203,7 @@ public class Player {
     public void placeReinforcement(Territory territory, int numberOfReinforcement) {
         if (hasTerritory(territory)) {
             territory.addSoldiers(numberOfReinforcement);
+            System.out.println("placed" + numberOfReinforcement + " soldiers in " + territory.getName());
             reinforcements -= numberOfReinforcement;
         }
     }

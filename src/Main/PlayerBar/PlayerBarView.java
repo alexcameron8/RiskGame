@@ -1,17 +1,22 @@
 package Main.PlayerBar;
 
 import Main.PlayerBar.*;
+import Main.RiskEvent;
 import Main.RiskModel;
+import Main.RiskViewListener;
+import Main.Turn;
 import Player.Player;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.Position;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class PlayerBarView extends JPanel {
+public class PlayerBarView extends JPanel implements RiskViewListener {
 
     private Color darkBlue = new Color(102,178,255);
+    private DefaultListModel<Player> model;
     private JList<Player> playersList;
     private RiskModel rm;
     private PlayerBarController pbc;
@@ -37,12 +42,11 @@ public class PlayerBarView extends JPanel {
         this.add(playersPanel);
     }
     public void initPlayersList(){
+        model = new DefaultListModel<Player>();
         for(Player player: pbm.getPlayers()){
-            System.out.println(player);
+            model.addElement(player);
         }
-
-        playersList = new JList(pbm.getPlayers().toArray());
-
+        playersList = new JList<>(model);
         DefaultListCellRenderer renderer= (DefaultListCellRenderer) playersList.getCellRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
 
@@ -51,6 +55,19 @@ public class PlayerBarView extends JPanel {
         playersList.setOpaque(false);
         playersList.setCellRenderer(new TransparentListCellRenderer());
         this.add(playersList);
+    }
+
+    @Override
+    public void handleTurnUpdate(RiskEvent e){
+        Turn currentTurn = e.getCurrentTurn();
+        ArrayList<Player> players = e.getPlayers();
+        int activePlayerID = e.getActivePlayerID();
+        for(Player player : players){
+            //not done.
+            if(model.contains(player)){
+                //set the current players box to a different colour
+            }
+        }
     }
 
     public class TransparentListCellRenderer extends DefaultListCellRenderer {
@@ -63,31 +80,4 @@ public class PlayerBarView extends JPanel {
         }
 
     }
-    class CellRenderer extends JLabel implements ListCellRenderer {
-        public CellRenderer() {
-            setOpaque(true);
-            setHorizontalAlignment(CENTER);
-            setVerticalAlignment(CENTER);
-        }
-
-        public Component getListCellRendererComponent(
-                JList list,
-                Object displayItem,
-                int index,
-                boolean isSelected,
-                boolean cellHasFocus) {
-            if (isSelected) {
-                setBackground(list.getSelectionBackground());
-                setForeground(list.getSelectionForeground());
-            } else {
-                setBackground(list.getBackground());
-                setForeground(list.getForeground());
-            }
-
-
-            setText((String)displayItem);
-            return this;
-        }
-    }
-
 }

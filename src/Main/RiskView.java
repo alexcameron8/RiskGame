@@ -8,7 +8,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
-public class RiskView extends JFrame {
+public class RiskView extends JFrame implements RiskViewListener{
     private RiskModel riskModel;
     private RiskController riskController;
     private final Integer[] numSetupPlayers = {null,2,3,4,5,6};
@@ -25,7 +25,7 @@ public class RiskView extends JFrame {
         }else{
             initSetup();
         }
-        this.setSize(new Dimension(800, 600));
+        this.setSize(new Dimension(1000, 800));
 
         riskModel.addRiskView(this);
 
@@ -35,6 +35,9 @@ public class RiskView extends JFrame {
         MapView mapView = new MapView();
         TerritoryInfoView territoryInfoView = new TerritoryInfoView(riskModel);
         mapView.getMapModel().addMapListener(territoryInfoView);
+
+        ActionBarViewListener actionBarViewListener = new ActionBarViewListener(riskModel);
+        mapView.getMapModel().addMapListener(actionBarViewListener);
 
         this.add(new ActionBarView(this, riskModel), BorderLayout.PAGE_START);
         this.add(mapView, BorderLayout.CENTER);
@@ -107,6 +110,11 @@ public class RiskView extends JFrame {
 
     public JComboBox<Integer> getPlayerBox(){
         return playerBox;
+    }
+
+    @Override
+    public void handleTurnUpdate(RiskEvent event){
+        Turn currentTurn = event.getCurrentTurn();
     }
 
     public static void main(String[] args) {
