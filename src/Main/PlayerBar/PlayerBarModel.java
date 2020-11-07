@@ -6,9 +6,10 @@ import Main.*;
 
 public class PlayerBarModel {
     private List<PlayerBarView> playerBarViews;
-    private Risk game;
+    private RiskModel rm;
 
-    public PlayerBarModel(){
+    public PlayerBarModel(RiskModel rm){
+        this.rm = rm;
         playerBarViews = new ArrayList<>();
     }
 
@@ -21,10 +22,10 @@ public class PlayerBarModel {
     }
 
     public ArrayList<Player> getPlayers(){
-        return game.getPlayers();
+        return rm.getPlayers();
     }
 
     public Player getCurrentTurn(){
-        return game.getActivePlayer();
+        return rm.getActivePlayer();
     }
 }

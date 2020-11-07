@@ -27,20 +27,19 @@ public class RiskView extends JFrame {
         }
         this.setSize(new Dimension(800, 600));
 
-        RiskModel rm = new RiskModel();
-        rm.addRiskView(this);
+        riskModel.addRiskView(this);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       this.setJMenuBar(new MenuBarView());
 
         MapView mapView = new MapView();
-        TerritoryInfoView territoryInfoView = new TerritoryInfoView();
+        TerritoryInfoView territoryInfoView = new TerritoryInfoView(riskModel);
        mapView.getMapModel().addMapListener(territoryInfoView);
 
         this.add(new ActionBarView(), BorderLayout.PAGE_START);
         this.add(mapView, BorderLayout.CENTER);
         this.add(territoryInfoView, BorderLayout.LINE_END);
-        this.add(new PlayerBarView(), BorderLayout.PAGE_END);
+        this.add(new PlayerBarView(riskModel), BorderLayout.PAGE_END);
 
       //  this.setVisible(true);
     }

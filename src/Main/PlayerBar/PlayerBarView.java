@@ -1,7 +1,7 @@
 package Main.PlayerBar;
 
-import Main.ActionBar.ActionBarController;
-import Main.ActionBar.ActionBarModel;
+import Main.PlayerBar.*;
+import Main.RiskModel;
 import Player.Player;
 
 import javax.swing.*;
@@ -13,18 +13,19 @@ public class PlayerBarView extends JPanel {
 
     private Color darkBlue = new Color(102,178,255);
     private JList<Player> playersList;
-    private Player[] players = {new Player("Alex"), new Player("Ben"), new Player("Thomas")};
+    private RiskModel rm;
     private PlayerBarController pbc;
     private PlayerBarModel pbm;
 
-    public PlayerBarView(){
+    public PlayerBarView(RiskModel rm){
         // JPanel Config
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.setBackground(darkBlue);
 
-        pbm = new PlayerBarModel();
+        pbm = new PlayerBarModel(rm);
         pbm.addPlayerBarModelViews(this);
         pbc = new PlayerBarController(this, pbm);
+        this.rm = rm;
 
         initPlayerPanel();
         initPlayersList();
@@ -36,8 +37,15 @@ public class PlayerBarView extends JPanel {
         this.add(playersPanel);
     }
     public void initPlayersList(){
-        //playersList = new JList(pbm.getPlayers().toArray());          This one works but not yet cuz game doesnt work
-        playersList = new JList<>(players);
+        for(Player player: pbm.getPlayers()){
+            System.out.println(player);
+        }
+
+        playersList = new JList(pbm.getPlayers().toArray());
+
+        DefaultListCellRenderer renderer= (DefaultListCellRenderer) playersList.getCellRenderer();
+        renderer.setHorizontalAlignment(JLabel.CENTER);
+
         playersList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         playersList.setVisibleRowCount(1);
         playersList.setOpaque(false);
@@ -54,6 +62,32 @@ public class PlayerBarView extends JPanel {
             return this;
         }
 
+    }
+    class CellRenderer extends JLabel implements ListCellRenderer {
+        public CellRenderer() {
+            setOpaque(true);
+            setHorizontalAlignment(CENTER);
+            setVerticalAlignment(CENTER);
+        }
+
+        public Component getListCellRendererComponent(
+                JList list,
+                Object displayItem,
+                int index,
+                boolean isSelected,
+                boolean cellHasFocus) {
+            if (isSelected) {
+                setBackground(list.getSelectionBackground());
+                setForeground(list.getSelectionForeground());
+            } else {
+                setBackground(list.getBackground());
+                setForeground(list.getForeground());
+            }
+
+
+            setText((String)displayItem);
+            return this;
+        }
     }
 
 }

@@ -7,15 +7,16 @@ import java.awt.*;
 
 public class TerritoryInfoView extends JPanel implements MapViewListener{
 
-    private JTextArea info1 = new JTextArea("Territory Info");
+    private JTextArea info1 = new JTextArea();
 
-    TerritoryInfoView(){
+    TerritoryInfoView(RiskModel rm){
         // JPanel Config
         this.setLayout(new BorderLayout());
         Color background = new Color(0,50,255,50);
         info1.setEditable(false);
         info1.setTabSize(4);
         info1.setBackground(background);
+        setInfo(rm.getMap().getTerritory("Ontario"));
         this.add(info1, BorderLayout.CENTER);
     }
 
