@@ -1,7 +1,8 @@
 package Main;
 
-import Main.ActionBar.ActionBarView;
-import Main.PlayerBar.PlayerBarView;
+import Main.ActionBar.*;
+import Main.PlayerBar.*;
+import Player.Player;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -90,10 +91,12 @@ public class RiskView extends JFrame {
     public void setupPlayers(int numOfPlayers){
         for(int i=0;i<numOfPlayers;i++){
             String s= "Enter player name (" + (i+1) + "/" + numOfPlayers + ")";
+
             String name = "";
-            while(name.isEmpty()==true){
-                name = JOptionPane.showInputDialog(this,s);
+            while(name.isEmpty()){
+                name =JOptionPane.showInputDialog(this,s);
             }
+            riskModel.addPlayer( new Player(name));
         }
         //sets GUI visible
         this.setVisible(true);
