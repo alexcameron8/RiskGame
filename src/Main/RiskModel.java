@@ -196,20 +196,17 @@ public class RiskModel {
      * This method plays the game and changes the game state and initializes the setup of the game.
      */
     public void play(){
-        state = GameState.MAIN_MENU;
-        while(state != GameState.QUIT){
-            if(state == GameState.GENERATE_GAME){
+        if(state == GameState.GENERATE_GAME){
 
-                Random r = new Random();
+            Random r = new Random();
 
-                activePlayerID = r.nextInt(players.size());
-                assignTroopsRandom();
-                currentTurn = new Turn(players.get(activePlayerID));
+            activePlayerID = r.nextInt(players.size());
+            assignTroopsRandom();
+            currentTurn = new Turn(players.get(activePlayerID));
 
-                setState(GameState.IN_GAME);
-            }
-
+            setState(GameState.IN_GAME);
         }
+
     }
 
     public void addRiskView(RiskView riskView) {

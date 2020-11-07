@@ -17,15 +17,19 @@ public class RiskView extends JFrame {
         super("Risk");
         this.riskModel = new RiskModel();
         this.riskController = new RiskController(riskModel,this);
+        riskModel.setState(GameState.MAIN_MENU);
         welcomeScreen();
 
 
         InitializeView initializeGame = new InitializeView();
         JOptionPane.showConfirmDialog(this, initializeGame, "Initialize Game ", JOptionPane.OK_CANCEL_OPTION);
+        riskModel.setState(GameState.GENERATE_GAME);
+
 
         for(String playerName: initializeGame.getNameOfPlayers()){
             riskModel.addPlayer(new Player(playerName));
         }
+        riskModel.play();
 
         this.setSize(new Dimension(800, 600));
         this.setVisible(true);
