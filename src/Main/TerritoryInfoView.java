@@ -26,7 +26,7 @@ public class TerritoryInfoView extends JPanel implements MapViewListener{
         info += "\n\tTroops: "+territory.getSoldiers();
         info += "\n\tNeighbours:";
         for(Territory neighbour : territory.getNeighbours()){
-            info += "\n\t\t- " + neighbour.getName() + " (" + (territory.getOwner()==null? "none":territory.getOwner().getName()) +")";
+            info += "\n\t\t- " + neighbour.getName() + " (" + (neighbour.getOwner()==null? "none":neighbour.getOwner().getName()) +")";
         }
         info1.setText(info);
     }
