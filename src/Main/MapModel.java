@@ -15,6 +15,7 @@ public class MapModel {
     private static PathParser pathParser = new PathParser();
     private static AWTPathProducer pathProducer = new AWTPathProducer();
     private ArrayList<Shape> waterCrossings;
+    private Color backgroundColor;
 
     private List<MapViewListener> mapViewListenerList;
     
@@ -24,6 +25,11 @@ public class MapModel {
         this.riskModel = riskModel;
         this.activeTerritory = null;
         this.mapViewListenerList = new ArrayList<>();
+        this.backgroundColor = new Color(
+                this.riskModel.getMap().getBackgroundColor().get(0),
+                this.riskModel.getMap().getBackgroundColor().get(1),
+                this.riskModel.getMap().getBackgroundColor().get(2)
+        );
 
         this.waterCrossings = new ArrayList<>();
         for(String waterCrossingString: this.riskModel.getMap().getWaterCrossings()){
@@ -56,6 +62,11 @@ public class MapModel {
 
         return this.waterCrossings;
     }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
 
     public void addMapListener(MapViewListener mvl){
         mapViewListenerList.add(mvl);

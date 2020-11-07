@@ -1,5 +1,6 @@
 {
   "name": "World Map",
+  "backgroundColor": [209, 246, 255],
   "waterCrossings": [
     "M 549.68504,63.878443 599.78721,64.439947",
     "M 9.3351158,54.1846 0.35406565,54.172045",
@@ -150,33 +151,39 @@
     {
       "id": "northAmerica",
       "name": "North America",
-      "numberOfReinforcement": 5
+      "numberOfReinforcement": 5,
+      "color": [255, 246, 122]
     },
     {
       "id": "southAmerica",
       "name": "South America",
-      "numberOfReinforcement": 2
+      "numberOfReinforcement": 2,
+      "color": [255, 123, 144]
     },
     {
       "id": "europe",
       "name": "Europe",
-      "numberOfReinforcement": 5
+      "numberOfReinforcement": 5,
+      "color": [140, 186, 255]
     },
     {
       "id": "africa",
       "name": "Africa",
-      "numberOfReinforcement": 3
+      "numberOfReinforcement": 3,
+      "color": [255, 206, 178]
     },
     {
       "id": "asia",
       "name": "Asia",
-      "numberOfReinforcement": 7
+      "numberOfReinforcement": 7,
+      "color": [155, 234, 205]
     },
 
     {
       "id": "australia",
       "name": "Australia",
-      "numberOfReinforcement": 2
+      "numberOfReinforcement": 2,
+      "color": [238, 176, 255]
     }
 
   ],
