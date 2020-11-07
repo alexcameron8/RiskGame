@@ -11,16 +11,19 @@ public class RiskView extends JFrame {
     private RiskModel riskModel;
     private RiskController riskController;
     private final Integer[] numSetupPlayers = {null,2,3,4,5,6};
-    private final Color[] colours = {Color.blue, Color.GREEN, Color.RED,Color.CYAN,Color.ORANGE,Color.MAGENTA};
-    private final String[] strings = {"Blue","Green","Red","Cyan","Orange","Magenta"};
     private JComboBox<Integer> playerBox;
-    private JComboBox<String> colourBox;
+    private int numofPlayers;
 
     RiskView(){
         this.riskModel = new RiskModel();
         this.riskController = new RiskController(riskModel,this);
-
+        welcomeScreen();
         initSetup();
+        if(numofPlayers>1 || numofPlayers < 7) {
+            setupPlayers(numofPlayers);
+        }else{
+            initSetup();
+        }
         this.setSize(new Dimension(800, 600));
 
         RiskModel rm = new RiskModel();
@@ -38,10 +41,10 @@ public class RiskView extends JFrame {
         this.add(territoryInfoView, BorderLayout.LINE_END);
         this.add(new PlayerBarView(), BorderLayout.PAGE_END);
 
-        this.setVisible(true);
+      //  this.setVisible(true);
     }
-    public void initSetup(){
-        //Welcome Screen
+
+    public void welcomeScreen(){
         ImageIcon icon = new ImageIcon("src/Main/Resources/Risk.png");
         JLabel labelIcon = new JLabel(icon);
         JPanel panel = new JPanel(new GridBagLayout());
@@ -55,6 +58,9 @@ public class RiskView extends JFrame {
         panel2.add(text);
         JOptionPane startGame = new JOptionPane();
         startGame.showMessageDialog(this,panel2, "Welcome to Risk",JOptionPane.DEFAULT_OPTION);
+
+    }
+    public void initSetup(){
 
         //Setup panel
         JPanel setupScreen = new JPanel();
@@ -77,12 +83,20 @@ public class RiskView extends JFrame {
 
     }
 
+    public void setNumOfPlayers(int numOfPlayers){
+        this.numofPlayers=numOfPlayers;
+    }
+
     public void setupPlayers(int numOfPlayers){
         for(int i=0;i<numOfPlayers;i++){
             String s= "Enter player name (" + (i+1) + "/" + numOfPlayers + ")";
-
-            JOptionPane.showInputDialog(this,s);
+            String name = "";
+            while(name.isEmpty()==true){
+                name = JOptionPane.showInputDialog(this,s);
+            }
         }
+        //sets GUI visible
+        this.setVisible(true);
     }
 
     public JComboBox<Integer> getPlayerBox(){

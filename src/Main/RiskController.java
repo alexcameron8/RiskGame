@@ -17,8 +17,7 @@ public class RiskController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object o = e.getSource();
         if(o instanceof JComboBox){
-            numOfPlayers = (Integer)rv.getPlayerBox().getSelectedItem();
-            rv.setupPlayers(numOfPlayers);
+            rv.setNumOfPlayers((Integer)rv.getPlayerBox().getSelectedItem());
             System.out.println("USer chose " + rv.getPlayerBox().getSelectedItem() + "players");
         }
     }
