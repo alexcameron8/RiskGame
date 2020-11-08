@@ -67,7 +67,9 @@ public class ActionBarController implements ActionListener, MapViewListener {
             territory = ((MapTerritoryEvent) e).getMapTerritory();
             System.out.println("This is a test for mapevent handler:" + territory.getName());
             setTerritory(territory);
-            abv.setDeployInfo();
+            if(abv.getPlaceTroopsFlag()){
+                abv.setDeployInfo();
+            }
         }
     }
     public Territory getTerritory() {
