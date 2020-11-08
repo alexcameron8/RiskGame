@@ -38,8 +38,8 @@ public class Turn {
      * Checks if all reinforcements have been placed and turn is complete.
      * @return true if turn is complete, false otherwise.
      */
-    public boolean isTurnComplete(){
-        if(numberOfReinforcements==0){
+    public boolean isTurnComplete(Player player){
+        if(player.getReinforcements()==0){
             return true;
         }else{
             return false;

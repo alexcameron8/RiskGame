@@ -38,13 +38,10 @@ public class ActionBarController implements ActionListener, MapViewListener {
                 System.out.println("attack");
             } else if (e.getActionCommand().equals("next")) {
                 //advances turn
-                abm.getRiskModel().advanceTurn();
-                System.out.println("next turn");
+                abm.nextTurn(abm.getRiskModel());
+                abv.removeDeployTroopsBar();
 
-                //delete below
-            } else if (e.getActionCommand().equals("setup")) {
-                abm.getRiskModel().play();
-                System.out.println("Test: play()");
+                System.out.println("next turn");
             } else if(e.getActionCommand().equals("numTroops")) {
                 if((Integer) abv.getNumberOfTroops().getSelectedItem()!=null) {
                     numOfTroops = (Integer) abv.getNumberOfTroops().getSelectedItem();
@@ -56,7 +53,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
                 abm.deployTroops(territory, numOfTroops);
                 abv.removeDeployTroopsBar();
                 abv.updateUI();
-                 System.out.println("place troops");
+                System.out.println("place troops");
          }
     }
 

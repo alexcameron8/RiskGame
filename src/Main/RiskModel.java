@@ -14,6 +14,7 @@ public class RiskModel {
     private int activePlayerID;
     private Turn currentTurn;
     private Map map;
+    private List<RiskViewListener> riskViewListeners;
 
     RiskModel(){
         MapImport mapImport = new MapImport("src/Map/worldmap.json");
@@ -44,11 +45,10 @@ public class RiskModel {
      * This method creates a new Turn instance and changes which player is currently playing the game.
      */
     public void advanceTurn(){
-        if(currentTurn.isTurnComplete()){
+        if(currentTurn.isTurnComplete(getActivePlayer())){
             if(players.size() == 1){
                 System.out.println(players.get(0).getName() + " has won");
                 state = GameState.MAIN_MENU;
-                return;
             }
             if(players.get(activePlayerID).getListOfTerritories().size()==0){
                 //They have no territories, therefore have been eliminated

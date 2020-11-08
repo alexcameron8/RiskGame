@@ -44,7 +44,7 @@ public class Risk {
      * This method creates a new Turn instance and changes which player is currently playing the game.
      */
     public void advanceTurn(){
-        if(currentTurn.isTurnComplete()){
+        if(currentTurn.isTurnComplete(getActivePlayer())){
             if(players.size() == 1){
                 System.out.println(players.get(0).getName() + " has won");
                 state = GameState.MAIN_MENU;

@@ -48,7 +48,7 @@ public class ActionBarModel {
         }
     }
 
-    public void nextTurn(){
-        riskModel.advanceTurn();
+    public void nextTurn(RiskModel riskModel){
+            this.riskModel.advanceTurn();
     }
 }

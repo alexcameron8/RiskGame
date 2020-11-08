@@ -17,13 +17,12 @@ public class RiskView extends JFrame implements RiskViewListener{
         super("Risk");
         this.riskModel = new RiskModel();
         this.riskController = new RiskController(riskModel,this);
-        riskModel.setState(GameState.MAIN_MENU);
         welcomeScreen();
 
 
         InitializeView initializeGame = new InitializeView();
         JOptionPane.showConfirmDialog(this, initializeGame, "Initialize Game ", JOptionPane.OK_CANCEL_OPTION);
-        riskModel.setState(GameState.GENERATE_GAME);
+
 
 
         for(String playerName: initializeGame.getNameOfPlayers()){
@@ -31,7 +30,7 @@ public class RiskView extends JFrame implements RiskViewListener{
         }
         riskModel.play();
 
-        this.setSize(new Dimension(800, 600));
+        this.setSize(new Dimension(1000, 800));
         this.setVisible(true);
         riskModel.addRiskView(this);
 
@@ -76,5 +75,10 @@ public class RiskView extends JFrame implements RiskViewListener{
 
     public static void main(String[] args) {
         new RiskView();
+    }
+
+    @Override
+    public void handleTurnUpdate(RiskEvent e) {
+
     }
 }

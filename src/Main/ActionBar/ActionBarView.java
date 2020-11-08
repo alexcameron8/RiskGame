@@ -76,12 +76,6 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         nextTurn.addActionListener(abc);
         nextTurn.setActionCommand("next");
 
-
-        //delete this
-        JButton testStart = new JButton("Test Start");
-        this.add(testStart);
-        testStart.addActionListener(abc);
-        testStart.setActionCommand("setup");
     }
 
     public void deployTroopsInfo(){
@@ -90,17 +84,15 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         numberOfTroops = new JComboBox<Integer>();
         deployButton= new JButton("Deploy Troops");
         deployButton.setEnabled(true);
-        if(riskModel.getActivePlayer().getReinforcement()>0) {
-            for (int i = 1; i <= riskModel.getActivePlayer().getReinforcement(); i++) {
+        if(riskModel.getActivePlayer().getReinforcements()>0) {
+            for (int i = 1; i <= riskModel.getActivePlayer().getReinforcements(); i++) {
                 numberOfTroops.addItem(i);
             }
         }else{
+            deployButton.setEnabled(false);
             numberOfTroops.setEnabled(false);
         }
-        if(reinforcements==0){
-          //  deployButton.setEnabled(false);
-            updateUI();
-        }
+
         deployPanel.add(deployInfo);
         deployPanel.add(numberOfTroops);
         deployPanel.add(deployButton);
@@ -114,8 +106,10 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         deployButton.setActionCommand("deploy");
         updateUI();
     }
-    public void removeDeployTroopsBar(){
-        this.remove(deployPanel);
+    public void removeDeployTroopsBar() {
+        if (deployPanel != null) {
+            deployPanel.setVisible(false);
+        }
     }
     public JComboBox<Integer> getNumberOfTroops(){
         return numberOfTroops;
@@ -126,14 +120,7 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
 
     @Override
     public void handleTroopDeployment(ActionBarEvent e){
-        if(reinforcements>=0) {
             reinforcements = e.getReinforcements();
             System.out.println("The (1) reinforcements are: " + reinforcements);
-        }else if(reinforcements<0){
-            reinforcements =0;
-            System.out.println("The (2) reinforcements are: " + reinforcements);
-        }else{
-            System.out.println("different error (3).");
-        }
     }
 }
