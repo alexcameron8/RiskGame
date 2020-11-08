@@ -1,9 +1,6 @@
 package Main.ActionBar;
 
-import Main.MapEvent;
-import Main.MapModel;
-import Main.MapView;
-import Main.MapViewListener;
+import Main.*;
 import Map.Territory;
 
 import javax.swing.*;
@@ -62,9 +59,11 @@ public class ActionBarController implements ActionListener, MapViewListener {
 
     @Override
     public void handleMapUpdate(MapEvent e){
-        territory = e.getMapTerritory();
-        System.out.println("This is a test for mapevent handler:" + territory.getName());
-        setTerritory(territory);
+        if(e instanceof MapTerritoryEvent){
+            territory = ((MapTerritoryEvent) e).getMapTerritory();
+            System.out.println("This is a test for mapevent handler:" + territory.getName());
+            setTerritory(territory);
+        }
     }
     public Territory getTerritory() {
         return territory;

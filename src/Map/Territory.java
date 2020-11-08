@@ -33,6 +33,7 @@ public class Territory {
     private Player owner;
     private HashMap<String, Territory> neighbours;
     private int soldiers;
+    private ArrayList<Point2D> soldierPositions;
 
     /**
      * Constructor for Territory. Creates a territory
@@ -47,6 +48,7 @@ public class Territory {
         neighbours = new  HashMap<>();
         soldiers = 0;
         owner = null;
+        soldierPositions = new ArrayList<>();
 
         // Shape generation
         pathParser.setPathHandler(pathProducer);
@@ -173,6 +175,7 @@ public class Territory {
      */
     public void addSoldiers(int add) {
         soldiers += add;
+        addSoldierLocation();
     }
 
     /**
@@ -182,6 +185,35 @@ public class Territory {
      */
     public void removeSoldiers(int remove) {
         soldiers -= remove;
+        removeSoldierLocation();
+    }
+
+    /**
+     * Adds a new soldier point
+     */
+    private void addSoldierLocation(){
+        Rectangle boundingRectangle = territoryShape.getBounds();
+        float x, y;
+        do {
+            x = (float) (boundingRectangle.getX() + boundingRectangle.getWidth() * Math.random());
+            y = (float) (boundingRectangle.getY() + boundingRectangle.getHeight() * Math.random());
+        } while (!territoryShape.contains(x, y));
+        soldierPositions.add(new Point2D.Float(x, y));
+    }
+
+    /**
+     * Remove a soldier location
+     */
+    private void removeSoldierLocation(){
+        soldierPositions.remove(0);
+    }
+
+    /**
+     * Returns list of solder positions
+     * @return List of soldier positions
+     */
+    public ArrayList<Point2D> getSoldierPositions(){
+        return this.soldierPositions;
     }
 
     @Override

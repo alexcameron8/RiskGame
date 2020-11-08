@@ -8,7 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Map View component. Displays the selectable game map to the user.
@@ -34,6 +37,7 @@ public class MapView extends JPanel implements MapViewListener{
         this.setLayout(new BorderLayout());
         this.setSize(new Dimension(600, 500));
         this.add(drawMap, BorderLayout.CENTER);
+        this.add(new ConfigBar(), BorderLayout.PAGE_END);
 
         // Mouse Listener
         MouseAdapter mouseListener = new MouseAdapter() {
@@ -63,8 +67,38 @@ public class MapView extends JPanel implements MapViewListener{
      */
     @Override
     public void handleMapUpdate(MapEvent e) {
-        MapView.this.repaint();
-        MapView.this.revalidate();
+        if(e instanceof MapTerritoryEvent || e instanceof MapRedrawEvent){
+            MapView.this.repaint();
+            MapView.this.revalidate();
+        }
+    }
+
+    private class ConfigBar extends JPanel {
+        ConfigBar(){
+            this.setLayout(new FlowLayout());
+
+            JCheckBox territoryNames = new JCheckBox("Show Territory Names");
+            territoryNames.setActionCommand("territoryName");
+            territoryNames.addItemListener(MapView.this.mapController);
+
+            JCheckBox troopDots = new JCheckBox("Show Troop Dots");
+            troopDots.setActionCommand("troopDots");
+            troopDots.addItemListener(MapView.this.mapController);
+
+            JCheckBox troopCount = new JCheckBox("Show Troop Count");
+            troopCount.setActionCommand("troopCount");
+            troopCount.addItemListener(MapView.this.mapController);
+
+            JCheckBox playerTerritoryColor = new JCheckBox("Player Territory Color");
+            playerTerritoryColor.setActionCommand("playerTerritoryColor");
+            playerTerritoryColor.addItemListener(MapView.this.mapController);
+
+
+            this.add(territoryNames);
+            this.add(troopDots);
+            this.add(troopCount);
+            this.add(playerTerritoryColor);
+        }
     }
 
     /**
@@ -72,6 +106,7 @@ public class MapView extends JPanel implements MapViewListener{
      */
     private class DrawMap extends JComponent {
         private static final int STANDARD_MAP_WIDTH = 600;
+        private static final int SOLDIER_SIZE = 7;
         AffineTransform tx;
         Double scale;
 
@@ -99,6 +134,7 @@ public class MapView extends JPanel implements MapViewListener{
                 Shape territoryShape = tx2.createTransformedShape(terr.getShape());
                 //Shape territoryShape = terr.getShape();
                 if(territoryShape.contains(point)){
+                    System.out.println("contains");
                     MapView.this.mapController.actionPerformed(
                             new ActionEvent(MapView.this, ActionEvent.ACTION_PERFORMED, terr.getId()));
                     break;
@@ -142,31 +178,67 @@ public class MapView extends JPanel implements MapViewListener{
                     graphics.setColor(Color.RED);
                     graphics.fill(territoryShape);
                 } else {
-                    Color terrColor = new Color(
-                            terr.getContinent().getColor().get(0),
-                            terr.getContinent().getColor().get(1),
-                            terr.getContinent().getColor().get(2));
+                    Color terrColor;
+                    if(MapView.this.getMapModel().isPlayerTerritoryColorVisible()){
+                        // PUT PLAYER COLOR LOGIC HERE
+                        terrColor = Color.GRAY;
+                    } else {
+                        terrColor = new Color(
+                                terr.getContinent().getColor().get(0),
+                                terr.getContinent().getColor().get(1),
+                                terr.getContinent().getColor().get(2));
+                    }
                     graphics.setColor(terrColor);
                     graphics.fill(territoryShape);
-                    graphics.setColor(Color.BLACK);
+                    graphics.setColor(Color.GRAY);
                     graphics.draw(territoryShape);
                 }
             }
 
-            // Draw territory names
-            for(Territory terr: MapView.this.mapModel.getTerritoryList()){
-                Shape territoryShape = tx2.createTransformedShape(terr.getShape());
-                graphics.setFont(new Font("default", Font.BOLD, 14));
-                FontMetrics fontMetrics = graphics.getFontMetrics();
-                String[] nameArr = terr.getName().split(" ");
-                graphics.setColor(Color.BLACK);
-
-                for(int i = 0; i < nameArr.length; i++){
-                    float centerX = (float) territoryShape.getBounds2D().getCenterX() - fontMetrics.stringWidth(nameArr[i]) / 2;
-                    float centerY = (float) territoryShape.getBounds2D().getCenterY() - fontMetrics.getHeight() + fontMetrics.getAscent() + i*fontMetrics.getAscent();
-                    graphics.drawString(nameArr[i], centerX, centerY);
+            // Draw troops
+            if(MapView.this.getMapModel().isTroopDotsVisible()){
+                for(Territory terr: MapView.this.mapModel.getTerritoryList()){
+                    for(Point2D pos: terr.getSoldierPositions()){
+                        int x, y;
+                        x = (int) (pos.getX()*scale2 - SOLDIER_SIZE/2);
+                        y = (int) (pos.getY()*scale2 - SOLDIER_SIZE/2);
+                        if(terr == MapView.this.mapModel.getActiveTerritory()){
+                            graphics.setColor(Color.WHITE);
+                        } else {
+                            if(terr.getOwner().getName().equals("Ben")){
+                                graphics.setColor(Color.BLUE);
+                            } else {
+                                graphics.setColor(Color.GREEN);
+                            }
+                        }
+                        graphics.fillOval(x, y, SOLDIER_SIZE, SOLDIER_SIZE);
+                    }
                 }
+            }
 
+            // Draw territory names and troop count
+            if(MapView.this.getMapModel().isTerritoryNamesVisible() || MapView.this.getMapModel().isTroopCountVisible()){
+                for(Territory terr: MapView.this.mapModel.getTerritoryList()){
+                    Shape territoryShape = tx2.createTransformedShape(terr.getShape());
+                    graphics.setFont(new Font("default", Font.BOLD, 14));
+                    FontMetrics fontMetrics = graphics.getFontMetrics();
+                    ArrayList<String> nameArr = new ArrayList<>();
+                    if(MapView.this.getMapModel().isTerritoryNamesVisible()){
+                        nameArr.addAll(Arrays.asList(terr.getName().split(" ")));
+                    }
+                    if(MapView.this.getMapModel().isTroopCountVisible()){
+                        nameArr.add("(" + terr.getSoldiers() + ")");
+                    }
+
+                    graphics.setColor(Color.BLACK);
+
+                    for(int i = 0; i < nameArr.size(); i++){
+                        float centerX = (float) territoryShape.getBounds2D().getCenterX() - fontMetrics.stringWidth(nameArr.get(i)) / 2;
+                        float centerY = (float) territoryShape.getBounds2D().getCenterY() - fontMetrics.getHeight() + fontMetrics.getAscent() + i*fontMetrics.getAscent();
+                        graphics.drawString(nameArr.get(i), centerX, centerY);
+                    }
+
+                }
             }
         }
     }
