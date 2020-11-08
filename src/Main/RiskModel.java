@@ -5,6 +5,7 @@ import Map.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class RiskModel {
@@ -13,13 +14,23 @@ public class RiskModel {
     private int activePlayerID;
     private Turn currentTurn;
     private Map map;
+    private List<RiskViewListener> riskViewListeners;
 
     RiskModel(){
         MapImport mapImport = new MapImport("src/Map/worldmap.json");
         players = new ArrayList<Player>();
         activePlayerID = 0;
         map = mapImport.getMap();
+        riskViewListeners = new ArrayList<>();
     }
+    public void addRiskViewListeners(RiskViewListener riskViewListener){
+        riskViewListeners.add(riskViewListener);
+    }
+    public void removeRiskViewListeners(RiskViewListener riskViewListener){
+        riskViewListeners.remove(riskViewListener);
+    }
+
+
     /**
      * This method is used to advance the turns in the auto setup phase.
      */
@@ -34,11 +45,10 @@ public class RiskModel {
      * This method creates a new Turn instance and changes which player is currently playing the game.
      */
     public void advanceTurn(){
-        if(currentTurn.isTurnComplete()){
+        if(currentTurn.isTurnComplete(getActivePlayer())){
             if(players.size() == 1){
                 System.out.println(players.get(0).getName() + " has won");
                 state = GameState.MAIN_MENU;
-                return;
             }
             if(players.get(activePlayerID).getListOfTerritories().size()==0){
                 //They have no territories, therefore have been eliminated
@@ -61,6 +71,9 @@ public class RiskModel {
             }
         } else{
             System.out.println(players.get(activePlayerID).getName() + " turn is not complete. There are " + players.get(activePlayerID).getReinforcement() + " soldiers left to place.");
+        }
+        for(RiskViewListener riskViewListener : riskViewListeners){
+            riskViewListener.handleTurnUpdate(new RiskEvent (this,activePlayerID,players, currentTurn));
         }
     }
 
@@ -86,22 +99,6 @@ public class RiskModel {
      */
     public Player getActivePlayer(){
         return players.get(activePlayerID);
-    }
-
-    /**
-     * This method returns what state the game is (e.g IN_GAME , MAIN_MENU ...)
-     * @return The state the game is in
-     */
-    public GameState getState(){
-        return state;
-    }
-
-    /**
-     * This method sets the state the game is in. (e.g IN_GAME, MAIN_MENU ..)
-     * @param state the state to set the game
-     */
-    public void setState(GameState state){
-        this.state = state;
     }
 
     /**
@@ -196,20 +193,12 @@ public class RiskModel {
      * This method plays the game and changes the game state and initializes the setup of the game.
      */
     public void play(){
-        state = GameState.MAIN_MENU;
-        while(state != GameState.QUIT){
-            if(state == GameState.GENERATE_GAME){
+        Random r = new Random();
 
-                Random r = new Random();
+        activePlayerID = r.nextInt(players.size());
+        assignTroopsRandom();
+        currentTurn = new Turn(players.get(activePlayerID));
 
-                activePlayerID = r.nextInt(players.size());
-                assignTroopsRandom();
-                currentTurn = new Turn(players.get(activePlayerID));
-
-                setState(GameState.IN_GAME);
-            }
-
-        }
     }
 
     public void addRiskView(RiskView riskView) {

@@ -124,11 +124,11 @@
     ["southernEurope","westernEurope"],
     ["southernEurope","ukraine"],
 
-    ["alaska","northwestTerritory"],
+    ["alaska","northwestTerritories"],
     ["alaska","alberta"],
 
     ["alberta","ontario"],
-    ["alberta","northwestTerritory"],
+    ["alberta","northwestTerritories"],
     ["alberta","westernUnitedStates"],
 
     ["centralAmerica","westernUnitedStates"],
@@ -139,10 +139,10 @@
     ["easternUnitedStates","westernUnitedStates"],
 
     ["greenland","quebec"],
-    ["greenland","northwestTerritory"],
+    ["greenland","northwestTerritories"],
     ["greenland","ontario"],
 
-    ["northwestTerritory","ontario"],
+    ["northwestTerritories","ontario"],
 
     ["ontario","westernUnitedStates"],
     ["ontario","quebec"]

@@ -1,22 +1,25 @@
 package Main.IntializeFrame;
 
+import Main.RiskView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class InitializeView extends JFrame implements InitializeViewListener {
+public class InitializeView extends JPanel implements InitializeViewListener {
 
     private JComboBox numPlayers;
     private JTextField[] nameOfPlayers;
     private JPanel nameOfPlayersPanel;
     private Integer[] numberOfPlayers;
-    private JPanel buttonPanel;
+    public static final int PREFFERED_WIDTH = 400;
+    public static final int PREFFERED_HEIGHT = 400;
 
     public InitializeView(){
-        super("Initialize Game");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super();
         this.setLayout(new BorderLayout());
-        this.setSize(new Dimension(400, 400));
+        this.setPreferredSize(new Dimension(PREFFERED_WIDTH,PREFFERED_HEIGHT));
+
 
         InitializeModel im = new InitializeModel();
         im.addInitializeView(this);
@@ -37,10 +40,11 @@ public class InitializeView extends JFrame implements InitializeViewListener {
         nameOfPlayers = new JTextField[InitializeModel.MAX_NUMBER_PLAYERS];
         nameOfPlayersPanel = new JPanel();
         nameOfPlayersPanel.setLayout(new BoxLayout(nameOfPlayersPanel, BoxLayout.Y_AXIS));
+        nameOfPlayersPanel.setSize(new Dimension(PREFFERED_WIDTH,PREFFERED_HEIGHT));
         for (int i=0; i < InitializeModel.MAX_NUMBER_PLAYERS; i++) {
             JTextField playerName = new JTextField();
             nameOfPlayers[i]=playerName;
-            nameOfPlayers[i].setMaximumSize(new Dimension(this.getWidth(), this.getHeight()/(InitializeModel.MAX_NUMBER_PLAYERS+1)));
+            nameOfPlayers[i].setMaximumSize(new Dimension(nameOfPlayersPanel.getWidth(), nameOfPlayersPanel.getHeight()/(InitializeModel.MAX_NUMBER_PLAYERS+1)));
             playerName.addActionListener(ic);
             playerName.setActionCommand("player"+(i+1));
             playerName.setBorder(BorderFactory.createTitledBorder("Name of Player "+(i+1) + ":"));
@@ -49,25 +53,7 @@ public class InitializeView extends JFrame implements InitializeViewListener {
             nameOfPlayersPanel.add(nameOfPlayers[i]);
         }
         this.add(nameOfPlayersPanel, BorderLayout.CENTER);
-
-
-        buttonPanel = new JPanel();
-
-        JButton continueButton = new JButton("Continue");
-        continueButton.addActionListener(ic);
-        continueButton.setActionCommand("continue");
-        buttonPanel.add(continueButton);
-
-        JButton cancelButton = new JButton("Cancel");
-        cancelButton.addActionListener(ic);
-        cancelButton.setActionCommand("cancel");
-        buttonPanel.add(cancelButton);
-
-        this.add(buttonPanel, BorderLayout.PAGE_END);
-        this.setVisible(true);
     }
-
-
 
     @Override
     public void handleInitializeUpdate(InitializeEvent e) {
@@ -90,6 +76,10 @@ public class InitializeView extends JFrame implements InitializeViewListener {
     }
 
     public static void main(String[] args) {
-        new InitializeView();
+
+        InitializeView initializeGame = new InitializeView();
+        int test = JOptionPane.showConfirmDialog(null, initializeGame, "JOptionPane Example : ", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        System.out.println(test);
     }
+
 }

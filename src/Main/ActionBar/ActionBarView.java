@@ -23,6 +23,10 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
     private ActionBarController abc;
     private RiskModel riskModel;
     private RiskView riskView;
+    private JComboBox numberOfTroops;
+    private JButton deployButton;
+    private JPanel deployPanel;
+    private int reinforcements;
 
     public ActionBarView(RiskView riskView, RiskModel riskModel){
         this.riskView = riskView;
@@ -71,9 +75,52 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         attack.setActionCommand("attack");
         nextTurn.addActionListener(abc);
         nextTurn.setActionCommand("next");
-    }
-    @Override
-    public void handleActionBarUpdate(ActionBarEvent e){
 
+    }
+
+    public void deployTroopsInfo(){
+        deployPanel = new JPanel();
+        JLabel deployInfo = new JLabel("Click Country. Choose reinforcements:");
+        numberOfTroops = new JComboBox<Integer>();
+        deployButton= new JButton("Deploy Troops");
+        deployButton.setEnabled(true);
+        if(riskModel.getActivePlayer().getReinforcements()>0) {
+            for (int i = 1; i <= riskModel.getActivePlayer().getReinforcements(); i++) {
+                numberOfTroops.addItem(i);
+            }
+        }else{
+            deployButton.setEnabled(false);
+            numberOfTroops.setEnabled(false);
+        }
+
+        deployPanel.add(deployInfo);
+        deployPanel.add(numberOfTroops);
+        deployPanel.add(deployButton);
+        deployPanel.setBackground(darkBlue);
+        this.add(deployPanel);
+
+        //adding Actionlisteners
+        numberOfTroops.addActionListener(abc);
+        numberOfTroops.setActionCommand("numTroops");
+        deployButton.addActionListener(abc);
+        deployButton.setActionCommand("deploy");
+        updateUI();
+    }
+    public void removeDeployTroopsBar() {
+        if (deployPanel != null) {
+            deployPanel.setVisible(false);
+        }
+    }
+    public JComboBox<Integer> getNumberOfTroops(){
+        return numberOfTroops;
+    }
+    public ActionBarController getAbc(){
+        return abc;
+    }
+
+    @Override
+    public void handleTroopDeployment(ActionBarEvent e){
+            reinforcements = e.getReinforcements();
+            System.out.println("The (1) reinforcements are: " + reinforcements);
     }
 }
