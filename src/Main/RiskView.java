@@ -9,7 +9,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 
-public class RiskView extends JFrame {
+public class RiskView extends JFrame implements RiskViewListener{
     private RiskModel riskModel;
     private RiskController riskController;
 
@@ -17,13 +17,12 @@ public class RiskView extends JFrame {
         super("Risk");
         this.riskModel = new RiskModel();
         this.riskController = new RiskController(riskModel,this);
-        riskModel.setState(GameState.MAIN_MENU);
         welcomeScreen();
 
 
         InitializeView initializeGame = new InitializeView();
         JOptionPane.showConfirmDialog(this, initializeGame, "Initialize Game ", JOptionPane.OK_CANCEL_OPTION);
-        riskModel.setState(GameState.GENERATE_GAME);
+
 
 
         for(String playerName: initializeGame.getNameOfPlayers()){
@@ -31,7 +30,7 @@ public class RiskView extends JFrame {
         }
         riskModel.play();
 
-        this.setSize(new Dimension(800, 600));
+        this.setSize(new Dimension(1000, 800));
         this.setVisible(true);
         riskModel.addRiskView(this);
 
@@ -41,8 +40,11 @@ public class RiskView extends JFrame {
         MapView mapView = new MapView(this.riskModel);
         TerritoryInfoView territoryInfoView = new TerritoryInfoView(riskModel);
         mapView.getMapModel().addMapListener(territoryInfoView);
+        ActionBarView actionBarView = new ActionBarView(this, riskModel);
 
-        this.add(new ActionBarView(this, riskModel), BorderLayout.PAGE_START);
+        mapView.getMapModel().addMapListener(actionBarView.getAbc());
+
+        this.add(actionBarView, BorderLayout.PAGE_START);
         this.add(mapView, BorderLayout.CENTER);
         this.add(territoryInfoView, BorderLayout.LINE_END);
         this.add(new PlayerBarView(riskModel), BorderLayout.PAGE_END);
@@ -73,5 +75,10 @@ public class RiskView extends JFrame {
 
     public static void main(String[] args) {
         new RiskView();
+    }
+
+    @Override
+    public void handleTurnUpdate(RiskEvent e) {
+
     }
 }
