@@ -27,6 +27,8 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
     private JButton deployButton;
     private JPanel deployPanel;
     private int reinforcements;
+    private JLabel deployInfo;
+    private boolean placetroopsFlag;
 
     public ActionBarView(RiskView riskView, RiskModel riskModel){
         this.riskView = riskView;
@@ -79,8 +81,9 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
     }
 
     public void deployTroopsInfo(){
+        placetroopsFlag = true;
         deployPanel = new JPanel();
-        JLabel deployInfo = new JLabel("Click Country. Choose reinforcements:");
+        deployInfo = new JLabel("Country:    Reinforcements:");
         numberOfTroops = new JComboBox<Integer>();
         deployButton= new JButton("Deploy Troops");
         deployButton.setEnabled(true);
@@ -109,6 +112,7 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
     public void removeDeployTroopsBar() {
         if (deployPanel != null) {
             deployPanel.setVisible(false);
+            placetroopsFlag = false;
         }
     }
     public JComboBox<Integer> getNumberOfTroops(){
@@ -116,6 +120,13 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
     }
     public ActionBarController getAbc(){
         return abc;
+    }
+    public void setDeployInfo(){
+        deployInfo.setText("Country: "+ abc.getTerritory() + "   Reinforcements: ");
+    }
+
+    public boolean getPlaceTroopsFlag(){
+        return placetroopsFlag;
     }
 
     @Override

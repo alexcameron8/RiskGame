@@ -27,7 +27,11 @@ public class ActionBarController implements ActionListener, MapViewListener {
         Object o = e.getSource();
             if (e.getActionCommand().equals("place")) {
                 //Open troop deployment info
-                abv.deployTroopsInfo();
+                if(!abv.getPlaceTroopsFlag()) {
+                    abv.deployTroopsInfo();
+                }else{
+                    System.out.println("test to see of deploy panel is already open");
+                }
                 System.out.println("Test to see if place troops button works.");
             } else if (e.getActionCommand().equals("attack")) {
                 //attack
@@ -63,6 +67,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
             territory = ((MapTerritoryEvent) e).getMapTerritory();
             System.out.println("This is a test for mapevent handler:" + territory.getName());
             setTerritory(territory);
+            abv.setDeployInfo();
         }
     }
     public Territory getTerritory() {
