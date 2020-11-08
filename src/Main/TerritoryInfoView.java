@@ -59,7 +59,8 @@ public class TerritoryInfoView extends JPanel implements MapViewListener{
 
     @Override
     public void handleMapUpdate(MapEvent e) {
-        setInfo(e.getMapTerritory());
-
+        if(e instanceof MapTerritoryEvent){
+            setInfo(((MapTerritoryEvent)e).getMapTerritory());
+        }
     }
 }

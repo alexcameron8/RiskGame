@@ -1,24 +1,15 @@
 package Main;
 
-import Map.Territory;
-
 import java.util.EventObject;
 
-/**
- * Object representing an event triggered by the MapView
- *
- * @author Benjamin Munro
- */
-public class MapEvent extends EventObject {
+public class MapRedrawEvent extends MapEvent {
     /**
      * Constructs a prototypical Event.
      *
      * @param source the object on which the Event initially occurred
      * @throws IllegalArgumentException if source is null
      */
-    public MapEvent(Object source) {
+    public MapRedrawEvent(Object source) {
         super(source);
     }
-
 }
-

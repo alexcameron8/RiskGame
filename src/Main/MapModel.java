@@ -21,6 +21,10 @@ public class MapModel {
     private static AWTPathProducer pathProducer = new AWTPathProducer();
     private ArrayList<Shape> waterCrossings;
     private Color backgroundColor;
+    private boolean territoryNamesVisible;
+    private boolean troopDotsVisible;
+    private boolean troopCountVisible;
+    private boolean playerTerritoryColorVisible;
 
     private List<MapViewListener> mapViewListenerList;
 
@@ -55,7 +59,7 @@ public class MapModel {
             if(terr.getId().equals(id)){
                 System.out.println(terr.getId());
                 activeTerritory = terr;
-                updateMapListeners(terr);
+                updateMapListeners(new MapTerritoryEvent(this, terr));
                 break;
             }
         }
@@ -99,13 +103,49 @@ public class MapModel {
         mapViewListenerList.add(mvl);
     }
 
+    public boolean isTerritoryNamesVisible() {
+        return territoryNamesVisible;
+    }
+
+    public void setTerritoryNamesVisible(boolean territoryNamesVisible) {
+        this.territoryNamesVisible = territoryNamesVisible;
+        updateMapListeners(new MapRedrawEvent(this));
+    }
+
+    public boolean isTroopDotsVisible() {
+        return troopDotsVisible;
+    }
+
+    public void setTroopDotsVisible(boolean troopDotsVisible) {
+        this.troopDotsVisible = troopDotsVisible;
+        updateMapListeners(new MapRedrawEvent(this));
+    }
+
+    public boolean isTroopCountVisible() {
+        return troopCountVisible;
+    }
+
+    public void setTroopCountVisible(boolean troopCountVisible) {
+        this.troopCountVisible = troopCountVisible;
+        updateMapListeners(new MapRedrawEvent(this));
+    }
+
+    public boolean isPlayerTerritoryColorVisible() {
+        return playerTerritoryColorVisible;
+    }
+
+    public void setPlayerTerritoryColorVisible(boolean playerTerritoryColorVisible) {
+        this.playerTerritoryColorVisible = playerTerritoryColorVisible;
+        updateMapListeners(new MapRedrawEvent(this));
+    }
+
     /**
      * Update all registered listeners on map events.
-     * @param mapTerritory Territory that has been clicked.
+     * @param mapEvent Event to send.
      */
-    private void updateMapListeners(Territory mapTerritory){
+    private void updateMapListeners(MapEvent mapEvent){
         for(MapViewListener mvl: mapViewListenerList){
-            mvl.handleMapUpdate(new MapEvent(this, mapTerritory));
+            mvl.handleMapUpdate(mapEvent);
         }
     }
 }
