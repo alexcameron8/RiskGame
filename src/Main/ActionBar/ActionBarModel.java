@@ -5,7 +5,7 @@ import Main.RiskModel;
 import Main.RiskView;
 import Main.Turn;
 import Player.Player;
-
+import Map.*;
 
 public class ActionBarModel {
 
@@ -36,13 +36,19 @@ public class ActionBarModel {
     }
 
     public void attack(){
+      //  riskModel.getActivePlayer().attack();
         return;
     }
-    public void deployTroops(){
-        return;
+    public void deployTroops(Territory territory, int numOfTroops){
+        for(ActionBarView actionBarView : actionBarViews){
+            actionBarView.handleTroopDeployment(new ActionBarEvent(this,riskModel.getActivePlayer().getReinforcements()));
+        }
+        if(numOfTroops>0) {
+            riskModel.getActivePlayer().placeReinforcement(territory, numOfTroops);
+        }
     }
 
-    public void nextTurn(){
-        return;
+    public void nextTurn(RiskModel riskModel){
+            this.riskModel.advanceTurn();
     }
 }

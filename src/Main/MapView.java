@@ -10,11 +10,20 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
+/**
+ * Map View component. Displays the selectable game map to the user.
+ *
+ * @author Benjamin Munro
+ */
 public class MapView extends JPanel implements MapViewListener{
     private MapModel mapModel;
     private MapController mapController;
     private DrawMap drawMap;
 
+    /**
+     * Create a new MapView
+     * @param riskModel Game model containing map to represent.
+     */
     MapView(RiskModel riskModel){
         this.mapModel = new MapModel(riskModel);
         this.mapModel.addMapListener(this);
@@ -40,20 +49,35 @@ public class MapView extends JPanel implements MapViewListener{
 
     }
 
+    /**
+     * Get the model of the game map.
+     * @return Model of the game map.
+     */
     MapModel getMapModel(){
         return this.mapModel;
     }
 
+    /**
+     * Handle events from MapModel
+     * @param e MapModel event.
+     */
     @Override
     public void handleMapUpdate(MapEvent e) {
         MapView.this.repaint();
         MapView.this.revalidate();
     }
 
+    /**
+     * Map component
+     */
     private class DrawMap extends JComponent {
+        private static final int STANDARD_MAP_WIDTH = 600;
         AffineTransform tx;
         Double scale;
 
+        /**
+         * Create new DrawMap
+         */
         DrawMap(){
             super();
             tx = new AffineTransform();
@@ -61,9 +85,14 @@ public class MapView extends JPanel implements MapViewListener{
             tx.scale(scale, scale);
         }
 
+        /**
+         * Handle mouse click events on the map.
+         * Creates a new action containing the ID of the territory clicked.
+         * @param point
+         */
         void mouseClickHandler(Point2D point){
             AffineTransform tx2 = new AffineTransform();
-            Double scale2 = (double) this.getWidth() /600;
+            Double scale2 = (double) this.getWidth() / STANDARD_MAP_WIDTH;
             tx2.scale(scale2, scale2);
 
             for(Territory terr: MapView.this.mapModel.getTerritoryList()){
@@ -77,6 +106,10 @@ public class MapView extends JPanel implements MapViewListener{
             }
         }
 
+        /**
+         * Override DrawMap paintComponent method to draw map from shapes.
+         * @param g Graphics object of component
+         */
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -93,6 +126,7 @@ public class MapView extends JPanel implements MapViewListener{
             tx2.scale(scale2, scale2);
 
 
+            // Draw water crossing lines
             graphics.setColor(Color.BLACK);
             graphics.setStroke(new BasicStroke(2));
             for(Shape waterCrossing: MapView.this.getMapModel().getWaterCrossings()){
@@ -100,7 +134,7 @@ public class MapView extends JPanel implements MapViewListener{
                 graphics.draw(waterCrossingScaledShape);
             }
 
-
+            // Draw territories
             graphics.setStroke(new BasicStroke(1));
             for(Territory terr: MapView.this.mapModel.getTerritoryList()){
                 Shape territoryShape = tx2.createTransformedShape(terr.getShape());
@@ -119,6 +153,7 @@ public class MapView extends JPanel implements MapViewListener{
                 }
             }
 
+            // Draw territory names
             for(Territory terr: MapView.this.mapModel.getTerritoryList()){
                 Shape territoryShape = tx2.createTransformedShape(terr.getShape());
                 graphics.setFont(new Font("default", Font.BOLD, 14));

@@ -4,6 +4,11 @@ import Map.Territory;
 
 import java.util.EventObject;
 
+/**
+ * Object representing an event triggered by the MapView
+ *
+ * @author Benjamin Munro
+ */
 public class MapEvent extends EventObject {
     private Territory territory;
 
