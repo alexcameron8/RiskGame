@@ -16,7 +16,6 @@ import java.util.ArrayList;
  */
 public class RiskView extends JFrame implements RiskViewListener{
     private RiskModel riskModel;
-    private RiskController riskController;
 
     /**
      * Initializes the JFrame containing all the different components.
@@ -25,7 +24,6 @@ public class RiskView extends JFrame implements RiskViewListener{
 
         super("Risk");
         this.riskModel = new RiskModel();
-        this.riskController = new RiskController(riskModel,this);
         //displays welcome screen
         welcomeScreen();
         //displays initial setup
