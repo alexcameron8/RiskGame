@@ -5,6 +5,7 @@ import Main.IntializeFrame.InitializeView;
 import Main.PlayerBar.*;
 import Player.Player;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
@@ -61,7 +62,13 @@ public class RiskView extends JFrame implements RiskViewListener{
     }
 
     public void welcomeScreen(){
-        ImageIcon icon = new ImageIcon("src/Main/Resources/Risk.png");
+        ImageIcon icon = null;
+        try {
+            icon = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("resources/Risk.png")));
+        } catch (Exception e){
+
+        }
+
         JLabel labelIcon = new JLabel(icon);
         JPanel panel = new JPanel(new GridBagLayout());
 

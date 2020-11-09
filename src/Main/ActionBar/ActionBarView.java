@@ -54,10 +54,10 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
 
     public void initActionButtons(){
         try {
-            placeImg = ImageIO.read(new File("src//Main//Resources//Soldier.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
-            nextTurnImg = ImageIO.read(new File("src//Main//Resources//NextTurn.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
-            attackImg = ImageIO.read(new File("src//Main//Resources//Attack.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
-        }catch(IOException ex){
+            placeImg = ImageIO.read(getClass().getResourceAsStream("resources/Soldier.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            nextTurnImg = ImageIO.read(getClass().getResourceAsStream("resources/NextTurn.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            attackImg = ImageIO.read(getClass().getResourceAsStream("resources/Attack.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+        }catch(Exception ex){
         }
         placeTroops = new JButton("Place Troops", new ImageIcon(placeImg));
         placeTroops.setBackground(darkBlue);
@@ -113,10 +113,10 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         JButton attackButton = new JButton("Attack",new ImageIcon(attackImg));
 
         try {
-            backImg = ImageIO.read(new File("src//Main//Resources//back.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
-            lock = ImageIO.read(new File("src//Main//Resources//lock.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
-            cancel = ImageIO.read(new File("src//Main//Resources//cancel.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
-        }catch(IOException ex){
+            backImg = ImageIO.read(getClass().getResourceAsStream("resources/back.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            lock = ImageIO.read(getClass().getResourceAsStream("resources/lock.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            cancel = ImageIO.read(getClass().getResourceAsStream("resources/cancel.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+        }catch(Exception ex){
         }
 
         JButton backButton = new JButton(new ImageIcon(backImg));

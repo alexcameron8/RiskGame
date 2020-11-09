@@ -23,7 +23,7 @@ public class RiskModel {
     private Player eliminatedPlayer = null;
 
     RiskModel(){
-        MapImport mapImport = new MapImport("src/Map/worldmap.json");
+        MapImport mapImport = new MapImport(getClass().getResourceAsStream("resources/worldmap.json"));
         players = new ArrayList<Player>();
         activePlayerID = 0;
         map = mapImport.getMap();
