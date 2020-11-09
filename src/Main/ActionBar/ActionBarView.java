@@ -34,7 +34,7 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         this.riskModel = riskModel;
         // JPanel Config
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
-        this.setBackground(new Color(153,204,255));
+        this.setBackground(RiskModel.BACKGROUND);
 
         ActionBarModel abm = new ActionBarModel(this.riskModel,this.riskView);
         abm.addActionBarModelViews(this);
