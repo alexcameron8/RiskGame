@@ -109,8 +109,13 @@ public class ActionBarController implements ActionListener, MapViewListener {
                 abv.setMessage("All of the attack information has not yet been confirmed.");
             }
         }else if(e.getActionCommand().equals("backAttack")){
+            state = "Default";
             removeMessageBar();
             abv.removeAttackBar();
+        }else if(e.getActionCommand().equals("backDeploy")){
+            state = "Default";
+            removeMessageBar();
+            abv.removeDeployTroopsBar();
         }
     }
 
@@ -133,9 +138,10 @@ public class ActionBarController implements ActionListener, MapViewListener {
                 }
             } else if (state.equals("Attacker")) {
                 if (((MapTerritoryEvent) e).getMapTerritory().getOwner() == abm.getRiskModel().getActivePlayer()) {
-                    attackerTerritory = ((MapTerritoryEvent) e).getMapTerritory();
                     abv.setAttackerInfo();
+                    attackerTerritory = ((MapTerritoryEvent) e).getMapTerritory();
                     abv.setAttackNumberRange();
+
                 } else {
                     abv.setMessage(((MapTerritoryEvent) e).getMapTerritory().getName() + " does not belong to you. Choose a Territory you own occupied with at least 2 troops.");
                 }
