@@ -7,7 +7,9 @@ import Player.Player;
 import Map.*;
 
 /**
- * This is the action bar model which calls methods from the current RiskModel
+ * This is the action bar model which calls methods from the current RiskModel\
+ *
+ * @Author Alex Cameron
  */
 public class ActionBarModel {
 

@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 
 /**
  * This class is controls what happens when user interacts with the action bar GUI component and updates the view/model with corresponding methods.
+ *
+ * @Author Alex Cameron
  */
 public class ActionBarController implements ActionListener, MapViewListener {
     private ActionBarView abv;

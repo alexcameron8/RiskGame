@@ -5,6 +5,8 @@ import java.util.EventObject;
 
 /**
  * This class is an event class that gets the events of the action bar model class.
+ *
+ * @Author Alex Cameron
  */
 public class ActionBarEvent extends EventObject {
 

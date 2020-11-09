@@ -11,6 +11,8 @@ import java.io.IOException;
 
 /**
  * This class is the view for the Action Bar component within the game of Risk.
+ *
+ * @Author Alex Cameron
  */
 public class ActionBarView extends JPanel {
 
