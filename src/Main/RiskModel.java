@@ -1,14 +1,17 @@
 package Main;
 
+import Map.Map;
 import Player.Player;
 import Map.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 public class RiskModel {
+
+    public static final int MAX_NUMBER_PLAYERS = 6;
+    public static final int MIN_NUMBER_PLAYERS = 2;
     private static GameState state;
     private ArrayList<Player> players;
     private int activePlayerID;
@@ -147,20 +150,8 @@ public class RiskModel {
      * @return The number of troops each player has
      */
     private int getNumberOfInitialTroops(){
-        switch (players.size()){
-            case 2:
-                return 50;
-            case 3:
-                return 35;
-            case 4:
-                return 30;
-            case 5:
-                return 25;
-            case 6:
-                return 20;
-            default:
-                return 0;
-        }
+        int lowest = (int) Math.floor(3*map.getTerritories().size()/MAX_NUMBER_PLAYERS/10)*10;
+        return lowest+5*(MAX_NUMBER_PLAYERS-players.size());
     }
 
     /**
