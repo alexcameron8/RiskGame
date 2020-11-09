@@ -1,11 +1,14 @@
 package Main;
 
+import Main.Map.MapEvent;
+import Main.Map.MapTerritoryEvent;
+import Main.Map.MapViewListener;
 import Map.Territory;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class TerritoryInfoView extends JPanel implements MapViewListener{
+public class TerritoryInfoView extends JPanel implements MapViewListener {
     TerritoryInfoView(RiskModel rm){
         // JPanel Config
         super();

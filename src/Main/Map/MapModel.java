@@ -1,6 +1,6 @@
-package Main;
+package Main.Map;
 
-import Map.*;
+import Main.RiskModel;
 import Map.Territory;
 import org.apache.batik.parser.AWTPathProducer;
 import org.apache.batik.parser.PathParser;
