@@ -17,6 +17,7 @@ public class Attack {
     private Territory attackerTerritory;
     private Territory defenderTerritory;
     private int numOfAttackArmy;
+    private boolean succesfulAttack;
 
     /**
      *  Constructor for attack class. This requires knowing who the attacking player is, the defending player, and their territories in the attack.
@@ -40,12 +41,14 @@ public class Attack {
             attackerTerritory.removeSoldiers(numOfAttackArmy);
             int returningArmy = attack(numOfAttackArmy);
             if(returningArmy != 0){
+                succesfulAttack = true;
                 System.out.println(attacker.getName() + ", conquered " + defender.getName() + "'s territory, " + defenderTerritory.getName() + ".");
                 defenderTerritory.addSoldiers(returningArmy);
                 defender.transferTerritory(attacker,defenderTerritory);
             }
             else{
                 System.out.println(attacker.getName() + ", failed to conquer " + defender.getName() + "'s territory, " + defenderTerritory.getName() + ".");
+                succesfulAttack = false;
             }
         }
     }
@@ -61,6 +64,10 @@ public class Attack {
             System.out.println("You cannot attack " + defenderTerritory.getName() + " as this territory is not neighbouring " + attackerTerritory.getName());
             return false;
         }
+    }
+
+    public boolean isSuccesfulAttack(){
+        return succesfulAttack;
     }
 
     /**

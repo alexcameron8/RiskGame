@@ -35,9 +35,8 @@ public class ActionBarModel {
         actionBarViews.remove(abv);
     }
 
-    public void attack(){
-      //  riskModel.getActivePlayer().attack();
-        return;
+    public boolean attack(Territory attackerTerritory,Player defender, Territory defenderTerritory,int numOfAttack){
+        return riskModel.getActivePlayer().attack(attackerTerritory, defender,defenderTerritory, numOfAttack);
     }
     public void deployTroops(Territory territory, int numOfTroops){
         for(ActionBarView actionBarView : actionBarViews){

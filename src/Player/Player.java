@@ -50,8 +50,9 @@ public class Player {
      * @param defenderTerritory Territory defending.
      * @param numOfAttackArmy Number of troops attacking
      */
-    public void attack(Territory attackerTerritory, Player defender, Territory defenderTerritory, int numOfAttackArmy){
+    public boolean attack(Territory attackerTerritory, Player defender, Territory defenderTerritory, int numOfAttackArmy){
         Attack attack = new Attack(this, attackerTerritory, defender, defenderTerritory,  numOfAttackArmy);
+        return attack.isSuccesfulAttack();
     }
 
     /**

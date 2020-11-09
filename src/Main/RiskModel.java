@@ -15,6 +15,7 @@ public class RiskModel {
     private Turn currentTurn;
     private Map map;
     private List<RiskViewListener> riskViewListeners;
+    private boolean turnComplete;
 
     RiskModel(){
         MapImport mapImport = new MapImport("src/Map/worldmap.json");
@@ -56,27 +57,34 @@ public class RiskModel {
                 if (activePlayerID + 1 < players.size()) {
                     activePlayerID++;
                     currentTurn = new Turn(players.get(activePlayerID));
+                    turnComplete = true;
                 }else{
                     activePlayerID = 0;
                     currentTurn = new Turn(players.get(0));
+                    turnComplete = true;
                 }
             }else {
                 if (activePlayerID + 1 < players.size()) {
                     activePlayerID++;
                     currentTurn = new Turn(players.get(activePlayerID));
+                    turnComplete = true;
                 } else {
                     activePlayerID = 0;
                     currentTurn = new Turn(players.get(0));
+                    turnComplete = true;
                 }
             }
         } else{
+            turnComplete = false;
             System.out.println(players.get(activePlayerID).getName() + " turn is not complete. There are " + players.get(activePlayerID).getReinforcement() + " soldiers left to place.");
         }
         for(RiskViewListener riskViewListener : riskViewListeners){
             riskViewListener.handleTurnUpdate(new RiskEvent (this,activePlayerID,players, currentTurn));
         }
     }
-
+    public boolean isTurnComplete(){
+        return turnComplete;
+    }
     /**
      * Reset the turns to the first player.
      */
@@ -163,6 +171,13 @@ public class RiskModel {
         }
     }
 
+    /**
+     * Getter method for getting active player ID
+     * @return the active players ID
+     */
+    public int getActivePlayerID() {
+        return activePlayerID;
+    }
     /**
      * This method is the auto-setup functionality of Risk where the players are
      */
