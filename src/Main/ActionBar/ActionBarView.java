@@ -82,10 +82,11 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         if(messageFlag){
             removeMessageBar();
         }
+        numberAttackTroops.removeAllItems();
         if(abc.getAttackerTerritory()!=null) {
             if (abc.getAttackerTerritory().getSoldiers() == 1) {
                setMessage("You cannot attack with this territory. Your territory must be occupied at all times.");
-            } else { //number of soldiers is 1 in that territory BAD
+            } else {
                 for (int i = 1; i < abc.getAttackerTerritory().getSoldiers(); i++) {
                     numberAttackTroops.addItem(i);
                 }
@@ -145,7 +146,7 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         attackPanel.add(defenderPanel);
         attackPanel.add(confirmButtonsD);
         attackPanel.add(attackButton);
-    //    attackPanel.add(backButton);
+        attackPanel.add(backButton);
         attackPanel.setBackground(darkBlue);
         this.add(attackPanel);
 
@@ -184,10 +185,16 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
             deployButton.setEnabled(false);
             numberOfTroops.setEnabled(false);
         }
+        try {
+            backImg = ImageIO.read(new File("src//Main//Resources//back.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+        }catch(IOException ex){
+        }
+        JButton backButton = new JButton(new ImageIcon(backImg));
 
         deployPanel.add(deployInfo);
         deployPanel.add(numberOfTroops);
         deployPanel.add(deployButton);
+        deployPanel.add(backButton);
         deployPanel.setBackground(darkBlue);
         this.add(deployPanel);
 
@@ -196,6 +203,8 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         numberOfTroops.setActionCommand("numTroops");
         deployButton.addActionListener(abc);
         deployButton.setActionCommand("deploy");
+        backButton.addActionListener(abc);
+        backButton.setActionCommand("backDeploy");
         updateUI();
     }
 
