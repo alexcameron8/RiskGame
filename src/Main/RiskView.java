@@ -8,6 +8,7 @@ import Player.Player;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class RiskView extends JFrame implements RiskViewListener{
     private RiskModel riskModel;
@@ -22,11 +23,11 @@ public class RiskView extends JFrame implements RiskViewListener{
 
         InitializeView initializeGame = new InitializeView();
         JOptionPane.showConfirmDialog(this, initializeGame, "Initialize Game ", JOptionPane.OK_CANCEL_OPTION);
+        ArrayList<String> nameOfPlayers = initializeGame.getNameOfPlayers();
+        ArrayList<Color> coloursOfPlayers = initializeGame.getPlayersColour();
 
-
-
-        for(String playerName: initializeGame.getNameOfPlayers()){
-            riskModel.addPlayer(new Player(playerName));
+        for(int i = 0; i < initializeGame.getNumberOfPlayers(); i++){
+            riskModel.addPlayer(new Player(nameOfPlayers.get(i),coloursOfPlayers.get(i)));
         }
         riskModel.play();
 
