@@ -56,18 +56,39 @@ public class Territory {
         this.territoryShape = pathProducer.getShape();
     }
 
+    /**
+     * get the id of the territory
+     *
+     * @return String
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * get the shape of the territory
+     *
+     * @return Shape
+     */
     public Shape getShape() {
         return territoryShape;
     }
 
+    /**
+     * get the continent that the territory belongs too
+     *
+     * @return Continent
+     */
     public Continent getContinent(){
         return this.continent;
     }
 
+    /**
+     * check to see if the territory contains a point
+     *
+     * @param point
+     * @return boolean
+     */
     public boolean contains(Point2D point){
         if(this.territoryShape.contains(point)){
             return true;

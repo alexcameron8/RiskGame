@@ -38,6 +38,11 @@ public class Player {
         this.playerColor = playerColor;
     }
 
+    /**
+     * get the player colour
+     *
+     * @return Color
+     */
     public Color getPlayerColor(){
         return playerColor;
     }

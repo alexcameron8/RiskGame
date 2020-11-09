@@ -127,6 +127,11 @@ public class Continent {
         return true;
     }
 
+    /**
+     * get the colour of the continent
+     *
+     * @return ArrayList<Integer>
+     */
     public ArrayList<Integer> getColor(){
         return this.color;
     }

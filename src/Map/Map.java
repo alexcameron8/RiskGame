@@ -32,11 +32,21 @@ public class Map {
         backgroundColor = new ArrayList<>(3);
     }
 
+    /**
+     * create the water Crossing
+     *
+     * @param path
+     */
     public void addWaterCrossing(String path){
 
         waterCrossings.add(path);
     }
 
+    /**
+     * get the path for the water crossing
+     *
+     * @return
+     */
     public ArrayList<String> getWaterCrossings(){
         return this.waterCrossings;
     }
@@ -105,8 +115,18 @@ public class Map {
         return continents;
     }
 
+    /**
+     * get the background of the map
+     *
+     * @return
+     */
     public ArrayList<Integer> getBackgroundColor(){ return backgroundColor; }
 
+    /**
+     * set the background color of the map
+     *
+     * @param backgroundColor
+     */
     public void setBackgroundColor(ArrayList<Integer> backgroundColor){
         this.backgroundColor = backgroundColor;
     }
