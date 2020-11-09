@@ -7,10 +7,11 @@ import Main.RiskViewListener;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class PlayerBarView extends JPanel implements RiskViewListener {
 
-    private JLabel[] playersList;
+    private ArrayList<JLabel> playersList;
     private RiskModel rm;
     private PlayerBarModel pbm;
     private JPanel playerNamesPanel;
@@ -38,17 +39,16 @@ public class PlayerBarView extends JPanel implements RiskViewListener {
         playerNamesPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         playerNamesPanel.setBackground(RiskModel.BACKGROUND);
 
-        playersList = new JLabel[pbm.getPlayers().size()];
+        playersList = new ArrayList<>();
         for (int i = 0; i < pbm.getPlayers().size(); i++) {
-            playersList[i]=new JLabel(pbm.getPlayers().get(i).getName());
-            playersList[i].setBackground(pbm.getPlayers().get(i).getPlayerColor());
-            playersList[i].setFont(new Font(playersList[i].getText(),Font.PLAIN, 20));
-            playersList[i].setBorder(new LineBorder(Color.BLACK,2));
-            if(playersList[i].getText().equals(pbm.getCurrentTurn().getName())){
-                playersList[i].setOpaque(true);
+            playersList.add(new JLabel(pbm.getPlayers().get(i).getName()));
+            playersList.get(i).setBackground(pbm.getPlayers().get(i).getPlayerColor());
+            playersList.get(i).setFont(new Font(playersList.get(i).getText(),Font.PLAIN, 20));
+            playersList.get(i).setBorder(new LineBorder(Color.BLACK,2));
+            if(playersList.get(i).getText().equals(pbm.getCurrentTurn().getName())){
+                playersList.get(i).setOpaque(true);
             }
-            playerNamesPanel.add(playersList[i]);
-
+            playerNamesPanel.add(playersList.get(i));
         }
 
         this.add(playerNamesPanel);
@@ -57,22 +57,27 @@ public class PlayerBarView extends JPanel implements RiskViewListener {
     @Override
     public void handleTurnUpdate(RiskEvent e){
         if(e.getEliminatedPlayer()!=null){
-            for(int i=0;i<playersList.length;i++){
-                if(playersList[i].getText().equals(e.getEliminatedPlayer().getName())){
-                    System.out.println("player removed from playersList");
-                    playersList[i].remove(i);
-                    updateUI();
+            for(JLabel playerLabel: playersList){
+                if(playerLabel.getText().equals(e.getEliminatedPlayer().getName())){
+                    playersList.remove(playerLabel);
+                    break;
                 }
             }
         }
-        for(JLabel playerName: playersList){
-            if(playerName.getText().equals(pbm.getCurrentTurn().getName())){
-                playerName.setOpaque(true);
+        playerNamesPanel.removeAll();
+        for (int i = 0; i < pbm.getPlayers().size(); i++) {
+            playersList.add(new JLabel(pbm.getPlayers().get(i).getName()));
+            playersList.get(i).setBackground(pbm.getPlayers().get(i).getPlayerColor());
+            playersList.get(i).setFont(new Font(playersList.get(i).getText(),Font.PLAIN, 20));
+            playersList.get(i).setBorder(new LineBorder(Color.BLACK,2));
+            if(playersList.get(i).getText().equals(pbm.getCurrentTurn().getName())){
+                playersList.get(i).setOpaque(true);
             }
             else{
-                playerName.setOpaque(false);
+                playersList.get(i).setOpaque(false);
             }
+            playerNamesPanel.add(playersList.get(i));
         }
-        playerNamesPanel.repaint();
+        updateUI();
     }
 }

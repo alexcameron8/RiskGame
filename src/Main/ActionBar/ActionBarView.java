@@ -278,6 +278,5 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
     @Override
     public void handleTroopDeployment(ActionBarEvent e){
         int reinforcements = e.getReinforcements();
-            System.out.println("The (1) reinforcements are: " + reinforcements);
     }
 }

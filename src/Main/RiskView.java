@@ -47,6 +47,7 @@ public class RiskView extends JFrame implements RiskViewListener{
 
         PlayerBarView playerBarView = new PlayerBarView(riskModel);
         riskModel.addRiskViewListeners(playerBarView);
+        riskModel.addRiskViewListeners(this);
 
 
         this.add(actionBarView, BorderLayout.PAGE_START);

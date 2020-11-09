@@ -60,34 +60,28 @@ public class RiskModel {
                 winner = getActivePlayer();
                 System.out.println(players.get(0).getName() + " has won");
             }
-            if(players.get(activePlayerID).getListOfTerritories().size()==0){
-                //They have no territories, therefore have been eliminated
-                players.remove(activePlayerID);
-                if (activePlayerID + 1 < players.size()) {
-                    eliminatedPlayer = getActivePlayer();
-                    activePlayerID++;
-                    currentTurn = new Turn(players.get(activePlayerID));
-                    turnComplete = true;
-                }else{
-                    eliminatedPlayer = getActivePlayer();
-                    activePlayerID = 0;
-                    currentTurn = new Turn(players.get(0));
-                    turnComplete = true;
-                }
-            }else {
-                if (activePlayerID + 1 < players.size()) {
-                    activePlayerID++;
-                    currentTurn = new Turn(players.get(activePlayerID));
-                    turnComplete = true;
-                } else {
-                    activePlayerID = 0;
-                    currentTurn = new Turn(players.get(0));
-                    turnComplete = true;
+            for(Player player: players){
+                if(player.getListOfTerritories().size()==0){
+                    eliminatedPlayer = player;
+                    if(players.indexOf(player)<=activePlayerID){
+                        activePlayerID--;
+                    }
+                    players.remove(player);
+                    break;
                 }
             }
+            if (activePlayerID + 1 < players.size()) {
+                activePlayerID++;
+                currentTurn = new Turn(players.get(activePlayerID));
+                turnComplete = true;
+            } else {
+                activePlayerID = 0;
+                currentTurn = new Turn(players.get(0));
+                turnComplete = true;
+            }
+
         } else{
             turnComplete = false;
-            System.out.println(players.get(activePlayerID).getName() + " turn is not complete. There are " + players.get(activePlayerID).getReinforcement() + " soldiers left to place.");
         }
         for(RiskViewListener riskViewListener : riskViewListeners){
             riskViewListener.handleTurnUpdate(new RiskEvent (this,activePlayerID,players, currentTurn,winner,eliminatedPlayer));
