@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import static Main.RiskModel.MAX_NUMBER_PLAYERS;
 import static Main.RiskModel.MIN_NUMBER_PLAYERS;
 
+/**
+ * this class create the GUI for initializing the players
+ */
 public class InitializeView extends JPanel implements InitializeViewListener {
 
     private JComboBox numPlayers;
@@ -17,10 +20,13 @@ public class InitializeView extends JPanel implements InitializeViewListener {
     private Integer[] numberOfPlayers;
     private InitializeModel im;
 
-    public static final String[] COLOURS = {null, "Red", "Green", "Blue", "Yellow", "Orange", "Purple"};
+    private static final String[] COLOURS = {null, "Red", "Green", "Blue", "Yellow", "Orange", "Purple"};
     public static final int PREFERRED_WIDTH = 400;
     public static final int PREFERRED_HEIGHT = 400;
 
+    /**
+     * constructor for InitializeView that create teh GUI
+     */
     public InitializeView(){
         super();
         this.setLayout(new BorderLayout());
@@ -79,6 +85,11 @@ public class InitializeView extends JPanel implements InitializeViewListener {
         this.add(playersConfigPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * display a number of player characteristics that is the number of players
+     *
+     * @param e
+     */
     @Override
     public void handleInitializeUpdate(InitializeEvent e) {
         int numPlayers = e.getNumberOfPlayer();
@@ -91,25 +102,29 @@ public class InitializeView extends JPanel implements InitializeViewListener {
         this.revalidate();
     }
 
+    /**
+     * get the final version of the player names
+     *
+     * @return ArrayList<String>
+     */
     public ArrayList<String> getNameOfPlayers(){
         return im.getNamesOfPlayers();
     }
 
+    /**
+     * get the final version of the player colours
+     *
+     * @return ArrayList<Color>
+     */
     public ArrayList<Color> getPlayersColour(){
         return im.getPlayersColours();
     }
 
-    public static void main(String[] args) {
-        InitializeView initializeGame = new InitializeView();
-        int test = JOptionPane.showConfirmDialog(null, initializeGame, "JOptionPane Example : ", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-        for(String name : initializeGame.getNameOfPlayers()){
-            System.out.println(name);
-        }
-        for(Color colour : initializeGame.getPlayersColour()){
-            System.out.println(colour);
-        }
-    }
-
+    /**
+     * get the final number of players
+     *
+     * @return int
+     */
     public int getNumberOfPlayers() {
         return im.getNumberOfPlayers();
     }

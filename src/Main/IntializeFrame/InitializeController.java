@@ -9,6 +9,9 @@ import javax.swing.text.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class is controls what happens when user interacts with the Initialize frame GUI component and updates the view/model with corresponding methods.
+ */
 public class InitializeController implements ActionListener, DocumentListener {
 
     private InitializeModel im;

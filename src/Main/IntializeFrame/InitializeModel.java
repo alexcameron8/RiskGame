@@ -9,10 +9,15 @@ import java.util.List;
 import static Main.RiskModel.MAX_NUMBER_PLAYERS;
 import static Main.RiskModel.MIN_NUMBER_PLAYERS;
 
+/**
+ * This class is the model for the initialize frame that computes the inputted player name, colour and the number of players.
+ *
+ */
 public class InitializeModel {
 
     private List<InitializeView> initializeViews;
 
+    //default colours for the players
     public static final HashMap<String, Color> COLOURS = new HashMap<>()
     {{
         put("Red", new Color(255, 123, 144));
@@ -26,6 +31,9 @@ public class InitializeModel {
     private ArrayList<PlayerInfo> playersInfo;
     private int numberOfPlayers;
 
+    /**
+     * Constructor for InitializeModel
+     */
     public InitializeModel(){
         initializeViews = new ArrayList<>();
         playersInfo = new ArrayList<>();
@@ -35,27 +43,59 @@ public class InitializeModel {
         numberOfPlayers = MIN_NUMBER_PLAYERS;
     }
 
+    /**
+     * add the view for InitializeModel
+     *
+     * @param iv
+     */
     public void addInitializeView(InitializeView iv){
         initializeViews.add(iv);
     }
 
+    /**
+     * set the number of players chosen by the user
+     *
+     * @param numberOfPlayers
+     */
     public void setPlayerNumbers(int numberOfPlayers){
         this.numberOfPlayers = numberOfPlayers;
         for (InitializeView iv: initializeViews) iv.handleInitializeUpdate(new InitializeEvent(this,numberOfPlayers,null));
     }
 
+    /**
+     * set the a player name
+     *
+     * @param playerNumber
+     * @param playerName
+     */
     public void setPlayerName(int playerNumber, String playerName){
         playersInfo.get(playerNumber-1).setName(playerName);
     }
 
+    /**
+     * set a player color
+     *
+     * @param playerNumber
+     * @param playerColour
+     */
     public void setPlayerColour(int playerNumber, String playerColour){
         playersInfo.get(playerNumber-1).setColor(COLOURS.get(playerColour));
     }
 
+    /**
+     * get the chosen number of players
+     *
+     * @return int
+     */
     public int getNumberOfPlayers(){
         return numberOfPlayers;
     }
 
+    /**
+     * get each player colour and if multiple or not chosen choose for the player
+     *
+     * @return ArrayList<Color>
+     */
     public ArrayList<Color> getPlayersColours(){
         ArrayList<Color> playersColours = new ArrayList<>();
         for(PlayerInfo playerInfo: playersInfo){
@@ -80,6 +120,11 @@ public class InitializeModel {
         return new ArrayList<>(playersColours.subList(0,numberOfPlayers));
     }
 
+    /**
+     * get each player name and if multiple add an identifier if not chosen name player Player
+     *
+     * @return ArrayList<String>
+     */
     public ArrayList<String> getNamesOfPlayers() {
         ArrayList<String> namesOfPlayers = new ArrayList<>();
         for(PlayerInfo playerInfo: playersInfo){
@@ -110,37 +155,57 @@ public class InitializeModel {
     }
 }
 
+/**
+ * this class is for the chosen info of a player
+ */
 class PlayerInfo{
 
     private String name;
     private Color color;
 
+    /**
+     * constructor for PlayerInfo
+     * @param name
+     * @param color
+     */
     public PlayerInfo(String name, Color color){
         this.color=color;
         this.name=name;
     }
 
+    /**
+     * get the name of the player
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * set the name of the player
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * get the colour of the player
+     *
+     * @return
+     */
     public Color getColor() {
         return color;
     }
 
+    /**
+     * set the colour of the player
+     *
+     * @param color
+     */
     public void setColor(Color color) {
         this.color = color;
-    }
-
-    @Override
-    public String toString() {
-        return "PlayerInfo{" +
-                "name='" + name + '\'' +
-                ", color=" + color +
-                '}';
     }
 }
