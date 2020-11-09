@@ -6,15 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class TerritoryInfoView extends JPanel implements MapViewListener{
-
-    private Color background = new Color(174,187,239,255);
-
     TerritoryInfoView(RiskModel rm){
         // JPanel Config
         super();
         this.setPreferredSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()/6,(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
         this.setLayout(new BorderLayout());
-        this.setBackground(background);
+        this.setBackground(RiskModel.BACKGROUND);
         setInfo(rm.getMap().getTerritory("Ontario"));
     }
 
@@ -29,7 +26,7 @@ public class TerritoryInfoView extends JPanel implements MapViewListener{
 
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-        infoPanel.setBackground(background);
+        infoPanel.setBackground(RiskModel.BACKGROUND);
 
         JLabel owner = new JLabel(("\nOwner: "+(territory.getOwner()==null? "none":territory.getOwner().getName())));
         owner.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -44,7 +41,7 @@ public class TerritoryInfoView extends JPanel implements MapViewListener{
         JTextArea neighboursInfo = new JTextArea();
         neighboursInfo.setEditable(false);
         neighboursInfo.setTabSize(2);
-        neighboursInfo.setBackground(background);
+        neighboursInfo.setBackground(RiskModel.BACKGROUND);
 
         String info = "\nNeighbours:";
         for(Territory neighbour : territory.getNeighbours()){
