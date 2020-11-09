@@ -200,19 +200,19 @@ public class MapView extends JPanel implements MapViewListener{
             // Draw troops
             if(MapView.this.getMapModel().isTroopDotsVisible()){
                 for(Territory terr: MapView.this.mapModel.getTerritoryList()){
+                    if(terr == MapView.this.mapModel.getActiveTerritory()){
+                        graphics.setColor(Color.WHITE);
+                    } else {
+                        if(MapView.this.getMapModel().isPlayerTerritoryColorVisible()){
+                            graphics.setColor(Color.BLACK);
+                        } else {
+                            graphics.setColor(terr.getOwner().getPlayerColor().darker());
+                        }
+                    }
                     for(Point2D pos: terr.getSoldierPositions()){
                         int x, y;
                         x = (int) (pos.getX()*scale2 - SOLDIER_SIZE/2);
                         y = (int) (pos.getY()*scale2 - SOLDIER_SIZE/2);
-                        if(terr == MapView.this.mapModel.getActiveTerritory()){
-                            graphics.setColor(Color.WHITE);
-                        } else {
-                            if(terr.getOwner().getName().equals("Ben")){
-                                graphics.setColor(Color.BLUE);
-                            } else {
-                                graphics.setColor(Color.GREEN);
-                            }
-                        }
                         graphics.fillOval(x, y, SOLDIER_SIZE, SOLDIER_SIZE);
                     }
                 }
