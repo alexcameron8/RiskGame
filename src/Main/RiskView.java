@@ -103,7 +103,6 @@ public class RiskView extends JFrame implements RiskViewListener{
             getRiskModel().newGame();
         }
         if(e.getEliminatedPlayer()!=null){
-            System.out.println("eliminated JOption");
             JOptionPane.showMessageDialog(this,e.getEliminatedPlayer().getName()+ " has been eliminated!");
         }
     }

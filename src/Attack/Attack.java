@@ -42,12 +42,10 @@ public class Attack {
             int returningArmy = attack(numOfAttackArmy);
             if(returningArmy != 0){
                 succesfulAttack = true;
-                System.out.println(attacker.getName() + ", conquered " + defender.getName() + "'s territory, " + defenderTerritory.getName() + ".");
                 defenderTerritory.addSoldiers(returningArmy);
                 defender.transferTerritory(attacker,defenderTerritory);
             }
             else{
-                System.out.println(attacker.getName() + ", failed to conquer " + defender.getName() + "'s territory, " + defenderTerritory.getName() + ".");
                 succesfulAttack = false;
             }
         }
@@ -61,7 +59,6 @@ public class Attack {
         if(attackerTerritory.isNeighbour(defenderTerritory.getName())){
             return true;
         }else{
-            System.out.println("You cannot attack " + defenderTerritory.getName() + " as this territory is not neighbouring " + attackerTerritory.getName());
             return false;
         }
     }
@@ -76,7 +73,6 @@ public class Attack {
      */
     public boolean isTerritoryOccupied(){
         if(attackerTerritory.getSoldiers() <=1){
-            System.out.println("You cannot attack with this territory. Your territory must be occupied at all times.");
             return false;
         }else{
             return true;
@@ -90,10 +86,8 @@ public class Attack {
      */
     public boolean isNumOfSoldiersAllowed() {
         if (attackerTerritory.getSoldiers() - numOfAttackArmy < 1) {
-            System.out.println("Cannot attack with this many soldiers because your territory must be occupied at all times");
             return false;
         } else if(numOfAttackArmy>attackerTerritory.getSoldiers()){
-            System.out.println("Cannot attack with more troops than there are in this territory.");
             return false;
          }else{
             return true;
@@ -107,7 +101,6 @@ public class Attack {
     public boolean isTerritoryEnemy() {
         for (Territory ter : attacker.getListOfTerritories()) {
             if (ter.equals(defenderTerritory)) {
-                System.out.println("You cannot attack your own territory");
                 return false;
             }
         }
