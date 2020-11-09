@@ -31,7 +31,7 @@ public class RiskView extends JFrame implements RiskViewListener{
         }
         riskModel.play();
 
-        this.setMinimumSize(new Dimension(800,600));
+        this.setMinimumSize(new Dimension(1250,800));
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
