@@ -58,7 +58,6 @@ public class RiskModel {
         if(currentTurn.isTurnComplete(getActivePlayer())){
             if(players.size() == 1){
                 winner = getActivePlayer();
-
                 System.out.println(players.get(0).getName() + " has won");
             }
             if(players.get(activePlayerID).getListOfTerritories().size()==0){
