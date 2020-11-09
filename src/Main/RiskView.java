@@ -35,7 +35,7 @@ public class RiskView extends JFrame implements RiskViewListener{
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setJMenuBar(new MenuBarView());
+        this.setJMenuBar(new MenuBarView(riskModel,this));
 
         MapView mapView = new MapView(this.riskModel);
         TerritoryInfoView territoryInfoView = new TerritoryInfoView(riskModel);
@@ -53,6 +53,11 @@ public class RiskView extends JFrame implements RiskViewListener{
         this.add(territoryInfoView, BorderLayout.LINE_END);
         this.add(playerBarView, BorderLayout.PAGE_END);
         this.setVisible(true);
+
+    }
+    public void newRiskView(RiskModel riskModel){
+        this.riskModel = riskModel;
+        new RiskView();
 
     }
 

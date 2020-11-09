@@ -35,6 +35,9 @@ public class RiskModel {
         riskViewListeners.remove(riskViewListener);
     }
 
+    public RiskModel newGame(){
+        return new RiskModel();
+    }
 
     /**
      * This method is used to advance the turns in the auto setup phase.
