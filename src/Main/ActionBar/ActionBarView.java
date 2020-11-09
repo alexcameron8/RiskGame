@@ -188,7 +188,7 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
             numberOfTroops.setEnabled(false);
         }
         try {
-            backImg = ImageIO.read(new File("src//Main//Resources//back.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            backImg = ImageIO.read(getClass().getResourceAsStream("src/Main/ActionBar/resources/back.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
         }catch(IOException ex){
         }
         JButton backButton = new JButton(new ImageIcon(backImg));
