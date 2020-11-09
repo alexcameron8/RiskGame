@@ -100,7 +100,9 @@ public class RiskView extends JFrame implements RiskViewListener{
     public void handleTurnUpdate(RiskEvent e) {
         if(e.getWinner()!=null){
             JOptionPane.showMessageDialog(this,getRiskModel().getActivePlayer().getName() + " has Won. You will now be returned to the Main Menu.");
-            getRiskModel().newGame();
+            this.dispose();
+            RiskModel newGame = riskModel.newGame();
+            this.newRiskView(newGame);
         }
         if(e.getEliminatedPlayer()!=null){
             JOptionPane.showMessageDialog(this,e.getEliminatedPlayer().getName()+ " has been eliminated!");
