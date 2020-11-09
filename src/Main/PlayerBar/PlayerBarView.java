@@ -42,11 +42,10 @@ public class PlayerBarView extends JPanel implements RiskViewListener {
         for (int i = 0; i < pbm.getPlayers().size(); i++) {
             playersList[i]=new JLabel(pbm.getPlayers().get(i).getName());
             playersList[i].setBackground(pbm.getPlayers().get(i).getPlayerColor());
-            playersList[i].setBorder(null);
             playersList[i].setFont(new Font(playersList[i].getText(),Font.BOLD, 25));
+            playersList[i].setBorder(new LineBorder(Color.BLACK,2));
             if(pbm.getPlayers().get(i).getName().equals(pbm.getCurrentTurn().getName())){
                 playersList[i].setOpaque(true);
-                playersList[i].setBorder(new LineBorder(Color.BLACK,2));
             }
             playerNamesPanel.add(playersList[i]);
 
@@ -60,10 +59,8 @@ public class PlayerBarView extends JPanel implements RiskViewListener {
         for(JLabel playerName: playersList){
             if(playerName.getText().equals(pbm.getCurrentTurn().getName())){
                 playerName.setOpaque(true);
-                playerName.setBorder(new LineBorder(Color.BLACK,2));
             }
             else{
-                playerName.setBorder(null);
                 playerName.setOpaque(false);
             }
         }
