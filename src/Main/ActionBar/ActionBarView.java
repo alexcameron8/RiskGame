@@ -47,6 +47,7 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
 
     public void initActionPanel(){
         JLabel actionPanel = new JLabel("Actions:");
+        actionPanel.setFont(new Font("Actions:", Font.PLAIN,20));
         actionPanel.setBackground(darkBlue);
         this.add(actionPanel);
     }

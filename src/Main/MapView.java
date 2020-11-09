@@ -136,7 +136,6 @@ public class MapView extends JPanel implements MapViewListener{
                 Shape territoryShape = tx2.createTransformedShape(terr.getShape());
                 //Shape territoryShape = terr.getShape();
                 if(territoryShape.contains(point)){
-                    System.out.println("contains");
                     MapView.this.mapController.actionPerformed(
                             new ActionEvent(MapView.this, ActionEvent.ACTION_PERFORMED, terr.getId()));
                     break;

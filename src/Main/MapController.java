@@ -29,7 +29,6 @@ public class MapController implements ActionListener, ItemListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if(source instanceof MapView){
-            System.out.println("triggered");
             mapModel.setActiveTerritoryByID(e.getActionCommand());
         }
     }

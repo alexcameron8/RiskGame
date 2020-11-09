@@ -58,7 +58,6 @@ public class RiskView extends JFrame implements RiskViewListener{
     public void newRiskView(RiskModel riskModel){
         this.riskModel = riskModel;
         new RiskView();
-
     }
 
     public void welcomeScreen(){
@@ -89,6 +88,13 @@ public class RiskView extends JFrame implements RiskViewListener{
 
     @Override
     public void handleTurnUpdate(RiskEvent e) {
-
+        if(e.getWinner()!=null){
+            JOptionPane.showMessageDialog(this,getRiskModel().getActivePlayer().getName() + " has Won. You will now be returned to the Main Menu.");
+            getRiskModel().newGame();
+        }
+        if(e.getEliminatedPlayer()!=null){
+            System.out.println("eliminated JOption");
+            JOptionPane.showMessageDialog(this,e.getEliminatedPlayer().getName()+ " has been eliminated!");
+        }
     }
 }

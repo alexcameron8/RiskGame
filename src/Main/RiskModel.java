@@ -13,13 +13,14 @@ public class RiskModel {
     public static final Color BACKGROUND =  new Color(163,214,255);
     public static final int MAX_NUMBER_PLAYERS = 6;
     public static final int MIN_NUMBER_PLAYERS = 2;
-    private static GameState state;
     private ArrayList<Player> players;
     private int activePlayerID;
     private Turn currentTurn;
     private Map map;
     private List<RiskViewListener> riskViewListeners;
     private boolean turnComplete;
+    private Player winner = null;
+    private Player eliminatedPlayer = null;
 
     RiskModel(){
         MapImport mapImport = new MapImport("src/Map/worldmap.json");
@@ -53,19 +54,23 @@ public class RiskModel {
      * This method creates a new Turn instance and changes which player is currently playing the game.
      */
     public void advanceTurn(){
+
         if(currentTurn.isTurnComplete(getActivePlayer())){
             if(players.size() == 1){
+                winner = getActivePlayer();
+
                 System.out.println(players.get(0).getName() + " has won");
-                state = GameState.MAIN_MENU;
             }
             if(players.get(activePlayerID).getListOfTerritories().size()==0){
                 //They have no territories, therefore have been eliminated
                 players.remove(activePlayerID);
                 if (activePlayerID + 1 < players.size()) {
+                    eliminatedPlayer = getActivePlayer();
                     activePlayerID++;
                     currentTurn = new Turn(players.get(activePlayerID));
                     turnComplete = true;
                 }else{
+                    eliminatedPlayer = getActivePlayer();
                     activePlayerID = 0;
                     currentTurn = new Turn(players.get(0));
                     turnComplete = true;
@@ -86,7 +91,11 @@ public class RiskModel {
             System.out.println(players.get(activePlayerID).getName() + " turn is not complete. There are " + players.get(activePlayerID).getReinforcement() + " soldiers left to place.");
         }
         for(RiskViewListener riskViewListener : riskViewListeners){
-            riskViewListener.handleTurnUpdate(new RiskEvent (this,activePlayerID,players, currentTurn));
+            riskViewListener.handleTurnUpdate(new RiskEvent (this,activePlayerID,players, currentTurn,winner,eliminatedPlayer));
+        }
+        //if a player was eliminated last round clear the player before continuing
+        if(eliminatedPlayer !=null){
+            eliminatedPlayer = null;
         }
     }
     public boolean isTurnComplete(){
@@ -200,7 +209,7 @@ public class RiskModel {
     }
 
     /**
-     * This method plays the game and changes the game state and initializes the setup of the game.
+     * This method plays the game and initializes the setup of the game.
      */
     public void play(){
         Random r = new Random();

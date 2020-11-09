@@ -56,6 +56,15 @@ public class PlayerBarView extends JPanel implements RiskViewListener {
 
     @Override
     public void handleTurnUpdate(RiskEvent e){
+        if(e.getEliminatedPlayer()!=null){
+            for(int i=0;i<playersList.length;i++){
+                if(playersList[i].getText().equals(e.getEliminatedPlayer().getName())){
+                    System.out.println("player removed from playersList");
+                    playersList[i].remove(i);
+                    updateUI();
+                }
+            }
+        }
         for(JLabel playerName: playersList){
             if(playerName.getText().equals(pbm.getCurrentTurn().getName())){
                 playerName.setOpaque(true);
