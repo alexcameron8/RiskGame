@@ -88,10 +88,12 @@ public class MapView extends JPanel implements MapViewListener{
             JCheckBox troopCount = new JCheckBox("Show Troop Count");
             troopCount.setActionCommand("troopCount");
             troopCount.addItemListener(MapView.this.mapController);
+            troopCount.setSelected(true);
 
             JCheckBox playerTerritoryColor = new JCheckBox("Player Territory Color");
             playerTerritoryColor.setActionCommand("playerTerritoryColor");
             playerTerritoryColor.addItemListener(MapView.this.mapController);
+            playerTerritoryColor.setSelected(true);
 
 
             this.add(territoryNames);
@@ -181,7 +183,7 @@ public class MapView extends JPanel implements MapViewListener{
                     Color terrColor;
                     if(MapView.this.getMapModel().isPlayerTerritoryColorVisible()){
                         // PUT PLAYER COLOR LOGIC HERE
-                        terrColor = Color.GRAY;
+                        terrColor = terr.getOwner().getPlayerColor();
                     } else {
                         terrColor = new Color(
                                 terr.getContinent().getColor().get(0),
