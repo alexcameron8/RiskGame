@@ -5,24 +5,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
+/**
+ * The MenuBarController which performs actions based on which Menu Items are clicked
+ *
+ * @Author Alex Cameron
+ */
 public class MenuBarController implements ActionListener {
     private RiskModel riskModel;
     private RiskView riskView;
+
+    /**
+     * Constructor gets the risk model and view which the current Risk game is being played
+     * @param riskModel the current risk model
+     * @param riskView the current risk view
+     */
     public MenuBarController(RiskModel riskModel, RiskView riskView){
         this.riskModel = riskModel;
         this.riskView = riskView;
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("howtoplay")) {
+        if (e.getActionCommand().equals("howtoplay")) { //brings to wikipedia website to learn how to play
             try {
                 Desktop.getDesktop().browse(new URL("https://en.wikipedia.org/wiki/Risk_(game)").toURI());
-            } catch (Exception a) {}
-        }else if (e.getActionCommand().equals("manual")) {
+            } catch (Exception ignored) {}
+        }else if (e.getActionCommand().equals("manual")) { //links to the game manual
             try {
                 Desktop.getDesktop().browse(new URL("https://drive.google.com/file/d/1ZyVn-hjSJK7hDP9uS90wCvZ496TQ_Wyi/view").toURI());
-            } catch (Exception a) {}
-        }else if(e.getActionCommand().equals("newGame")){
+            } catch (Exception ignored) {}
+        }else if(e.getActionCommand().equals("newGame")){ //creates a new game
             //creates new game
             riskView.dispose();
             RiskModel newGame = riskModel.newGame();
