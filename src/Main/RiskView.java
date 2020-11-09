@@ -11,17 +11,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * RiskView class which is the swing components creating a GUI representing the risk game from risk model
+ */
 public class RiskView extends JFrame implements RiskViewListener{
     private RiskModel riskModel;
     private RiskController riskController;
 
+    /**
+     * Initializes the JFrame containing all the different components.
+     */
     RiskView(){
+
         super("Risk");
         this.riskModel = new RiskModel();
         this.riskController = new RiskController(riskModel,this);
+        //displays welcome screen
         welcomeScreen();
-
-
+        //displays initial setup
         InitializeView initializeGame = new InitializeView();
         JOptionPane.showConfirmDialog(this, initializeGame, "Initialize Game ", JOptionPane.OK_CANCEL_OPTION);
         ArrayList<String> nameOfPlayers = initializeGame.getNameOfPlayers();
@@ -37,7 +44,7 @@ public class RiskView extends JFrame implements RiskViewListener{
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setJMenuBar(new MenuBarView(riskModel,this));
-
+        //creates map listeners for territoryinfoview and actionbarview
         MapView mapView = new MapView(this.riskModel);
         TerritoryInfoView territoryInfoView = new TerritoryInfoView(riskModel);
         mapView.getMapModel().addMapListener(territoryInfoView);
@@ -49,7 +56,7 @@ public class RiskView extends JFrame implements RiskViewListener{
         riskModel.addRiskViewListeners(playerBarView);
         riskModel.addRiskViewListeners(this);
 
-
+        //adds the different views to this component
         this.add(actionBarView, BorderLayout.PAGE_START);
         this.add(mapView, BorderLayout.CENTER);
         this.add(territoryInfoView, BorderLayout.LINE_END);
@@ -57,11 +64,19 @@ public class RiskView extends JFrame implements RiskViewListener{
         this.setVisible(true);
 
     }
+
+    /**
+     * Creates a new view of risk. This method is used when a new risk game is created.
+     * @param riskModel The risk model
+     */
     public void newRiskView(RiskModel riskModel){
         this.riskModel = riskModel;
         new RiskView();
     }
 
+    /**
+     * Initializes the welcome screen frame that opens upon new game start.
+     */
     public void welcomeScreen(){
         ImageIcon icon = null;
         try {
@@ -87,25 +102,29 @@ public class RiskView extends JFrame implements RiskViewListener{
 
     }
 
+    /**
+     * gets the current risk model
+     * @return risk model
+     */
     public RiskModel getRiskModel(){
         return riskModel;
     }
 
-
-    public static void main(String[] args) {
-        new RiskView();
-    }
-
     @Override
     public void handleTurnUpdate(RiskEvent e) {
+        //if there is a winner then start new game and display that there is a winner
         if(e.getWinner()!=null){
             JOptionPane.showMessageDialog(this,getRiskModel().getActivePlayer().getName() + " has Won. You will now be returned to the Main Menu.");
             this.dispose();
             RiskModel newGame = riskModel.newGame();
             this.newRiskView(newGame);
-        }
+        }//If a player is eliminated then notify user there is an eliminated player
         if(e.getEliminatedPlayer()!=null){
             JOptionPane.showMessageDialog(this,e.getEliminatedPlayer().getName()+ " has been eliminated!");
         }
+    }
+
+    public static void main(String[] args) {
+        new RiskView();
     }
 }

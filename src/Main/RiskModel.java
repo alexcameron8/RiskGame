@@ -7,7 +7,9 @@ import Map.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
-
+/**
+ * This class is the risk model which plays the risk game
+ */
 public class RiskModel {
 
     public static final Color BACKGROUND =  new Color(163,214,255);
@@ -22,6 +24,9 @@ public class RiskModel {
     private Player winner = null;
     private Player eliminatedPlayer = null;
 
+    /**
+     * This constructor initializes the world map, the list of players and creates a list of listeners
+     */
     RiskModel(){
         MapImport mapImport = new MapImport(getClass().getResourceAsStream("resources/worldmap.json"));
         players = new ArrayList<Player>();
@@ -29,13 +34,27 @@ public class RiskModel {
         map = mapImport.getMap();
         riskViewListeners = new ArrayList<>();
     }
+
+    /**
+     * Adds a risk view listener to a list of listeners
+     * @param riskViewListener the view that is added to the list of listeners
+     */
     public void addRiskViewListeners(RiskViewListener riskViewListener){
         riskViewListeners.add(riskViewListener);
     }
+
+    /**
+     * Removes a risk view listener from a list of listeners
+     * @param riskViewListener the view that is being removed
+     */
     public void removeRiskViewListeners(RiskViewListener riskViewListener){
         riskViewListeners.remove(riskViewListener);
     }
 
+    /**
+     * This method creates a new game of Risk
+     * @return a new Risk Model
+     */
     public RiskModel newGame(){
         return new RiskModel();
     }
@@ -90,9 +109,15 @@ public class RiskModel {
             eliminatedPlayer = null;
         }
     }
+
+    /**
+     * Checks if the turn is complete
+     * @return True if the turn is complete, but false otherwise
+     */
     public boolean isTurnComplete(){
         return turnComplete;
     }
+
     /**
      * Reset the turns to the first player.
      */
@@ -106,7 +131,6 @@ public class RiskModel {
      */
     public Turn getActivePlayerTurn(){
         return currentTurn;
-
     }
 
     /**
