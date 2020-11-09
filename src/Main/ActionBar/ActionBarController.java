@@ -1,6 +1,8 @@
 package Main.ActionBar;
 
-import Main.*;
+import Main.Map.MapEvent;
+import Main.Map.MapTerritoryEvent;
+import Main.Map.MapViewListener;
 import Map.Territory;
 import Player.Player;
 
@@ -87,8 +89,10 @@ public class ActionBarController implements ActionListener, MapViewListener {
                 abv.setMessage("You must select a Territory before placing troops.");
             }
         }else if(e.getActionCommand().equals("confirmAttack")) {
-            attackConfirm = true;
-            state = "Defender";
+            if(attackerTerritory!=null) {
+                attackConfirm = true;
+                state = "Defender";
+            }
         }else if(e.getActionCommand().equals("cancelDefend")){
             defendConfirm = false;
             state = "Defender";
@@ -100,19 +104,23 @@ public class ActionBarController implements ActionListener, MapViewListener {
                 numofAttackers = (Integer) abv.getAttackNumberOfTroops().getSelectedItem();
             }
         }else if(e.getActionCommand().equals("confirmDefend")){
-            defendConfirm = true;
+            if(defenderTerritory!=null) {
+                defendConfirm = true;
+            }
         }else if(e.getActionCommand().equals("attackButton")){
             removeMessageBar();
-            if(defendConfirm && attackConfirm){
-                if(abm.attack(attackerTerritory,defender,defenderTerritory, numofAttackers)){
-                    abv.setMessage(attackerTerritory.getOwner().getName() + ", conquered " + defender.getName() + "'s territory, " + defenderTerritory.getName() + ".");
-                }else{
-                    abv.setMessage(attackerTerritory.getOwner().getName() + ", failed to conquer " + defender.getName() + "'s territory, " + defenderTerritory.getName() + ".");
-                }
+            if(defendConfirm && attackConfirm) {
+                if (attackerTerritory != null && defenderTerritory !=null) {
+                    if (abm.attack(attackerTerritory, defender, defenderTerritory, numofAttackers)) {
+                        abv.setMessage(attackerTerritory.getOwner().getName() + ", conquered " + defender.getName() + "'s territory, " + defenderTerritory.getName() + ".");
+                    } else {
+                        abv.setMessage(attackerTerritory.getOwner().getName() + ", failed to conquer " + defender.getName() + "'s territory, " + defenderTerritory.getName() + ".");
+                    }
                     abv.removeAttackBar();
-                state = "Default";
-            }else{
-                abv.setMessage("All of the attack information has not yet been confirmed.");
+                    state = "Default";
+                } else {
+                    abv.setMessage("All of the attack information has not yet been confirmed.");
+                }
             }
         }else if(e.getActionCommand().equals("backAttack")){
             state = "Default";
@@ -144,11 +152,13 @@ public class ActionBarController implements ActionListener, MapViewListener {
                 }
             } else if (state.equals("Attacker")) {
                 if (((MapTerritoryEvent) e).getMapTerritory().getOwner() == abm.getRiskModel().getActivePlayer()) {
-                    abv.setAttackerInfo();
                     attackerTerritory = ((MapTerritoryEvent) e).getMapTerritory();
+                    abv.setAttackerInfo();
                     abv.setAttackNumberRange();
 
                 } else {
+                    attackerTerritory = null;
+                    abv.setAttackerInfo();
                     abv.setMessage(((MapTerritoryEvent) e).getMapTerritory().getName() + " does not belong to you. Choose a Territory you own occupied with at least 2 troops.");
                 }
             } else if (state.equals("Defender")) {
@@ -161,11 +171,15 @@ public class ActionBarController implements ActionListener, MapViewListener {
                             abv.setDefenderInfo();
                             return;
                         }else{
+                            defenderTerritory = null;
+                            abv.setDefenderInfo();
                             abv.setMessage("You cannot attack your own Territory!");
                             return;
                         }
                     }
                 }
+                    defenderTerritory = null;
+                    abv.setDefenderInfo();
                     abv.setMessage(((MapTerritoryEvent) e).getMapTerritory().getName() + " is not a neighbour of " + attackerTerritory);
                 }else{
                     abv.setMessage("Choose the territory you want to attack with first!");

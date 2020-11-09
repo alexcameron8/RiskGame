@@ -6,17 +6,16 @@ import Map.MapTerritory;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 
 public class MapImport {
     private ArrayList<Territory> territories;
     private ArrayList<Continent> continents;
     private Map map;
-    String path;
+    InputStream path;
 
-    public MapImport(String path){
+    public MapImport(InputStream path){
         this.territories = new ArrayList<>();
         this.continents = new ArrayList<>();
         this.path = path;
@@ -45,12 +44,8 @@ public class MapImport {
     private void populate(){
         Gson gson = new Gson();
         MapImportJSONModel mapImportJSONModel = null;
-        try {
-            JsonReader reader = new JsonReader(new FileReader(path));
-            mapImportJSONModel = gson.fromJson(reader, MapImportJSONModel.class);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        JsonReader reader = new JsonReader(new InputStreamReader(path));
+        mapImportJSONModel = gson.fromJson(reader, MapImportJSONModel.class);
         for(MapModelContinent mmc: mapImportJSONModel.getContinents()) {
             continents.add(new Continent(mmc.getName(), mmc.getId(), mmc.getNumberOfReinforcement(), mmc.getColor()));
         }

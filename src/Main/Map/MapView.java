@@ -1,5 +1,6 @@
-package Main;
+package Main.Map;
 
+import Main.RiskModel;
 import Map.Territory;
 
 import javax.swing.*;
@@ -8,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +27,7 @@ public class MapView extends JPanel implements MapViewListener{
      * Create a new MapView
      * @param riskModel Game model containing map to represent.
      */
-    MapView(RiskModel riskModel){
+    public MapView(RiskModel riskModel){
         this.mapModel = new MapModel(riskModel);
         this.mapModel.addMapListener(this);
         this.mapController = new MapController(this.mapModel);
@@ -57,7 +57,7 @@ public class MapView extends JPanel implements MapViewListener{
      * Get the model of the game map.
      * @return Model of the game map.
      */
-    MapModel getMapModel(){
+    public MapModel getMapModel(){
         return this.mapModel;
     }
 

@@ -1,4 +1,4 @@
-package Main;
+package Main.Map;
 
 /**
  * Interface required to handle MapView events.

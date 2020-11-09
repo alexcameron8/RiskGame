@@ -23,7 +23,7 @@ public class RiskModel {
     private Player eliminatedPlayer = null;
 
     RiskModel(){
-        MapImport mapImport = new MapImport("src/Map/worldmap.json");
+        MapImport mapImport = new MapImport(getClass().getResourceAsStream("resources/worldmap.json"));
         players = new ArrayList<Player>();
         activePlayerID = 0;
         map = mapImport.getMap();
@@ -58,7 +58,6 @@ public class RiskModel {
         if(currentTurn.isTurnComplete(getActivePlayer())){
             if(players.size() == 1){
                 winner = getActivePlayer();
-
                 System.out.println(players.get(0).getName() + " has won");
             }
             for(Player player: players){
