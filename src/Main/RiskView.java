@@ -65,6 +65,7 @@ public class RiskView extends JFrame implements RiskViewListener{
         ImageIcon icon = new ImageIcon("src/Main/Resources/Risk.png");
         JLabel labelIcon = new JLabel(icon);
         JPanel panel = new JPanel(new GridBagLayout());
+
         panel.add(labelIcon);
         JLabel text = new JLabel("Welcome to Risk. Click OK to continue to game setup.");
         text.setAlignmentX(JLabel.CENTER_ALIGNMENT);
@@ -73,6 +74,7 @@ public class RiskView extends JFrame implements RiskViewListener{
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
         panel2.add(panel);
         panel2.add(text);
+
         JOptionPane startGame = new JOptionPane();
         startGame.showMessageDialog(this,panel2, "Welcome to Risk",JOptionPane.DEFAULT_OPTION);
 
