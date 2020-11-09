@@ -175,7 +175,9 @@ public class Territory {
      */
     public void addSoldiers(int add) {
         soldiers += add;
-        addSoldierLocation();
+        for(int i = 0; i < add; i++){
+            addSoldierLocation();
+        }
     }
 
     /**
