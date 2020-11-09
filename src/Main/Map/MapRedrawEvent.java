@@ -1,6 +1,4 @@
-package Main;
-
-import java.util.EventObject;
+package Main.Map;
 
 public class MapRedrawEvent extends MapEvent {
     /**
