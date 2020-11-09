@@ -65,9 +65,9 @@ public class ActionBarView extends JPanel {
     public void initActionButtons(){
         //gets the images
         try {
-            placeImg = ImageIO.read(getClass().getResourceAsStream("resources/Soldier.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
-            nextTurnImg = ImageIO.read(getClass().getResourceAsStream("resources/NextTurn.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
-            attackImg = ImageIO.read(getClass().getResourceAsStream("resources/Attack.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            placeImg = ImageIO.read(getClass().getResourceAsStream("resources/Soldier.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            nextTurnImg = ImageIO.read(getClass().getResourceAsStream("resources/NextTurn.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            attackImg = ImageIO.read(getClass().getResourceAsStream("resources/Attack.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
         }catch(Exception ex){
         }
         //creates the buttons
@@ -216,7 +216,7 @@ public class ActionBarView extends JPanel {
         }
         //gets images
         try {
-            backImg = ImageIO.read(getClass().getResourceAsStream("src/Main/ActionBar/resources/back.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            backImg = ImageIO.read(getClass().getResourceAsStream("resources/back.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
         }catch(IOException ex){
         }
         //creates back button
