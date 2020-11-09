@@ -6,11 +6,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import static Main.RiskModel.MAX_NUMBER_PLAYERS;
+import static Main.RiskModel.MIN_NUMBER_PLAYERS;
+
 public class InitializeModel {
 
     private List<InitializeView> initializeViews;
-    public static final int MAX_NUMBER_PLAYERS = 6;
-    public static final int MIN_NUMBER_PLAYERS = 2;
 
     public static final HashMap<String, Color> COLOURS = new HashMap<>()
     {{

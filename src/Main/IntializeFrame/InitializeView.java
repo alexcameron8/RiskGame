@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static Main.RiskModel.MAX_NUMBER_PLAYERS;
+import static Main.RiskModel.MIN_NUMBER_PLAYERS;
+
 public class InitializeView extends JPanel implements InitializeViewListener {
 
     private JComboBox numPlayers;
@@ -27,34 +30,33 @@ public class InitializeView extends JPanel implements InitializeViewListener {
         im.addInitializeView(this);
         InitializeController ic = new InitializeController(im, this);
 
-        numberOfPlayers = new Integer[InitializeModel.MAX_NUMBER_PLAYERS-1];
-        for(int i = InitializeModel.MIN_NUMBER_PLAYERS; i <= InitializeModel.MAX_NUMBER_PLAYERS; i++){
-            numberOfPlayers[i-InitializeModel.MIN_NUMBER_PLAYERS]=i;
+        numberOfPlayers = new Integer[MAX_NUMBER_PLAYERS-1];
+        for(int i = MIN_NUMBER_PLAYERS; i <= MAX_NUMBER_PLAYERS; i++){
+            numberOfPlayers[i-MIN_NUMBER_PLAYERS]=i;
         }
 
         numPlayers= new JComboBox(numberOfPlayers);
-        numPlayers.setPreferredSize(new Dimension(this.getPreferredSize().width,this.getPreferredSize().height/(InitializeModel.MAX_NUMBER_PLAYERS+1)));
+        numPlayers.setPreferredSize(new Dimension(this.getPreferredSize().width,this.getPreferredSize().height/(MAX_NUMBER_PLAYERS+1)));
         numPlayers.setBorder(BorderFactory.createTitledBorder("Select number of Players:"));
         numPlayers.addActionListener(ic);
         numPlayers.setActionCommand("numPlayers");
         this.add(numPlayers, BorderLayout.PAGE_START);
 
-        nameOfPlayers = new JTextField[InitializeModel.MAX_NUMBER_PLAYERS];
+        nameOfPlayers = new JTextField[MAX_NUMBER_PLAYERS];
 
         playersConfigPanel = new JPanel();
         playersConfigPanel.setLayout(new BoxLayout(playersConfigPanel, BoxLayout.Y_AXIS));
-        playersConfigPanel.setPreferredSize(new Dimension(this.getPreferredSize().width,this.getPreferredSize().height*InitializeModel.MAX_NUMBER_PLAYERS/(InitializeModel.MAX_NUMBER_PLAYERS+1)));
+        playersConfigPanel.setPreferredSize(new Dimension(this.getPreferredSize().width,this.getPreferredSize().height*MAX_NUMBER_PLAYERS/(MAX_NUMBER_PLAYERS+1)));
 
 
-        playerColour = new JComboBox[InitializeModel.MAX_NUMBER_PLAYERS];
-        playerConfigPanel = new JPanel[InitializeModel.MAX_NUMBER_PLAYERS];
+        playerColour = new JComboBox[MAX_NUMBER_PLAYERS];
+        playerConfigPanel = new JPanel[MAX_NUMBER_PLAYERS];
 
-        for (int i=0; i < InitializeModel.MAX_NUMBER_PLAYERS; i++) {
+        for (int i=0; i < MAX_NUMBER_PLAYERS; i++) {
             playerConfigPanel[i] = new JPanel();
             playerConfigPanel[i].setLayout(new FlowLayout(FlowLayout.LEFT));
             playerConfigPanel[i].setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-            playerConfigPanel[i].setMaximumSize(new Dimension(playersConfigPanel.getPreferredSize().width, playersConfigPanel.getPreferredSize().height/(InitializeModel.MAX_NUMBER_PLAYERS)));
-
+            playerConfigPanel[i].setMaximumSize(new Dimension(playersConfigPanel.getPreferredSize().width, playersConfigPanel.getPreferredSize().height/(MAX_NUMBER_PLAYERS)));
             playerColour[i] = new JComboBox(COLOURS);
             playerColour[i].addActionListener(ic);
             playerColour[i].setActionCommand("colour "+(i+1));
@@ -71,7 +73,7 @@ public class InitializeView extends JPanel implements InitializeViewListener {
             playerConfigPanel[i].add(playerColour[i]);
 
         }
-        for (int i=0; i < InitializeModel.MIN_NUMBER_PLAYERS; i++) {
+        for (int i=0; i < MIN_NUMBER_PLAYERS; i++) {
             playersConfigPanel.add(playerConfigPanel[i]);
         }
         this.add(playersConfigPanel, BorderLayout.CENTER);
