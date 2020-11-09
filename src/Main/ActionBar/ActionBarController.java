@@ -1,6 +1,8 @@
 package Main.ActionBar;
 
-import Main.*;
+import Main.Map.MapEvent;
+import Main.Map.MapTerritoryEvent;
+import Main.Map.MapViewListener;
 import Map.Territory;
 import Player.Player;
 

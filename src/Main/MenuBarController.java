@@ -27,6 +27,10 @@ public class MenuBarController implements ActionListener {
             riskView.dispose();
             RiskModel newGame = riskModel.newGame();
             riskView.newRiskView(newGame);
+        }else if(e.getActionCommand().equals("transferAll")){
+            riskModel.getActivePlayer().transferAllTerritory(riskModel.getPlayers().get(riskModel.getActivePlayerID()+1==riskModel.getPlayers().size()? 0:riskModel.getActivePlayerID()+1));
+            riskView.repaint();
+            riskView.revalidate();
         }
     }
 }

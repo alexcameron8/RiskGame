@@ -1,6 +1,6 @@
-package Main;
+package Main.Map;
 
-import Map.*;
+import Main.RiskModel;
 import Map.Territory;
 import org.apache.batik.parser.AWTPathProducer;
 import org.apache.batik.parser.PathParser;
@@ -57,7 +57,6 @@ public class MapModel {
     public void setActiveTerritoryByID(String id){
         for(Territory terr: this.riskModel.getMap().getTerritories()){
             if(terr.getId().equals(id)){
-                System.out.println(terr.getId());
                 activeTerritory = terr;
                 updateMapListeners(new MapTerritoryEvent(this, terr));
                 break;

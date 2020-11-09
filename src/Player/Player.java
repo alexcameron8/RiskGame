@@ -88,8 +88,6 @@ public class Player {
                         break;
                 }
                 listOfTerritories.remove(ter);
-                if(listOfTerritories.size() == 0)
-                    System.out.println(this.name + " has no more territories and has been eliminated from the game!");
                 return ter;
             }
         }
@@ -188,11 +186,9 @@ public class Player {
      */
     public boolean canPlaceReinforcement(Territory territory, int numberOfReinforcement){
         if(numberOfReinforcement <=0 ){
-            System.out.println("Cannot place 0 or less reinforcements.");
             return false;
         }
         else if(numberOfReinforcement > getReinforcement() ){
-            System.out.println("Cannot place more than "+ getReinforcement() + " reinforcements.");
             return false;
         }
         else if(hasTerritory(territory)){
@@ -214,7 +210,6 @@ public class Player {
     public void placeReinforcement(Territory territory, int numberOfReinforcement) {
         if (hasTerritory(territory)) {
             territory.addSoldiers(numberOfReinforcement);
-            System.out.println("placed" + numberOfReinforcement + " soldiers in " + territory.getName());
             reinforcements -= numberOfReinforcement;
         }
     }

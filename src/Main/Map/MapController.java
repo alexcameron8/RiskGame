@@ -1,4 +1,4 @@
-package Main;
+package Main.Map;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -1,8 +1,6 @@
-package Main;
+package Main.Map;
 
 import Map.Territory;
-
-import java.util.EventObject;
 
 /**
  * Object representing an event triggered by the MapView

@@ -52,9 +52,6 @@ public class ActionBarView extends JPanel {
 
     }
 
-    /**
-     * Initializes the Panel which contains the buttons
-     */
     public void initActionPanel(){
         JLabel actionPanel = new JLabel("Actions:");
         actionPanel.setFont(new Font("Actions:", Font.PLAIN,20));
@@ -219,7 +216,7 @@ public class ActionBarView extends JPanel {
         }
         //gets images
         try {
-            backImg = ImageIO.read(new File("src//Main//Resources//back.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            backImg = ImageIO.read(getClass().getResourceAsStream("src/Main/ActionBar/resources/back.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
         }catch(IOException ex){
         }
         //creates back button
