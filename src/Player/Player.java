@@ -1,4 +1,5 @@
 package Player;
+import java.awt.*;
 import java.util.*;
 import Map.*;
 import Attack.*;
@@ -19,6 +20,8 @@ public class Player {
     private String name;
     //number of Reinforcements
     private int reinforcements;
+    //player colour
+    private Color playerColor;
 
     /**
      * Constructor for a player. Gives them
@@ -27,11 +30,16 @@ public class Player {
      *
      * @param name Player name.
      */
-    public Player(String name){
+    public Player(String name, Color playerColor){
         this.name = name;
         this.listOfContinents = new ArrayList<>();
         this.listOfTerritories = new ArrayList<>();
         this.reinforcements = 0;
+        this.playerColor = playerColor;
+    }
+
+    public Color getPlayerColor(){
+        return playerColor;
     }
 
     /**
