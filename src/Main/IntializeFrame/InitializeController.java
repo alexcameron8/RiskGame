@@ -22,6 +22,11 @@ public class InitializeController implements ActionListener, DocumentListener {
         this.iv = iv;
     }
 
+    /**
+     * change the number of players or the colour of the player
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -32,11 +37,21 @@ public class InitializeController implements ActionListener, DocumentListener {
         }
     }
 
+    /**
+     * when a new character is inserted into the JTextfield change the player name
+     *
+     * @param e
+     */
     @Override
     public void insertUpdate(DocumentEvent e) {
         addPlayerNames(e);
     }
 
+    /**
+     * when a character is removed into the JTextfield change the player name
+     *
+     * @param e
+     */
     @Override
     public void removeUpdate(DocumentEvent e) {
         addPlayerNames(e);
@@ -47,6 +62,11 @@ public class InitializeController implements ActionListener, DocumentListener {
 
     }
 
+    /**
+     * change the name of the player
+     *
+     * @param documentEvent
+     */
     private void addPlayerNames(DocumentEvent documentEvent) {
         Document source = documentEvent.getDocument();
         try {
