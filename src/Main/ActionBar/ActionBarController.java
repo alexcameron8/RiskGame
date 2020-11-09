@@ -13,20 +13,16 @@ public class ActionBarController implements ActionListener, MapViewListener {
     private Territory territory;
     private int numOfTroops;
     private String state = "Default";
-    private Territory attackerTerritory;
-    private Territory defenderTerritory;
+    private Territory attackerTerritory,defenderTerritory;
     private Player defender;
     private int numofAttackers;
-    private boolean attackConfirm, defendConfirm;
+    private boolean attackConfirm, defendConfirm,hasNumTroopsSelected,hasTerritorySelected;
 
     public ActionBarController(ActionBarView abv, ActionBarModel abm) {
         this.abv = abv;
         this.abm = abm;
     }
-    public Territory setTerritory(Territory territory){
-        this.territory = territory;
-        return territory;
-    }
+
     public void removeMessageBar(){
         if(abv.getMessageFlag()){
             abv.removeMessageBar();
@@ -55,6 +51,8 @@ public class ActionBarController implements ActionListener, MapViewListener {
         } else if (e.getActionCommand().equals("next")) {
             removeMessageBar();
             //advances turn
+            hasNumTroopsSelected = false;
+            hasTerritorySelected = false;
             abm.nextTurn(abm.getRiskModel());
             abv.removeDeployTroopsBar();
             abv.removeAttackBar();
@@ -68,16 +66,28 @@ public class ActionBarController implements ActionListener, MapViewListener {
             if((Integer) abv.getNumberOfTroops().getSelectedItem()!=null) {
                 numOfTroops = (Integer) abv.getNumberOfTroops().getSelectedItem();
                 System.out.println("Number of troops to deploy : " + numOfTroops);
+                hasNumTroopsSelected = true;
             }else{
                 abv.setMessage("Number of troops not selected.");
             }
         } else if (e.getActionCommand().equals("deploy")) {
             removeMessageBar();
             if (territory != null) {
-                abm.deployTroops(territory, numOfTroops);
-                abv.removeDeployTroopsBar();
-                abv.updateUI();
-            }else{
+                if(hasTerritorySelected) {
+                    if (hasNumTroopsSelected) {
+                        abm.deployTroops(territory, numOfTroops);
+                        abv.removeDeployTroopsBar();
+                        abv.updateUI();
+                        hasTerritorySelected = false;
+                        hasNumTroopsSelected = false;
+                        state = "Default";
+                    } else {
+                        abv.setMessage("Select number of reinforcements to deploy.");
+                    }
+                }else{
+                    abv.setMessage("You must select a Territory before placing troops.");
+                }
+            } else {
                 abv.setMessage("You must select a Territory before placing troops.");
             }
         }else if(e.getActionCommand().equals("confirmAttack")) {
@@ -127,9 +137,9 @@ public class ActionBarController implements ActionListener, MapViewListener {
             }
             if (state.equals("Place")) {
                 if (((MapTerritoryEvent) e).getMapTerritory().getOwner() == abm.getRiskModel().getActivePlayer()) {
+                    hasTerritorySelected = true;
                     territory = ((MapTerritoryEvent) e).getMapTerritory();
 
-                    setTerritory(territory);
                     if (abv.getPlaceTroopsFlag()) {
                         abv.setDeployInfo();
                     }
