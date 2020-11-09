@@ -125,7 +125,23 @@ public class RiskModelTest {
         rm.addPlayer(new Player("Alex", Color.RED));
         rm.addPlayer(new Player("Ben", Color.BLUE));
         rm.play();
-        rm.getActivePlayer().transferAllTerritory(rm.getPlayers().get(rm.getActivePlayerID()+1));
+        rm.getActivePlayer().placeReinforcement(rm.getActivePlayer().getListOfTerritories().get(0),rm.getActivePlayer().getReinforcements());
+        rm.getActivePlayer().transferAllTerritory(rm.getPlayers().get(rm.getActivePlayerID()+1==rm.getPlayers().size()? 0:rm.getActivePlayerID()+1));
+        int previousNumberOfPlayers = rm.getPlayers().size();
+        rm.advanceTurn();
+        assertEquals(previousNumberOfPlayers-1,rm.getPlayers().size());
     }
 
+    @Test
+    public void testWinPlayer(){
+        rm= new RiskModel();
+        rm.addPlayer(new Player("Thomas", Color.BLACK));
+        rm.addPlayer(new Player("Alex", Color.RED));
+        rm.play();
+        rm.getActivePlayer().placeReinforcement(rm.getActivePlayer().getListOfTerritories().get(0),rm.getActivePlayer().getReinforcements());
+        rm.getActivePlayer().transferAllTerritory(rm.getPlayers().get(rm.getActivePlayerID()+1==rm.getPlayers().size()? 0:rm.getActivePlayerID()+1));
+        int previousNumberOfPlayers = rm.getPlayers().size();
+        rm.advanceTurn();
+        assertEquals(previousNumberOfPlayers-1,rm.getPlayers().size());
+    }
 }
