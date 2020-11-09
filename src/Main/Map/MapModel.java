@@ -102,37 +102,77 @@ public class MapModel {
         mapViewListenerList.add(mvl);
     }
 
+    /**
+     * return if the territory names are visible or not
+     *
+     * @return boolean
+     */
     public boolean isTerritoryNamesVisible() {
         return territoryNamesVisible;
     }
 
+    /**
+     * set if the territory names are to be made visible
+     *
+     * @param territoryNamesVisible
+     */
     public void setTerritoryNamesVisible(boolean territoryNamesVisible) {
         this.territoryNamesVisible = territoryNamesVisible;
         updateMapListeners(new MapRedrawEvent(this));
     }
 
+    /**
+     * return if the territory troop dots are visible or not
+     *
+     * @return boolean
+     */
     public boolean isTroopDotsVisible() {
         return troopDotsVisible;
     }
 
+    /**
+     * set if the territory troop dots are to be made visible
+     *
+     * @param troopDotsVisible
+     */
     public void setTroopDotsVisible(boolean troopDotsVisible) {
         this.troopDotsVisible = troopDotsVisible;
         updateMapListeners(new MapRedrawEvent(this));
     }
 
+    /**
+     * return if the territory troop count are visible or not
+     *
+     * @return boolean
+     */
     public boolean isTroopCountVisible() {
         return troopCountVisible;
     }
 
+    /**
+     * set if the territory troop count is to be made visible
+     *
+     * @param troopCountVisible
+     */
     public void setTroopCountVisible(boolean troopCountVisible) {
         this.troopCountVisible = troopCountVisible;
         updateMapListeners(new MapRedrawEvent(this));
     }
 
+    /**
+     * return if the territory colour is visible or not
+     *
+     * @return
+     */
     public boolean isPlayerTerritoryColorVisible() {
         return playerTerritoryColorVisible;
     }
 
+    /**
+     * set if the territory colour is to be made visible
+     *
+     * @param playerTerritoryColorVisible
+     */
     public void setPlayerTerritoryColorVisible(boolean playerTerritoryColorVisible) {
         this.playerTerritoryColorVisible = playerTerritoryColorVisible;
         updateMapListeners(new MapRedrawEvent(this));
