@@ -2,6 +2,7 @@ package Main.ActionBar;
 
 import Main.RiskModel;
 import Main.RiskView;
+import Map.Territory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -250,11 +251,19 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         deployInfo.setText("Country: "+ abc.getTerritory() + "   Reinforcements: ");
     }
     public void setAttackerInfo(){
-        attackerTerritoryLabel.setText("Attacker Territory: " + abc.getAttackerTerritory());
+        if(abc.getAttackerTerritory()!=null) {
+            attackerTerritoryLabel.setText("Attacker Territory: " + abc.getAttackerTerritory());
+        }else{
+            attackerTerritoryLabel.setText("Attacker Territory: ");
+        }
     }
     public void setDefenderInfo(){
+        if(abc.getDefenderTerritory()!=null) {
         defenderTerritoryLabel.setText("Defender Territory:" + abc.getDefenderTerritory());
         defenderPlayerLabel.setText("Defending Player: " + abc.getDefenderTerritory().getOwner().getName());
+    }else{
+        defenderTerritoryLabel.setText("Defender Territory: ");
+        }
     }
     public boolean getPlaceTroopsFlag(){
         return placetroopsFlag;
