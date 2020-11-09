@@ -8,7 +8,6 @@ import Player.*;
 public class Turn {
 
     private int numberOfReinforcements;
-    private Player player;
 
     /**
      * Create a new Turn
