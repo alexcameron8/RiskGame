@@ -2,7 +2,6 @@ package Main.ActionBar;
 
 import Main.RiskModel;
 import Main.RiskView;
-import Map.Territory;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,8 +9,10 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-//import Resources.*;
-public class ActionBarView extends JPanel implements ActionBarViewListener {
+/**
+ * This class is the view for the Action Bar component within the game of Risk.
+ */
+public class ActionBarView extends JPanel {
 
     private JButton placeTroops,attack,nextTurn,deployButton;
     private Image placeImg,nextTurnImg,attackImg, lock, cancel, backImg;
@@ -29,7 +30,11 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
     private boolean attackFlag;
     private boolean messageFlag;
 
-
+    /**
+     * The Constructor which gets the current Risk view and Risk model and initializes the action bar panel.
+     * @param riskView The risk view
+     * @param riskModel The risk model
+     */
     public ActionBarView(RiskView riskView, RiskModel riskModel){
         this.riskView = riskView;
         this.riskModel = riskModel;
@@ -37,15 +42,19 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.setBackground(RiskModel.BACKGROUND);
 
+        //adds this view to the model listeners
         ActionBarModel abm = new ActionBarModel(this.riskModel,this.riskView);
         abm.addActionBarModelViews(this);
         abc = new ActionBarController(this, abm);
-
+        //initializes the actionbar / buttons
         initActionPanel();
         initActionButtons();
 
     }
 
+    /**
+     * Initializes the Panel which contains the buttons
+     */
     public void initActionPanel(){
         JLabel actionPanel = new JLabel("Actions:");
         actionPanel.setFont(new Font("Actions:", Font.PLAIN,20));
@@ -53,20 +62,25 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         this.add(actionPanel);
     }
 
+    /**
+     * Initializes the Buttons for the action panel
+     */
     public void initActionButtons(){
+        //gets the images
         try {
             placeImg = ImageIO.read(getClass().getResourceAsStream("resources/Soldier.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
             nextTurnImg = ImageIO.read(getClass().getResourceAsStream("resources/NextTurn.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
             attackImg = ImageIO.read(getClass().getResourceAsStream("resources/Attack.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
         }catch(Exception ex){
         }
+        //creates the buttons
         placeTroops = new JButton("Place Troops", new ImageIcon(placeImg));
         placeTroops.setBackground(darkBlue);
         attack = new JButton("Attack", new ImageIcon(attackImg));
         attack.setBackground(darkBlue);
         nextTurn = new JButton("Next Turn", new ImageIcon(nextTurnImg));
         nextTurn.setBackground(darkBlue);
-
+        //adds the buttons to the JLabel
         this.add(placeTroops);
         this.add(attack);
         this.add(nextTurn);
@@ -78,8 +92,11 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         attack.setActionCommand("attack");
         nextTurn.addActionListener(abc);
         nextTurn.setActionCommand("next");
-
     }
+
+    /**
+     * Adds the number of possible troops to send in an attack
+     */
     public void setAttackNumberRange(){
         if(messageFlag){
             removeMessageBar();
@@ -95,10 +112,16 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
             }
         }
     }
+
+    /**
+     * Displays the info in the current attack in a JPanel
+     */
     public void attackInfo(){
+        //removes placetroops bar
         if(getPlaceTroopsFlag()){
             removeDeployTroopsBar();
         }
+        //create attack and defend panels which display the attacker and defender info
         attackFlag = true;
         attackPanel = new JPanel();
         JPanel defenderPanel = new JPanel();
@@ -109,16 +132,17 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         JLabel numberAttackersLabel = new JLabel("Number of Attackers: ");
         defenderTerritoryLabel = new JLabel("Defender Territory: ");
         defenderPlayerLabel = new JLabel("Defending Player: ");
-
+        //creates the JComboBox with number of attackers
         numberAttackTroops = new JComboBox<Integer>();
         JButton attackButton = new JButton("Attack",new ImageIcon(attackImg));
-
+        //gets images
         try {
             backImg = ImageIO.read(getClass().getResourceAsStream("resources/back.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
             lock = ImageIO.read(getClass().getResourceAsStream("resources/lock.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
             cancel = ImageIO.read(getClass().getResourceAsStream("resources/cancel.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
         }catch(Exception ex){
         }
+        //creates back, lock and cancel buttons
 
         JButton backButton = new JButton(new ImageIcon(backImg));
 
@@ -137,10 +161,11 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         confirmButtonsD.add(cancelD);
         confirmButtonsD.setBackground(darkBlue);
 
-
+        //adds defender labels to defenderPanel
         defenderPanel.add(defenderTerritoryLabel);
         defenderPanel.add(defenderPlayerLabel);
 
+        //Adds all components into the attackPanel
         attackPanel.add(attackerTerritoryLabel);
         attackPanel.add(numberAttackersLabel);
         attackPanel.add(numberAttackTroops);
@@ -152,7 +177,7 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         attackPanel.setBackground(darkBlue);
         this.add(attackPanel);
 
-        //actionlisteners
+        //Create actionlisteners
         numberAttackTroops.addActionListener(abc);
         numberAttackTroops.setActionCommand("attackTroops");
         attackButton.addActionListener(abc);
@@ -172,6 +197,10 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
 
         updateUI();
     }
+
+    /**
+     * This method displays a Jpanel with the information regarding deploying troops
+     */
     public void deployTroopsInfo(){
         placetroopsFlag = true;
         deployPanel = new JPanel();
@@ -179,20 +208,23 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         numberOfTroops = new JComboBox<Integer>();
         deployButton= new JButton("Deploy Troops");
         deployButton.setEnabled(true);
+        //adds the total possible troops to deploy to the JComboBox
         if(riskModel.getActivePlayer().getReinforcements()>0) {
             for (int i = 1; i <= riskModel.getActivePlayer().getReinforcements(); i++) {
                 numberOfTroops.addItem(i);
             }
-        }else{
+        }else{ //if the total reinforcement is 0 then the deploy troops button is disabled
             deployButton.setEnabled(false);
             numberOfTroops.setEnabled(false);
         }
+        //gets images
         try {
             backImg = ImageIO.read(new File("src//Main//Resources//back.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
         }catch(IOException ex){
         }
+        //creates back button
         JButton backButton = new JButton(new ImageIcon(backImg));
-
+        //adding information to the deploy troops panel
         deployPanel.add(deployInfo);
         deployPanel.add(numberOfTroops);
         deployPanel.add(deployButton);
@@ -200,7 +232,7 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         deployPanel.setBackground(darkBlue);
         this.add(deployPanel);
 
-        //adding Actionlisteners
+        //adding Actionlisteners to components
         numberOfTroops.addActionListener(abc);
         numberOfTroops.setActionCommand("numTroops");
         deployButton.addActionListener(abc);
@@ -210,6 +242,10 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         updateUI();
     }
 
+    /**
+     * Sets the message to be displayed in the ActionBar
+     * @param msg the message displayed in Message bar
+     */
     public void setMessage(String msg){
         messageFlag =true;
         messagePanel = new JPanel();
@@ -220,36 +256,70 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         updateUI();
     }
 
+    /**
+     * Removes the deploy troops bar from the GUI
+     */
     public void removeDeployTroopsBar() {
         if (deployPanel != null) {
             deployPanel.setVisible(false);
             placetroopsFlag = false;
         }
     }
+
+    /**
+     * Removes the attack bar from the GUI
+     */
     public void removeAttackBar(){
         if(attackPanel!=null){
             attackPanel.setVisible(false);
             attackFlag = false;
         }
     }
+
+    /**
+     * Removes the recent message bar from the GUI
+     */
     public void removeMessageBar(){
         if(messagePanel !=null){
             messagePanel.setVisible(false);
             messageFlag = false;
         }
     }
+
+    /**
+     * Gets the number of troops allowed to be deployed
+     * @return The JComboBox of the number of troops allowed to be deployed
+     */
     public JComboBox<Integer> getNumberOfTroops(){
         return numberOfTroops;
     }
+
+    /**
+     * Gets the number of troops allowed to attack with in a certain territory
+     * @return The JComboBox of the number of troops allowed to attack
+     */
     public JComboBox<Integer> getAttackNumberOfTroops(){
         return numberAttackTroops;
     }
+
+    /**
+     * Gets the action bar controller which controls the view and the model
+     * @return The action bar controller
+     */
     public ActionBarController getAbc(){
         return abc;
     }
+
+    /**
+     * Sets the territories that are clicked in the deploy info bar in the GUI
+     */
     public void setDeployInfo(){
-        deployInfo.setText("Country: "+ abc.getTerritory() + "   Reinforcements: ");
+        deployInfo.setText("Territory: "+ abc.getTerritory() + "   Reinforcements: ");
     }
+
+    /**
+     * Sets the attacker territory that was clicked in the attack info bar in the GUI
+     */
     public void setAttackerInfo(){
         if(abc.getAttackerTerritory()!=null) {
             attackerTerritoryLabel.setText("Attacker Territory: " + abc.getAttackerTerritory());
@@ -257,6 +327,10 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
             attackerTerritoryLabel.setText("Attacker Territory: ");
         }
     }
+
+    /**
+     * Sets the defender territory and the defender that was clicked in the attack info bar in the GUI
+     */
     public void setDefenderInfo(){
         if(abc.getDefenderTerritory()!=null) {
         defenderTerritoryLabel.setText("Defender Territory:" + abc.getDefenderTerritory());
@@ -265,19 +339,26 @@ public class ActionBarView extends JPanel implements ActionBarViewListener {
         defenderTerritoryLabel.setText("Defender Territory: ");
         }
     }
+
+    /**
+     * Gets the boolean value if the place troops info bar is visible or not
+     * @return True if the bar is visible, false otherwise
+     */
     public boolean getPlaceTroopsFlag(){
         return placetroopsFlag;
     }
+    /**
+     * Gets the boolean value if the attack info bar is visible or not
+     * @return True if the bar is visible, false otherwise
+     */
     public boolean getAttackFlag(){
         return attackFlag;
     }
+    /**
+     * Gets the boolean value if the message bar is visible or not
+     * @return True if the bar is visible, false otherwise
+     */
     public boolean getMessageFlag(){
         return messageFlag;
-    }
-
-    @Override
-    public void handleTroopDeployment(ActionBarEvent e){
-        int reinforcements = e.getReinforcements();
-            System.out.println("The (1) reinforcements are: " + reinforcements);
     }
 }
