@@ -5,6 +5,7 @@ import java.util.EventObject;
 
 /**
  * This class is an event class that creates the events of the initialize model class.
+ * @author Thomas
  */
 public class InitializeEvent extends EventObject {
 

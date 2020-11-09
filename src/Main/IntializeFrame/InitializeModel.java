@@ -11,7 +11,7 @@ import static Main.RiskModel.MIN_NUMBER_PLAYERS;
 
 /**
  * This class is the model for the initialize frame that computes the inputted player name, colour and the number of players.
- *
+ * @author Thomas
  */
 public class InitializeModel {
 
@@ -157,6 +157,7 @@ public class InitializeModel {
 
 /**
  * this class is for the chosen info of a player
+ * @author Thomas
  */
 class PlayerInfo{
 

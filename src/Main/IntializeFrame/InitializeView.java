@@ -9,6 +9,7 @@ import static Main.RiskModel.MIN_NUMBER_PLAYERS;
 
 /**
  * this class create the GUI for initializing the players
+ * @author Thomas
  */
 public class InitializeView extends JPanel implements InitializeViewListener {
 
