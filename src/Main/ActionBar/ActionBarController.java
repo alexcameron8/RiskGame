@@ -38,7 +38,6 @@ public class ActionBarController implements ActionListener, MapViewListener {
                 abv.removeAttackBar();
                 abv.deployTroopsInfo();
             }
-            System.out.println("Test to see if place troops button works.");
         } else if (e.getActionCommand().equals("attack")) {
             state = "Attacker";
             //attack
@@ -47,7 +46,6 @@ public class ActionBarController implements ActionListener, MapViewListener {
                 abv.removeDeployTroopsBar();
                 abv.attackInfo();
             }
-            System.out.println("attack");
         } else if (e.getActionCommand().equals("next")) {
             removeMessageBar();
             //advances turn
@@ -61,11 +59,9 @@ public class ActionBarController implements ActionListener, MapViewListener {
             }else{
                 abv.setMessage("Turn advanced. It is now " + abm.getRiskModel().getActivePlayer().getName() + "'s turn.");
             }
-            System.out.println("next turn");
         } else if(e.getActionCommand().equals("numTroops")) {
             if((Integer) abv.getNumberOfTroops().getSelectedItem()!=null) {
                 numOfTroops = (Integer) abv.getNumberOfTroops().getSelectedItem();
-                System.out.println("Number of troops to deploy : " + numOfTroops);
                 hasNumTroopsSelected = true;
             }else{
                 abv.setMessage("Number of troops not selected.");
