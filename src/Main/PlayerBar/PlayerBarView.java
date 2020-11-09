@@ -9,6 +9,10 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * the GUI for th Player Bar which shows the players and which player's turn it is.
+ * @author Thomas
+ */
 public class PlayerBarView extends JPanel implements RiskViewListener {
 
     private ArrayList<JLabel> playersList;
@@ -16,6 +20,11 @@ public class PlayerBarView extends JPanel implements RiskViewListener {
     private PlayerBarModel pbm;
     private JPanel playerNamesPanel;
 
+    /**
+     * constructor for PlayerBarView
+     *
+     * @param rm
+     */
     public PlayerBarView(RiskModel rm){
         // JPanel Config
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -29,11 +38,18 @@ public class PlayerBarView extends JPanel implements RiskViewListener {
         initPlayersList();
     }
 
+    /**
+     * create a panel the displays "Players: "
+     */
     public void initPlayerPanel(){
         JLabel playersPanel = new JLabel("Players:");
         playersPanel.setFont(new Font(playersPanel.getText(),Font.PLAIN, 20));
         this.add(playersPanel);
     }
+
+    /**
+     * creates a panel that displays all the Names of the players and highlights which player starts
+     */
     public void initPlayersList(){
         playerNamesPanel = new JPanel();
         playerNamesPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -54,6 +70,11 @@ public class PlayerBarView extends JPanel implements RiskViewListener {
         this.add(playerNamesPanel);
     }
 
+    /**
+     * update the player Bar for when a player is eliminated or the current turn of a player
+     *
+     * @param e
+     */
     @Override
     public void handleTurnUpdate(RiskEvent e){
         if(e.getEliminatedPlayer()!=null){
