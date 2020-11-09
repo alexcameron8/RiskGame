@@ -10,7 +10,7 @@ import java.util.List;
 
 public class RiskModel {
 
-    public static final Color BACKGROUND =  new Color(102,178,255);
+    public static final Color BACKGROUND =  new Color(163,214,255);
     public static final int MAX_NUMBER_PLAYERS = 6;
     public static final int MIN_NUMBER_PLAYERS = 2;
     private static GameState state;
