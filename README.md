@@ -48,12 +48,14 @@ Alex Cameron
 - Designed Action Bar Controller, ActionBarModel, ActionBarView classes which is where attacking, placing troops and skipping to next turn happens.
 - Designed MenuBar and Controller functionalities
 - Wrote JavaDocs
+
 Thomas Dunnigan
 - Designed InitalizeController, InitializeEvent, InitializeModel, InitializeView and InitializeViewListener classes which allows the user to set the players names and colours
 - Designed TerritoyinfoView that displays the info of a selected Territory
 - Designed PlayerBarModel and PlayerBarView that shows all the players and which is player is currently playing
 - Desgined the Territories to have a shape, a owner and a continent
 - Wrote JavaDocs
+
 Ben Munro
 
 ### Changes Made to UML and Data Structures from Milestone 1
