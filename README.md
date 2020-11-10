@@ -43,6 +43,8 @@ Our known issues can be found at: https://github.com/computebender/Risk/issues
 - When attacking or placing troops, if the user inputs a string as the number of troops to be placed/ used in the attack the command will fail because it only accepts int values.
 
 ## Milestone 2
+https://drive.google.com/file/d/10f_wSMXT4B321GG6q1Rzht-eY5L8cPN_/view?usp=sharing
+
 ### Authors:
 Alex Cameron
 - Designed Action Bar Controller, ActionBarModel, ActionBarView classes which is where attacking, placing troops and skipping to next turn happens.
