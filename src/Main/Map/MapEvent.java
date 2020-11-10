@@ -1,7 +1,5 @@
 package Main.Map;
 
-import Map.Territory;
-
 import java.util.EventObject;
 
 /**

@@ -1,20 +1,25 @@
 package Map;
 
-import Map.MapImportJSONModel;
-import Map.MapModelTerritory;
-import Map.MapTerritory;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * This class creates the map from a Json file
+ * @Author Ben
+ */
 public class MapImport {
     private ArrayList<Territory> territories;
     private ArrayList<Continent> continents;
     private Map map;
     InputStream path;
 
+    /**
+     * Constructor for MapImport which takes a path to a json file and makes the map
+     * @param path
+     */
     public MapImport(InputStream path){
         this.territories = new ArrayList<>();
         this.continents = new ArrayList<>();
@@ -23,6 +28,12 @@ public class MapImport {
         populate();
     }
 
+    /**
+     * get a created territory from an id
+     *
+     * @param id
+     * @return Territory
+     */
     private Territory getTerritory(String id){
         for(Territory territory: territories) {
             if(territory.getId().equals(id)){
@@ -32,6 +43,12 @@ public class MapImport {
         return null;
     }
 
+    /**
+     * get a continent from an id
+     *
+     * @param id
+     * @return Continent
+     */
     private Continent getContinent(String id){
         for(Continent continent: continents) {
             if(continent.getId().equals(id)){
@@ -41,6 +58,9 @@ public class MapImport {
         return null;
     }
 
+    /**
+     * create the map from a json file
+     */
     private void populate(){
         Gson gson = new Gson();
         MapImportJSONModel mapImportJSONModel = null;
@@ -73,14 +93,29 @@ public class MapImport {
         map.setBackgroundColor(mapImportJSONModel.getBackgroundColor());
     }
 
+    /**
+     * get all made territories
+     *
+     * @return ArrayList<Territory>
+     */
     public ArrayList<Territory> getTerritories(){
         return this.territories;
     }
 
+    /**
+     * get all made continents
+     *
+     * @return ArrayList<Continent>
+     */
     public ArrayList<Continent> getContinents(){
         return this.continents;
     }
 
+    /**
+     * return the map that was created from the json file
+     *
+     * @return Map
+     */
     public Map getMap(){
         return this.map;
     }

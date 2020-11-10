@@ -1,9 +1,5 @@
 package Map;
 
-import org.apache.batik.parser.AWTPathProducer;
-import org.apache.batik.parser.PathParser;
-
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 /**

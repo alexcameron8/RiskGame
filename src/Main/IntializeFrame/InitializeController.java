@@ -1,7 +1,5 @@
 package Main.IntializeFrame;
 
-import Main.RiskView;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
