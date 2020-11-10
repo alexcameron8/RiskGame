@@ -57,6 +57,10 @@ Thomas Dunnigan
 - Wrote JavaDocs
 
 Ben Munro
+- Wrote MapView, MapController, MapModel, MapEvent, MapRedrawEvent, MapTerritoryEvent, MapViewListener, MapImport, MapImportJSONModel
+- Designed the MapView to allow players to  select territories.
+- Wrote JavaDocs for Main/Map
+- Wrote user manual for milestone 2.
 
 ### Changes Made to UML and Data Structures from Milestone 1
 The major change in design from Milestone 1 to Milestone 2 was changing the user interface to a graphical interface where the user uses the mouse rather than a command based game that was used in the previous milestone. For milestone 2 we changed the design of territories to know which players own them, what continent they are apart of and gave them shapes and corresponding colours to player colours. As well, players now have colours and when an attack occurs it now returns a boolean value of true if successful and false otherwise. The way the map is created was changed from Milestone 1 to now import a JSON file with the data for the map. Otherwise, all data structures were kept the same for all methods within the Risk project. 
