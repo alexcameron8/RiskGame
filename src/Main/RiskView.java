@@ -16,6 +16,7 @@ import java.util.ArrayList;
  */
 public class RiskView extends JFrame implements RiskViewListener{
     private RiskModel riskModel;
+    private TerritoryInfoView territoryInfoView;
 
     /**
      * Initializes the JFrame containing all the different components.
@@ -44,7 +45,7 @@ public class RiskView extends JFrame implements RiskViewListener{
         this.setJMenuBar(new MenuBarView(riskModel,this));
         //creates map listeners for territoryinfoview and actionbarview
         MapView mapView = new MapView(this.riskModel);
-        TerritoryInfoView territoryInfoView = new TerritoryInfoView(riskModel);
+        territoryInfoView = new TerritoryInfoView(riskModel);
         mapView.getMapModel().addMapListener(territoryInfoView);
         ActionBarView actionBarView = new ActionBarView(this, riskModel);
 
