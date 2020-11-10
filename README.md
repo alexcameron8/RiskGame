@@ -43,7 +43,8 @@ Our known issues can be found at: https://github.com/computebender/Risk/issues
 - When attacking or placing troops, if the user inputs a string as the number of troops to be placed/ used in the attack the command will fail because it only accepts int values.
 
 ## Milestone 2
-https://drive.google.com/file/d/10f_wSMXT4B321GG6q1Rzht-eY5L8cPN_/view?usp=sharing
+[User Manual](https://drive.google.com/file/d/10f_wSMXT4B321GG6q1Rzht-eY5L8cPN_/view?usp=sharing)
+[Initial UI design](https://docs.google.com/drawings/d/1TjWCDmL8Fy99HRsly1mUbK_5Way2hJCWwjTnl8maWwA/edit?usp=sharing)
 
 ### Authors:
 Alex Cameron
