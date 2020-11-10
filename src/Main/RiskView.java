@@ -101,6 +101,9 @@ public class RiskView extends JFrame implements RiskViewListener{
 
     }
 
+    public TerritoryInfoView getTerritoryInfoView(){
+        return territoryInfoView;
+    }
     /**
      * gets the current risk model
      * @return risk model

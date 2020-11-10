@@ -93,6 +93,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
                     if (hasNumTroopsSelected) {
                         abm.deployTroops(territory, numOfTroops);
                         abv.removeDeployTroopsBar();
+                        abv.getRiskView().getTerritoryInfoView().setInfo(territory);
                         hasTerritorySelected = false;
                         hasNumTroopsSelected = false;
                         state = "Default";

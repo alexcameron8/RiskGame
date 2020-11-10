@@ -338,7 +338,9 @@ public class ActionBarView extends JPanel {
         defenderTerritoryLabel.setText("Defender Territory: ");
         }
     }
-
+    public RiskView getRiskView(){
+        return riskView;
+    }
     /**
      * Gets the boolean value if the place troops info bar is visible or not
      * @return True if the bar is visible, false otherwise
