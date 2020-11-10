@@ -32,7 +32,7 @@ public class MenuBarController implements ActionListener {
             } catch (Exception ignored) {}
         }else if (e.getActionCommand().equals("manual")) { //links to the game manual
             try {
-                Desktop.getDesktop().browse(new URL("https://drive.google.com/file/d/1ZyVn-hjSJK7hDP9uS90wCvZ496TQ_Wyi/view").toURI());
+                Desktop.getDesktop().browse(new URL("https://drive.google.com/file/d/10f_wSMXT4B321GG6q1Rzht-eY5L8cPN_/view").toURI());
             } catch (Exception ignored) {}
         }else if(e.getActionCommand().equals("newGame")){ //creates a new game
             //creates new game
