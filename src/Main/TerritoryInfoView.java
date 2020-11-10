@@ -8,7 +8,18 @@ import Map.Territory;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * this class displays the info of a territory, the name of the territory
+ * who ownes the territory, the number of troops on the territory and the neighbours
+ *
+ * @author Thomas
+ */
 public class TerritoryInfoView extends JPanel implements MapViewListener {
+    /**
+     * constructor for TerritoryInfoView which creates the display with a default territory of Ontario
+     *
+     * @param rm
+     */
     TerritoryInfoView(RiskModel rm){
         // JPanel Config
         super();
@@ -18,6 +29,11 @@ public class TerritoryInfoView extends JPanel implements MapViewListener {
         setInfo(rm.getMap().getTerritory("Ontario"));
     }
 
+    /**
+     * Updates the display to show the current territories info
+     *
+     * @param territory
+     */
     public void setInfo(Territory territory){
         this.removeAll();
         this.repaint();
@@ -57,6 +73,11 @@ public class TerritoryInfoView extends JPanel implements MapViewListener {
         this.add(infoPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * changes the display when a new territory is clicked
+     *
+     * @param e Event to handle.
+     */
     @Override
     public void handleMapUpdate(MapEvent e) {
         if(e instanceof MapTerritoryEvent){
