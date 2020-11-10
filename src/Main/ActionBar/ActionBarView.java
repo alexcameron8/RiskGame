@@ -135,9 +135,9 @@ public class ActionBarView extends JPanel {
         JButton attackButton = new JButton("Attack",new ImageIcon(attackImg));
         //gets images
         try {
-            backImg = ImageIO.read(getClass().getResourceAsStream("resources/back.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
-            lock = ImageIO.read(getClass().getResourceAsStream("resources/lock.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
-            cancel = ImageIO.read(getClass().getResourceAsStream("resources/cancel.PNG")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            backImg = ImageIO.read(getClass().getResourceAsStream("resources/back.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            lock = ImageIO.read(getClass().getResourceAsStream("resources/lock.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            cancel = ImageIO.read(getClass().getResourceAsStream("resources/cancel.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
         }catch(Exception ex){
         }
         //creates back, lock and cancel buttons

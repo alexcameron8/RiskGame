@@ -35,7 +35,11 @@ public class ActionBarModel {
     public RiskModel getRiskModel(){
         return riskModel;
     }
-
+    /**
+     * This method gets the RiskView
+     * @return The current risk view
+     */
+    public RiskView getRiskView(){return riskView;}
     /**
      * Adds new listeners to the list of listeners called actionBarViews
      * @param abv The new view that is added to the listeners
