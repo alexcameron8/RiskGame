@@ -57,9 +57,9 @@ The major change in design from Milestone 1 to Milestone 2 was changing the user
 Note: *For markers convenience* a test menu item is in the game to transfer all territories to another player to test eliminating players/ speed the game up.    
 
 ### Known Issues
--Upon game setup if the user attempts to close any of the frames the game will continue to open and ignore the user hitting the cancel button in the top right corner.
--If the user tries to play the game not full screen there is potential for the message bar to not appear on screen because the text is too long to fit in the component.
--In our testing, if using mac or linux the JComboBox does not work to choose the player colour in the setup phase.
+- Upon game setup if the user attempts to close any of the frames the game will continue to open and ignore the user hitting the cancel button in the top right corner.
+- If the user tries to play the game not full screen there is potential for the message bar to not appear on screen because the text is too long to fit in the component.
+- In our testing, if using mac or linux the JComboBox does not work to choose the player colour in the setup phase.
 
 ## Roadmap
 ### Milestone 3
