@@ -42,13 +42,38 @@ Our known issues can be found at: https://github.com/computebender/Risk/issues
 - When either placing or attacking with a 2 name country, the country must be put in quotations. E.g. “South Africa”
 - When attacking or placing troops, if the user inputs a string as the number of troops to be placed/ used in the attack the command will fail because it only accepts int values.
 
+## Milestone 2
+https://drive.google.com/file/d/10f_wSMXT4B321GG6q1Rzht-eY5L8cPN_/view?usp=sharing
+
+### Authors:
+Alex Cameron
+- Designed Action Bar Controller, ActionBarModel, ActionBarView classes which is where attacking, placing troops and skipping to next turn happens.
+- Designed MenuBar and Controller functionalities
+- Wrote JavaDocs
+
+Thomas Dunnigan
+- Designed InitalizeController, InitializeEvent, InitializeModel, InitializeView and InitializeViewListener classes which allows the user to set the players names and colours
+- Designed TerritoyinfoView that displays the info of a selected Territory
+- Designed PlayerBarModel and PlayerBarView that shows all the players and which is player is currently playing
+- Desgined the Territories to have a shape, a owner and a continent
+- Wrote JavaDocs
+
+Ben Munro
+- Wrote MapView, MapController, MapModel, MapEvent, MapRedrawEvent, MapTerritoryEvent, MapViewListener, MapImport, MapImportJSONModel
+- Designed the MapView to allow players to  select territories.
+- Wrote JavaDocs for Main/Map
+- Wrote user manual for milestone 2.
+
+### Changes Made to UML and Data Structures from Milestone 1
+The major change in design from Milestone 1 to Milestone 2 was changing the user interface to a graphical interface where the user uses the mouse rather than a command based game that was used in the previous milestone. For milestone 2 we changed the design of territories to know which players own them, what continent they are apart of and gave them shapes and corresponding colours to player colours. As well, players now have colours and when an attack occurs it now returns a boolean value of true if successful and false otherwise. The way the map is created was changed from Milestone 1 to now import a JSON file with the data for the map. Otherwise, all data structures were kept the same for all methods within the Risk project. 
+Note: *For markers convenience* a test menu item is in the game to transfer all territories to another player to test eliminating players/ speed the game up.    
+
+### Known Issues
+- Upon game setup if the user attempts to close any of the frames the game will continue to open and ignore the user hitting the cancel button in the top right corner.
+- If the user tries to play the game not full screen there is potential for the message bar to not appear on screen because the text is too long to fit in the component.
+- In our testing, if using mac or linux the JComboBox does not work to choose the player colour in the setup phase.
+
 ## Roadmap
-
-### Milestone 2
-Met by: Monday, 9 November 2020
-- GUI Based version of the game.
-- Create unit tests for the model.
-
 ### Milestone 3
 Met by: Monday, 23 November 2020
 - Additional features: bonus army placement + troupe movement phase.  
