@@ -44,10 +44,12 @@ Our known issues can be found at: https://github.com/computebender/Risk/issues
 
 ## Roadmap
 
-### Milestone 2
-Met by: Monday, 9 November 2020
-- GUI Based version of the game.
-- Create unit tests for the model.
+## Milestone 2
+### Authors:
+Alex Cameron
+- Designed Action Bar Controller, ActionBarModel, ActionBarView classes which is where attacking, placing troops and skipping to next turn happens.
+- Designed MenuBar and Controller functionalities
+- Wrote JavaDocs
 
 ### Milestone 3
 Met by: Monday, 23 November 2020
