@@ -16,6 +16,8 @@ public class InitializeView extends JPanel implements InitializeViewListener {
     private JComboBox numPlayers;
     private JPanel[] playerConfigPanel;
     private JComboBox[] playerColour;
+    private JCheckBox[] playerIsAI;
+    private JLabel[] playerIsAILabel;
     private JTextField[] nameOfPlayers;
     private JPanel playersConfigPanel;
     private Integer[] numberOfPlayers;
@@ -59,25 +61,57 @@ public class InitializeView extends JPanel implements InitializeViewListener {
         playerColour = new JComboBox[MAX_NUMBER_PLAYERS];
         playerConfigPanel = new JPanel[MAX_NUMBER_PLAYERS];
 
+        playerIsAI = new JCheckBox[MAX_NUMBER_PLAYERS];
+
+        playerIsAILabel = new JLabel[MAX_NUMBER_PLAYERS];
+
         for (int i=0; i < MAX_NUMBER_PLAYERS; i++) {
             playerConfigPanel[i] = new JPanel();
-            playerConfigPanel[i].setLayout(new FlowLayout(FlowLayout.LEFT));
-            playerConfigPanel[i].setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-            playerConfigPanel[i].setMaximumSize(new Dimension(playersConfigPanel.getPreferredSize().width, playersConfigPanel.getPreferredSize().height/(MAX_NUMBER_PLAYERS)));
-            playerColour[i] = new JComboBox(COLOURS);
-            playerColour[i].addActionListener(ic);
-            playerColour[i].setActionCommand("colour "+(i+1));
-            playerColour[i].setPreferredSize(new Dimension(playerConfigPanel[i].getMaximumSize().width/5, playerConfigPanel[i].getMaximumSize().height/2));
+            playerConfigPanel[i].setLayout(new GridBagLayout());
+            playerConfigPanel[i].setBorder(BorderFactory.createTitledBorder("Player "+(i+1) + " setup:"));
+            playerConfigPanel[i].setMaximumSize(
+                    new Dimension(playersConfigPanel.getPreferredSize().width,
+                            playersConfigPanel.getPreferredSize().height/(MAX_NUMBER_PLAYERS)));
+            GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
             nameOfPlayers[i]=new JTextField();
             nameOfPlayers[i].getDocument().addDocumentListener(ic);
             nameOfPlayers[i].getDocument().putProperty("name",(i+1));
-            nameOfPlayers[i].setPreferredSize(new Dimension((playerConfigPanel[i].getMaximumSize().width*3)/4, playerConfigPanel[i].getMaximumSize().height/2));
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = 0;
+            gridBagConstraints.weightx = 0.8;
+            gridBagConstraints.fill = GridBagConstraints.BOTH;
+            playerConfigPanel[i].add(nameOfPlayers[i], gridBagConstraints);
 
+            playerColour[i] = new JComboBox(COLOURS);
+            playerColour[i].addActionListener(ic);
+            playerColour[i].setActionCommand("colour "+(i+1));
+            gridBagConstraints = new GridBagConstraints();
+            gridBagConstraints.gridx = 1;
+            gridBagConstraints.gridy = 0;
+            gridBagConstraints.weightx = 0.1;
+            gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+            playerConfigPanel[i].add(playerColour[i], gridBagConstraints);
 
-            playerConfigPanel[i].setBorder(BorderFactory.createTitledBorder("Player "+(i+1) + " setup:"));
-            playerConfigPanel[i].add(nameOfPlayers[i]);
-            playerConfigPanel[i].add(playerColour[i]);
+            playerIsAILabel[i] = new JLabel("AI: ");
+            gridBagConstraints = new GridBagConstraints();
+            gridBagConstraints.gridx = 2;
+            gridBagConstraints.gridy = 0;
+            gridBagConstraints.weightx = 0.05;
+            gridBagConstraints.fill = GridBagConstraints.NONE;
+            gridBagConstraints.anchor = GridBagConstraints.LINE_END;
+            playerConfigPanel[i].add(playerIsAILabel[i], gridBagConstraints);
+
+            playerIsAI[i] = new JCheckBox();
+            playerIsAI[i].setActionCommand("isAI "+(i+1));
+            playerIsAI[i].addActionListener(ic);
+            gridBagConstraints = new GridBagConstraints();
+            gridBagConstraints.gridx = 3;
+            gridBagConstraints.gridy = 0;
+            gridBagConstraints.weightx = 0.05;
+            gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+            gridBagConstraints.anchor = GridBagConstraints.LINE_START;
+            playerConfigPanel[i].add(playerIsAI[i], gridBagConstraints);
 
         }
         for (int i=0; i < MIN_NUMBER_PLAYERS; i++) {
@@ -120,6 +154,16 @@ public class InitializeView extends JPanel implements InitializeViewListener {
     public ArrayList<Color> getPlayersColour(){
         return im.getPlayersColours();
     }
+
+    /**
+     * get the final version of the player colours
+     *
+     * @return ArrayList<Color>
+     */
+    public ArrayList<Boolean> getIsPlayerAI(){
+        return im.getPlayersIsAI();
+    }
+
 
     /**
      * get the final number of players

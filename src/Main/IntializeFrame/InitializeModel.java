@@ -38,7 +38,7 @@ public class InitializeModel {
         initializeViews = new ArrayList<>();
         playersInfo = new ArrayList<>();
         for(int i = 0; i < MAX_NUMBER_PLAYERS; i++){
-            playersInfo.add(new PlayerInfo(null, null));
+            playersInfo.add(new PlayerInfo(null, null, false));
         }
         numberOfPlayers = MIN_NUMBER_PLAYERS;
     }
@@ -83,12 +83,35 @@ public class InitializeModel {
     }
 
     /**
+     * set if a player is an AI
+     *
+     * @param playerNumber
+     * @param playerIsAI
+     */
+    public void setPlayerisAI(int playerNumber, boolean playerIsAI){
+        playersInfo.get(playerNumber-1).setAI(playerIsAI);
+    }
+
+    /**
      * get the chosen number of players
      *
      * @return int
      */
     public int getNumberOfPlayers(){
         return numberOfPlayers;
+    }
+
+    /**
+     * get if each player is ai
+     *
+     * @return ArrayList<boolean>
+     */
+    public ArrayList<Boolean> getPlayersIsAI(){
+        ArrayList<Boolean> playersIsAI = new ArrayList<>();
+        for(PlayerInfo playerInfo: playersInfo){
+            playersIsAI.add(playerInfo.isAI());
+        }
+        return new ArrayList<>(playersIsAI.subList(0,numberOfPlayers));
     }
 
     /**
@@ -163,15 +186,18 @@ class PlayerInfo{
 
     private String name;
     private Color color;
+    private boolean isAI;
 
     /**
      * constructor for PlayerInfo
      * @param name
      * @param color
+     * @param isAI
      */
-    public PlayerInfo(String name, Color color){
+    public PlayerInfo(String name, Color color, boolean isAI){
         this.color=color;
         this.name=name;
+        this.isAI = isAI;
     }
 
     /**
@@ -208,5 +234,13 @@ class PlayerInfo{
      */
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public boolean isAI() {
+        return isAI;
+    }
+
+    public void setAI(boolean AI) {
+        isAI = AI;
     }
 }
