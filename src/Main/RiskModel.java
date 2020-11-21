@@ -235,4 +235,14 @@ public class RiskModel {
         currentTurn = new Turn(players.get(activePlayerID));
     }
 
+    public boolean moveTroops(Territory giving, Territory receiving, int  numOfTroops){
+        if(getActivePlayer().hasTerritory(giving) && getActivePlayer().hasTerritory(receiving)){
+            if(giving.isNeighbour(receiving.getName())) {
+                giving.removeSoldiers(numOfTroops);
+                receiving.addSoldiers(numOfTroops);
+                return true;
+            }
+        }
+        return false;
+    }
 }
