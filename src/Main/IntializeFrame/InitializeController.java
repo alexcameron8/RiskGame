@@ -33,6 +33,8 @@ public class InitializeController implements ActionListener, DocumentListener {
             im.setPlayerNumbers((int) (((JComboBox) e.getSource()).getSelectedItem()));
         } else if (e.getActionCommand().split(" ")[0].equals("colour")) {
             im.setPlayerColour(Integer.parseInt(e.getActionCommand().split(" ")[1]), (String) ((JComboBox) e.getSource()).getSelectedItem());
+        } else if (e.getActionCommand().split(" ")[0].equals("isAI") && e.getSource() instanceof JCheckBox) {
+            im.setPlayerisAI(Integer.parseInt(e.getActionCommand().split(" ")[1]), ((JCheckBox) e.getSource()).isSelected());
         }
     }
 

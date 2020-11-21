@@ -32,9 +32,15 @@ public class RiskView extends JFrame implements RiskViewListener{
         JOptionPane.showConfirmDialog(this, initializeGame, "Initialize Game ", JOptionPane.OK_CANCEL_OPTION);
         ArrayList<String> nameOfPlayers = initializeGame.getNameOfPlayers();
         ArrayList<Color> coloursOfPlayers = initializeGame.getPlayersColour();
+        ArrayList<Boolean> isPlayerAI = initializeGame.getIsPlayerAI();
 
         for(int i = 0; i < initializeGame.getNumberOfPlayers(); i++){
-            riskModel.addPlayer(new Player(nameOfPlayers.get(i),coloursOfPlayers.get(i)));
+            if(!isPlayerAI.get(i)){
+                riskModel.addPlayer(new Player(nameOfPlayers.get(i),coloursOfPlayers.get(i)));
+            } else {
+                // ADD AI PLAYER
+            }
+
         }
         riskModel.play();
 
