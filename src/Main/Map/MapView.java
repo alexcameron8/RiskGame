@@ -19,6 +19,12 @@ import java.util.Arrays;
  * @author Benjamin Munro
  */
 public class MapView extends JPanel implements MapViewListener{
+
+    public static final String TERRITORY_NAME_TOGGLE_ACTION = "territoryName";
+    public static final String TROOP_DOTS_TOGGLE_ACTION = "troopDots";
+    public static final String TROOP_COUNT_TOGGLE_ACTION = "troopCount";
+    public static final String PLAYER_TERRITORY_COLOUR_TOGGLE_ACTION = "playerTerritoryColor";
+
     private MapModel mapModel;
     private MapController mapController;
     private DrawMap drawMap;
@@ -78,20 +84,20 @@ public class MapView extends JPanel implements MapViewListener{
             this.setLayout(new FlowLayout());
 
             JCheckBox territoryNames = new JCheckBox("Show Territory Names");
-            territoryNames.setActionCommand("territoryName");
+            territoryNames.setActionCommand(TERRITORY_NAME_TOGGLE_ACTION);
             territoryNames.addItemListener(MapView.this.mapController);
 
             JCheckBox troopDots = new JCheckBox("Show Troop Dots");
-            troopDots.setActionCommand("troopDots");
+            troopDots.setActionCommand(TROOP_DOTS_TOGGLE_ACTION);
             troopDots.addItemListener(MapView.this.mapController);
 
             JCheckBox troopCount = new JCheckBox("Show Troop Count");
-            troopCount.setActionCommand("troopCount");
+            troopCount.setActionCommand(TROOP_COUNT_TOGGLE_ACTION);
             troopCount.addItemListener(MapView.this.mapController);
             troopCount.setSelected(true);
 
             JCheckBox playerTerritoryColor = new JCheckBox("Player Territory Color");
-            playerTerritoryColor.setActionCommand("playerTerritoryColor");
+            playerTerritoryColor.setActionCommand(PLAYER_TERRITORY_COLOUR_TOGGLE_ACTION);
             playerTerritoryColor.addItemListener(MapView.this.mapController);
             playerTerritoryColor.setSelected(true);
 
