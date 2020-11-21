@@ -13,16 +13,16 @@ import java.io.IOException;
  *
  * @Author Alex Cameron
  */
-public class ActionBarView extends JPanel {
+public class ActionBarView extends JPanel implements ActionBarListener {
 
-    private JButton placeTroops,attack,nextTurn,deployButton;
-    private Image placeImg,nextTurnImg,attackImg, lock, cancel, backImg;
+    private JButton placeTroops,attack,nextTurn,fortify,deployButton;
+    private Image placeImg,nextTurnImg,attackImg, lock, cancel, backImg, tankImg;
     private Color darkBlue = new Color(102,178,255);
     private ActionBarController abc;
     private RiskModel riskModel;
     private RiskView riskView;
     private JComboBox numberOfTroops,numberAttackTroops;
-    private JPanel deployPanel,attackPanel, messagePanel;
+    private JPanel deployPanel,attackPanel, messagePanel,troopPanel, fortifyTroopBar, actionPanel;
     private JLabel deployInfo;
     private JLabel attackerTerritoryLabel;
     private JLabel defenderTerritoryLabel;
@@ -48,50 +48,97 @@ public class ActionBarView extends JPanel {
         abm.addActionBarModelViews(this);
         abc = new ActionBarController(this, abm);
         //initializes the actionbar / buttons
-        initActionPanel();
-        initActionButtons();
+        initTroopMovement();
 
     }
 
-    public void initActionPanel(){
-        JLabel actionPanel = new JLabel("Actions:");
-        actionPanel.setFont(new Font("Actions:", Font.PLAIN,20));
-        actionPanel.setBackground(darkBlue);
+    /**
+     * This method sets up the view for the troop movement phase which is phase 1/3.
+     */
+    public void initTroopMovement(){
+        if(fortifyTroopBar != null){
+            fortifyTroopBar.setVisible(false);
+        }
+        troopPanel = new JPanel();
+        JLabel troopMovement = new JLabel("Bonus Army Placement");
+        troopMovement.setFont(new Font("Bonus Army Placement", Font.PLAIN,20));
+        troopPanel.setBackground(darkBlue);
+
+        try {
+            placeImg = ImageIO.read(getClass().getResourceAsStream("resources/Soldier.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+        }catch(Exception ex){
+        }
+
+        placeTroops = new JButton("Place Troops", new ImageIcon(placeImg));
+        placeTroops.setBackground(darkBlue);
+
+        placeTroops.addActionListener(abc);
+        placeTroops.setActionCommand("place");
+        troopPanel.add(troopMovement);
+        troopPanel.add(placeTroops);
+        this.add(troopPanel);
+
+    }
+    public void initAttackPanel(){
+        actionPanel = new JPanel();
         this.add(actionPanel);
+        JLabel actionLabel = new JLabel("Attack Phase:");
+        actionLabel.setFont(new Font("Attack Phase:", Font.PLAIN,20));
+        actionLabel.setBackground(darkBlue);
+        actionPanel.setBackground(darkBlue);
+        actionPanel.add(actionLabel);
     }
-
     /**
      * Initializes the Buttons for the action panel
      */
     public void initActionButtons(){
+        initAttackPanel();
         //gets the images
         try {
-            placeImg = ImageIO.read(getClass().getResourceAsStream("resources/Soldier.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
-            nextTurnImg = ImageIO.read(getClass().getResourceAsStream("resources/NextTurn.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            tankImg = ImageIO.read(getClass().getResourceAsStream("resources/Tank.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
             attackImg = ImageIO.read(getClass().getResourceAsStream("resources/Attack.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
         }catch(Exception ex){
         }
         //creates the buttons
-        placeTroops = new JButton("Place Troops", new ImageIcon(placeImg));
-        placeTroops.setBackground(darkBlue);
         attack = new JButton("Attack", new ImageIcon(attackImg));
         attack.setBackground(darkBlue);
-        nextTurn = new JButton("Next Turn", new ImageIcon(nextTurnImg));
-        nextTurn.setBackground(darkBlue);
+        fortify = new JButton("Fortify Phase", new ImageIcon(tankImg));
+        fortify.setBackground(darkBlue);
         //adds the buttons to the JLabel
-        this.add(placeTroops);
-        this.add(attack);
-        this.add(nextTurn);
+        actionPanel.add(attack);
+        actionPanel.add(fortify);
 
         //adding Action Listeners
-        placeTroops.addActionListener(abc);
-        placeTroops.setActionCommand("place");
         attack.addActionListener(abc);
         attack.setActionCommand("attack");
+        fortify.addActionListener(abc);
+        fortify.setActionCommand("fortify");
+    }
+    public void fortifyTroops(){
+        actionPanel.setVisible(false);
+        fortifyTroopBar = new JPanel();
+        JLabel troopFortify = new JLabel("Troop Movement Phase");
+        troopFortify.setFont(new Font("Troop Movement Phase", Font.PLAIN,20));
+        fortifyTroopBar.add(troopFortify);
+        fortifyTroopBar.setBackground(darkBlue);
+        try {
+            nextTurnImg = ImageIO.read(getClass().getResourceAsStream("resources/NextTurn.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+        }catch(Exception ex){
+        }
+
+        nextTurn = new JButton("Next Turn", new ImageIcon(nextTurnImg));
+        nextTurn.setBackground(darkBlue);
+        fortifyTroopBar.add(nextTurn);
+
+        //ActionListeners
         nextTurn.addActionListener(abc);
         nextTurn.setActionCommand("next");
+        this.add(fortifyTroopBar);
     }
+    public void fortifyTroopsInfo(){
+        JPanel fortifyInfo = new JPanel();
 
+    }
     /**
      * Adds the number of possible troops to send in an attack
      */
@@ -360,5 +407,13 @@ public class ActionBarView extends JPanel {
      */
     public boolean getMessageFlag(){
         return messageFlag;
+    }
+
+    @Override
+    public void handleTroopDeployment(ActionBarEvent e){
+        if(e.isTurnComplete()){
+            troopPanel.setVisible(false);
+            initActionButtons();
+        }
     }
 }

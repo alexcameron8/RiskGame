@@ -9,24 +9,24 @@ import java.util.EventObject;
  */
 public class ActionBarEvent extends EventObject {
 
-    private int reinforcements;
+    private boolean isTurnComplete;
 
     /**
      * Constructor which gets the number of reinforcements from the action bar model
      * @param actionBarModel The action bar model
-     * @param reinforcements The number of reinforcements being deployed
+     *
      */
-    public ActionBarEvent(ActionBarModel actionBarModel,int reinforcements ) {
+    public ActionBarEvent(ActionBarModel actionBarModel, boolean isTurnComplete) {
         super(actionBarModel);
-        this.reinforcements = reinforcements;
+        this.isTurnComplete = isTurnComplete;
     }
 
     /**
-     * Getter method for the number of reinforcements being deployed
-     * @return Number of reinforcements deployed
+     * Checks if player is done placing troops
+     * @return true if placing troops is complete, false otherwise.
      */
-    public int getReinforcements(){
-        return reinforcements;
+    public boolean isTurnComplete(){
+        return isTurnComplete;
     }
 }
 

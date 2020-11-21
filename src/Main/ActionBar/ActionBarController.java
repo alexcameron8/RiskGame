@@ -66,6 +66,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
             }
         } else if (e.getActionCommand().equals("next")) { //Advances turn to next player
             removeMessageBar();
+
             //Clears all previous flags for attacking
             hasNumTroopsSelected = false;
             hasTerritorySelected = false;
@@ -77,6 +78,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
             if(!abm.getRiskModel().isTurnComplete()){
                 abv.setMessage(abm.getRiskModel().getPlayers().get(abm.getRiskModel().getActivePlayerID()).getName() + " turn is not complete. There are " + abm.getRiskModel().getPlayers().get(abm.getRiskModel().getActivePlayerID()).getReinforcement() + " soldiers left to place.");
             }else{
+                abv.initTroopMovement();
                 abv.setMessage("Turn advanced. It is now " + abm.getRiskModel().getActivePlayer().getName() + "'s turn.");
             }
         } else if(e.getActionCommand().equals("numTroops")) { //Gets number of troops the player chooses to place
@@ -152,6 +154,9 @@ public class ActionBarController implements ActionListener, MapViewListener {
             state = "Default";
             removeMessageBar();
             abv.removeDeployTroopsBar();
+        }else if(e.getActionCommand().equals("fortify")) { //Changes ActionBar to fortify
+            removeMessageBar();
+            abv.fortifyTroops();
         }
     }
     /**
