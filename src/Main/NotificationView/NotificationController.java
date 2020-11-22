@@ -12,7 +12,6 @@ public class NotificationController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("called");
         if(e.getSource() instanceof NotificationView.GameNotification){
             NotificationModel.Notification notification = ((NotificationView.GameNotification) e.getSource()).getNotification();
             notificationModel.removeNotification(notification);

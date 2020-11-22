@@ -3,6 +3,9 @@ package Main;
 import Main.ActionBar.*;
 import Main.IntializeFrame.InitializeView;
 import Main.Map.*;
+import Main.NotificationView.NotificationEvent;
+import Main.NotificationView.NotificationModel;
+import Main.NotificationView.NotificationView;
 import Main.PlayerBar.*;
 import Player.AI.AIEasy;
 import Player.Player;
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 public class RiskView extends JFrame implements RiskViewListener{
     private RiskModel riskModel;
     private TerritoryInfoView territoryInfoView;
+    private NotificationView notificationView;
 
     /**
      * Initializes the JFrame containing all the different components.
@@ -45,8 +49,7 @@ public class RiskView extends JFrame implements RiskViewListener{
         }
         riskModel.play();
 
-        this.setMinimumSize(new Dimension(1250,800));
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setLayout(new GridBagLayout());
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setJMenuBar(new MenuBarView(riskModel,this));
@@ -62,12 +65,68 @@ public class RiskView extends JFrame implements RiskViewListener{
         riskModel.addRiskViewListeners(playerBarView);
         riskModel.addRiskViewListeners(this);
 
+        this.notificationView = new NotificationView();
+
         //adds the different views to this component
-        this.add(actionBarView, BorderLayout.PAGE_START);
-        this.add(mapView, BorderLayout.CENTER);
-        this.add(territoryInfoView, BorderLayout.LINE_END);
-        this.add(playerBarView, BorderLayout.PAGE_END);
+        // Action Bar View
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weighty = 0.1;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(actionBarView, gbc);
+
+        // Map View
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridheight = 2;
+        gbc.weighty = 0.8;
+        gbc.weightx = 0.7;
+        gbc.fill = GridBagConstraints.BOTH;
+        this.add(mapView, gbc);
+
+        // Territory Info View
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.weightx = 0.3;
+        gbc.weighty = 0.4;
+        gbc.fill = GridBagConstraints.BOTH;
+        this.add(territoryInfoView, gbc);
+
+        // Notification View
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.weightx = 0.3;
+        gbc.fill = GridBagConstraints.BOTH;
+        this.add(notificationView, gbc);
+
+        // Player Bar View
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weighty = 0.1;
+        gbc.weightx = 1.0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        this.add(playerBarView, gbc);
+
+        this.setMinimumSize(new Dimension(1250,800));
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
+
+        for(int i = 1; i < 20; i++){
+            if(i%2==0){
+                this.notificationView.notifyUser("Event that goes way too long and takes up way too much space. This should probably be split." + i, NotificationModel.NotificationType.INFO);
+            } else {
+                this.notificationView.notifyUser("Event " + i, NotificationModel.NotificationType.WARNING);
+            }
+
+        }
 
     }
 
@@ -78,6 +137,10 @@ public class RiskView extends JFrame implements RiskViewListener{
     public void newRiskView(RiskModel riskModel){
         this.riskModel = riskModel;
         new RiskView();
+    }
+
+    public NotificationView getNotificationView() {
+        return notificationView;
     }
 
     /**

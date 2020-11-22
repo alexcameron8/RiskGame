@@ -23,7 +23,6 @@ public class TerritoryInfoView extends JPanel implements MapViewListener {
     TerritoryInfoView(RiskModel rm){
         // JPanel Config
         super();
-        this.setPreferredSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()/6,(int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
         this.setLayout(new BorderLayout());
         this.setBackground(RiskModel.BACKGROUND);
         setInfo(rm.getMap().getTerritories().get(0));

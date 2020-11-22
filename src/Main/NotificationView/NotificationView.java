@@ -24,30 +24,13 @@ public class NotificationView extends JPanel implements NotificationViewListener
 
         notificationList = new JPanel();
         notificationList.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        notificationList.add(new JPanel(), gbc);
 
-        this.add(new JScrollPane(notificationList));
+        this.add(new JScrollPane(notificationList), BorderLayout.CENTER);
 
     }
 
     public void notifyUser(String message, NotificationModel.NotificationType notificationType){
         this.notificationModel.addNotification(message, notificationType);
-    }
-
-    private boolean notificationListContains(NotificationModel.Notification notificationToCheck){
-        for(Component component: notificationList.getComponents()){
-            if(component instanceof GameNotification){
-                GameNotification notification = (GameNotification) component;
-                if(notificationToCheck == notification.getNotification()){
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     @Override
@@ -90,14 +73,23 @@ public class NotificationView extends JPanel implements NotificationViewListener
             this.notification = notification;
             JLabel typeLabel;
             if(this.notification.getNotificationType() == NotificationModel.NotificationType.INFO){
-                typeLabel = new JLabel("INFO  ");
+                typeLabel = new JLabel(UIManager.getIcon("OptionPane.informationIcon"));
             } else {
-                typeLabel = new JLabel("WARNING  ");
+                typeLabel = new JLabel(UIManager.getIcon("OptionPane.warningIcon"));
             }
             this.add(typeLabel, BorderLayout.LINE_START);
 
-            JLabel notificationText = new JLabel(this.notification.getMessage());
-            this.add(notificationText, BorderLayout.CENTER);
+            JTextArea notificationTextArea = new JTextArea(2, 20);
+            notificationTextArea.setText(this.notification.getMessage());
+            notificationTextArea.setWrapStyleWord(true);
+            notificationTextArea.setLineWrap(true);
+            notificationTextArea.setOpaque(false);
+            notificationTextArea.setEditable(false);
+            notificationTextArea.setFocusable(false);
+            notificationTextArea.setBackground(UIManager.getColor("Label.background"));
+            notificationTextArea.setFont(UIManager.getFont("Label.font"));
+            notificationTextArea.setBorder(UIManager.getBorder("Label.border"));
+            this.add(notificationTextArea, BorderLayout.CENTER);
 
             JButton closeNotificationButton = new JButton("X");
             closeNotificationButton.addActionListener(new ActionListener() {
