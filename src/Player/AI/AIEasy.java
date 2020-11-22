@@ -23,6 +23,12 @@ public class AIEasy extends Player{
         super(name, playerColor);
     }
 
+    public void advanceTurn(){
+        AIPlaceTroops();
+        AIAttack();
+        AIMoveTroop();
+    }
+
     public void AIPlaceTroops(){
         Continent targetContinent = targetContinent();
         for(Territory terr: targetContinent.getTerritories()){

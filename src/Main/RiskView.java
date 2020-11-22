@@ -4,6 +4,7 @@ import Main.ActionBar.*;
 import Main.IntializeFrame.InitializeView;
 import Main.Map.*;
 import Main.PlayerBar.*;
+import Player.AI.AIEasy;
 import Player.Player;
 
 import javax.imageio.ImageIO;
@@ -38,7 +39,7 @@ public class RiskView extends JFrame implements RiskViewListener{
             if(!isPlayerAI.get(i)){
                 riskModel.addPlayer(new Player(nameOfPlayers.get(i),coloursOfPlayers.get(i)));
             } else {
-                // ADD AI PLAYER
+                riskModel.addPlayer(new AIEasy(nameOfPlayers.get(i),coloursOfPlayers.get(i)));
             }
 
         }

@@ -1,6 +1,7 @@
 package Main;
 
 import Map.Map;
+import Player.AI.AIEasy;
 import Player.Player;
 import Map.*;
 
@@ -90,11 +91,21 @@ public class RiskModel {
             }
             if (activePlayerID + 1 < players.size()) {
                 activePlayerID++;
-                currentTurn = new Turn(players.get(activePlayerID));
+                if(getActivePlayer() instanceof AIEasy){
+                    ((AIEasy) getActivePlayer()).advanceTurn();
+                }
+                else {
+                    currentTurn = new Turn(players.get(activePlayerID));
+                }
                 turnComplete = true;
             } else {
                 activePlayerID = 0;
-                currentTurn = new Turn(players.get(0));
+                if(getActivePlayer() instanceof AIEasy){
+                    ((AIEasy) getActivePlayer()).advanceTurn();
+                }
+                else {
+                    currentTurn = new Turn(players.get(activePlayerID));
+                }
                 turnComplete = true;
             }
 
@@ -232,6 +243,12 @@ public class RiskModel {
 
         activePlayerID = r.nextInt(players.size());
         assignTroopsRandom();
-        currentTurn = new Turn(players.get(activePlayerID));
+
+        if(getActivePlayer() instanceof AIEasy){
+            ((AIEasy) getActivePlayer()).advanceTurn();
+        }
+        else {
+            currentTurn = new Turn(players.get(activePlayerID));
+        }
     }
 }
