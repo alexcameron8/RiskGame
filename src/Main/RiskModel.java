@@ -73,8 +73,6 @@ public class RiskModel {
      * This method creates a new Turn instance and changes which player is currently playing the game.
      */
     public void advanceTurn(){
-
-        boolean turnComplete;
         if(currentTurn.isTurnComplete(getActivePlayer())){
             if(players.size() == 1){
                 winner = getActivePlayer();
@@ -91,23 +89,20 @@ public class RiskModel {
             }
             if (activePlayerID + 1 < players.size()) {
                 activePlayerID++;
+                currentTurn = new Turn(players.get(activePlayerID));
                 if(getActivePlayer() instanceof AIEasy){
+                    currentTurn.setNumberOfReinforcements(0);
                     ((AIEasy) getActivePlayer()).advanceTurn();
                 }
-                    currentTurn = new Turn(players.get(activePlayerID));
-
-                turnComplete = true;
             } else {
                 activePlayerID = 0;
+                currentTurn = new Turn(players.get(activePlayerID));
                 if(getActivePlayer() instanceof AIEasy){
+                    currentTurn.setNumberOfReinforcements(0);
                     ((AIEasy) getActivePlayer()).advanceTurn();
                 }
-                    currentTurn = new Turn(players.get(activePlayerID));
-                turnComplete = true;
             }
 
-        } else{
-            turnComplete = false;
         }
         for(RiskViewListener riskViewListener : riskViewListeners){
             riskViewListener.handleTurnUpdate(new RiskEvent (this,activePlayerID,players, currentTurn,winner,eliminatedPlayer));
@@ -217,10 +212,10 @@ public class RiskModel {
         activePlayerID = r.nextInt(players.size());
         assignTroopsRandom();
 
+        currentTurn = new Turn(players.get(activePlayerID));
         if(getActivePlayer() instanceof AIEasy){
-
+            currentTurn.setNumberOfReinforcements(0);
             ((AIEasy) getActivePlayer()).advanceTurn();
         }
-        currentTurn = new Turn(players.get(activePlayerID));
     }
 }
