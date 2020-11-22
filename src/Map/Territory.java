@@ -1,6 +1,7 @@
 package Map;
 
 import Player.Player;
+import com.google.gson.annotations.Expose;
 import org.apache.batik.parser.AWTPathProducer;
 import org.apache.batik.parser.PathParser;
 
@@ -25,13 +26,18 @@ public class Territory {
     private static PathParser pathParser = new PathParser();
     private static AWTPathProducer pathProducer = new AWTPathProducer();
 
+    @Expose
     private String name;
+    @Expose
     private String id;
+
     private Shape territoryShape;
+
     private Continent continent;
 
     private Player owner;
     private HashMap<String, Territory> neighbours;
+    @Expose
     private int soldiers;
     private ArrayList<Point2D> soldierPositions;
 

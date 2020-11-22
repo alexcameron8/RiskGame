@@ -3,6 +3,7 @@ import java.awt.*;
 import java.util.*;
 import Map.*;
 import Attack.*;
+import com.google.gson.annotations.Expose;
 
 /**
  * Player models a player in risk.
@@ -17,6 +18,7 @@ public class Player {
     //the continents controlled by the player
     private ArrayList<Continent> listOfContinents;
     //the name of the player
+    @Expose
     private String name;
     //number of Reinforcements
     private int reinforcements;

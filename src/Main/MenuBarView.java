@@ -45,9 +45,11 @@ public class MenuBarView extends JMenuBar {
         JMenuItem gameManual = new JMenuItem("Game Manual");
         JMenuItem newGame = new JMenuItem("New Game");
         JMenuItem transferAll = new JMenuItem("Transfer All");
+        JMenuItem saveGame = new JMenuItem("Save");
 
         //Add JMenuItems to Menubar
         gameMenu.add(newGame);
+        gameMenu.add(saveGame);
         helpMenu.add(howToPlay);
         helpMenu.add(gameManual);
         testMenu.add(transferAll);
@@ -61,6 +63,8 @@ public class MenuBarView extends JMenuBar {
         newGame.setActionCommand("newGame");
         transferAll.addActionListener(mbc);
         transferAll.setActionCommand("transferAll");
+        saveGame.addActionListener(mbc);
+        saveGame.setActionCommand("saveGame");
 
     }
 }

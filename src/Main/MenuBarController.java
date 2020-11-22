@@ -44,6 +44,8 @@ public class MenuBarController implements ActionListener {
             riskModel.getActivePlayer().transferAllTerritory(riskModel.getPlayers().get(riskModel.getActivePlayerID()+1==riskModel.getPlayers().size()? 0:riskModel.getActivePlayerID()+1));
             riskView.repaint();
             riskView.revalidate();
+        } else if(e.getActionCommand().equals("saveGame")){
+            riskModel.serializeGame();
         }
     }
 }

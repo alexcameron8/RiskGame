@@ -1,5 +1,7 @@
 package Map;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 /**
@@ -12,8 +14,11 @@ import java.util.HashMap;
 
 public class Map {
 
+    @Expose
     private HashMap<String, Continent> continents;
+
     private ArrayList<String> waterCrossings;
+
     private ArrayList<Integer> backgroundColor;
 
 

@@ -3,8 +3,11 @@ package Main;
 import Map.Map;
 import Player.Player;
 import Map.*;
+import com.google.gson.*;
+import com.google.gson.annotations.Expose;
 
 import java.awt.*;
+import java.lang.reflect.Type;
 import java.util.*;
 import java.util.List;
 /**
@@ -15,12 +18,17 @@ public class RiskModel {
     public static final Color BACKGROUND =  new Color(163,214,255);
     public static final int MAX_NUMBER_PLAYERS = 6;
     public static final int MIN_NUMBER_PLAYERS = 2;
+    @Expose
     private ArrayList<Player> players;
+    @Expose
     private int activePlayerID;
     private Turn currentTurn;
+    @Expose
     private Map map;
     private List<RiskViewListener> riskViewListeners;
+    @Expose
     private boolean turnComplete;
+    @Expose
     private Player winner = null;
     private Player eliminatedPlayer = null;
 
@@ -246,5 +254,23 @@ public class RiskModel {
             }
         }
         return false;
+    }
+
+    public void serializeGame(){
+        GsonBuilder gsonBuilder = new GsonBuilder();
+
+        JsonSerializer<RiskModel> riskModelJsonSerializer = new JsonSerializer<RiskModel>() {
+            @Override
+            public JsonElement serialize(RiskModel riskModel, Type type, JsonSerializationContext jsonSerializationContext) {
+                JsonObject jsonRiskModel = new JsonObject();
+                jsonRiskModel.addProperty("activePlayerId", riskModel.getActivePlayerID());
+                return jsonRiskModel;
+            }
+        };
+        gsonBuilder.registerTypeAdapter(RiskModel.class, riskModelJsonSerializer);
+
+        Gson gson = gsonBuilder.create();
+        String json = gson.toJson(this);
+        System.out.println(json);
     }
 }

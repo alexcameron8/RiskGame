@@ -1,5 +1,7 @@
 package Map;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -14,10 +16,15 @@ import java.util.HashMap;
 
 public class Continent {
 
+    @Expose
     private String name;
+    @Expose
     private String id;
+    @Expose
     private HashMap<String, Territory> territories;
+    @Expose
     private int numberOfReinforcement;
+
     private ArrayList<Integer> color = new ArrayList<>(3);
 
     /**
