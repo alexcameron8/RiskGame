@@ -188,17 +188,16 @@ public class ActionBarController implements ActionListener, MapViewListener {
                     if (abm.getRiskModel().moveTroops(currTerritory, moveTerritory, numMoveTroopsSelected)) {
                         if(currTerritory.getSoldiers()>1) {
                             abv.fortifyMoreTroops();
-                            abv.setMessage(abm.getRiskModel().getActivePlayer().getName() + " has moved " + numMoveTroopsSelected + " troops from " + currTerritory + " to " + moveTerritory);
-                            troopsMoved = true;
-                            hasCurrConfirm = false;
-                            hasMoveConfirm = false;
-                            hasNumMoveTroopsSelected = false;
                             abv.setNumberMoveTroopsRange();
                         }else{
                             abv.fortifyMoreTroops();
                             abv.removeTroopsLabel();
-
                         }
+                        abv.setMessage(abm.getRiskModel().getActivePlayer().getName() + " has moved " + numMoveTroopsSelected + " troops from " + currTerritory + " to " + moveTerritory);
+                        troopsMoved = true;
+                        hasCurrConfirm = false;
+                        hasMoveConfirm = false;
+                        hasNumMoveTroopsSelected = false;
                     } else {
                         abv.setMessage("Failed Troops not moved");
                     }
