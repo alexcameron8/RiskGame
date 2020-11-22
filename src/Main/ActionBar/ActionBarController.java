@@ -71,15 +71,18 @@ public class ActionBarController implements ActionListener, MapViewListener {
             hasTerritorySelected = false;
             troopsMoved = false;
             abm.nextTurn(abm.getRiskModel());
+            System.out.println(abm.getRiskModel().getActivePlayer().getName());
             //clears any bars on GUI
             abv.removeDeployTroopsBar();
             abv.removeAttackBar();
 
             //displays corresponding message if turn is complete or not
             if(abm.getRiskModel().getActivePlayer() instanceof AIEasy){
+                System.out.println(abm.getRiskModel().getActivePlayer().getName());
                 abm.nextTurn(abm.getRiskModel());
                 abv.setMessage("Turn advanced. It is now " + abm.getRiskModel().getActivePlayer().getName() + "'s turn.");
                 abv.initTroopMovement();
+                abv.setMessage("Turn advanced. It is now " + abm.getRiskModel().getActivePlayer().getName() + "'s turn.");
             }else{
                 abv.initTroopMovement();
                 abv.setMessage("Turn advanced. It is now " + abm.getRiskModel().getActivePlayer().getName() + "'s turn.");
