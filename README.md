@@ -80,12 +80,16 @@ Requirements:
 - Additional features: bonus army placement + troupe movement phase.  
 - Implement support for “AI” players.
 ### Authors:
+
 Alex Cameron
-- 
+- Designed troop movement view component
+- Redesigned action bar view
+- Created Sequence diagram
+
 Thomas Dunnigan
-- 
+- trash 
 Ben Munro
-- 
+- cans
 
 ## Changes made since Milestone 2:
 A feature that was refactored in this milestone eliminated a few known issues from last milestone which was creating different phases (troop deployment phase, attack phase and troop movement phase) within the actionbar. In milestone 2, it was possible to do attacks before placing troops which is a bug that was fixed in this milestone. As well, last iteration we came across a bug where sometimes the panels containing attack/deploy information wouldn't display in the action bar because the territories were too long and were cut off by the screens size limitations. By creating the different phases of the action bar this bug is resolved because every possible combination can be displayed properly. On top of these changes, the action bar was improved to be more visually appealing. As well, in this iteration we implemented an AI player that uses strategic probability to determine the best possible moves to make. 
