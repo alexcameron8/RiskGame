@@ -180,12 +180,12 @@ public class ActionBarController implements ActionListener, MapViewListener {
         }else if(e.getActionCommand().equals("moveTroops")){
             removeMessageBar();
             if(troopsMoved){
-                if(abm.getRiskModel().moveTroops(currTerritory,moveTerritory,numMoveTroopsSelected)) {
+                if(abm.getRiskModel().getActivePlayer().moveTroops(currTerritory,moveTerritory,numMoveTroopsSelected)) {
                     abv.setMessage(abm.getRiskModel().getActivePlayer().getName() + " has moved " + numMoveTroopsSelected + " troops from " + currTerritory + " to " + moveTerritory);
                     abv.setNumberMoveTroopsRange();
                 }
             }else if(hasCurrConfirm && hasMoveConfirm) {
-                    if (abm.getRiskModel().moveTroops(currTerritory, moveTerritory, numMoveTroopsSelected)) {
+                    if (abm.getRiskModel().getActivePlayer().moveTroops(currTerritory, moveTerritory, numMoveTroopsSelected)) {
                         if(currTerritory.getSoldiers()>1) {
                             abv.fortifyMoreTroops();
                             abv.setNumberMoveTroopsRange();

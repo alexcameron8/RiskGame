@@ -336,4 +336,17 @@ public class Player {
     public String toString(){
       return name;
     }
+
+    public boolean moveTroops(Territory giving, Territory receiving, int  numOfTroops){
+        if(giving.getSoldiers()>numOfTroops) {
+            if (hasTerritory(giving) && hasTerritory(receiving)) {
+                if (giving.isNeighbour(receiving.getName())) {
+                    giving.removeSoldiers(numOfTroops);
+                    receiving.addSoldiers(numOfTroops);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

@@ -27,7 +27,7 @@ public class RiskModel {
     /**
      * This constructor initializes the world map, the list of players and creates a list of listeners
      */
-    RiskModel(){
+    public RiskModel(){
         MapImport mapImport = new MapImport(getClass().getResourceAsStream("resources/worldmap.json"));
         players = new ArrayList<Player>();
         activePlayerID = 0;
@@ -233,18 +233,5 @@ public class RiskModel {
         activePlayerID = r.nextInt(players.size());
         assignTroopsRandom();
         currentTurn = new Turn(players.get(activePlayerID));
-    }
-
-    public boolean moveTroops(Territory giving, Territory receiving, int  numOfTroops){
-        if(giving.getSoldiers()>numOfTroops) {
-            if (getActivePlayer().hasTerritory(giving) && getActivePlayer().hasTerritory(receiving)) {
-                if (giving.isNeighbour(receiving.getName())) {
-                    giving.removeSoldiers(numOfTroops);
-                    receiving.addSoldiers(numOfTroops);
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }
