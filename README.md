@@ -87,7 +87,8 @@ Alex Cameron
 - Created Sequence diagram
 
 Thomas Dunnigan
-- trash 
+- trash
+
 Ben Munro
 - cans
 
