@@ -17,12 +17,12 @@ import java.awt.event.ActionListener;
 public class ActionBarController implements ActionListener, MapViewListener {
     private ActionBarView abv;
     private ActionBarModel abm;
-    private int numOfTroops,numofAttackers;
+    private int numOfTroops,numofAttackers, numMoveTroopsSelected;
     //Different states are used to determine what variables are updated when the user clicks the territories on the map
     private String state = "Default";
-    private Territory territory, attackerTerritory,defenderTerritory;
+    private Territory territory, attackerTerritory,defenderTerritory, currTerritory, moveTerritory;
     private Player defender;
-    private boolean attackConfirm, defendConfirm,hasNumTroopsSelected,hasTerritorySelected;
+    private boolean attackConfirm, defendConfirm,hasNumTroopsSelected,hasTerritorySelected, hasNumMoveTroopsSelected, hasCurrConfirm, hasMoveConfirm, troopsMoved;
 
     /**
      * The ActionBarController constructor passes the action bar view and model in which are being manipulated in Risk.
@@ -70,17 +70,14 @@ public class ActionBarController implements ActionListener, MapViewListener {
             //Clears all previous flags for attacking
             hasNumTroopsSelected = false;
             hasTerritorySelected = false;
+            troopsMoved = false;
             abm.nextTurn(abm.getRiskModel());
             //clears any bars on GUI
             abv.removeDeployTroopsBar();
             abv.removeAttackBar();
             //displays corresponding message if turn is complete or not
-            if(!abm.getRiskModel().isTurnComplete()){
-                abv.setMessage(abm.getRiskModel().getPlayers().get(abm.getRiskModel().getActivePlayerID()).getName() + " turn is not complete. There are " + abm.getRiskModel().getPlayers().get(abm.getRiskModel().getActivePlayerID()).getReinforcement() + " soldiers left to place.");
-            }else{
                 abv.initTroopMovement();
                 abv.setMessage("Turn advanced. It is now " + abm.getRiskModel().getActivePlayer().getName() + "'s turn.");
-            }
         } else if(e.getActionCommand().equals("numTroops")) { //Gets number of troops the player chooses to place
             if((Integer) abv.getNumberOfTroops().getSelectedItem()!=null) {
                 numOfTroops = (Integer) abv.getNumberOfTroops().getSelectedItem();
@@ -157,6 +154,62 @@ public class ActionBarController implements ActionListener, MapViewListener {
         }else if(e.getActionCommand().equals("fortify")) { //Changes ActionBar to fortify
             removeMessageBar();
             abv.fortifyTroops();
+            state = "currTerritory";
+        }else if(e.getActionCommand().equals("lockMove1")){
+            removeMessageBar();
+            if(currTerritory!=null) {
+                hasCurrConfirm = true;
+                state = "moveTerritory";
+            }else{
+                abv.setMessage("You must choose a valid territory to move troops from.");
+            }
+        }else if(e.getActionCommand().equals("cancelMove1")){
+            hasCurrConfirm = false;
+            state = "currTerritory";
+        }else if(e.getActionCommand().equals("lockMove2")){
+            removeMessageBar();
+            if(moveTerritory !=null) {
+                hasMoveConfirm = true;
+                state = "Default";
+            }else{
+                abv.setMessage("You must choose a valid territory to move troops to.");
+            }
+        }else if(e.getActionCommand().equals("cancelMove2")){
+            hasMoveConfirm = false;
+            state = "moveTerritory";
+        }else if(e.getActionCommand().equals("moveTroops")){
+            removeMessageBar();
+            if(troopsMoved){
+                if(abm.getRiskModel().moveTroops(currTerritory,moveTerritory,numMoveTroopsSelected)) {
+                    abv.setMessage(abm.getRiskModel().getActivePlayer().getName() + " has moved " + numMoveTroopsSelected + " troops from " + currTerritory + " to " + moveTerritory);
+                    abv.setNumberMoveTroopsRange();
+                }
+            }else if(hasCurrConfirm && hasMoveConfirm) {
+                    if (abm.getRiskModel().moveTroops(currTerritory, moveTerritory, numMoveTroopsSelected)) {
+                        if(currTerritory.getSoldiers()>1) {
+                            abv.fortifyMoreTroops();
+                            abv.setMessage(abm.getRiskModel().getActivePlayer().getName() + " has moved " + numMoveTroopsSelected + " troops from " + currTerritory + " to " + moveTerritory);
+                            troopsMoved = true;
+                            hasCurrConfirm = false;
+                            hasMoveConfirm = false;
+                            hasNumMoveTroopsSelected = false;
+                            abv.setNumberMoveTroopsRange();
+                        }else{
+                            abv.fortifyMoreTroops();
+                            abv.removeTroopsLabel();
+
+                        }
+                    } else {
+                        abv.setMessage("Failed Troops not moved");
+                    }
+                } else {
+                    abv.setMessage("Both territories have not been confirmed.");
+                }
+        }else if(e.getActionCommand().equals("move")){
+            if((Integer) abv.getMoveNumberOfTroops().getSelectedItem()!=null) {
+                numMoveTroopsSelected= (Integer) abv.getMoveNumberOfTroops().getSelectedItem();
+                hasNumMoveTroopsSelected = true;
+            }
         }
     }
     /**
@@ -199,7 +252,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
                         }else{ //invalid territory selected
                             defenderTerritory = null;
                             abv.setDefenderInfo();
-                            abv.setMessage("You cannot attack your own Territory!");
+                            abv.setMessage("You cannot attack your own territory!");
                             return;
                         }
                     }
@@ -209,6 +262,32 @@ public class ActionBarController implements ActionListener, MapViewListener {
                     abv.setMessage(((MapTerritoryEvent) e).getMapTerritory().getName() + " is not a neighbour of " + attackerTerritory);
                 }else{
                     abv.setMessage("Choose the territory you want to attack with first!");
+                }
+            }else if(state.equals("currTerritory") && !troopsMoved){
+                if (((MapTerritoryEvent) e).getMapTerritory().getOwner() == abm.getRiskModel().getActivePlayer()) {
+                    currTerritory = ((MapTerritoryEvent) e).getMapTerritory();
+                    abv.setNumberMoveTroopsRange();
+                }else{
+                    currTerritory = null;
+                    abv.setMessage("You do not own this territory.");
+                }
+                abv.setCurrTerrInfo();
+            }else if(state.equals("moveTerritory") && !troopsMoved) {
+                if (currTerritory != null) {
+                    if (((MapTerritoryEvent) e).getMapTerritory().isNeighbour(currTerritory.getName())) {
+                        if (((MapTerritoryEvent) e).getMapTerritory().getOwner() == abm.getRiskModel().getActivePlayer()) {
+                            moveTerritory = ((MapTerritoryEvent) e).getMapTerritory();
+                        } else {
+                            moveTerritory = null;
+                            abv.setMessage("This Territory does not belong to " + abm.getRiskModel().getActivePlayer().getName());
+                        }
+                    } else {
+                        moveTerritory = null;
+                        abv.setMessage("This Territory is not a neighbour of " + currTerritory.getName());
+                    }
+                    abv.setMoveTerrInfo();
+                }else{
+                    abv.setMessage("Choose a territory to move troops from first.");
                 }
             }
         }
@@ -236,5 +315,11 @@ public class ActionBarController implements ActionListener, MapViewListener {
      */
     public Territory getDefenderTerritory(){
         return defenderTerritory;
+    }
+    public Territory getCurrTerritory(){
+        return currTerritory;
+    }
+    public Territory getMoveTerritory(){
+        return moveTerritory;
     }
 }

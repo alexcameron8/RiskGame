@@ -5,6 +5,7 @@ import Main.RiskView;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.io.IOException;
 
@@ -15,18 +16,18 @@ import java.io.IOException;
  */
 public class ActionBarView extends JPanel implements ActionBarListener {
 
-    private JButton placeTroops,attack,nextTurn,fortify,deployButton;
+    private JButton placeTroops,attack,nextTurn,fortify,deployButton, moveTroopsButton;
     private Image placeImg,nextTurnImg,attackImg, lock, cancel, backImg, tankImg;
     private Color darkBlue = new Color(102,178,255);
+    private Color darkerBlue = new Color(93,182,240);
+    private Color lighterBlue = new Color(148,210,255);
+    private Border blackBorder = BorderFactory.createLineBorder(Color.BLACK,1);
     private ActionBarController abc;
     private RiskModel riskModel;
     private RiskView riskView;
-    private JComboBox numberOfTroops,numberAttackTroops;
-    private JPanel deployPanel,attackPanel, messagePanel,troopPanel, fortifyTroopBar, actionPanel;
-    private JLabel deployInfo;
-    private JLabel attackerTerritoryLabel;
-    private JLabel defenderTerritoryLabel;
-    private JLabel defenderPlayerLabel;
+    private JComboBox numberOfTroops,numberAttackTroops, numberMoveTroops;
+    private JPanel deployPanel,attackPanel, messagePanel,troopPanel, fortifyTroopBar, actionPanel, fortifyInfo;
+    private JLabel deployInfo, attackerTerritoryLabel, defenderTerritoryLabel, defenderPlayerLabel,currTerritoryLabel,numberAttackersLabel,moveTerritoryLabel,fortifyFurtherLabel ;
     private boolean placetroopsFlag;
     private boolean attackFlag;
     private boolean messageFlag;
@@ -56,12 +57,16 @@ public class ActionBarView extends JPanel implements ActionBarListener {
      * This method sets up the view for the troop movement phase which is phase 1/3.
      */
     public void initTroopMovement(){
-        if(fortifyTroopBar != null){
+        if(fortifyInfo != null){
+            fortifyInfo.setVisible(false);
+        }
+        if(fortifyTroopBar!=null){
             fortifyTroopBar.setVisible(false);
         }
         troopPanel = new JPanel();
+        troopPanel.setBorder(blackBorder);
         JLabel troopMovement = new JLabel("Bonus Army Placement");
-        troopMovement.setFont(new Font("Bonus Army Placement", Font.PLAIN,20));
+        troopMovement.setFont(new Font("Bonus Army Placement", Font.BOLD,20));
         troopPanel.setBackground(darkBlue);
 
         try {
@@ -70,8 +75,8 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         }
 
         placeTroops = new JButton("Place Troops", new ImageIcon(placeImg));
-        placeTroops.setBackground(darkBlue);
-
+        placeTroops.setBackground(lighterBlue);
+        placeTroops.setFocusPainted(false);
         placeTroops.addActionListener(abc);
         placeTroops.setActionCommand("place");
         troopPanel.add(troopMovement);
@@ -81,9 +86,10 @@ public class ActionBarView extends JPanel implements ActionBarListener {
     }
     public void initAttackPanel(){
         actionPanel = new JPanel();
+        actionPanel.setBorder(blackBorder);
         this.add(actionPanel);
         JLabel actionLabel = new JLabel("Attack Phase:");
-        actionLabel.setFont(new Font("Attack Phase:", Font.PLAIN,20));
+        actionLabel.setFont(new Font("Attack Phase:", Font.BOLD,20));
         actionLabel.setBackground(darkBlue);
         actionPanel.setBackground(darkBlue);
         actionPanel.add(actionLabel);
@@ -101,9 +107,11 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         }
         //creates the buttons
         attack = new JButton("Attack", new ImageIcon(attackImg));
-        attack.setBackground(darkBlue);
+        attack.setBackground(lighterBlue);
+        attack.setFocusPainted(false);
         fortify = new JButton("Fortify Phase", new ImageIcon(tankImg));
-        fortify.setBackground(darkBlue);
+        fortify.setBackground(lighterBlue);
+        fortify.setFocusPainted(false);
         //adds the buttons to the JLabel
         actionPanel.add(attack);
         actionPanel.add(fortify);
@@ -117,6 +125,7 @@ public class ActionBarView extends JPanel implements ActionBarListener {
     public void fortifyTroops(){
         actionPanel.setVisible(false);
         fortifyTroopBar = new JPanel();
+        fortifyTroopBar.setBorder(blackBorder);
         JLabel troopFortify = new JLabel("Troop Movement Phase");
         troopFortify.setFont(new Font("Troop Movement Phase", Font.PLAIN,20));
         fortifyTroopBar.add(troopFortify);
@@ -125,19 +134,123 @@ public class ActionBarView extends JPanel implements ActionBarListener {
             nextTurnImg = ImageIO.read(getClass().getResourceAsStream("resources/NextTurn.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
         }catch(Exception ex){
         }
-
+        fortifyTroopsInfo();
         nextTurn = new JButton("Next Turn", new ImageIcon(nextTurnImg));
-        nextTurn.setBackground(darkBlue);
+        nextTurn.setBackground(lighterBlue);
+        nextTurn.setFocusPainted(false);
         fortifyTroopBar.add(nextTurn);
 
-        //ActionListeners
+        //adding actionlisteners
         nextTurn.addActionListener(abc);
         nextTurn.setActionCommand("next");
+
         this.add(fortifyTroopBar);
     }
     public void fortifyTroopsInfo(){
-        JPanel fortifyInfo = new JPanel();
+        fortifyInfo = new JPanel();
+        fortifyInfo.setBorder(blackBorder);
+        currTerritoryLabel =new JLabel("Territory: ");
+        numberAttackersLabel = new JLabel("Number of troops: ");
+        moveTerritoryLabel = new JLabel("Move to Territory: ");
+        //creates the JComboBox with number of attackers
+        numberMoveTroops = new JComboBox<Integer>();
+        numberMoveTroops.setBackground(lighterBlue);
+        try {
+            tankImg = ImageIO.read(getClass().getResourceAsStream("resources/Tank.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            lock = ImageIO.read(getClass().getResourceAsStream("resources/lock.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+            cancel = ImageIO.read(getClass().getResourceAsStream("resources/cancel.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+        }catch(Exception ex){
+        }
+        JButton moveTroopsButton = new JButton("Move Troops",new ImageIcon(tankImg));
+        moveTroopsButton.setFocusPainted(false);
+        moveTroopsButton.setBackground(lighterBlue);
+        //Confirmation Buttons for choosing attack territory
+        JPanel confirmButtons1 = new JPanel();
+        JButton confirm1 = new JButton(new ImageIcon(lock));
+        confirm1.setFocusPainted(false);
+        confirm1.setBackground(darkerBlue);
+        JButton cancel1 = new JButton(new ImageIcon(cancel));
+        cancel1.setFocusPainted(false);
+        cancel1.setBackground(darkerBlue);
+        confirmButtons1.add(confirm1);
+        confirmButtons1.add(cancel1);
+        confirmButtons1.setBackground(darkBlue);
+        //Confirmation Buttons for choosing defender territory
+        JPanel confirmButtons2 = new JPanel();
+        JButton confirm2 = new JButton(new ImageIcon(lock));
+        confirm2.setFocusPainted(false);
+        confirm2.setBackground(darkerBlue);
+        JButton cancel2 = new JButton(new ImageIcon(cancel));
+        cancel2.setFocusPainted(false);
+        cancel2.setBackground(darkerBlue);
+        confirmButtons2.add(confirm2);
+        confirmButtons2.add(cancel2);
+        confirmButtons2.setBackground(darkBlue);
 
+        //add components into fortifyInfo
+        fortifyInfo.add(currTerritoryLabel);
+        fortifyInfo.add(numberAttackersLabel);
+        fortifyInfo.add(numberMoveTroops
+        );
+        fortifyInfo.add(confirmButtons1);
+        fortifyInfo.add(moveTerritoryLabel);
+        fortifyInfo.add(confirmButtons2);
+        fortifyInfo.add(moveTroopsButton);
+        fortifyInfo.setBackground(darkBlue);
+        fortifyTroopBar.add(fortifyInfo);
+
+        //ActionListeners
+        numberMoveTroops.addActionListener(abc);
+        numberMoveTroops.setActionCommand("move");
+        //Lock and cancel for current Territory selected to move troops from
+        confirm1.addActionListener(abc);
+        confirm1.setActionCommand("lockMove1");
+        cancel1.addActionListener(abc);
+        cancel1.setActionCommand("cancelMove1");
+        //Lock and cancel for Territory the troops will be moved to.
+        confirm2.addActionListener(abc);
+        confirm2.setActionCommand("lockMove2");
+        cancel2.addActionListener(abc);
+        cancel2.setActionCommand("cancelMove2");
+        //Move troops button
+        moveTroopsButton.addActionListener(abc);
+        moveTroopsButton.setActionCommand("moveTroops");
+    }
+    public void fortifyMoreTroops(){
+        fortifyInfo.setVisible(false);
+        fortifyTroopBar.setVisible(false);
+        fortifyInfo = new JPanel();
+        fortifyInfo.setBorder(blackBorder);
+        JLabel troopFortify = new JLabel("Troop Movement Phase");
+        troopFortify.setFont(new Font("Troop Movement Phase", Font.PLAIN,20));
+        fortifyInfo.add(troopFortify);
+        fortifyInfo.setBackground(darkBlue);
+        fortifyFurtherLabel = new JLabel("Do you want to send more troops to " + abc.getMoveTerritory().getName() + " from " + abc.getCurrTerritory() +"?");
+        moveTroopsButton = new JButton("Move Troops",new ImageIcon(tankImg));
+        moveTroopsButton.setBackground(lighterBlue);
+        moveTroopsButton.setFocusPainted(false);
+        fortifyInfo.add(fortifyFurtherLabel);
+        fortifyInfo.add(numberMoveTroops);
+        fortifyInfo.add(moveTroopsButton);
+        fortifyInfo.add(nextTurn);
+        this.add(fortifyInfo);
+
+        //adding actionlistener
+        numberMoveTroops.addActionListener(abc);
+        numberMoveTroops.setActionCommand("move");
+
+        moveTroopsButton.addActionListener(abc);
+        moveTroopsButton.setActionCommand("moveTroops");
+
+    }
+
+    /**
+     * Used for when there are no possible troops left to move.
+     */
+    public void removeTroopsLabel(){
+        fortifyInfo.remove(fortifyFurtherLabel);
+        fortifyInfo.remove(numberMoveTroops);
+        fortifyInfo.remove(moveTroopsButton);
     }
     /**
      * Adds the number of possible troops to send in an attack
@@ -169,7 +282,9 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         //create attack and defend panels which display the attacker and defender info
         attackFlag = true;
         attackPanel = new JPanel();
+        attackPanel.setBorder(blackBorder);
         JPanel defenderPanel = new JPanel();
+        defenderPanel.setBorder(blackBorder);
         defenderPanel.setLayout(new BoxLayout(defenderPanel,BoxLayout.Y_AXIS));
         defenderPanel.setBackground(darkBlue);
 
@@ -179,7 +294,9 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         defenderPlayerLabel = new JLabel("Defending Player: ");
         //creates the JComboBox with number of attackers
         numberAttackTroops = new JComboBox<Integer>();
+        numberAttackTroops.setBackground(lighterBlue);
         JButton attackButton = new JButton("Attack",new ImageIcon(attackImg));
+        attackButton.setFocusPainted(false);
         //gets images
         try {
             backImg = ImageIO.read(getClass().getResourceAsStream("resources/back.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
@@ -190,18 +307,27 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         //creates back, lock and cancel buttons
 
         JButton backButton = new JButton(new ImageIcon(backImg));
-
+        backButton.setFocusPainted(false);
+        backButton.setBackground(darkerBlue);
         //Confirmation Buttons for choosing attack territory
         JPanel confirmButtonsA = new JPanel();
         JButton confirmA = new JButton(new ImageIcon(lock));
+        confirmA.setFocusPainted(false);
+        confirmA.setBackground(darkerBlue);
         JButton cancelA = new JButton(new ImageIcon(cancel));
+        cancelA.setFocusPainted(false);
+        cancelA.setBackground(darkerBlue);
         confirmButtonsA.add(confirmA);
         confirmButtonsA.add(cancelA);
         confirmButtonsA.setBackground(darkBlue);
         //Confirmation Buttons for choosing defender territory
         JPanel confirmButtonsD = new JPanel();
         JButton confirmD = new JButton(new ImageIcon(lock));
+        confirmD.setFocusPainted(false);
+        confirmD.setBackground(darkerBlue);
         JButton cancelD = new JButton(new ImageIcon(cancel));
+        cancelD.setFocusPainted(false);
+        cancelD.setBackground(darkerBlue);
         confirmButtonsD.add(confirmD);
         confirmButtonsD.add(cancelD);
         confirmButtonsD.setBackground(darkBlue);
@@ -249,9 +375,13 @@ public class ActionBarView extends JPanel implements ActionBarListener {
     public void deployTroopsInfo(){
         placetroopsFlag = true;
         deployPanel = new JPanel();
+        deployPanel.setBorder(blackBorder);
         deployInfo = new JLabel("Territory:    Reinforcements:");
         numberOfTroops = new JComboBox<Integer>();
+        numberOfTroops.setBackground(lighterBlue);
         deployButton= new JButton("Deploy Troops");
+        deployButton.setFocusPainted(false);
+        deployButton.setBackground(lighterBlue);
         deployButton.setEnabled(true);
         //adds the total possible troops to deploy to the JComboBox
         if(riskModel.getActivePlayer().getReinforcements()>0) {
@@ -269,6 +399,8 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         }
         //creates back button
         JButton backButton = new JButton(new ImageIcon(backImg));
+        backButton.setFocusPainted(false);
+        backButton.setBackground(darkerBlue);
         //adding information to the deploy troops panel
         deployPanel.add(deployInfo);
         deployPanel.add(numberOfTroops);
@@ -294,6 +426,7 @@ public class ActionBarView extends JPanel implements ActionBarListener {
     public void setMessage(String msg){
         messageFlag =true;
         messagePanel = new JPanel();
+        messagePanel.setBorder(blackBorder);
         JLabel message = new JLabel(msg);
         messagePanel.add(message);
         messagePanel.setBackground(darkBlue);
@@ -347,6 +480,9 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         return numberAttackTroops;
     }
 
+    public JComboBox<Integer> getMoveNumberOfTroops(){
+        return numberMoveTroops;
+    }
     /**
      * Gets the action bar controller which controls the view and the model
      * @return The action bar controller
@@ -384,6 +520,28 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         defenderTerritoryLabel.setText("Defender Territory: ");
         }
     }
+    public void setCurrTerrInfo(){
+        if(abc.getCurrTerritory()!=null){
+            currTerritoryLabel.setText("Territory: " + abc.getCurrTerritory());
+        }else{
+            currTerritoryLabel.setText("Territory: ");
+        }
+    }
+
+    public void setMoveTerrInfo(){
+        if(abc.getMoveTerritory()!= null){
+            moveTerritoryLabel.setText("Move to Territory: " + abc.getMoveTerritory());
+        }else{
+            moveTerritoryLabel.setText("Move to Territory: " );
+        }
+    }
+
+    public void setNumberMoveTroopsRange(){
+        numberMoveTroops.removeAllItems();
+        for (int i = 1; i < abc.getCurrTerritory().getSoldiers(); i++) {
+            numberMoveTroops.addItem(i);
+        }
+    }
     public RiskView getRiskView(){
         return riskView;
     }
@@ -414,6 +572,7 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         if(e.isTurnComplete()){
             troopPanel.setVisible(false);
             initActionButtons();
+            updateUI();
         }
     }
 }

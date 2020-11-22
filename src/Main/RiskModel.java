@@ -236,11 +236,13 @@ public class RiskModel {
     }
 
     public boolean moveTroops(Territory giving, Territory receiving, int  numOfTroops){
-        if(getActivePlayer().hasTerritory(giving) && getActivePlayer().hasTerritory(receiving)){
-            if(giving.isNeighbour(receiving.getName())) {
-                giving.removeSoldiers(numOfTroops);
-                receiving.addSoldiers(numOfTroops);
-                return true;
+        if(giving.getSoldiers()>numOfTroops) {
+            if (getActivePlayer().hasTerritory(giving) && getActivePlayer().hasTerritory(receiving)) {
+                if (giving.isNeighbour(receiving.getName())) {
+                    giving.removeSoldiers(numOfTroops);
+                    receiving.addSoldiers(numOfTroops);
+                    return true;
+                }
             }
         }
         return false;
