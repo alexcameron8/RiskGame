@@ -31,10 +31,11 @@ public class AIEasy extends Player{
 
     public void AIPlaceTroops(){
         Continent targetContinent = targetContinent();
+        System.out.println(targetContinent.getName());
         for(Territory terr: targetContinent.getTerritories()){
             if(!hasTerritory(terr)){
                 Territory attackingTerr = findAttackingTerritory(terr);
-                if(howManyToWin(terr, attackingTerr) < 0 && canPlaceReinforcement(attackingTerr, howManyToWin(terr, attackingTerr)*-1)){
+                if(howManyToWin(terr, attackingTerr) < 0 && canPlaceReinforcement(attackingTerr, howManyToWin(terr, attackingTerr)*-1) && attackingTerr != null){
                     placeReinforcement(attackingTerr, howManyToWin(terr, attackingTerr)*-1);
                 }
             }
@@ -42,7 +43,6 @@ public class AIEasy extends Player{
         if(getReinforcements() != 0){
             placeReinforcement(getListOfTerritories().get(0), getReinforcements());
         }
-        System.out.println(getReinforcements());
     }
 
     public void AIMoveTroop(){
