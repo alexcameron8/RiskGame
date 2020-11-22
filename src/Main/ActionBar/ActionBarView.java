@@ -16,18 +16,19 @@ import java.io.IOException;
  */
 public class ActionBarView extends JPanel implements ActionBarListener {
 
-    private JButton placeTroops,attack,nextTurn,fortify,deployButton, moveTroopsButton;
+    private JButton nextTurn;
+    private JButton moveTroopsButton;
     private Image placeImg,nextTurnImg,attackImg, lock, cancel, backImg, tankImg;
-    private Color darkBlue = new Color(102,178,255);
-    private Color darkerBlue = new Color(93,182,240);
-    private Color lighterBlue = new Color(148,210,255);
-    private Border blackBorder = BorderFactory.createLineBorder(Color.BLACK,1);
-    private ActionBarController abc;
-    private RiskModel riskModel;
+    private final Color darkBlue = new Color(102,178,255);
+    private final Color darkerBlue = new Color(93,182,240);
+    private final Color lighterBlue = new Color(148,210,255);
+    private final Border blackBorder = BorderFactory.createLineBorder(Color.BLACK,1);
+    private final ActionBarController abc;
+    private final RiskModel riskModel;
     private RiskView riskView;
     private JComboBox numberOfTroops,numberAttackTroops, numberMoveTroops;
     private JPanel deployPanel,attackPanel, messagePanel,troopPanel, fortifyTroopBar, actionPanel, fortifyInfo;
-    private JLabel deployInfo, attackerTerritoryLabel, defenderTerritoryLabel, defenderPlayerLabel,currTerritoryLabel,numberAttackersLabel,moveTerritoryLabel,fortifyFurtherLabel ;
+    private JLabel deployInfo, attackerTerritoryLabel, defenderTerritoryLabel, defenderPlayerLabel,currTerritoryLabel,moveTerritoryLabel,fortifyFurtherLabel ;
     private boolean placetroopsFlag;
     private boolean attackFlag;
     private boolean messageFlag;
@@ -74,7 +75,7 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         }catch(Exception ex){
         }
 
-        placeTroops = new JButton("Place Troops", new ImageIcon(placeImg));
+        JButton placeTroops = new JButton("Place Troops", new ImageIcon(placeImg));
         placeTroops.setBackground(lighterBlue);
         placeTroops.setFocusPainted(false);
         placeTroops.addActionListener(abc);
@@ -84,6 +85,10 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         this.add(troopPanel);
 
     }
+
+    /**
+     * Initializes the panel which contains a label describing that the active player is in the attack phase (2/3).
+     */
     public void initAttackPanel(){
         actionPanel = new JPanel();
         actionPanel.setBorder(blackBorder);
@@ -95,7 +100,8 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         actionPanel.add(actionLabel);
     }
     /**
-     * Initializes the Buttons for the action panel
+     * Initializes the Buttons for the action panel containing advancing to troop movement phase (3/3)
+     * and allows the user to perform attacks.
      */
     public void initActionButtons(){
         initAttackPanel();
@@ -106,10 +112,10 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         }catch(Exception ex){
         }
         //creates the buttons
-        attack = new JButton("Attack", new ImageIcon(attackImg));
+        JButton attack = new JButton("Attack", new ImageIcon(attackImg));
         attack.setBackground(lighterBlue);
         attack.setFocusPainted(false);
-        fortify = new JButton("Fortify Phase", new ImageIcon(tankImg));
+        JButton fortify = new JButton("Fortify Phase", new ImageIcon(tankImg));
         fortify.setBackground(lighterBlue);
         fortify.setFocusPainted(false);
         //adds the buttons to the JLabel
@@ -122,12 +128,16 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         fortify.addActionListener(abc);
         fortify.setActionCommand("fortify");
     }
+
+    /**
+     * The label showing the user that it is troop movement phase (phase 3/3).
+     */
     public void fortifyTroops(){
         actionPanel.setVisible(false);
         fortifyTroopBar = new JPanel();
         fortifyTroopBar.setBorder(blackBorder);
         JLabel troopFortify = new JLabel("Troop Movement Phase");
-        troopFortify.setFont(new Font("Troop Movement Phase", Font.PLAIN,20));
+        troopFortify.setFont(new Font("Troop Movement Phase", Font.BOLD,20));
         fortifyTroopBar.add(troopFortify);
         fortifyTroopBar.setBackground(darkBlue);
         try {
@@ -146,11 +156,16 @@ public class ActionBarView extends JPanel implements ActionBarListener {
 
         this.add(fortifyTroopBar);
     }
+
+    /**
+     * This is the panel that contains the info regarding where the active player is moving troops from what territory
+     * to another territory. There is specfications for how many troops desired to move as well.
+     */
     public void fortifyTroopsInfo(){
         fortifyInfo = new JPanel();
         fortifyInfo.setBorder(blackBorder);
         currTerritoryLabel =new JLabel("Territory: ");
-        numberAttackersLabel = new JLabel("Number of troops: ");
+        JLabel numberAttackersLabel = new JLabel("Number of troops: ");
         moveTerritoryLabel = new JLabel("Move to Territory: ");
         //creates the JComboBox with number of attackers
         numberMoveTroops = new JComboBox<Integer>();
@@ -216,13 +231,18 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         moveTroopsButton.addActionListener(abc);
         moveTroopsButton.setActionCommand("moveTroops");
     }
+
+    /**
+     * Once a player has moved troops in a turn, they can only move troops from the territory they moved the troops from
+     * and this method adds a double check implementation to see if user wants to move even more troops before passing turns.
+     */
     public void fortifyMoreTroops(){
         fortifyInfo.setVisible(false);
         fortifyTroopBar.setVisible(false);
         fortifyInfo = new JPanel();
         fortifyInfo.setBorder(blackBorder);
         JLabel troopFortify = new JLabel("Troop Movement Phase");
-        troopFortify.setFont(new Font("Troop Movement Phase", Font.PLAIN,20));
+        troopFortify.setFont(new Font("Troop Movement Phase", Font.BOLD,20));
         fortifyInfo.add(troopFortify);
         fortifyInfo.setBackground(darkBlue);
         fortifyFurtherLabel = new JLabel("Do you want to send more troops to " + abc.getMoveTerritory().getName() + " from " + abc.getCurrTerritory() +"?");
@@ -284,7 +304,6 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         attackPanel = new JPanel();
         attackPanel.setBorder(blackBorder);
         JPanel defenderPanel = new JPanel();
-        defenderPanel.setBorder(blackBorder);
         defenderPanel.setLayout(new BoxLayout(defenderPanel,BoxLayout.Y_AXIS));
         defenderPanel.setBackground(darkBlue);
 
@@ -296,6 +315,7 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         numberAttackTroops = new JComboBox<Integer>();
         numberAttackTroops.setBackground(lighterBlue);
         JButton attackButton = new JButton("Attack",new ImageIcon(attackImg));
+        attackButton.setBackground(lighterBlue);
         attackButton.setFocusPainted(false);
         //gets images
         try {
@@ -379,7 +399,7 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         deployInfo = new JLabel("Territory:    Reinforcements:");
         numberOfTroops = new JComboBox<Integer>();
         numberOfTroops.setBackground(lighterBlue);
-        deployButton= new JButton("Deploy Troops");
+        JButton deployButton = new JButton("Deploy Troops");
         deployButton.setFocusPainted(false);
         deployButton.setBackground(lighterBlue);
         deployButton.setEnabled(true);
@@ -514,12 +534,16 @@ public class ActionBarView extends JPanel implements ActionBarListener {
      */
     public void setDefenderInfo(){
         if(abc.getDefenderTerritory()!=null) {
-        defenderTerritoryLabel.setText("Defender Territory:" + abc.getDefenderTerritory());
+        defenderTerritoryLabel.setText("Defender Territory: " + abc.getDefenderTerritory());
         defenderPlayerLabel.setText("Defending Player: " + abc.getDefenderTerritory().getOwner().getName());
     }else{
         defenderTerritoryLabel.setText("Defender Territory: ");
         }
     }
+
+    /**
+     * Sets the current territory info in the troop movement phase bar. This method is used to change the label whenever a territory is clicked.
+     */
     public void setCurrTerrInfo(){
         if(abc.getCurrTerritory()!=null){
             currTerritoryLabel.setText("Territory: " + abc.getCurrTerritory());
@@ -527,7 +551,10 @@ public class ActionBarView extends JPanel implements ActionBarListener {
             currTerritoryLabel.setText("Territory: ");
         }
     }
-
+    /**
+     * Sets the territory info in the troop movement phase bar for the territory which troops will be moved to.
+     * This method is used to change the label whenever a territory is clicked.
+     */
     public void setMoveTerrInfo(){
         if(abc.getMoveTerritory()!= null){
             moveTerritoryLabel.setText("Move to Territory: " + abc.getMoveTerritory());
@@ -536,6 +563,9 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         }
     }
 
+    /**
+     * Each time a new territory is selected the JComboBox has to be adjusted to show the number of troops available to move.
+     */
     public void setNumberMoveTroopsRange(){
         numberMoveTroops.removeAllItems();
         for (int i = 1; i < abc.getCurrTerritory().getSoldiers(); i++) {
@@ -569,10 +599,9 @@ public class ActionBarView extends JPanel implements ActionBarListener {
 
     @Override
     public void handleTroopDeployment(ActionBarEvent e){
-        if(e.isTurnComplete()){
+        if(e.isTurnComplete()){ //When troop movement is finished and the remaining soldiers to place is 0 then the action buttons will appear in actionbar
             troopPanel.setVisible(false);
             initActionButtons();
-            updateUI();
         }
     }
 }
