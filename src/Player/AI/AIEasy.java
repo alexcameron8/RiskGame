@@ -30,24 +30,37 @@ public class AIEasy extends Player{
     }
 
     public void AIPlaceTroops(){
+        ArrayList<Territory> territoriesAlreadyAttacking = new ArrayList<>();
+
         Continent targetContinent = targetContinent();
-        System.out.println(targetContinent.getName());
+        if(targetContinent == null){
+            placeReinforcement(getListOfTerritories().get(0), getReinforcements());
+        }
         for(Territory terr: targetContinent.getTerritories()){
             if(!hasTerritory(terr)){
-                Territory attackingTerr = findAttackingTerritory(terr);
-                if(howManyToWin(terr, attackingTerr) < 0 && canPlaceReinforcement(attackingTerr, howManyToWin(terr, attackingTerr)*-1) && attackingTerr != null){
+                Territory attackingTerr = findAttackingTerritory(terr, territoriesAlreadyAttacking);
+                if(attackingTerr != null && howManyToWin(terr, attackingTerr) < 0 && canPlaceReinforcement(attackingTerr, howManyToWin(terr, attackingTerr)*-1)){
+                    System.out.println("Placed " + howManyToWin(terr, attackingTerr)*-1 + " on " + attackingTerr.getName()+ " to take " +terr.getName());
                     placeReinforcement(attackingTerr, howManyToWin(terr, attackingTerr)*-1);
+                    territoriesAlreadyAttacking.add(attackingTerr);
                 }
             }
         }
         if(getReinforcements() != 0){
-            placeReinforcement(getListOfTerritories().get(0), getReinforcements());
+            for(Territory terr : getListOfTerritories()){
+                if(!terr.getContinent().equals(targetContinent) && !hasContinent(terr.getContinent())){
+                    System.out.println("Placed " + getReinforcements() + " on " + terr);
+                    placeReinforcement(terr, getReinforcements());
+                    break;
+                }
+            }
         }
     }
 
     public void AIMoveTroop(){
         for(Territory terr: getListOfTerritories()){
-            if(hasUnownedNeighbour(terr) && !canTerritoryAttack(terr)){
+            if(hasUnownedNeighbour(terr) && !canTerritoryAttack(terr) && terr.getSoldiers() > 1){
+                System.out.println("Moved " + terr.getName() + " to " + findUnownedNeighbour(terr).getName());
                 moveTroops(terr, findUnownedNeighbour(terr), terr.getSoldiers() - 1);
                 return;
             }
@@ -98,46 +111,88 @@ public class AIEasy extends Player{
     }
 
     public void AIAttack(){
-        Object[] territories = getListOfTerritories().toArray();
-        for(Object terr: territories){
-            for(Territory neighbour : ((Territory) terr).getNeighbours()){
-                if(!hasTerritory(neighbour)) {
-                    if (canWinTerritory(neighbour, ((Territory) terr))) {
-                        attack(((Territory) terr), neighbour.getOwner(), neighbour, ((Territory) terr).getSoldiers()-1);
+        while(canAttack()) {
+            Object[] territories = getListOfTerritories().toArray();
+            for (Object terr : territories) {
+                for (Territory neighbour : ((Territory) terr).getNeighbours()) {
+                    if (!hasTerritory(neighbour)) {
+                        if (canWinTerritory(neighbour, ((Territory) terr))) {
+                            System.out.println(((Territory) terr).getName() + " attacked " + neighbour.getName());
+                            attack(((Territory) terr), neighbour.getOwner(), neighbour, ((Territory) terr).getSoldiers() - 1);
+                        }
                     }
                 }
             }
         }
     }
 
+    private boolean canAttack(){
+        boolean canAttack = false;
+        for(Object terr: getListOfTerritories()){
+            for(Territory neighbour : ((Territory) terr).getNeighbours()){
+                if(!hasTerritory(neighbour)) {
+                    if (canWinTerritory(neighbour, ((Territory) terr))) {
+                        canAttack = true;
+                    }
+                }
+            }
+        }
+        return canAttack;
+    }
+
     private Continent targetContinent(){
         HashMap<Continent, Integer> territoriesInContinents = new HashMap<>();
         for(Territory terr : getListOfTerritories()){
-            territoriesInContinents.putIfAbsent(terr.getContinent(), 1);
+            territoriesInContinents.putIfAbsent(terr.getContinent(), 0);
             territoriesInContinents.computeIfPresent(terr.getContinent(), (k, v) -> v + 1);
         }
 
-        Continent mostTerritories = getListOfTerritories().get(0).getContinent();
+        Continent mostTerritories = null;
 
         for(Continent continent: territoriesInContinents.keySet()){
-            if(territoriesInContinents.get(mostTerritories)/mostTerritories.getTerritories().size() != 1) {
-                if(territoriesInContinents.get(continent)/continent.getTerritories().size()>territoriesInContinents.get(mostTerritories)/mostTerritories.getTerritories().size()){
+            if(territoriesInContinents.get(continent)-continent.getTerritories().size() < 0) {
+                if(mostTerritories == null){
                     mostTerritories = continent;
+                }
+                int continentSoldiers = 0;
+                for(Territory terr : continent.getTerritories()){
+                    if(!hasTerritory(terr)){
+                        continentSoldiers += terr.getSoldiers();
+                    }
+                }
+
+                int mostTerritoriesSoldiers = 0;
+                for(Territory terr : mostTerritories.getTerritories()){
+                    if(!hasTerritory(terr)){
+                        mostTerritoriesSoldiers += terr.getSoldiers();
+                    }
+                }
+                if(continentSoldiers <= mostTerritoriesSoldiers) {
+                    if (territoriesInContinents.get(continent) - continent.getTerritories().size() > territoriesInContinents.get(mostTerritories) - mostTerritories.getTerritories().size()) {
+                        mostTerritories = continent;
+                    }
                 }
             }
         }
         return mostTerritories;
     }
 
-    private Territory findAttackingTerritory(Territory defendingTerritory){
+    private Territory findAttackingTerritory(Territory defendingTerritory, ArrayList<Territory> NotpossibleAttackingTerritories){
         Territory attackingTerritory = null;
         for(Territory terr: defendingTerritory.getNeighbours()){
             if(hasTerritory(terr)){
-                if(attackingTerritory == null){
-                    attackingTerritory = terr;
+                boolean canHave = true;
+                for(Territory notTerr : NotpossibleAttackingTerritories){
+                    if(notTerr.equals(terr)){
+                        canHave = false;
+                    }
                 }
-                else if(attackingTerritory.getSoldiers() < terr.getSoldiers()){
-                    attackingTerritory = terr;
+                if(canHave) {
+                    if (attackingTerritory == null) {
+                        attackingTerritory = terr;
+                    } else if (attackingTerritory.getSoldiers() < terr.getSoldiers()) {
+                        attackingTerritory = terr;
+                    }
                 }
             }
         }
@@ -145,12 +200,12 @@ public class AIEasy extends Player{
     }
 
     private int howManyToWin(Territory enemyTerritory, Territory aiTerritory){
-        double requiredSoldiers = (5/4)*(enemyTerritory.getSoldiers()-2)+Math.exp(1+(1/enemyTerritory.getSoldiers()))+1;
+        double requiredSoldiers = 1.2158*enemyTerritory.getSoldiers()+1.8842;
         return (int) (aiTerritory.getSoldiers() - Math.round(requiredSoldiers));
     }
 
     private boolean canWinTerritory(Territory enemyTerritory, Territory aiTerritory){
-        double requiredSoldiers = (5/4)*(enemyTerritory.getSoldiers()-2)+Math.exp(1+(1/enemyTerritory.getSoldiers()))+1;
+        double requiredSoldiers = 1.2158*enemyTerritory.getSoldiers()+1.8842;
         return Math.round(requiredSoldiers) <= aiTerritory.getSoldiers();
     }
 

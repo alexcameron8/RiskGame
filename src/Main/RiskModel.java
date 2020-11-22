@@ -216,6 +216,7 @@ public class RiskModel {
         if(getActivePlayer() instanceof AIEasy){
             currentTurn.setNumberOfReinforcements(0);
             ((AIEasy) getActivePlayer()).advanceTurn();
+            advanceTurn();
         }
     }
 }

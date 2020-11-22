@@ -80,7 +80,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
             if(abm.getRiskModel().getActivePlayer() instanceof AIEasy){
                 System.out.println(abm.getRiskModel().getActivePlayer().getName());
                 abm.nextTurn(abm.getRiskModel());
-                System.out.println(abm.getRiskModel().getActivePlayer().getName());
+                abv.setMessage("Turn advanced. It is now " + abm.getRiskModel().getActivePlayer().getName() + "'s turn.");
                 abv.initTroopMovement();
                 abv.setMessage("Turn advanced. It is now " + abm.getRiskModel().getActivePlayer().getName() + "'s turn.");
             }else{
