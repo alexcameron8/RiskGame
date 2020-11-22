@@ -4,6 +4,7 @@ import Main.Map.MapEvent;
 import Main.Map.MapTerritoryEvent;
 import Main.Map.MapViewListener;
 import Map.Territory;
+import Player.AI.AIEasy;
 import Player.Player;
 
 import java.awt.event.ActionEvent;
@@ -44,10 +45,10 @@ public class ActionBarController implements ActionListener, MapViewListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        //check if any previous message bars are on GUI and removes them if true
+        removeMessageBar();
         if (e.getActionCommand().equals("place")) {
             state = "Place";
-            //check if any previous message bars are on GUI and removes them if true
-            removeMessageBar();
             //Clears all previous flags for attacking
             hasNumTroopsSelected = false;
             hasTerritorySelected = false;
@@ -59,25 +60,33 @@ public class ActionBarController implements ActionListener, MapViewListener {
             }
         } else if (e.getActionCommand().equals("attack")) { //If attack button is clicked then the Attack info bar appears on GUI
             state = "Attacker";
-            removeMessageBar();
             if(!abv.getAttackFlag()) {
                 abv.removeDeployTroopsBar();
                 abv.attackInfo();
             }
         } else if (e.getActionCommand().equals("next")) { //Advances turn to next player
-            removeMessageBar();
-
             //Clears all previous flags for attacking
+
             hasNumTroopsSelected = false;
             hasTerritorySelected = false;
             troopsMoved = false;
             abm.nextTurn(abm.getRiskModel());
+            System.out.println(abm.getRiskModel().getActivePlayer().getName());
             //clears any bars on GUI
             abv.removeDeployTroopsBar();
             abv.removeAttackBar();
+
             //displays corresponding message if turn is complete or not
+            if(abm.getRiskModel().getActivePlayer() instanceof AIEasy){
+                System.out.println(abm.getRiskModel().getActivePlayer().getName());
+                abm.nextTurn(abm.getRiskModel());
+                System.out.println(abm.getRiskModel().getActivePlayer().getName());
+                abv.setMessage("Turn advanced. It is now " + abm.getRiskModel().getActivePlayer().getName() + "'s turn.");
+                abv.initTroopMovement();
+            }else{
                 abv.initTroopMovement();
                 abv.setMessage("Turn advanced. It is now " + abm.getRiskModel().getActivePlayer().getName() + "'s turn.");
+            }
         } else if(e.getActionCommand().equals("numTroops")) { //Gets number of troops the player chooses to place
             if((Integer) abv.getNumberOfTroops().getSelectedItem()!=null) {
                 numOfTroops = (Integer) abv.getNumberOfTroops().getSelectedItem();
@@ -86,7 +95,6 @@ public class ActionBarController implements ActionListener, MapViewListener {
                 abv.setMessage("Number of troops not selected.");
             }
         } else if (e.getActionCommand().equals("deploy")) { //This button will deploy the troops in the model and update the view correspondingly or deliver error messages
-            removeMessageBar();
             if (territory != null) {
                 if(hasTerritorySelected) {
                     if (hasNumTroopsSelected) {
@@ -125,7 +133,6 @@ public class ActionBarController implements ActionListener, MapViewListener {
                 defendConfirm = true;
             }
         }else if(e.getActionCommand().equals("attackButton")){ //performs the attack with the attacker territory, defender territory and number of troops to send to battle
-            removeMessageBar();
             //ensures that both defender and attacker territories are valid
             if(defendConfirm && attackConfirm) {
                 if (attackerTerritory != null && defenderTerritory !=null) {
@@ -145,18 +152,14 @@ public class ActionBarController implements ActionListener, MapViewListener {
             }
         }else if(e.getActionCommand().equals("backAttack")){ //exits the attack info bar
             state = "Default";
-            removeMessageBar();
             abv.removeAttackBar();
         }else if(e.getActionCommand().equals("backDeploy")){ //exits the deploy troops info bar
             state = "Default";
-            removeMessageBar();
             abv.removeDeployTroopsBar();
         }else if(e.getActionCommand().equals("fortify")) { //Changes ActionBar to fortify
-            removeMessageBar();
             abv.fortifyTroops();
             state = "currTerritory";
         }else if(e.getActionCommand().equals("lockMove1")){
-            removeMessageBar();
             if(currTerritory!=null) {
                 hasCurrConfirm = true;
                 state = "moveTerritory";
@@ -167,7 +170,6 @@ public class ActionBarController implements ActionListener, MapViewListener {
             hasCurrConfirm = false;
             state = "currTerritory";
         }else if(e.getActionCommand().equals("lockMove2")){
-            removeMessageBar();
             if(moveTerritory !=null) {
                 hasMoveConfirm = true;
                 state = "Default";
@@ -178,7 +180,6 @@ public class ActionBarController implements ActionListener, MapViewListener {
             hasMoveConfirm = false;
             state = "moveTerritory";
         }else if(e.getActionCommand().equals("moveTroops")){
-            removeMessageBar();
             if(troopsMoved){
                 if(abm.getRiskModel().getActivePlayer().moveTroops(currTerritory,moveTerritory,numMoveTroopsSelected)) {
                     abv.setMessage(abm.getRiskModel().getActivePlayer().getName() + " has moved " + numMoveTroopsSelected + " troops from " + currTerritory + " to " + moveTerritory);

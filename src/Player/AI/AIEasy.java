@@ -42,7 +42,7 @@ public class AIEasy extends Player{
         if(getReinforcements() != 0){
             placeReinforcement(getListOfTerritories().get(0), getReinforcements());
         }
-
+        System.out.println(getReinforcements());
     }
 
     public void AIMoveTroop(){

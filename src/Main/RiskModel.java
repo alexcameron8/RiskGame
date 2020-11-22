@@ -21,7 +21,6 @@ public class RiskModel {
     private Turn currentTurn;
     private Map map;
     private List<RiskViewListener> riskViewListeners;
-    private boolean turnComplete;
     private Player winner = null;
     private Player eliminatedPlayer = null;
 
@@ -75,6 +74,7 @@ public class RiskModel {
      */
     public void advanceTurn(){
 
+        boolean turnComplete;
         if(currentTurn.isTurnComplete(getActivePlayer())){
             if(players.size() == 1){
                 winner = getActivePlayer();
@@ -94,18 +94,15 @@ public class RiskModel {
                 if(getActivePlayer() instanceof AIEasy){
                     ((AIEasy) getActivePlayer()).advanceTurn();
                 }
-                else {
                     currentTurn = new Turn(players.get(activePlayerID));
-                }
+
                 turnComplete = true;
             } else {
                 activePlayerID = 0;
                 if(getActivePlayer() instanceof AIEasy){
                     ((AIEasy) getActivePlayer()).advanceTurn();
                 }
-                else {
                     currentTurn = new Turn(players.get(activePlayerID));
-                }
                 turnComplete = true;
             }
 
@@ -120,30 +117,6 @@ public class RiskModel {
             eliminatedPlayer = null;
         }
     }
-
-    /**
-     * Checks if the turn is complete
-     * @return True if the turn is complete, but false otherwise
-     */
-    public boolean isTurnComplete(){
-        return turnComplete;
-    }
-
-    /**
-     * Reset the turns to the first player.
-     */
-    public void resetTurns(){
-        activePlayerID = 0;
-    }
-
-    /**
-     * This method accesses the currentTurn.
-     * @return The current Turn
-     */
-    public Turn getActivePlayerTurn(){
-        return currentTurn;
-    }
-
     /**
      * This method gets the current player whos turn it is.
      * @return The current player who's turn it is.
@@ -245,10 +218,9 @@ public class RiskModel {
         assignTroopsRandom();
 
         if(getActivePlayer() instanceof AIEasy){
+
             ((AIEasy) getActivePlayer()).advanceTurn();
         }
-        else {
-            currentTurn = new Turn(players.get(activePlayerID));
-        }
+        currentTurn = new Turn(players.get(activePlayerID));
     }
 }

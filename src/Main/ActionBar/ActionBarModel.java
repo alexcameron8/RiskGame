@@ -3,6 +3,7 @@ import java.util.*;
 
 import Main.RiskModel;
 import Main.RiskView;
+import Player.AI.AIEasy;
 import Player.Player;
 import Map.*;
 
@@ -87,7 +88,7 @@ public class ActionBarModel {
      * Advances to the next turn
      * @param riskModel The current risk model
      */
-    public void nextTurn(RiskModel riskModel){
-            riskModel.advanceTurn();
+    public void nextTurn(RiskModel riskModel) {
+        riskModel.advanceTurn();
     }
 }
