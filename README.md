@@ -74,11 +74,23 @@ Note: *For markers convenience* a test menu item is in the game to transfer all 
 - If the user tries to play the game not full screen there is potential for the message bar to not appear on screen because the text is too long to fit in the component.
 - In our testing, if using mac or linux the JComboBox does not work to choose the player colour in the setup phase.
 
-## Roadmap
-### Milestone 3
+## Milestone 3
 Met by: Monday, 23 November 2020
+Requirements:
 - Additional features: bonus army placement + troupe movement phase.  
 - Implement support for “AI” players.
+### Authors:
+Alex Cameron
+- 
+Thomas Dunnigan
+- 
+Ben Munro
+- 
+
+## Changes made since Milestone 2:
+A feature that was refactored in this milestone eliminated a few known issues from last milestone which was creating different phases (troop deployment phase, attack phase and troop movement phase) within the actionbar. In milestone 2, it was possible to do attacks before placing troops which is a bug that was fixed in this milestone. As well, last iteration we came across a bug where sometimes the panels containing attack/deploy information wouldn't display in the action bar because the territories were too long and were cut off by the screens size limitations. By creating the different phases of the action bar this bug is resolved because every possible combination can be displayed properly. On top of these changes, the action bar was improved to be more visually appealing. As well, in this iteration we implemented an AI player that uses strategic probability to determine the best possible moves to make. 
+
+## Roadmap
 
 ### Milestone 4
 Met by: Monday, 7 December 2020
