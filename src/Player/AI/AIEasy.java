@@ -95,7 +95,8 @@ public class AIEasy extends Player{
     }
 
     public void AIAttack(){
-        for(Territory terr: getListOfTerritories()){
+        ArrayList<Territory> territories = getListOfTerritories();
+        for(Territory terr: territories){
             for(Territory neighbour : terr.getNeighbours()){
                 if(!hasTerritory(neighbour)) {
                     if (canWinTerritory(neighbour, terr)) {
