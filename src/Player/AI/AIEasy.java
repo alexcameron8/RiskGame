@@ -54,15 +54,6 @@ public class AIEasy extends Player{
         }
         if(getReinforcements() != 0){
             for(Territory terr : getListOfTerritories()){
-                System.out.println(terr);
-                System.out.println(hasContinent(terr.getContinent()));
-                if(!hasContinent(terr.getContinent())){
-                    System.out.println("\t\t"+getListOfContinents().size());
-                    for(Continent c : getListOfContinents()){
-                        System.out.println("\t"+c.getName());
-                    }
-                }
-                System.out.println(terr.getContinent());
                 if(!terr.getContinent().equals(targetContinent) && !hasContinent(terr.getContinent())){
                                         this.riskView.getNotificationView().notifyUser(
                             this.name + " Placed " + getReinforcements() + " on " + terr,

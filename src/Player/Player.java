@@ -82,9 +82,6 @@ public class Player {
         }
         if(sizeControlsContinent == territory.getContinent().getTerritories().size()) {
             addContinent(territory.getContinent());
-            for(Continent c: getListOfContinents()){
-                System.out.println("\t"+c);
-            }
         }
     }
 
