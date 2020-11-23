@@ -9,6 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
+/**
+ * View to display notifications to the user.
+ */
 public class NotificationView extends JPanel implements NotificationViewListener{
     public static final String CLOSE_ALL_ACTION = "closeAll";
     private JPanel notificationList;
@@ -16,6 +19,9 @@ public class NotificationView extends JPanel implements NotificationViewListener
     private NotificationController notificationController;
 
 
+    /**
+     * Create new notification view.
+     */
     public NotificationView(){
         notificationModel = new NotificationModel();
         notificationModel.addNotificationListener(this);
@@ -35,10 +41,19 @@ public class NotificationView extends JPanel implements NotificationViewListener
 
     }
 
+    /**
+     * Display a message to the user.
+     * @param message Message
+     * @param notificationType Type of notification
+     */
     public void notifyUser(String message, NotificationModel.NotificationType notificationType){
         this.notificationModel.addNotification(message, notificationType);
     }
 
+    /**
+     * Handle notification updates.
+     * @param e NotificationEvent object.
+     */
     @Override
     public void handleNotificationUpdate(NotificationEvent e) {
         NotificationModel.Notification notification = e.getNotification();
@@ -73,10 +88,17 @@ public class NotificationView extends JPanel implements NotificationViewListener
         this.repaint();
     }
 
+    /**
+     * Individual notification frame
+     */
     public class GameNotification extends JPanel {
         private NotificationModel.Notification notification;
         public final String CLOSE_ACTION_COMMAND = "close";
 
+        /**
+         * Create a new notification frame
+         * @param notification Notification to display in the frame
+         */
         GameNotification(NotificationModel.Notification notification){
             this.setLayout(new BorderLayout());
             this.notification = notification;
@@ -114,6 +136,10 @@ public class NotificationView extends JPanel implements NotificationViewListener
             this.setBorder(new MatteBorder(0, 0, 1, 0, Color.GRAY));
         }
 
+        /**
+         * Return the notification displayed in the frame.
+         * @return Notification of the frame.
+         */
         public NotificationModel.Notification getNotification() {
             return notification;
         }
