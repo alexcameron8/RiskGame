@@ -1,5 +1,6 @@
 package Main.ActionBar;
 
+import Main.Map.MapRedrawEvent;
 import Main.RiskModel;
 import Main.RiskView;
 import Player.AI.AIEasy;
@@ -453,6 +454,9 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         if(fortifyTroopBar!=null){
             fortifyTroopBar.setVisible(false);
         }
+        if(fortifyInfo !=null){
+            fortifyInfo.setVisible(false);
+        }
         if(aiNextTurn!=null){
             aiNextTurn.setVisible(false);
         }
@@ -632,9 +636,14 @@ public class ActionBarView extends JPanel implements ActionBarListener {
 
     @Override
     public void handleTroopDeployment(ActionBarEvent e){
+        getRiskView().getMapView().handleMapUpdate(new MapRedrawEvent(this));
         if(e.isTurnComplete()){ //When troop movement is finished and the remaining soldiers to place is 0 then the action buttons will appear in actionbar
             troopPanel.setVisible(false);
             initActionButtons();
         }
+    }
+    @Override
+    public void handleTroopMovement(ActionBarEvent e){
+        getRiskView().getMapView().handleMapUpdate(new MapRedrawEvent(this));
     }
 }

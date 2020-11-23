@@ -176,7 +176,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
             state = "moveTerritory";
         }else if(e.getActionCommand().equals("moveTroops")){
             if(troopsMoved){
-                if(abm.getRiskModel().getActivePlayer().moveTroops(currTerritory,moveTerritory,numMoveTroopsSelected)) {
+                if(abm.moveTroops(currTerritory,moveTerritory,numMoveTroopsSelected)) {
                     abv.setMessage(abm.getRiskModel().getActivePlayer().getName() + " has moved " + numMoveTroopsSelected + " troops from " + currTerritory + " to " + moveTerritory);
                     abv.setNumberMoveTroopsRange();
                 }

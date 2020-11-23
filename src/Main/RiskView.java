@@ -147,6 +147,9 @@ public class RiskView extends JFrame implements RiskViewListener{
     public RiskModel getRiskModel(){
         return riskModel;
     }
+    public MapView getMapView(){
+        return mapView;
+    }
 
     @Override
     public void handleTurnUpdate(RiskEvent e) {
