@@ -3,8 +3,6 @@ package Main;
 import Main.ActionBar.*;
 import Main.IntializeFrame.InitializeView;
 import Main.Map.*;
-import Main.NotificationView.NotificationEvent;
-import Main.NotificationView.NotificationModel;
 import Main.NotificationView.NotificationView;
 import Main.PlayerBar.*;
 import Player.AI.AIEasy;

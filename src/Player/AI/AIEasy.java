@@ -1,8 +1,5 @@
 package Player.AI;
-import Attack.Attack;
-import Main.IntializeFrame.InitializeModel;
 import Main.NotificationView.NotificationModel;
-import Main.RiskModel;
 import Main.RiskView;
 import Map.Continent;
 import Map.Territory;
@@ -12,6 +9,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * AIEasy is an extension of the player class that is a AI.
+ * This AI is simple it will try to take the easiest continent and will only fight battles it knows it's going to win
+ * It will move troops to another territory if a territory doesn't have any enemy neighbours.
+ *
+ * @author Thomas Dunnigan
+ */
 public class AIEasy extends Player{
     /**
      * Constructor for a player. Gives them
@@ -25,6 +29,9 @@ public class AIEasy extends Player{
         super(name, playerColor, riskView);
     }
 
+    /**
+     * Simulates an AI taking their turn
+     */
     public void advanceTurn(){
         AIPlaceTroops();
         AIAttack();
@@ -32,6 +39,10 @@ public class AIEasy extends Player{
     }
 
 
+    /**
+     * This method makes the AI place troops in the best spots
+     *
+     */
     public void AIPlaceTroops(){
         ArrayList<Territory> territoriesAlreadyAttacking = new ArrayList<>();
 
@@ -71,6 +82,9 @@ public class AIEasy extends Player{
         }
     }
 
+    /**
+     * The AI moves troops from one territory to another
+     */
     public void AIMoveTroop(){
         for(Territory terr: getListOfTerritories()){
             if(hasUnownedNeighbour(terr) && !canTerritoryAttack(terr) && terr.getSoldiers() > 1){
@@ -83,6 +97,12 @@ public class AIEasy extends Player{
         }
     }
 
+    /**
+     * Takes a territory and return a territory that's a neighbour of the input but also has an enemy territory
+     *
+     * @param territory
+     * @return neighbouring territory
+     */
     private Territory findUnownedNeighbour(Territory territory){
         for(Territory terr: territory.getNeighbours()){
             Territory unownedNeighbour = null;
@@ -99,6 +119,12 @@ public class AIEasy extends Player{
         return null;
     }
 
+    /**
+     * returns true when the input territory has a neighbour enemy territory false otherwise
+     *
+     * @param territory
+     * @return boolean
+     */
     private boolean canTerritoryAttack(Territory territory){
         boolean hasUnownedNeighbour = false;
         for(Territory terr: territory.getNeighbours()){
@@ -110,6 +136,12 @@ public class AIEasy extends Player{
         return hasUnownedNeighbour;
     }
 
+    /**
+     * returns true of a territory that is a neighbour of the input neighbours has an enemy neighbour false otherwise
+     *
+     * @param territory
+     * @return boolean
+     */
     private boolean hasUnownedNeighbour(Territory territory){
         for(Territory terr: territory.getNeighbours()){
             boolean hasUnownedNeighbour = false;
@@ -126,6 +158,9 @@ public class AIEasy extends Player{
         return false;
     }
 
+    /**
+     * The AI will attack any territory that it can beat
+     */
     public void AIAttack(){
         while(canAttack()) {
             Object[] territories = getListOfTerritories().toArray();
@@ -144,6 +179,11 @@ public class AIEasy extends Player{
         }
     }
 
+    /**
+     * returns true if the territory can attack a neighbour and win against them false otherwise
+     *
+     * @return boolean
+     */
     private boolean canAttack(){
         boolean canAttack = false;
         for(Object terr: getListOfTerritories()){
@@ -158,6 +198,11 @@ public class AIEasy extends Player{
         return canAttack;
     }
 
+    /**
+     * Finds the easiest continent to control
+     *
+     * @return the easiest continent to attack
+     */
     private Continent targetContinent(){
         HashMap<Continent, Integer> territoriesInContinents = new HashMap<>();
         for(Territory terr : getListOfTerritories()){
@@ -195,6 +240,13 @@ public class AIEasy extends Player{
         return mostTerritories;
     }
 
+    /**
+     * find a territory to attack from
+     *
+     * @param defendingTerritory
+     * @param NotpossibleAttackingTerritories
+     * @return the territory
+     */
     private Territory findAttackingTerritory(Territory defendingTerritory, ArrayList<Territory> NotpossibleAttackingTerritories){
         Territory attackingTerritory = null;
         for(Territory terr: defendingTerritory.getNeighbours()){
@@ -217,25 +269,27 @@ public class AIEasy extends Player{
         return attackingTerritory;
     }
 
+    /**
+     * returns the number of soldier needed for the territory to beat the enemy territory
+     *
+     * @param enemyTerritory
+     * @param aiTerritory
+     * @return number of soldiers needed
+     */
     private int howManyToWin(Territory enemyTerritory, Territory aiTerritory){
         double requiredSoldiers = 1.2158*enemyTerritory.getSoldiers()+1.8842;
         return (int) (aiTerritory.getSoldiers() - Math.round(requiredSoldiers));
     }
 
+    /**
+     * returns a boolean if the AI can take the territory with the current amount of soldiers
+     *
+     * @param enemyTerritory
+     * @param aiTerritory
+     * @return
+     */
     private boolean canWinTerritory(Territory enemyTerritory, Territory aiTerritory){
         double requiredSoldiers = 1.2158*enemyTerritory.getSoldiers()+1.8842;
         return Math.round(requiredSoldiers) <= aiTerritory.getSoldiers();
-    }
-
-    public static void main(String[] args) {
-        AIEasy ai = new AIEasy("Bot 1", RiskModel.BACKGROUND, null);
-        Player thomas = new Player("Thomas", InitializeModel.COLOURS.get("Red"), null);
-        RiskModel rm = new RiskModel();
-        rm.addPlayer(ai);
-        rm.addPlayer(thomas);
-        rm.play();
-        //ai.AIPlaceTroops();
-        //ai.AIAttack();
-        //ai.AIMoveTroop();
     }
 }
