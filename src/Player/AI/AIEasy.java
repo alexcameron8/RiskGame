@@ -38,6 +38,7 @@ public class AIEasy extends Player{
         Continent targetContinent = targetContinent();
         if(targetContinent == null){
             placeReinforcement(getListOfTerritories().get(0), getReinforcements());
+            return;
         }
         for(Territory terr: targetContinent.getTerritories()){
             if(!hasTerritory(terr)){
@@ -61,7 +62,11 @@ public class AIEasy extends Player{
                     return;
                 }
             }
-            placeReinforcement(getListOfTerritories().get(0), getReinforcements());
+            for(Territory terr : getListOfTerritories()){
+                if(canTerritoryAttack(terr)){
+                    placeReinforcement(terr, getReinforcements());
+                }
+            }
         }
     }
 
