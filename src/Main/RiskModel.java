@@ -74,17 +74,22 @@ public class RiskModel {
      */
     public void advanceTurn(){
         if(currentTurn.isTurnComplete(getActivePlayer())){
-            if(players.size() == 1){
-                winner = getActivePlayer();
-            }
             for(Player player: players){
                 if(player.getListOfTerritories().size()==0){
-                    eliminatedPlayer = player;
-                    if(players.indexOf(player)<=activePlayerID){
-                        activePlayerID--;
+                    if(players.size() == 2){
+                        winner = getActivePlayer();
+                        for(RiskViewListener riskViewListener : riskViewListeners){
+                            riskViewListener.handleTurnUpdate(new RiskEvent (this,activePlayerID,players, currentTurn,winner,eliminatedPlayer));
+                        }
+                        return;
+                    }else {
+                        eliminatedPlayer = player;
+                        if (players.indexOf(player) <= activePlayerID) {
+                            activePlayerID--;
+                        }
+                        players.remove(eliminatedPlayer);
+                        break;
                     }
-                    players.remove(player);
-                    break;
                 }
             }
             if (activePlayerID + 1 < players.size()) {
@@ -216,7 +221,6 @@ public class RiskModel {
         if(getActivePlayer() instanceof AIEasy){
             currentTurn.setNumberOfReinforcements(0);
             ((AIEasy) getActivePlayer()).advanceTurn();
-            advanceTurn();
         }
     }
 }

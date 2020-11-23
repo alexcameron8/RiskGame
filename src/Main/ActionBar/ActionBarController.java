@@ -66,7 +66,6 @@ public class ActionBarController implements ActionListener, MapViewListener {
             }
         } else if (e.getActionCommand().equals("next")) { //Advances turn to next player
             //Clears all previous flags for attacking
-
             hasNumTroopsSelected = false;
             hasTerritorySelected = false;
             troopsMoved = false;
@@ -78,15 +77,12 @@ public class ActionBarController implements ActionListener, MapViewListener {
 
             //displays corresponding message if turn is complete or not
             if(abm.getRiskModel().getActivePlayer() instanceof AIEasy){
-                System.out.println(abm.getRiskModel().getActivePlayer().getName());
                 abv.nextTurn();
                 abv.setMessage("Turn advanced. It is now " + abm.getRiskModel().getActivePlayer().getName() + "'s turn.");
             }else{
-                System.out.println("why hy why");
                 abv.initTroopMovement();
                 abv.setMessage("Turn advanced. It is now " + abm.getRiskModel().getActivePlayer().getName() + "'s turn.");
             }
-            System.out.println(abm.getRiskModel().getActivePlayer().getName());
         } else if(e.getActionCommand().equals("numTroops")) { //Gets number of troops the player chooses to place
             if((Integer) abv.getNumberOfTroops().getSelectedItem()!=null) {
                 numOfTroops = (Integer) abv.getNumberOfTroops().getSelectedItem();
@@ -269,7 +265,9 @@ public class ActionBarController implements ActionListener, MapViewListener {
                     abv.setNumberMoveTroopsRange();
                 }else{
                     currTerritory = null;
-                    abv.setMessage("You do not own this territory.");
+                    if(!(abm.getRiskModel().getActivePlayer() instanceof AIEasy)) {
+                        abv.setMessage("You do not own this territory.");
+                    }
                 }
                 abv.setCurrTerrInfo();
             }else if(state.equals("moveTerritory") && !troopsMoved) {
