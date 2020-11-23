@@ -1,8 +1,5 @@
 package Player.AI;
-import Attack.Attack;
-import Main.IntializeFrame.InitializeModel;
 import Main.NotificationView.NotificationModel;
-import Main.RiskModel;
 import Main.RiskView;
 import Map.Continent;
 import Map.Territory;
@@ -12,6 +9,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * AIEasy is an extension of the player class that is a AI.
+ * This AI is simple it will try to take the easiest continent and will only fight battles it knows it's going to win
+ * It will move troops to another territory if a territory doesn't have any enemy neighbours.
+ *
+ * @author Thomas Dunnigan
+ */
 public class AIEasy extends Player{
     /**
      * Constructor for a player. Gives them
@@ -278,7 +282,7 @@ public class AIEasy extends Player{
     }
 
     /**
-     *
+     * returns a boolean if the AI can take the territory with the current amount of soldiers
      *
      * @param enemyTerritory
      * @param aiTerritory

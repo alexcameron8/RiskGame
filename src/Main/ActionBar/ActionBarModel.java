@@ -3,7 +3,6 @@ import java.util.*;
 
 import Main.RiskModel;
 import Main.RiskView;
-import Player.AI.AIEasy;
 import Player.Player;
 import Map.*;
 

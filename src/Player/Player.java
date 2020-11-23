@@ -1,8 +1,6 @@
 package Player;
 import java.awt.*;
 import java.util.*;
-
-import Main.RiskModel;
 import Main.RiskView;
 import Map.*;
 import Attack.*;
@@ -154,6 +152,11 @@ public class Player {
         removeTerritory(territory.getName());
     }
 
+    /**
+     * Transfer all the territories owned by the player to another player
+     *
+     * @param receiver
+     */
     public void transferAllTerritory(Player receiver){
         int size = listOfTerritories.size();
         for(int i = 0; i <  size; i ++){
@@ -161,6 +164,11 @@ public class Player {
         }
     }
 
+    /**
+     * get the number of reinforcements left
+     *
+     * @return
+     */
     public int getReinforcements() {
         return reinforcements;
     }
@@ -343,6 +351,14 @@ public class Player {
       return name;
     }
 
+    /**
+     * move troops from one territory to another territory
+     *
+     * @param giving
+     * @param receiving
+     * @param numOfTroops
+     * @return boolean if moved was successful
+     */
     public boolean moveTroops(Territory giving, Territory receiving, int  numOfTroops){
         if(giving.getSoldiers()>numOfTroops) {
             if (hasTerritory(giving) && hasTerritory(receiving)) {
