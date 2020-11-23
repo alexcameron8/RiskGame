@@ -22,6 +22,7 @@ public class RiskView extends JFrame implements RiskViewListener{
     private RiskModel riskModel;
     private TerritoryInfoView territoryInfoView;
     private NotificationView notificationView;
+    private MapView mapView;
 
     /**
      * Initializes the JFrame containing all the different components.
@@ -56,7 +57,7 @@ public class RiskView extends JFrame implements RiskViewListener{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setJMenuBar(new MenuBarView(riskModel,this));
         //creates map listeners for territoryinfoview and actionbarview
-        MapView mapView = new MapView(this.riskModel);
+        this.mapView = new MapView(this.riskModel);
         territoryInfoView = new TerritoryInfoView(riskModel);
         mapView.getMapModel().addMapListener(territoryInfoView);
         ActionBarView actionBarView = new ActionBarView(this, riskModel);
@@ -149,6 +150,7 @@ public class RiskView extends JFrame implements RiskViewListener{
 
     @Override
     public void handleTurnUpdate(RiskEvent e) {
+        this.mapView.handleMapUpdate(new MapRedrawEvent(this));
         //if there is a winner then start new game and display that there is a winner
         if(e.getWinner()!=null){
             JOptionPane.showMessageDialog(this,getRiskModel().getActivePlayer().getName() + " has Won. You will now be returned to the Main Menu.");
