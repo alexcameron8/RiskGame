@@ -354,9 +354,9 @@ public class Player {
     /**
      * move troops from one territory to another territory
      *
-     * @param giving
-     * @param receiving
-     * @param numOfTroops
+     * @param giving Territroy giving troops
+     * @param receiving Territory receiving troops
+     * @param numOfTroops Number of troops
      * @return boolean if moved was successful
      */
     public boolean moveTroops(Territory giving, Territory receiving, int  numOfTroops){

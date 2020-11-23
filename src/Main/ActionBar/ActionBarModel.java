@@ -85,10 +85,10 @@ public class ActionBarModel {
 
     /**
      * Method which calls the move troops method from the riskmodel and updates the map with corresponding troops.
-     * @param currTerritory
-     * @param moveTerritory
-     * @param numMoveTroopsSelected
-     * @return
+     * @param currTerritory Current territory where troops are moved from
+     * @param moveTerritory New territory where troops are being moved to
+     * @param numMoveTroopsSelected number of troops being moved
+     * @return True if the troops are moved and false otherwise.
      */
     public boolean moveTroops(Territory currTerritory, Territory moveTerritory,int numMoveTroopsSelected){
         boolean value = riskModel.getActivePlayer().moveTroops(currTerritory,moveTerritory,numMoveTroopsSelected);
