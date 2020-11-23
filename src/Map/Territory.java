@@ -208,7 +208,9 @@ public class Territory {
      */
     public void removeSoldiers(int remove) {
         soldiers -= remove;
-        removeSoldierLocation();
+        for(int i = 0; i < remove; i++){
+            removeSoldierLocation();
+        }
     }
 
     /**
@@ -228,7 +230,9 @@ public class Territory {
      * Remove a soldier location
      */
     private void removeSoldierLocation(){
-        soldierPositions.remove(0);
+        if(soldierPositions.size() > 0){
+            soldierPositions.remove(0);
+        }
     }
 
     /**
