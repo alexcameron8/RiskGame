@@ -91,7 +91,10 @@ Thomas Dunnigan
 - Wrote JavaDocs
 
 Ben Munro
-- cans
+- Added UI for selecting an AI
+- Added notification feature.
+- Contributed to JavaDocs
+- Updated User Manual
 
 ## Changes made since Milestone 2:
 A feature that was refactored in this milestone eliminated a few known issues from last milestone which was creating different phases (troop deployment phase, attack phase and troop movement phase) within the actionbar. In milestone 2, it was possible to do attacks before placing troops which is a bug that was fixed in this milestone. As well, last iteration we came across a bug where sometimes the panels containing attack/deploy information wouldn't display in the action bar because the territories were too long and were cut off by the screens size limitations. By creating the different phases of the action bar this bug is resolved because every possible combination can be displayed properly. On top of these changes, the action bar was improved to be more visually appealing. As well, in this iteration we implemented an AI player that uses strategic probability to determine the best possible moves to make. 
