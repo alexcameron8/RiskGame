@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.util.Objects;
 
 public class NotificationView extends JPanel implements NotificationViewListener{
+    public static final String CLOSE_ALL_ACTION = "closeAll";
     private JPanel notificationList;
     private NotificationModel notificationModel;
     private NotificationController notificationController;
@@ -25,7 +26,12 @@ public class NotificationView extends JPanel implements NotificationViewListener
         notificationList = new JPanel();
         notificationList.setLayout(new GridBagLayout());
 
-        this.add(new JScrollPane(notificationList), BorderLayout.CENTER);
+        JButton closeAll = new JButton("Close All");
+        closeAll.setActionCommand(CLOSE_ALL_ACTION);
+        closeAll.addActionListener(notificationController);
+
+        this.add(closeAll, BorderLayout.PAGE_START);
+        this.add(new JScrollPane(notificationList, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.CENTER);
 
     }
 
@@ -59,6 +65,8 @@ public class NotificationView extends JPanel implements NotificationViewListener
             if(Objects.nonNull(removeComponent)){
                 notificationList.remove(removeComponent);
             }
+        } else if(notificationEventType == NotificationEvent.NotificationEventType.REMOVE_ALL){
+            notificationList.removeAll();
         }
 
         this.revalidate();
@@ -70,6 +78,7 @@ public class NotificationView extends JPanel implements NotificationViewListener
         public final String CLOSE_ACTION_COMMAND = "close";
 
         GameNotification(NotificationModel.Notification notification){
+            this.setLayout(new BorderLayout());
             this.notification = notification;
             JLabel typeLabel;
             if(this.notification.getNotificationType() == NotificationModel.NotificationType.INFO){
@@ -81,6 +90,7 @@ public class NotificationView extends JPanel implements NotificationViewListener
 
             JTextArea notificationTextArea = new JTextArea(2, 20);
             notificationTextArea.setText(this.notification.getMessage());
+            notificationTextArea.append("\n" + notification.getTimestamp());
             notificationTextArea.setWrapStyleWord(true);
             notificationTextArea.setLineWrap(true);
             notificationTextArea.setOpaque(false);

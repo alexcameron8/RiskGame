@@ -19,6 +19,7 @@ public class NotificationEvent {
 
     public enum NotificationEventType {
         REMOVE,
-        ADD
+        ADD,
+        REMOVE_ALL
     }
 }
