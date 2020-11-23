@@ -2,6 +2,7 @@ package Main.ActionBar;
 
 import Main.RiskModel;
 import Main.RiskView;
+import Player.AI.AIEasy;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -27,7 +28,7 @@ public class ActionBarView extends JPanel implements ActionBarListener {
     private final RiskModel riskModel;
     private RiskView riskView;
     private JComboBox numberOfTroops,numberAttackTroops, numberMoveTroops;
-    private JPanel deployPanel,attackPanel, messagePanel,troopPanel, fortifyTroopBar, actionPanel, fortifyInfo;
+    private JPanel deployPanel,attackPanel, messagePanel,troopPanel, fortifyTroopBar, actionPanel, fortifyInfo,aiNextTurn;
     private JLabel deployInfo, attackerTerritoryLabel, defenderTerritoryLabel, defenderPlayerLabel,currTerritoryLabel,moveTerritoryLabel,fortifyFurtherLabel ;
     private boolean placetroopsFlag;
     private boolean attackFlag;
@@ -50,8 +51,11 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         abm.addActionBarModelViews(this);
         abc = new ActionBarController(this, abm);
         //initializes the actionbar / buttons
-        initTroopMovement();
-
+        if(riskModel.getActivePlayer() instanceof AIEasy){
+            nextTurn();
+        }else {
+            initTroopMovement();
+        }
     }
 
     /**
@@ -63,6 +67,9 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         }
         if(fortifyTroopBar!=null){
             fortifyTroopBar.setVisible(false);
+        }
+        if(aiNextTurn != null){
+            aiNextTurn.setVisible(false);
         }
         troopPanel = new JPanel();
         troopPanel.setBorder(blackBorder);
@@ -439,6 +446,32 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         updateUI();
     }
 
+    /**
+     * Used to advance next turn when an AI goes
+     */
+    public void nextTurn(){
+        if(fortifyTroopBar!=null){
+            fortifyTroopBar.setVisible(false);
+        }
+        if(aiNextTurn!=null){
+            aiNextTurn.setVisible(false);
+        }
+        aiNextTurn = new JPanel();
+        try {
+            nextTurnImg = ImageIO.read(getClass().getResourceAsStream("resources/NextTurn.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
+        }catch(Exception ex){
+        }
+        nextTurn = new JButton("Next Turn", new ImageIcon(nextTurnImg));
+        nextTurn.setBackground(lighterBlue);
+        nextTurn.setFocusPainted(false);
+        aiNextTurn.add(nextTurn);
+        aiNextTurn.setBackground(darkBlue);
+        this.add(aiNextTurn);
+
+        nextTurn.addActionListener(abc);
+        nextTurn.setActionCommand("next");
+        updateUI();
+    }
     /**
      * Sets the message to be displayed in the ActionBar
      * @param msg the message displayed in Message bar
