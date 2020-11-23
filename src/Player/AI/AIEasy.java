@@ -44,7 +44,7 @@ public class AIEasy extends Player{
                 Territory attackingTerr = findAttackingTerritory(terr, territoriesAlreadyAttacking);
                 if(attackingTerr != null && howManyToWin(terr, attackingTerr) < 0 && canPlaceReinforcement(attackingTerr, howManyToWin(terr, attackingTerr)*-1)){
                     this.riskView.getNotificationView().notifyUser(
-                            "Placed " + howManyToWin(terr, attackingTerr)*-1 + " on " + attackingTerr.getName()+ " to take " +terr.getName(),
+                            this.name + " Placed " + howManyToWin(terr, attackingTerr)*-1 + " on " + attackingTerr.getName()+ " to take " +terr.getName(),
                              NotificationModel.NotificationType.INFO);
                     placeReinforcement(attackingTerr, howManyToWin(terr, attackingTerr)*-1);
                     territoriesAlreadyAttacking.add(attackingTerr);
@@ -55,7 +55,7 @@ public class AIEasy extends Player{
             for(Territory terr : getListOfTerritories()){
                 if(!terr.getContinent().equals(targetContinent) && !hasContinent(terr.getContinent())){
                     this.riskView.getNotificationView().notifyUser(
-                            "Placed " + getReinforcements() + " on " + terr,
+                            this.name + " Placed " + getReinforcements() + " on " + terr,
                             NotificationModel.NotificationType.INFO);
                     placeReinforcement(terr, getReinforcements());
                     break;
@@ -68,7 +68,7 @@ public class AIEasy extends Player{
         for(Territory terr: getListOfTerritories()){
             if(hasUnownedNeighbour(terr) && !canTerritoryAttack(terr) && terr.getSoldiers() > 1){
                 this.riskView.getNotificationView().notifyUser(
-                        "Moved " + terr.getName() + " to " + findUnownedNeighbour(terr).getName(),
+                        this.name + " Moved " + terr.getName() + " to " + findUnownedNeighbour(terr).getName(),
                         NotificationModel.NotificationType.INFO);
                 moveTroops(terr, findUnownedNeighbour(terr), terr.getSoldiers() - 1);
                 return;
@@ -127,7 +127,7 @@ public class AIEasy extends Player{
                     if (!hasTerritory(neighbour)) {
                         if (canWinTerritory(neighbour, ((Territory) terr))) {
                             this.riskView.getNotificationView().notifyUser(
-                                    ((Territory) terr).getName() + " attacked " + neighbour.getName(),
+                                    this.name + "'s " + ((Territory) terr).getName() + " attacked " + neighbour.getName(),
                                     NotificationModel.NotificationType.WARNING);
                             attack(((Territory) terr), neighbour.getOwner(), neighbour, ((Territory) terr).getSoldiers() - 1);
                         }

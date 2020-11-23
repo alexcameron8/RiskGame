@@ -20,7 +20,7 @@ public class Player {
     //the continents controlled by the player
     private ArrayList<Continent> listOfContinents;
     //the name of the player
-    private String name;
+    protected String name;
     //number of Reinforcements
     private int reinforcements;
     //player colour

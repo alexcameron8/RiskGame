@@ -30,6 +30,7 @@ public class RiskView extends JFrame implements RiskViewListener{
 
         super("Risk");
         this.riskModel = new RiskModel();
+
         //displays welcome screen
         welcomeScreen();
         //displays initial setup
@@ -47,9 +48,10 @@ public class RiskView extends JFrame implements RiskViewListener{
             }
 
         }
+        this.notificationView = new NotificationView();
         riskModel.play();
 
-        this.setLayout(new GridBagLayout());
+        this.setLayout(new BorderLayout());
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setJMenuBar(new MenuBarView(riskModel,this));
@@ -65,60 +67,32 @@ public class RiskView extends JFrame implements RiskViewListener{
         riskModel.addRiskViewListeners(playerBarView);
         riskModel.addRiskViewListeners(this);
 
-        this.notificationView = new NotificationView();
-
         //adds the different views to this component
         // Action Bar View
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.weighty = 0.1;
-        gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        this.add(actionBarView, gbc);
+
+        this.add(actionBarView, BorderLayout.PAGE_START);
 
         // Map View
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridheight = 2;
-        gbc.weighty = 0.8;
-        gbc.weightx = 0.7;
-        gbc.fill = GridBagConstraints.BOTH;
-        this.add(mapView, gbc);
+
+        this.add(mapView, BorderLayout.CENTER);
 
         // Territory Info View
-        gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.weightx = 0.3;
-        gbc.weighty = 0.4;
-        gbc.fill = GridBagConstraints.BOTH;
-        this.add(territoryInfoView, gbc);
+        JSplitPane splitPane = new JSplitPane(
+                JSplitPane.VERTICAL_SPLIT,
+                territoryInfoView,
+                notificationView);
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setDividerLocation(500);
 
-        // Notification View
-        gbc = new GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        gbc.weightx = 0.3;
-        gbc.fill = GridBagConstraints.BOTH;
-        this.add(notificationView, gbc);
+        this.add(splitPane, BorderLayout.LINE_END);
 
         // Player Bar View
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.weighty = 0.1;
-        gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        this.add(playerBarView, gbc);
+
+        this.add(playerBarView, BorderLayout.PAGE_END);
 
         this.setMinimumSize(new Dimension(1250,800));
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
-
     }
 
     /**
