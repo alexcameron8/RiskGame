@@ -80,8 +80,12 @@ public class Player {
                 sizeControlsContinent+=1;
             }
         }
-        if(sizeControlsContinent == territory.getContinent().getTerritories().size())
-        addContinent(territory.getContinent());
+        if(sizeControlsContinent == territory.getContinent().getTerritories().size()) {
+            addContinent(territory.getContinent());
+            for(Continent c: getListOfContinents()){
+                System.out.println("\t"+c);
+            }
+        }
     }
 
     /**
@@ -92,11 +96,12 @@ public class Player {
      */
     public Territory removeTerritory(String name) {
         for (Territory ter : listOfTerritories) {
-            if (ter.getName() == name) {
+            if (ter.getName().equals(name)) {
                 for(Continent continent : listOfContinents){
-                    if(continent.isTerritory(ter.getName()));
+                    if(continent.isTerritory(ter.getName())) {
                         removeContinent(continent);
                         break;
+                    }
                 }
                 listOfTerritories.remove(ter);
                 return ter;
@@ -123,7 +128,7 @@ public class Player {
      */
     public Continent removeContinent(String name){
         for (Continent cont : listOfContinents) {
-            if (cont.getName() == name) {
+            if (cont.getName().equals(name)) {
                 listOfContinents.remove(cont);
                 return cont;
             }
@@ -258,9 +263,7 @@ public class Player {
      * @param continent Continent to add.
      */
     public void addContinent(Continent continent){
-        if(!hasContinent(continent)){
-            listOfContinents.add(continent);
-        }
+        listOfContinents.add(continent);
     }
 
     /**
@@ -281,7 +284,7 @@ public class Player {
      */
     public boolean hasContinent(String name){
         for (Continent cont : listOfContinents) {
-            if (cont.getName() == name) {
+            if (cont.getName().equals(name)) {
                 return true;
             }
         }

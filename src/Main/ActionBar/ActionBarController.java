@@ -70,7 +70,6 @@ public class ActionBarController implements ActionListener, MapViewListener {
             hasTerritorySelected = false;
             troopsMoved = false;
             abm.nextTurn(abm.getRiskModel());
-            System.out.println(abm.getRiskModel().getActivePlayer().getName());
             //clears any bars on GUI
             abv.removeDeployTroopsBar();
             abv.removeAttackBar();
