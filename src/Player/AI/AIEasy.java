@@ -58,9 +58,10 @@ public class AIEasy extends Player{
                             this.name + " Placed " + getReinforcements() + " on " + terr,
                             NotificationModel.NotificationType.INFO);
                     placeReinforcement(terr, getReinforcements());
-                    break;
+                    return;
                 }
             }
+            placeReinforcement(getListOfTerritories().get(0), getReinforcements());
         }
     }
 
