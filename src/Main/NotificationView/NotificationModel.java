@@ -1,5 +1,7 @@
 package Main.NotificationView;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class NotificationModel {
@@ -21,6 +23,11 @@ public class NotificationModel {
     public void removeNotification(Notification notification){
         this.notificationArrayList.remove(notification);
         updateNotificationListeners(new NotificationEvent(notification, NotificationEvent.NotificationEventType.REMOVE));
+    }
+
+    public void removeAllNotifications(){
+        this.notificationArrayList.clear();
+        updateNotificationListeners(new NotificationEvent(null, NotificationEvent.NotificationEventType.REMOVE_ALL));
     }
 
     public ArrayList<Notification> getNotifications(){
@@ -45,10 +52,14 @@ public class NotificationModel {
     public class Notification {
         private String message;
         private NotificationType notificationType;
+        private String timestamp;
 
         Notification(String message, NotificationType notificationType){
             this.message = message;
             this.notificationType = notificationType;
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            this.timestamp = dtf.format(now);
         }
 
         public String getMessage() {
@@ -65,6 +76,10 @@ public class NotificationModel {
 
         public void setNotificationType(NotificationType notificationType) {
             this.notificationType = notificationType;
+        }
+
+        public String getTimestamp() {
+            return timestamp;
         }
     }
 }
