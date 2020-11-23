@@ -65,6 +65,7 @@ public class AIEasy extends Player{
             for(Territory terr : getListOfTerritories()){
                 if(canTerritoryAttack(terr)){
                     placeReinforcement(terr, getReinforcements());
+                    break;
                 }
             }
         }
