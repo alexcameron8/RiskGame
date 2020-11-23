@@ -1,6 +1,9 @@
 package Player;
 import java.awt.*;
 import java.util.*;
+
+import Main.RiskModel;
+import Main.RiskView;
 import Map.*;
 import Attack.*;
 
@@ -17,11 +20,13 @@ public class Player {
     //the continents controlled by the player
     private ArrayList<Continent> listOfContinents;
     //the name of the player
-    private String name;
+    protected String name;
     //number of Reinforcements
     private int reinforcements;
     //player colour
     private Color playerColor;
+    //risk view
+    protected RiskView riskView;
 
     /**
      * Constructor for a player. Gives them
@@ -30,12 +35,13 @@ public class Player {
      *
      * @param name Player name.
      */
-    public Player(String name, Color playerColor){
+    public Player(String name, Color playerColor, RiskView riskView){
         this.name = name;
         this.listOfContinents = new ArrayList<>();
         this.listOfTerritories = new ArrayList<>();
         this.reinforcements = 0;
         this.playerColor = playerColor;
+        this.riskView = riskView;
     }
 
     /**

@@ -3,6 +3,9 @@ package Main;
 import Main.ActionBar.*;
 import Main.IntializeFrame.InitializeView;
 import Main.Map.*;
+import Main.NotificationView.NotificationEvent;
+import Main.NotificationView.NotificationModel;
+import Main.NotificationView.NotificationView;
 import Main.PlayerBar.*;
 import Player.AI.AIEasy;
 import Player.Player;
@@ -18,6 +21,7 @@ import java.util.ArrayList;
 public class RiskView extends JFrame implements RiskViewListener{
     private RiskModel riskModel;
     private TerritoryInfoView territoryInfoView;
+    private NotificationView notificationView;
 
     /**
      * Initializes the JFrame containing all the different components.
@@ -26,6 +30,7 @@ public class RiskView extends JFrame implements RiskViewListener{
 
         super("Risk");
         this.riskModel = new RiskModel();
+
         //displays welcome screen
         welcomeScreen();
         //displays initial setup
@@ -37,16 +42,16 @@ public class RiskView extends JFrame implements RiskViewListener{
 
         for(int i = 0; i < initializeGame.getNumberOfPlayers(); i++){
             if(!isPlayerAI.get(i)){
-                riskModel.addPlayer(new Player(nameOfPlayers.get(i),coloursOfPlayers.get(i)));
+                riskModel.addPlayer(new Player(nameOfPlayers.get(i),coloursOfPlayers.get(i), this));
             } else {
-                riskModel.addPlayer(new AIEasy(nameOfPlayers.get(i),coloursOfPlayers.get(i)));
+                riskModel.addPlayer(new AIEasy(nameOfPlayers.get(i),coloursOfPlayers.get(i), this));
             }
 
         }
+        this.notificationView = new NotificationView();
         riskModel.play();
 
-        this.setMinimumSize(new Dimension(1250,800));
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setLayout(new BorderLayout());
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setJMenuBar(new MenuBarView(riskModel,this));
@@ -63,12 +68,31 @@ public class RiskView extends JFrame implements RiskViewListener{
         riskModel.addRiskViewListeners(this);
 
         //adds the different views to this component
-        this.add(actionBarView, BorderLayout.PAGE_START);
-        this.add(mapView, BorderLayout.CENTER);
-        this.add(territoryInfoView, BorderLayout.LINE_END);
-        this.add(playerBarView, BorderLayout.PAGE_END);
-        this.setVisible(true);
+        // Action Bar View
 
+        this.add(actionBarView, BorderLayout.PAGE_START);
+
+        // Map View
+
+        this.add(mapView, BorderLayout.CENTER);
+
+        // Territory Info View
+        JSplitPane splitPane = new JSplitPane(
+                JSplitPane.VERTICAL_SPLIT,
+                territoryInfoView,
+                notificationView);
+        splitPane.setOneTouchExpandable(true);
+        splitPane.setDividerLocation(500);
+
+        this.add(splitPane, BorderLayout.LINE_END);
+
+        // Player Bar View
+
+        this.add(playerBarView, BorderLayout.PAGE_END);
+
+        this.setMinimumSize(new Dimension(1250,800));
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setVisible(true);
     }
 
     /**
@@ -78,6 +102,10 @@ public class RiskView extends JFrame implements RiskViewListener{
     public void newRiskView(RiskModel riskModel){
         this.riskModel = riskModel;
         new RiskView();
+    }
+
+    public NotificationView getNotificationView() {
+        return notificationView;
     }
 
     /**

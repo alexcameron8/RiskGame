@@ -1,7 +1,9 @@
 package Player.AI;
 import Attack.Attack;
 import Main.IntializeFrame.InitializeModel;
+import Main.NotificationView.NotificationModel;
 import Main.RiskModel;
+import Main.RiskView;
 import Map.Continent;
 import Map.Territory;
 import Player.*;
@@ -19,8 +21,8 @@ public class AIEasy extends Player{
      * @param name        Player name.
      * @param playerColor
      */
-    public AIEasy(String name, Color playerColor) {
-        super(name, playerColor);
+    public AIEasy(String name, Color playerColor, RiskView riskView) {
+        super(name, playerColor, riskView);
     }
 
     public void advanceTurn(){
@@ -28,6 +30,7 @@ public class AIEasy extends Player{
         AIAttack();
         AIMoveTroop();
     }
+
 
     public void AIPlaceTroops(){
         ArrayList<Territory> territoriesAlreadyAttacking = new ArrayList<>();
@@ -40,7 +43,9 @@ public class AIEasy extends Player{
             if(!hasTerritory(terr)){
                 Territory attackingTerr = findAttackingTerritory(terr, territoriesAlreadyAttacking);
                 if(attackingTerr != null && howManyToWin(terr, attackingTerr) < 0 && canPlaceReinforcement(attackingTerr, howManyToWin(terr, attackingTerr)*-1)){
-                    System.out.println("Placed " + howManyToWin(terr, attackingTerr)*-1 + " on " + attackingTerr.getName()+ " to take " +terr.getName());
+                    this.riskView.getNotificationView().notifyUser(
+                            this.name + " Placed " + howManyToWin(terr, attackingTerr)*-1 + " on " + attackingTerr.getName()+ " to take " +terr.getName(),
+                             NotificationModel.NotificationType.INFO);
                     placeReinforcement(attackingTerr, howManyToWin(terr, attackingTerr)*-1);
                     territoriesAlreadyAttacking.add(attackingTerr);
                 }
@@ -49,7 +54,9 @@ public class AIEasy extends Player{
         if(getReinforcements() != 0){
             for(Territory terr : getListOfTerritories()){
                 if(!terr.getContinent().equals(targetContinent) && !hasContinent(terr.getContinent())){
-                    System.out.println("Placed " + getReinforcements() + " on " + terr);
+                    this.riskView.getNotificationView().notifyUser(
+                            this.name + " Placed " + getReinforcements() + " on " + terr,
+                            NotificationModel.NotificationType.INFO);
                     placeReinforcement(terr, getReinforcements());
                     break;
                 }
@@ -60,7 +67,9 @@ public class AIEasy extends Player{
     public void AIMoveTroop(){
         for(Territory terr: getListOfTerritories()){
             if(hasUnownedNeighbour(terr) && !canTerritoryAttack(terr) && terr.getSoldiers() > 1){
-                System.out.println("Moved " + terr.getName() + " to " + findUnownedNeighbour(terr).getName());
+                this.riskView.getNotificationView().notifyUser(
+                        this.name + " Moved " + terr.getName() + " to " + findUnownedNeighbour(terr).getName(),
+                        NotificationModel.NotificationType.INFO);
                 moveTroops(terr, findUnownedNeighbour(terr), terr.getSoldiers() - 1);
                 return;
             }
@@ -117,7 +126,9 @@ public class AIEasy extends Player{
                 for (Territory neighbour : ((Territory) terr).getNeighbours()) {
                     if (!hasTerritory(neighbour)) {
                         if (canWinTerritory(neighbour, ((Territory) terr))) {
-                            System.out.println(((Territory) terr).getName() + " attacked " + neighbour.getName());
+                            this.riskView.getNotificationView().notifyUser(
+                                    this.name + "'s " + ((Territory) terr).getName() + " attacked " + neighbour.getName(),
+                                    NotificationModel.NotificationType.WARNING);
                             attack(((Territory) terr), neighbour.getOwner(), neighbour, ((Territory) terr).getSoldiers() - 1);
                         }
                     }
@@ -210,8 +221,8 @@ public class AIEasy extends Player{
     }
 
     public static void main(String[] args) {
-        AIEasy ai = new AIEasy("Bot 1", RiskModel.BACKGROUND);
-        Player thomas = new Player("Thomas", InitializeModel.COLOURS.get("Red"));
+        AIEasy ai = new AIEasy("Bot 1", RiskModel.BACKGROUND, null);
+        Player thomas = new Player("Thomas", InitializeModel.COLOURS.get("Red"), null);
         RiskModel rm = new RiskModel();
         rm.addPlayer(ai);
         rm.addPlayer(thomas);
