@@ -41,9 +41,9 @@ public class RiskView extends JFrame implements RiskViewListener{
 
         for(int i = 0; i < initializeGame.getNumberOfPlayers(); i++){
             if(!isPlayerAI.get(i)){
-                riskModel.addPlayer(new Player(nameOfPlayers.get(i),coloursOfPlayers.get(i)));
+                riskModel.addPlayer(new Player(nameOfPlayers.get(i),coloursOfPlayers.get(i), this));
             } else {
-                riskModel.addPlayer(new AIEasy(nameOfPlayers.get(i),coloursOfPlayers.get(i)));
+                riskModel.addPlayer(new AIEasy(nameOfPlayers.get(i),coloursOfPlayers.get(i), this));
             }
 
         }
@@ -118,15 +118,6 @@ public class RiskView extends JFrame implements RiskViewListener{
         this.setMinimumSize(new Dimension(1250,800));
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
-
-        for(int i = 1; i < 20; i++){
-            if(i%2==0){
-                this.notificationView.notifyUser("Event that goes way too long and takes up way too much space. This should probably be split." + i, NotificationModel.NotificationType.INFO);
-            } else {
-                this.notificationView.notifyUser("Event " + i, NotificationModel.NotificationType.WARNING);
-            }
-
-        }
 
     }
 
