@@ -17,10 +17,12 @@ import java.util.ArrayList;
  * RiskView class which is the swing components creating a GUI representing the risk game from risk model
  */
 public class RiskView extends JFrame implements RiskViewListener{
+    private JFrame welcomeScreen;
     private RiskModel riskModel;
     private TerritoryInfoView territoryInfoView;
     private NotificationView notificationView;
     private MapView mapView;
+    private RiskController rc;
 
     /**
      * Initializes the JFrame containing all the different components.
@@ -30,9 +32,70 @@ public class RiskView extends JFrame implements RiskViewListener{
         super("Risk");
         this.riskModel = new RiskModel();
 
+        rc = new RiskController(riskModel,this);
         //displays welcome screen
         welcomeScreen();
         //displays initial setup
+    }
+
+    /**
+     * Creates a new view of risk. This method is used when a new risk game is created.
+     * @param riskModel The risk model
+     */
+    public void newRiskView(RiskModel riskModel){
+        this.riskModel = riskModel;
+        new RiskView();
+    }
+
+    public NotificationView getNotificationView() {
+        return notificationView;
+    }
+
+    /**
+     * Initializes the welcome screen frame that opens upon new game start.
+     */
+    public void welcomeScreen(){
+
+        welcomeScreen = new JFrame("Risk Setup");
+        welcomeScreen.setLocationRelativeTo(null);
+        ImageIcon riskPic = null;
+        try {
+            riskPic = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("resources/Risk.png")));
+        } catch (Exception e){
+
+        }
+
+        JLabel labelIcon = new JLabel(riskPic);
+        JPanel panel = new JPanel(new GridBagLayout());
+
+        panel.add(labelIcon);
+        JLabel text = new JLabel("Welcome to Risk. Click OK to continue to game setup.");
+        text.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        text.setFont(new Font("Ubuntu", Font.BOLD, 20));
+
+        JButton loadGame = new JButton("Load Game");
+        loadGame.setFocusPainted(false);
+        JButton newGame = new JButton("New Game");
+        JPanel panel2 = new JPanel();
+        panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
+        panel2.add(panel);
+        panel2.add(text);
+        panel2.add(newGame);
+        panel2.add(loadGame);
+
+        welcomeScreen.add(panel2);
+        welcomeScreen.setVisible(true);
+        welcomeScreen.setSize(500,500);
+
+        //adding actionlisteners
+        loadGame.addActionListener(rc);
+        loadGame.setActionCommand("load");
+
+        newGame.addActionListener(rc);
+        newGame.setActionCommand("newGame");
+    }
+    public void setupInit(){
+        welcomeScreen.dispose();
         InitializeView initializeGame = new InitializeView();
         JOptionPane.showConfirmDialog(this, initializeGame, "Initialize Game ", JOptionPane.OK_CANCEL_OPTION);
         ArrayList<String> nameOfPlayers = initializeGame.getNameOfPlayers();
@@ -93,48 +156,6 @@ public class RiskView extends JFrame implements RiskViewListener{
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
     }
-
-    /**
-     * Creates a new view of risk. This method is used when a new risk game is created.
-     * @param riskModel The risk model
-     */
-    public void newRiskView(RiskModel riskModel){
-        this.riskModel = riskModel;
-        new RiskView();
-    }
-
-    public NotificationView getNotificationView() {
-        return notificationView;
-    }
-
-    /**
-     * Initializes the welcome screen frame that opens upon new game start.
-     */
-    public void welcomeScreen(){
-        ImageIcon icon = null;
-        try {
-            icon = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("resources/Risk.png")));
-        } catch (Exception e){
-
-        }
-
-        JLabel labelIcon = new JLabel(icon);
-        JPanel panel = new JPanel(new GridBagLayout());
-
-        panel.add(labelIcon);
-        JLabel text = new JLabel("Welcome to Risk. Click OK to continue to game setup.");
-        text.setAlignmentX(JLabel.CENTER_ALIGNMENT);
-        text.setFont(new Font("Ubuntu", Font.BOLD, 20));
-        JPanel panel2 = new JPanel();
-        panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
-        panel2.add(panel);
-        panel2.add(text);
-
-        JOptionPane startGame = new JOptionPane();
-        startGame.showMessageDialog(this,panel2, "Welcome to Risk",JOptionPane.DEFAULT_OPTION);
-
-    }
-
     public TerritoryInfoView getTerritoryInfoView(){
         return territoryInfoView;
     }

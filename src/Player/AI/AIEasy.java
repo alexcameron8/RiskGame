@@ -6,6 +6,7 @@ import Map.Territory;
 import Player.*;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -38,7 +39,6 @@ public class AIEasy extends Player{
         AIAttack();
         AIMoveTroop();
     }
-
 
     /**
      * This method makes the AI place troops in the best spots

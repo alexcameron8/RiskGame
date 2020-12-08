@@ -1,5 +1,6 @@
 package Map;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,7 +13,7 @@ import java.util.HashMap;
  * 101115382
  */
 
-public class Continent {
+public class Continent{
 
     private String name;
     private String id;

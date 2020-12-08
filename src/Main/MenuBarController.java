@@ -1,8 +1,10 @@
 package Main;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.net.URL;
 
 /**
@@ -44,6 +46,9 @@ public class MenuBarController implements ActionListener {
             riskModel.getActivePlayer().transferAllTerritory(riskModel.getPlayers().get(riskModel.getActivePlayerID()+1==riskModel.getPlayers().size()? 0:riskModel.getActivePlayerID()+1));
             riskView.repaint();
             riskView.revalidate();
+        }else if(e.getActionCommand().equals("save")){
+            String fileName = JOptionPane.showInputDialog(riskView, "Enter Risk Game's name");
+            riskModel.save(fileName);
         }
     }
 }

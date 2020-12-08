@@ -7,6 +7,7 @@ import org.apache.batik.parser.PathParser;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -20,7 +21,7 @@ import java.util.HashMap;
  * 101115382
  */
 
-public class Territory {
+public class Territory{
 
     private static PathParser pathParser = new PathParser();
     private static AWTPathProducer pathProducer = new AWTPathProducer();

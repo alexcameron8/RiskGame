@@ -6,12 +6,13 @@ import Player.Player;
 import Map.*;
 
 import java.awt.*;
+import java.io.*;
 import java.util.*;
 import java.util.List;
 /**
  * This class is the risk model which plays the risk game
  */
-public class RiskModel {
+public class RiskModel implements Serializable {
 
     public static final Color BACKGROUND =  new Color(163,214,255);
     public static final int MAX_NUMBER_PLAYERS = 6;
@@ -220,6 +221,49 @@ public class RiskModel {
         }
 
     }
+
+    public void save(String fileName) {
+        File f = new File(fileName);
+        try {
+            FileOutputStream file = new FileOutputStream(fileName);
+            ObjectOutputStream out = new ObjectOutputStream(file);
+
+            out.writeObject(players);
+
+            out.close();
+            file.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public RiskModel load(String fileName){
+        try
+        {
+            FileInputStream file = new FileInputStream(fileName);
+            ObjectInputStream in = new ObjectInputStream(file);
+
+            RiskModel riskModel = (RiskModel) in.readObject();
+
+            in.close();
+            file.close();
+            return riskModel;
+        }
+
+        catch(IOException ex)
+        {
+            System.out.println("IOException is caught");
+            ex.printStackTrace();
+        }
+
+        catch(ClassNotFoundException ex)
+        {
+            System.out.println("ClassNotFoundException is caught");
+        }
+        return null;
+    }
+
+
 
     /**
      * This method plays the game and initializes the setup of the game.
