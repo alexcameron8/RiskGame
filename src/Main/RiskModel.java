@@ -31,6 +31,7 @@ public class RiskModel implements Serializable {
     private List<RiskViewListener> riskViewListeners;
     private Player winner = null;
     private Player eliminatedPlayer = null;
+    private String currentMap;
 
     /**
      * This constructor initializes the world map, the list of players and creates a list of listeners
@@ -48,6 +49,16 @@ public class RiskModel implements Serializable {
     public void loadMap(String mapPath){
         MapImport mapImport = new MapImport(getClass().getResourceAsStream(mapPath));
         map = mapImport.getMap();
+    }
+
+    /**
+     * Set the current map name to the map that was loaded
+     * @param mapName The name of the map
+     */
+    public void setCurrentMap(String mapName){
+        if(mapName!=null && mapName!="") {
+            currentMap = mapName;
+        }
     }
 
     /**
