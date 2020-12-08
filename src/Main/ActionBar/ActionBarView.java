@@ -34,6 +34,31 @@ public class ActionBarView extends JPanel implements ActionBarListener {
     private boolean placetroopsFlag;
     private boolean attackFlag;
     private boolean messageFlag;
+    //Action commands
+    enum ActionComs {PLACE,ATTACK,NEXT,NUM_TROOPS,DEPLOY ,CONFIRM_ATTACK ,CANCEL_ATTACK,
+        CONFIRM_DEFEND,CANCEL_DEFEND ,ATTACK_TROOPS ,ATTACK_BUTTON ,BACK_ATTACK ,BACK_DEPLOY
+        ,FORTIFY ,LOCK_MOVE_1 ,LOCK_MOVE_2,CANCEL_MOVE_1 ,CANCEL_MOVE_2 ,MOVE_TROOPS ,MOVE}
+    public static final String PLACE = "place";
+    public static final String ATTACK = "attack";
+    public static final String NEXT = "next";
+    public static final String NUM_TROOPS = "numTroops";
+    public static final String DEPLOY = "deploy";
+    public static final String CONFIRM_ATTACK = "confirmAttack";
+    public static final String CANCEL_ATTACK = "cancelAttack";
+    public static final String CONFIRM_DEFEND = "confirmDefend";
+    public static final String CANCEL_DEFEND = "cancelDefend";
+    public static final String ATTACK_TROOPS = "attackTroops";
+    public static final String ATTACK_BUTTON = "attackButton";
+    public static final String BACK_ATTACK = "backAttack";
+    public static final String BACK_DEPLOY = "backDeploy";
+    public static final String FORTIFY = "fortify";
+    public static final String LOCK_MOVE_1 = "lockMove1";
+    public static final String LOCK_MOVE_2 = "lockMove2";
+    public static final String CANCEL_MOVE_1 = "cancelmove1";
+    public static final String CANCEL_MOVE_2 = "cancelmove2";
+    public static final String MOVE_TROOPS = "moveTroops";
+    public static final String MOVE = "move";
+
 
     /**
      * The Constructor which gets the current Risk view and Risk model and initializes the action bar panel.
@@ -87,7 +112,7 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         placeTroops.setBackground(lighterBlue);
         placeTroops.setFocusPainted(false);
         placeTroops.addActionListener(abc);
-        placeTroops.setActionCommand("place");
+        placeTroops.setActionCommand(PLACE);
         troopPanel.add(troopMovement);
         troopPanel.add(placeTroops);
         this.add(troopPanel);
@@ -132,9 +157,9 @@ public class ActionBarView extends JPanel implements ActionBarListener {
 
         //adding Action Listeners
         attack.addActionListener(abc);
-        attack.setActionCommand("attack");
+        attack.setActionCommand(ATTACK);
         fortify.addActionListener(abc);
-        fortify.setActionCommand("fortify");
+        fortify.setActionCommand(FORTIFY);
     }
 
     /**
@@ -160,7 +185,7 @@ public class ActionBarView extends JPanel implements ActionBarListener {
 
         //adding actionlisteners
         nextTurn.addActionListener(abc);
-        nextTurn.setActionCommand("next");
+        nextTurn.setActionCommand(NEXT);
 
         this.add(fortifyTroopBar);
     }
@@ -224,20 +249,20 @@ public class ActionBarView extends JPanel implements ActionBarListener {
 
         //ActionListeners
         numberMoveTroops.addActionListener(abc);
-        numberMoveTroops.setActionCommand("move");
+        numberMoveTroops.setActionCommand(MOVE);
         //Lock and cancel for current Territory selected to move troops from
         confirm1.addActionListener(abc);
-        confirm1.setActionCommand("lockMove1");
+        confirm1.setActionCommand(LOCK_MOVE_1);
         cancel1.addActionListener(abc);
-        cancel1.setActionCommand("cancelMove1");
+        cancel1.setActionCommand(CANCEL_MOVE_1);
         //Lock and cancel for Territory the troops will be moved to.
         confirm2.addActionListener(abc);
-        confirm2.setActionCommand("lockMove2");
+        confirm2.setActionCommand(LOCK_MOVE_2);
         cancel2.addActionListener(abc);
-        cancel2.setActionCommand("cancelMove2");
+        cancel2.setActionCommand(CANCEL_MOVE_2);
         //Move troops button
         moveTroopsButton.addActionListener(abc);
-        moveTroopsButton.setActionCommand("moveTroops");
+        moveTroopsButton.setActionCommand(MOVE_TROOPS);
     }
 
     /**
@@ -265,10 +290,10 @@ public class ActionBarView extends JPanel implements ActionBarListener {
 
         //adding actionlistener
         numberMoveTroops.addActionListener(abc);
-        numberMoveTroops.setActionCommand("move");
+        numberMoveTroops.setActionCommand(MOVE);
 
         moveTroopsButton.addActionListener(abc);
-        moveTroopsButton.setActionCommand("moveTroops");
+        moveTroopsButton.setActionCommand(MOVE_TROOPS);
 
     }
 
@@ -378,21 +403,21 @@ public class ActionBarView extends JPanel implements ActionBarListener {
 
         //Create actionlisteners
         numberAttackTroops.addActionListener(abc);
-        numberAttackTroops.setActionCommand("attackTroops");
+        numberAttackTroops.setActionCommand(ATTACK_TROOPS);
         attackButton.addActionListener(abc);
-        attackButton.setActionCommand("attackButton");
+        attackButton.setActionCommand(ATTACK_BUTTON);
         backButton.addActionListener(abc);
-        backButton.setActionCommand("backAttack");
+        backButton.setActionCommand(BACK_ATTACK);
 
         confirmA.addActionListener(abc);
-        confirmA.setActionCommand("confirmAttack");
+        confirmA.setActionCommand(CONFIRM_ATTACK);
         cancelA.addActionListener(abc);
-        cancelA.setActionCommand("cancelAttack");
+        cancelA.setActionCommand(CANCEL_ATTACK);
 
         confirmD.addActionListener(abc);
-        confirmD.setActionCommand("confirmDefend");
+        confirmD.setActionCommand(CONFIRM_DEFEND);
         cancelD.addActionListener(abc);
-        cancelD.setActionCommand("cancelDefend");
+        cancelD.setActionCommand(CANCEL_DEFEND);
 
         updateUI();
     }
@@ -439,11 +464,11 @@ public class ActionBarView extends JPanel implements ActionBarListener {
 
         //adding Actionlisteners to components
         numberOfTroops.addActionListener(abc);
-        numberOfTroops.setActionCommand("numTroops");
+        numberOfTroops.setActionCommand(NUM_TROOPS);
         deployButton.addActionListener(abc);
-        deployButton.setActionCommand("deploy");
+        deployButton.setActionCommand(DEPLOY);
         backButton.addActionListener(abc);
-        backButton.setActionCommand("backDeploy");
+        backButton.setActionCommand(BACK_DEPLOY);
         updateUI();
     }
 
@@ -473,7 +498,7 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         this.add(aiNextTurn);
 
         nextTurn.addActionListener(abc);
-        nextTurn.setActionCommand("next");
+        nextTurn.setActionCommand(NEXT);
         updateUI();
     }
     /**
@@ -537,6 +562,10 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         return numberAttackTroops;
     }
 
+    /**
+     * The number of troops allowed to move
+     * @return the JComboBox with number of troops allowed to attack
+     */
     public JComboBox<Integer> getMoveNumberOfTroops(){
         return numberMoveTroops;
     }

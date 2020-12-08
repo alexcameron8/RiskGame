@@ -49,7 +49,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
         //check if any previous message bars are on GUI and removes them if true
         removeMessageBar();
         switch (e.getActionCommand()) {
-            case "place":
+            case ActionBarView.PLACE:
                 state = State.PLACE;
                 //Clears all previous flags for attacking
                 hasNumTroopsSelected = false;
@@ -61,14 +61,14 @@ public class ActionBarController implements ActionListener, MapViewListener {
                     abv.deployTroopsInfo();
                 }
                 break;
-            case "attack":  //If attack button is clicked then the Attack info bar appears on GUI
+            case ActionBarView.ATTACK:  //If attack button is clicked then the Attack info bar appears on GUI
                 state = State.ATTACKER;
                 if (!abv.getAttackFlag()) {
                     abv.removeDeployTroopsBar();
                     abv.attackInfo();
                 }
                 break;
-            case "next":  //Advances turn to next player
+            case ActionBarView.NEXT:  //Advances turn to next player
                 //Clears all previous flags for attacking
                 hasNumTroopsSelected = false;
                 hasTerritorySelected = false;
@@ -87,7 +87,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
                     abv.setMessage("Turn advanced. It is now " + abm.getRiskModel().getActivePlayer().getName() + "'s turn.");
                 }
                 break;
-            case "numTroops":  //Gets number of troops the player chooses to place
+            case ActionBarView.NUM_TROOPS:  //Gets number of troops the player chooses to place
                 if ((Integer) abv.getNumberOfTroops().getSelectedItem() != null) {
                     numOfTroops = (Integer) abv.getNumberOfTroops().getSelectedItem();
                     hasNumTroopsSelected = true;
@@ -95,7 +95,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
                     abv.setMessage("Number of troops not selected.");
                 }
                 break;
-            case "deploy":  //This button will deploy the troops in the model and update the view correspondingly or deliver error messages
+            case ActionBarView.DEPLOY:  //This button will deploy the troops in the model and update the view correspondingly or deliver error messages
                 if (territory != null) {
                     if (hasTerritorySelected) {
                         if (hasNumTroopsSelected) {
@@ -115,31 +115,31 @@ public class ActionBarController implements ActionListener, MapViewListener {
                     abv.setMessage("You must select a Territory before placing troops.");
                 }
                 break;
-            case "confirmAttack":  //confirms the attacker territory and changes state to defender territory
+            case ActionBarView.CONFIRM_ATTACK:  //confirms the attacker territory and changes state to defender territory
                 if (attackerTerritory != null) {
                     attackConfirm = true;
                     state = State.DEFENDER;
                 }
                 break;
-            case "cancelDefend":  //cancels the confirmation of the defender territory and changes state to defender
+            case ActionBarView.CANCEL_DEFEND:  //cancels the confirmation of the defender territory and changes state to defender
                 defendConfirm = false;
                 state = State.DEFENDER;
                 break;
-            case "cancelAttack":  //cancels the confirmation of the attacker territory and changes state to attacker
+            case ActionBarView.CANCEL_ATTACK:  //cancels the confirmation of the attacker territory and changes state to attacker
                 attackConfirm = false;
                 state = State.ATTACKER;
                 break;
-            case "attackTroops":  //gets the number of troops to attack with from JComboBox
+            case ActionBarView.ATTACK_TROOPS:  //gets the number of troops to attack with from JComboBox
                 if ((Integer) abv.getAttackNumberOfTroops().getSelectedItem() != null) {
                     numofAttackers = (Integer) abv.getAttackNumberOfTroops().getSelectedItem();
                 }
                 break;
-            case "confirmDefend":  //confirms the defender territory
+            case ActionBarView.CONFIRM_DEFEND:  //confirms the defender territory
                 if (defenderTerritory != null) {
                     defendConfirm = true;
                 }
                 break;
-            case "attackButton":  //performs the attack with the attacker territory, defender territory and number of troops to send to battle
+            case ActionBarView.ATTACK_BUTTON:  //performs the attack with the attacker territory, defender territory and number of troops to send to battle
                 //ensures that both defender and attacker territories are valid
                 if (defendConfirm && attackConfirm) {
                     if (attackerTerritory != null && defenderTerritory != null) {
@@ -158,19 +158,19 @@ public class ActionBarController implements ActionListener, MapViewListener {
                     }
                 }
                 break;
-            case "backAttack":  //exits the attack info bar
+            case ActionBarView.BACK_ATTACK:  //exits the attack info bar
                 state = State.DEFAULT;
                 abv.removeAttackBar();
                 break;
-            case "backDeploy":  //exits the deploy troops info bar
+            case ActionBarView.BACK_DEPLOY:  //exits the deploy troops info bar
                 state = State.DEFAULT;
                 abv.removeDeployTroopsBar();
                 break;
-            case "fortify":  //Changes ActionBar to fortify
+            case ActionBarView.FORTIFY:  //Changes ActionBar to fortify
                 abv.fortifyTroops();
                 state = State.currTerritory;
                 break;
-            case "lockMove1":
+            case ActionBarView.LOCK_MOVE_1:
                 if (currTerritory != null) {
                     hasCurrConfirm = true;
                     state = State.moveTerritory;
@@ -178,11 +178,11 @@ public class ActionBarController implements ActionListener, MapViewListener {
                     abv.setMessage("You must choose a valid territory to move troops from.");
                 }
                 break;
-            case "cancelMove1":
+            case ActionBarView.CANCEL_MOVE_1:
                 hasCurrConfirm = false;
                 state = State.currTerritory;
                 break;
-            case "lockMove2":
+            case ActionBarView.LOCK_MOVE_2:
                 if (moveTerritory != null) {
                     hasMoveConfirm = true;
                     state = State.DEFAULT;
@@ -190,11 +190,11 @@ public class ActionBarController implements ActionListener, MapViewListener {
                     abv.setMessage("You must choose a valid territory to move troops to.");
                 }
                 break;
-            case "cancelMove2":
+            case ActionBarView.CANCEL_MOVE_2:
                 hasMoveConfirm = false;
                 state = State.moveTerritory;
                 break;
-            case "moveTroops": //move troop button
+            case ActionBarView.MOVE_TROOPS: //move troop button
                 if (troopsMoved) {
                     if (abm.moveTroops(currTerritory, moveTerritory, numMoveTroopsSelected)) {
                         abv.setMessage(abm.getRiskModel().getActivePlayer().getName() + " has moved " + numMoveTroopsSelected + " troops from " + currTerritory + " to " + moveTerritory);
@@ -221,7 +221,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
                     abv.setMessage("Both territories have not been confirmed.");
                 }
                 break;
-            case "move": //gets the number of troops selected in the JComboBox to move
+            case ActionBarView.MOVE: //gets the number of troops selected in the JComboBox to move
                 if ((Integer) abv.getMoveNumberOfTroops().getSelectedItem() != null) {
                     numMoveTroopsSelected = (Integer) abv.getMoveNumberOfTroops().getSelectedItem();
                     hasNumMoveTroopsSelected = true;

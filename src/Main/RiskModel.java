@@ -104,7 +104,17 @@ public class RiskModel implements Serializable {
      */
     public void advanceTurn(){
         //checks if a player has won or a player is eliminated.
-        isPlayerEvent();
+        if(getActivePlayer().isTurnComplete()){
+            for(Player player: players){
+                if(player.getListOfTerritories().size()==0){ //there is a winner of eliminated player because someone does not own any territories
+                    if(hasWinner()){
+                        return;
+                    }
+                    hasElimination(player);
+                    break;
+                }
+            }
+        }
 
         if(activePlayerID + 1 < players.size()) {
             activePlayerID++;
@@ -125,14 +135,15 @@ public class RiskModel implements Serializable {
         }
     }
 
-    public void hasWinner() {
+    public boolean hasWinner() {
         if (players.size() == 2) { //if only 2 players left
             winner = getActivePlayer();
             for (RiskViewListener riskViewListener : riskViewListeners) { //update listeners
                 riskViewListener.handleTurnUpdate(new RiskEvent(this, activePlayerID, players, winner, eliminatedPlayer));
             }
-            return;
+            return true;
         }
+        return false;
     }
 
     public void hasElimination(Player player){
@@ -144,29 +155,14 @@ public class RiskModel implements Serializable {
     }
 
     /**
-     * This method checks before the next turn is complete if a player has either won or a player has been eliminated
-     * by checking the size of each players list of territories. If a player has 0 territories that means that specific
-     * player is eliminated from the game or there is a winner crowned.
-     */
-    public void isPlayerEvent(){
-        if(getActivePlayer().isTurnComplete()){
-            for(Player player: players){
-                if(player.getListOfTerritories().size()==0){ //there is a winner of eliminated player because someone does not own any territories
-                    hasWinner();
-                    hasElimination(player);
-                    break;
-                }
-            }
-        }
-    }
-
-
-    /**
      * This method gets the current player whos turn it is.
      * @return The current player who's turn it is.
      */
-    public Player getActivePlayer(){
-        return players.get(activePlayerID);
+    public Player getActivePlayer() {
+        if (players.size() > 0) {
+            return players.get(activePlayerID);
+        }
+        return null;
     }
 
     /**
