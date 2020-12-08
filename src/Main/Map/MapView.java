@@ -124,7 +124,7 @@ public class MapView extends JPanel implements MapViewListener{
         }
 
         double calculateScale(){
-            return (this.getWidth() / STANDARD_MAP_WIDTH) * ZOOM;
+            return (this.getWidth() / (double) STANDARD_MAP_WIDTH) * ZOOM;
         }
 
         /**
