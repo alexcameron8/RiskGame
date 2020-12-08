@@ -41,7 +41,6 @@ public class MapView extends JPanel implements MapViewListener{
 
         // JPanel Config
         this.setLayout(new BorderLayout());
-        this.setSize(new Dimension(600, 500));
         this.add(drawMap, BorderLayout.CENTER);
         this.add(new ConfigBar(), BorderLayout.PAGE_END);
 
@@ -115,17 +114,17 @@ public class MapView extends JPanel implements MapViewListener{
     private class DrawMap extends JComponent {
         private static final int STANDARD_MAP_WIDTH = 600;
         private static final int SOLDIER_SIZE = 7;
-        AffineTransform tx;
-        Double scale;
+        private static final double ZOOM = 1.0;
 
         /**
          * Create new DrawMap
          */
         DrawMap(){
             super();
-            tx = new AffineTransform();
-            scale = (double) this.getWidth() /600;
-            tx.scale(scale, scale);
+        }
+
+        double calculateScale(){
+            return (this.getWidth() / (double) STANDARD_MAP_WIDTH) * ZOOM;
         }
 
         /**
@@ -135,12 +134,11 @@ public class MapView extends JPanel implements MapViewListener{
          */
         void mouseClickHandler(Point2D point){
             AffineTransform tx2 = new AffineTransform();
-            Double scale2 = (double) this.getWidth() / STANDARD_MAP_WIDTH;
-            tx2.scale(scale2, scale2);
+            Double scale = calculateScale();
+            tx2.scale(scale, scale);
 
             for(Territory terr: MapView.this.mapModel.getTerritoryList()){
                 Shape territoryShape = tx2.createTransformedShape(terr.getShape());
-                //Shape territoryShape = terr.getShape();
                 if(territoryShape.contains(point)){
                     MapView.this.mapController.actionPerformed(
                             new ActionEvent(MapView.this, ActionEvent.ACTION_PERFORMED, terr.getId()));
@@ -165,8 +163,8 @@ public class MapView extends JPanel implements MapViewListener{
             graphics.fillRect(0,0, getWidth(), getHeight());
 
             AffineTransform tx2 = new AffineTransform();
-            Double scale2 = (double) this.getWidth() /600;
-            tx2.scale(scale2, scale2);
+            Double scale = calculateScale();
+            tx2.scale(scale, scale);
 
 
             // Draw water crossing lines
@@ -187,7 +185,6 @@ public class MapView extends JPanel implements MapViewListener{
                 } else {
                     Color terrColor;
                     if(MapView.this.getMapModel().isPlayerTerritoryColorVisible()){
-                        // PUT PLAYER COLOR LOGIC HERE
                         terrColor = terr.getOwner().getPlayerColor();
                     } else {
                         terrColor = new Color(
@@ -216,8 +213,8 @@ public class MapView extends JPanel implements MapViewListener{
                     }
                     for(Point2D pos: terr.getSoldierPositions()){
                         int x, y;
-                        x = (int) (pos.getX()*scale2 - SOLDIER_SIZE/2);
-                        y = (int) (pos.getY()*scale2 - SOLDIER_SIZE/2);
+                        x = (int) (pos.getX()*scale - SOLDIER_SIZE/2);
+                        y = (int) (pos.getY()*scale - SOLDIER_SIZE/2);
                         graphics.fillOval(x, y, SOLDIER_SIZE, SOLDIER_SIZE);
                     }
                 }

@@ -37,16 +37,16 @@ public class MapController implements ActionListener, ItemListener {
     public void itemStateChanged(ItemEvent e) {
         if(e.getItem() instanceof JCheckBox){
             if(((JCheckBox) e.getItem()).getActionCommand().equals(MapView.TERRITORY_NAME_TOGGLE_ACTION)){
-                mapModel.setTerritoryNamesVisible(e.getStateChange()==1?true:false);
+                mapModel.setTerritoryNamesVisible(e.getStateChange()==ItemEvent.SELECTED);
             }
             if(((JCheckBox) e.getItem()).getActionCommand().equals(MapView.TROOP_DOTS_TOGGLE_ACTION)){
-                mapModel.setTroopDotsVisible(e.getStateChange()==1?true:false);
+                mapModel.setTroopDotsVisible(e.getStateChange()==ItemEvent.SELECTED);
             }
             if(((JCheckBox) e.getItem()).getActionCommand().equals(MapView.TROOP_COUNT_TOGGLE_ACTION)){
-                mapModel.setTroopCountVisible(e.getStateChange()==1?true:false);
+                mapModel.setTroopCountVisible(e.getStateChange()==ItemEvent.SELECTED);
             }
             if(((JCheckBox) e.getItem()).getActionCommand().equals(MapView.PLAYER_TERRITORY_COLOUR_TOGGLE_ACTION)){
-                mapModel.setPlayerTerritoryColorVisible(e.getStateChange()==1?true:false);
+                mapModel.setPlayerTerritoryColorVisible(e.getStateChange()==ItemEvent.SELECTED);
             }
         }
     }
