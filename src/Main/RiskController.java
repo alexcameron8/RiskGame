@@ -21,10 +21,12 @@ public class RiskController implements ActionListener {
             try {
                 fileName = JOptionPane.showInputDialog(riskView, "Enter Risk Game's name to load");
             }catch (Exception exception){
-
+                JOptionPane.showMessageDialog(riskView,"Could not load game: " + fileName);
             }
             if(fileName!=null && !fileName.equals("")) {
                 riskModel.load(fileName);
+            }else{
+                JOptionPane.showMessageDialog(riskView,"Could not load that game.");
             }
         }else if(e.getActionCommand().equals("newGame")){
             riskView.setupInit();

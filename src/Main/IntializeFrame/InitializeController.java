@@ -34,6 +34,7 @@ public class InitializeController implements ActionListener, DocumentListener {
             im.setPlayerisAI(Integer.parseInt(e.getActionCommand().split(" ")[1]), ((JCheckBox) e.getSource()).isSelected());
         } else if (e.getActionCommand().equals(InitializeView.ACTION_MAP_SELECT) && e.getSource() instanceof JComboBox) {
             im.setMapPath((String)((JComboBox<String>) e.getSource()).getSelectedItem());
+            im.setMapName((String)((JComboBox<String>) e.getSource()).getSelectedItem());
         }
     }
 

@@ -110,6 +110,10 @@ public class RiskView extends JFrame implements RiskViewListener{
         newGame.addActionListener(rc);
         newGame.setActionCommand("newGame");
     }
+
+    /**
+     *
+     */
     public void setupInit(){
         welcomeScreen.dispose();
 
@@ -143,6 +147,10 @@ public class RiskView extends JFrame implements RiskViewListener{
         initializeFrame.setVisible(true);
 
     }
+
+    /**
+     *
+     */
     public void setupPlayers(){
         ArrayList<String> nameOfPlayers = initializeGame.getNameOfPlayers();
         ArrayList<Color> coloursOfPlayers = initializeGame.getPlayersColour();
@@ -156,6 +164,7 @@ public class RiskView extends JFrame implements RiskViewListener{
             }
         }
         riskModel.loadMap(initializeGame.getMapPath());
+        riskModel.setCurrentMap(initializeGame.getMapName());
     }
 
     public void setupView(){

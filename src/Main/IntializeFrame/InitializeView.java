@@ -204,4 +204,12 @@ public class InitializeView extends JPanel implements InitializeViewListener {
      * @return Path of the selected map
      */
     public String getMapPath() { return im.getMapPath(); }
+
+    /**
+     * Gets the name of the selected map
+     * @return returns the name of the selected map
+     */
+    public String getMapName(){
+        return im.getMapName();
+    }
 }
