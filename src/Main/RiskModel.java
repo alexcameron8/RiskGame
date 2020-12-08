@@ -1,9 +1,15 @@
 package Main;
 
+import Main.IntializeFrame.InitializeModel;
 import Map.Map;
 import Player.AI.AIEasy;
 import Player.Player;
 import Map.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.annotations.Expose;
+import com.google.gson.stream.JsonReader;
 
 import java.awt.*;
 import java.io.*;
@@ -17,7 +23,9 @@ public class RiskModel implements Serializable {
     public static final Color BACKGROUND =  new Color(163,214,255);
     public static final int MAX_NUMBER_PLAYERS = 6;
     public static final int MIN_NUMBER_PLAYERS = 2;
+    @Expose
     private ArrayList<Player> players;
+    @Expose
     private int activePlayerID;
     private Map map = null;
     private List<RiskViewListener> riskViewListeners;
@@ -240,49 +248,48 @@ public class RiskModel implements Serializable {
 
     }
 
-    public void save(String fileName) {
-        File f = new File(fileName);
+    public void save(String path) {
+        GsonBuilder builder = new GsonBuilder();
+        builder.excludeFieldsWithoutExposeAnnotation();
+        Gson gson = builder.setPrettyPrinting().create();
+        try{
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path));
+            bufferedWriter.write(gson.toJson(this));
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void load(String fileName, RiskView rv){
         try {
-            FileOutputStream file = new FileOutputStream(fileName);
-            ObjectOutputStream out = new ObjectOutputStream(file);
-
-            out.writeObject(players);
-
-            out.close();
-            file.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            File f = new File(fileName);
+            populate(new FileInputStream(f), rv);
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
         }
     }
 
-    public RiskModel load(String fileName){
-        try
-        {
-            FileInputStream file = new FileInputStream(fileName);
-            ObjectInputStream in = new ObjectInputStream(file);
-
-            RiskModel riskModel = (RiskModel) in.readObject();
-
-            in.close();
-            file.close();
-            return riskModel;
+    private void populate(FileInputStream path, RiskView rv) {
+        Gson gson = new Gson();
+        RiskModelImportJSONModel riskModelImportJSONModel = null;
+        JsonReader reader = new JsonReader(new InputStreamReader(path));
+        riskModelImportJSONModel = gson.fromJson(reader, RiskModelImportJSONModel.class);
+        activePlayerID = riskModelImportJSONModel.getActivePlayerID();
+        loadMap(InitializeModel.AVAILABLE_MAPS.get(map));
+        for(RiskModelPlayer rmp: riskModelImportJSONModel.getPlayers()){
+            if(rmp.isAi()){
+                players.add(new AIEasy(rmp.getName(), new Color(rmp.getPlayerColorValue()),rv));
+            }
+            else{
+                players.add(new Player(rmp.getName(), new Color(rmp.getPlayerColorValue()),rv));
+            }
+            for(RiskModelTerritory rmt: rmp.getListOfTerritories()){
+                players.get(players.size()-1).addTerritory(map.getTerritory(rmt.getName()));
+                map.getTerritory(rmt.getName()).setSoldiers(rmt.getSoldiers());
+            }
         }
-
-        catch(IOException ex)
-        {
-            System.out.println("IOException is caught");
-            ex.printStackTrace();
-        }
-
-        catch(ClassNotFoundException ex)
-        {
-            System.out.println("ClassNotFoundException is caught");
-        }
-        return null;
     }
-
-
-
     /**
      * This method plays the game and initializes the setup of the game.
      */

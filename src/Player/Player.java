@@ -5,6 +5,7 @@ import java.util.*;
 import Main.RiskView;
 import Map.*;
 import Attack.*;
+import com.google.gson.annotations.Expose;
 
 /**
  * Player models a player in risk.
@@ -15,15 +16,22 @@ import Attack.*;
  */
 public class Player {
     //the territories controlled by the player
+    @Expose
     private ArrayList<Territory> listOfTerritories;
     //the continents controlled by the player
     private ArrayList<Continent> listOfContinents;
     //the name of the player
+    @Expose
     protected String name;
     //number of Reinforcements
+    @Expose
     private int reinforcements;
     //player colour
     private Color playerColor;
+    //player colour red component
+    @Expose
+    private int playerColorValue;
+    //player colour red component
     //risk view
     protected RiskView riskView;
 
@@ -41,6 +49,7 @@ public class Player {
         this.reinforcements = 0;
         this.playerColor = playerColor;
         this.riskView = riskView;
+        this.playerColorValue = playerColor.getRGB();
     }
 
     /**

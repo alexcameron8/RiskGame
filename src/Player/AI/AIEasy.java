@@ -4,9 +4,9 @@ import Main.RiskView;
 import Map.Continent;
 import Map.Territory;
 import Player.*;
+import com.google.gson.annotations.Expose;
 
 import java.awt.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,6 +18,9 @@ import java.util.HashMap;
  * @author Thomas Dunnigan
  */
 public class AIEasy extends Player{
+
+    @Expose
+    private boolean isAi = true;
     /**
      * Constructor for a player. Gives them
      * a name and create a list of territories
