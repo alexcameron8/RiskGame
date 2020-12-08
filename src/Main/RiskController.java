@@ -25,6 +25,7 @@ public class RiskController implements ActionListener {
             }
             if(fileName!=null && !fileName.equals("")) {
                 riskModel.load(fileName, riskView);
+                riskView.setupView();
             }else{
                 JOptionPane.showMessageDialog(riskView,"Could not load that game.");
             }
@@ -38,4 +39,3 @@ public class RiskController implements ActionListener {
         }
     }
 }
--
