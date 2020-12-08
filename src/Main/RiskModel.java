@@ -69,46 +69,30 @@ public class RiskModel {
             activePlayerID = 0;
         }
     }
+
     /**
      * This method creates a new Turn instance and changes which player is currently playing the game.
      */
     public void advanceTurn(){
-        if(currentTurn.isTurnComplete(getActivePlayer())){
-            for(Player player: players){
-                if(player.getListOfTerritories().size()==0){
-                    if(players.size() == 2){
-                        winner = getActivePlayer();
-                        for(RiskViewListener riskViewListener : riskViewListeners){
-                            riskViewListener.handleTurnUpdate(new RiskEvent (this,activePlayerID,players, currentTurn,winner,eliminatedPlayer));
-                        }
-                        return;
-                    }else {
-                        eliminatedPlayer = player;
-                        if (players.indexOf(player) <= activePlayerID) {
-                            activePlayerID--;
-                        }
-                        players.remove(eliminatedPlayer);
-                        break;
-                    }
-                }
-            }
-            if (activePlayerID + 1 < players.size()) {
-                activePlayerID++;
-                currentTurn = new Turn(players.get(activePlayerID));
-                if(getActivePlayer() instanceof AIEasy){
-                    currentTurn.setNumberOfReinforcements(0);
-                    ((AIEasy) getActivePlayer()).advanceTurn();
-                }
-            } else {
-                activePlayerID = 0;
-                currentTurn = new Turn(players.get(activePlayerID));
-                if(getActivePlayer() instanceof AIEasy){
-                    currentTurn.setNumberOfReinforcements(0);
-                    ((AIEasy) getActivePlayer()).advanceTurn();
-                }
-            }
+        //checks if a player has won or a player is eliminated.
+        isPlayerEvent();
 
+        if (activePlayerID + 1 < players.size()) {
+            activePlayerID++;
+            currentTurn = new Turn(players.get(activePlayerID));
+            if(getActivePlayer() instanceof AIEasy){
+                currentTurn.setNumberOfReinforcements(0);
+                ((AIEasy) getActivePlayer()).advanceTurn();
+            }
+        } else {
+            activePlayerID = 0;
+            currentTurn = new Turn(players.get(activePlayerID));
+            if(getActivePlayer() instanceof AIEasy){
+                currentTurn.setNumberOfReinforcements(0);
+                ((AIEasy) getActivePlayer()).advanceTurn();
+            }
         }
+
         for(RiskViewListener riskViewListener : riskViewListeners){
             riskViewListener.handleTurnUpdate(new RiskEvent (this,activePlayerID,players, currentTurn,winner,eliminatedPlayer));
         }
@@ -117,6 +101,43 @@ public class RiskModel {
             eliminatedPlayer = null;
         }
     }
+
+    public void hasWinner() {
+        if (players.size() == 2) { //if only 2 players left
+            winner = getActivePlayer();
+            for (RiskViewListener riskViewListener : riskViewListeners) { //update listeners
+                riskViewListener.handleTurnUpdate(new RiskEvent(this, activePlayerID, players, currentTurn, winner, eliminatedPlayer));
+            }
+            return;
+        }
+    }
+
+    public void hasElimination(Player player){
+        eliminatedPlayer = player;
+        if (players.indexOf(player) <= activePlayerID) {
+            activePlayerID--;
+        }
+        players.remove(eliminatedPlayer);
+    }
+
+    /**
+     * This method checks before the next turn is complete if a player has either won or a player has been eliminated
+     * by checking the size of each players list of territories. If a player has 0 territories that means that specific
+     * player is eliminated from the game or there is a winner crowned.
+     */
+    public void isPlayerEvent(){
+        if(currentTurn.isTurnComplete(getActivePlayer())){
+            for(Player player: players){
+                if(player.getListOfTerritories().size()==0){ //there is a winner of eliminated player because someone does not own any territories
+                    hasWinner();
+                    hasElimination(player);
+                    break;
+                }
+            }
+        }
+    }
+
+
     /**
      * This method gets the current player whos turn it is.
      * @return The current player who's turn it is.
@@ -152,7 +173,6 @@ public class RiskModel {
                 return player;
             }
         }
-
         return null;
     }
 
