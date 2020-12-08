@@ -1,0 +1,189 @@
+{
+  "players": [
+    {
+      "isAi": true,
+      "listOfTerritories": [
+        {
+          "name": "Siberia",
+          "soldiers": 1
+        },
+        {
+          "name": "Indonesia",
+          "soldiers": 1
+        },
+        {
+          "name": "Greenland",
+          "soldiers": 2
+        },
+        {
+          "name": "Iceland",
+          "soldiers": 1
+        },
+        {
+          "name": "Eastern United States",
+          "soldiers": 2
+        },
+        {
+          "name": "Venezuela",
+          "soldiers": 5
+        },
+        {
+          "name": "Yakutsk",
+          "soldiers": 1
+        },
+        {
+          "name": "Kamchatka",
+          "soldiers": 2
+        },
+        {
+          "name": "Western United States",
+          "soldiers": 2
+        },
+        {
+          "name": "India",
+          "soldiers": 1
+        },
+        {
+          "name": "Mongolia",
+          "soldiers": 2
+        },
+        {
+          "name": "Central America",
+          "soldiers": 1
+        },
+        {
+          "name": "Western Australia",
+          "soldiers": 1
+        },
+        {
+          "name": "Japan",
+          "soldiers": 2
+        },
+        {
+          "name": "China",
+          "soldiers": 1
+        },
+        {
+          "name": "South Africa",
+          "soldiers": 2
+        },
+        {
+          "name": "Western Europe",
+          "soldiers": 1
+        },
+        {
+          "name": "Great Britain",
+          "soldiers": 1
+        },
+        {
+          "name": "Quebec",
+          "soldiers": 1
+        },
+        {
+          "name": "Madagascar",
+          "soldiers": 2
+        },
+        {
+          "name": "Alaska",
+          "soldiers": 3
+        },
+        {
+          "name": "Ural",
+          "soldiers": 1
+        },
+        {
+          "name": "Scandinavia",
+          "soldiers": 1
+        },
+        {
+          "name": "New Guinea",
+          "soldiers": 1
+        },
+        {
+          "name": "Afghanistan",
+          "soldiers": 5
+        },
+        {
+          "name": "Ukraine",
+          "soldiers": 2
+        }
+      ],
+      "name": "Player 1",
+      "reinforcements": 0,
+      "playerColorValue": -33904
+    },
+    {
+      "isAi": true,
+      "listOfTerritories": [
+        {
+          "name": "Middle East",
+          "soldiers": 3
+        },
+        {
+          "name": "Siam",
+          "soldiers": 1
+        },
+        {
+          "name": "Argentina",
+          "soldiers": 3
+        },
+        {
+          "name": "Ontario",
+          "soldiers": 2
+        },
+        {
+          "name": "Alberta",
+          "soldiers": 3
+        },
+        {
+          "name": "Southern Europe",
+          "soldiers": 2
+        },
+        {
+          "name": "Northern Europe",
+          "soldiers": 3
+        },
+        {
+          "name": "North Africa",
+          "soldiers": 2
+        },
+        {
+          "name": "Irkutsk",
+          "soldiers": 2
+        },
+        {
+          "name": "Peru",
+          "soldiers": 2
+        },
+        {
+          "name": "Brazil",
+          "soldiers": 1
+        },
+        {
+          "name": "Eastern Australia",
+          "soldiers": 3
+        },
+        {
+          "name": "Egypt",
+          "soldiers": 1
+        },
+        {
+          "name": "Congo",
+          "soldiers": 2
+        },
+        {
+          "name": "East Africa",
+          "soldiers": 1
+        },
+        {
+          "name": "Northwest Territories",
+          "soldiers": 2
+        }
+      ],
+      "name": "Player 2",
+      "reinforcements": 0,
+      "playerColorValue": -7554305
+    }
+  ],
+  "activePlayerID": 0
+}

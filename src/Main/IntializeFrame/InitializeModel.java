@@ -48,7 +48,7 @@ public class InitializeModel {
         initializeViews = new ArrayList<>();
         playersInfo = new ArrayList<>();
         for(int i = 0; i < MAX_NUMBER_PLAYERS; i++){
-            playersInfo.add(new PlayerInfo(null, null, false));
+            playersInfo.add(new PlayerInfo("Player "+(i+1), ((Color)COLOURS.values().toArray()[i]), false));
         }
         numberOfPlayers = MIN_NUMBER_PLAYERS;
     }

@@ -18,7 +18,7 @@ public class RiskController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("load")){
             String fileName = JOptionPane.showInputDialog(riskView, "Enter Risk Game's name to load");
-            riskModel.load(fileName);
+            riskModel.load(fileName, riskView);
         }else if(e.getActionCommand().equals("newGame")){
             riskView.setupInit();
         }

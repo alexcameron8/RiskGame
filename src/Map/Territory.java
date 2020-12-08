@@ -1,13 +1,12 @@
 package Map;
 
 import Player.Player;
+import com.google.gson.annotations.Expose;
 import org.apache.batik.parser.AWTPathProducer;
 import org.apache.batik.parser.PathParser;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -26,6 +25,7 @@ public class Territory{
     private static PathParser pathParser = new PathParser();
     private static AWTPathProducer pathProducer = new AWTPathProducer();
 
+    @Expose
     private String name;
     private String id;
     private Shape territoryShape;
@@ -33,6 +33,7 @@ public class Territory{
 
     private Player owner;
     private HashMap<String, Territory> neighbours;
+    @Expose
     private int soldiers;
     private ArrayList<Point2D> soldierPositions;
 
@@ -212,6 +213,15 @@ public class Territory{
         for(int i = 0; i < remove; i++){
             removeSoldierLocation();
         }
+    }
+
+    /**
+     * set the number of soldiers in the territory
+     *
+     * @param set Number of soldiers to set to the territory
+     */
+    public void setSoldiers(int set) {
+        soldiers = set;
     }
 
     /**
