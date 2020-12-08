@@ -29,7 +29,7 @@ public class RiskModel {
      */
     public RiskModel(){
         MapImport mapImport = new MapImport(getClass().getResourceAsStream("resources/worldmap.json"));
-        players = new ArrayList<Player>();
+        players = new ArrayList<>();
         activePlayerID = 0;
         map = mapImport.getMap();
         riskViewListeners = new ArrayList<>();

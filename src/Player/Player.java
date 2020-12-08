@@ -158,36 +158,42 @@ public class Player {
      * @param receiver
      */
     public void transferAllTerritory(Player receiver){
-        int size = listOfTerritories.size();
-        for(int i = 0; i <  size; i ++){
-            transferTerritory(receiver, listOfTerritories.get(0));
+        int firstTerritory = 0;
+        int terrSize = listOfTerritories.size();
+        for(int i = 0; i <  terrSize; i ++){
+            transferTerritory(receiver, listOfTerritories.get(firstTerritory));
         }
     }
 
     /**
      * get the number of reinforcements left
      *
-     * @return
+     * @return Number of reinforcements remaining
      */
-    public int getReinforcements() {
+    public int getRemainingReinforcements() {
         return reinforcements;
     }
 
     /**
      * get the number of reinforcements the player gets
      *
-     * @return int
+     * @return int number of reinforcements a player gets
      */
     public int getReinforcement(){
         if(reinforcements != 0){
             return reinforcements;
         }
         int numberOfReinforcement = 0;
-        if(listOfTerritories.size() <= 9){
+        //the lowest amount of reinforcements a player can receive per turn is 3 armies.
+        //A player receives 1 army for every 3 territories they own e.g. player has 23 countries, player receives 7 armies
+        //if a player has less than 9 territories then they must receive at least 3 armies.
+        int minNumTerritories = 9;
+        int threeTerr = 3;
+        if(listOfTerritories.size() <= minNumTerritories){
             numberOfReinforcement = 3;
         }
         else {
-            numberOfReinforcement = (int) listOfTerritories.size() / 3;
+            numberOfReinforcement = listOfTerritories.size() / threeTerr;
         }
         for (Continent continent: listOfContinents) {
             numberOfReinforcement += continent.getNumberOfReinforcement();
@@ -203,20 +209,20 @@ public class Player {
      * @param territory Territory to place troops
      * @param numberOfReinforcement Number of troops to place
     *
-    * @return boolean
+    * @return boolean Returns true if can place reinforcement and false otherwise.
      */
     public boolean canPlaceReinforcement(Territory territory, int numberOfReinforcement){
-        if(numberOfReinforcement <=0 ){
+        int noReinforcements = 0; //no reinforcements for player to place
+        if(numberOfReinforcement <= noReinforcements ){ //checks if player has any reinforcements left
             return false;
         }
-        else if(numberOfReinforcement > getReinforcement() ){
+        else if(numberOfReinforcement > getReinforcement() ){ //check if number of reinforcements to be placed are more than what player has
             return false;
         }
-        else if(hasTerritory(territory)){
+        else if(hasTerritory(territory)){ //check if player owns territory.
             return true;
         }
         else{
-            System.out.println("You do not own this territory");
             return false;
         }
     }
@@ -354,7 +360,7 @@ public class Player {
     /**
      * move troops from one territory to another territory
      *
-     * @param giving Territroy giving troops
+     * @param giving Territory giving troops
      * @param receiving Territory receiving troops
      * @param numOfTroops Number of troops
      * @return boolean if moved was successful

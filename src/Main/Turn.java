@@ -39,7 +39,7 @@ public class Turn {
      * @return true if turn is complete, false otherwise.
      */
     public boolean isTurnComplete(Player player){
-        if(player.getReinforcements()==0){
+        if(player.getRemainingReinforcements()==0){
             return true;
         }else{
             return false;

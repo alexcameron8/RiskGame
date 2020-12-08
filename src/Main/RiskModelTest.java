@@ -52,7 +52,7 @@ public class RiskModelTest {
         rm.addPlayer(new Player("Thomas", Color.BLACK, null));
         rm.addPlayer(new Player("Alex", Color.RED, null));
         rm.play();
-        assertNotEquals(rm.getActivePlayer().getReinforcements(),0);
+        assertNotEquals(rm.getActivePlayer().getRemainingReinforcements(),0);
     }
     @Test
     public void testPlaceReinforcements(){
@@ -60,11 +60,11 @@ public class RiskModelTest {
         rm.addPlayer(new Player("Thomas", Color.BLACK, null));
         rm.addPlayer(new Player("Alex", Color.RED, null));
         rm.play();
-        int previous = rm.getActivePlayer().getReinforcements();
+        int previous = rm.getActivePlayer().getRemainingReinforcements();
         int previousTerr = rm.getActivePlayer().getListOfTerritories().get(0).getSoldiers();
         rm.getActivePlayer().placeReinforcement(rm.getActivePlayer().getListOfTerritories().get(0),previous-1);
         //Test the number of Reinforcements left
-        assertEquals(1,rm.getActivePlayer().getReinforcements());
+        assertEquals(1,rm.getActivePlayer().getRemainingReinforcements());
         //Check the number of placed Reinforcments
         assertEquals(previousTerr+previous-1,rm.getActivePlayer().getListOfTerritories().get(0).getSoldiers());
         //Check can't place more
@@ -112,7 +112,7 @@ public class RiskModelTest {
         rm.addPlayer(new Player("Thomas", Color.BLACK, null));
         rm.addPlayer(new Player("Alex", Color.RED, null));
         rm.play();
-        rm.getActivePlayer().placeReinforcement(rm.getActivePlayer().getListOfTerritories().get(0),rm.getActivePlayer().getReinforcements());
+        rm.getActivePlayer().placeReinforcement(rm.getActivePlayer().getListOfTerritories().get(0),rm.getActivePlayer().getRemainingReinforcements());
         int previousActivePlayerId = rm.getActivePlayerID();
         rm.advanceTurn();
         assertNotEquals(previousActivePlayerId,rm.getActivePlayerID());
@@ -125,7 +125,7 @@ public class RiskModelTest {
         rm.addPlayer(new Player("Alex", Color.RED, null));
         rm.addPlayer(new Player("Ben", Color.BLUE, null));
         rm.play();
-        rm.getActivePlayer().placeReinforcement(rm.getActivePlayer().getListOfTerritories().get(0),rm.getActivePlayer().getReinforcements());
+        rm.getActivePlayer().placeReinforcement(rm.getActivePlayer().getListOfTerritories().get(0),rm.getActivePlayer().getRemainingReinforcements());
         rm.getActivePlayer().transferAllTerritory(rm.getPlayers().get(rm.getActivePlayerID()+1==rm.getPlayers().size()? 0:rm.getActivePlayerID()+1));
         int previousNumberOfPlayers = rm.getPlayers().size();
         rm.advanceTurn();
@@ -138,7 +138,7 @@ public class RiskModelTest {
         rm.addPlayer(new Player("Thomas", Color.BLACK, null));
         rm.addPlayer(new Player("Alex", Color.RED, null));
         rm.play();
-        rm.getActivePlayer().placeReinforcement(rm.getActivePlayer().getListOfTerritories().get(0),rm.getActivePlayer().getReinforcements());
+        rm.getActivePlayer().placeReinforcement(rm.getActivePlayer().getListOfTerritories().get(0),rm.getActivePlayer().getRemainingReinforcements());
         rm.getActivePlayer().transferAllTerritory(rm.getPlayers().get(rm.getActivePlayerID()+1==rm.getPlayers().size()? 0:rm.getActivePlayerID()+1));
         int previousNumberOfPlayers = rm.getPlayers().size();
         rm.advanceTurn();

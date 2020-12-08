@@ -77,7 +77,7 @@ public class ActionBarModel {
         if(riskModel.getActivePlayer().canPlaceReinforcement(territory,numOfTroops)) {
             riskModel.getActivePlayer().placeReinforcement(territory, numOfTroops);
         }
-        if(riskModel.getActivePlayer().getReinforcements()==0)
+        if(riskModel.getActivePlayer().getRemainingReinforcements()==0)
         for(ActionBarView abv : actionBarViews){
             abv.handleTroopDeployment(new ActionBarEvent(this,true));
         }

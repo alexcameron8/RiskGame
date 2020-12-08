@@ -20,7 +20,8 @@ public class ActionBarController implements ActionListener, MapViewListener {
     private ActionBarModel abm;
     private int numOfTroops,numofAttackers, numMoveTroopsSelected;
     //Different states are used to determine what variables are updated when the user clicks the territories on the map
-    private String state = "Default";
+    enum State {DEFAULT,PLACE,ATTACKER,DEFENDER, currTerritory,moveTerritory};
+    private State state = State.DEFAULT;
     private Territory territory, attackerTerritory,defenderTerritory, currTerritory, moveTerritory;
     private Player defender;
     private boolean attackConfirm, defendConfirm,hasNumTroopsSelected,hasTerritorySelected, hasNumMoveTroopsSelected, hasCurrConfirm, hasMoveConfirm, troopsMoved;
@@ -49,7 +50,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
         removeMessageBar();
         switch (e.getActionCommand()) {
             case "place":
-                state = "Place";
+                state = State.PLACE;
                 //Clears all previous flags for attacking
                 hasNumTroopsSelected = false;
                 hasTerritorySelected = false;
@@ -61,7 +62,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
                 }
                 break;
             case "attack":  //If attack button is clicked then the Attack info bar appears on GUI
-                state = "Attacker";
+                state = State.ATTACKER;
                 if (!abv.getAttackFlag()) {
                     abv.removeDeployTroopsBar();
                     abv.attackInfo();
@@ -103,7 +104,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
                             abv.getRiskView().getTerritoryInfoView().setInfo(territory);
                             hasTerritorySelected = false;
                             hasNumTroopsSelected = false;
-                            state = "Default";
+                            state = State.DEFAULT;
                         } else {
                             abv.setMessage("Select number of reinforcements to deploy.");
                         }
@@ -117,16 +118,16 @@ public class ActionBarController implements ActionListener, MapViewListener {
             case "confirmAttack":  //confirms the attacker territory and changes state to defender territory
                 if (attackerTerritory != null) {
                     attackConfirm = true;
-                    state = "Defender";
+                    state = State.DEFENDER;
                 }
                 break;
             case "cancelDefend":  //cancels the confirmation of the defender territory and changes state to defender
                 defendConfirm = false;
-                state = "Defender";
+                state = State.DEFENDER;
                 break;
             case "cancelAttack":  //cancels the confirmation of the attacker territory and changes state to attacker
                 attackConfirm = false;
-                state = "Attacker";
+                state = State.ATTACKER;
                 break;
             case "attackTroops":  //gets the number of troops to attack with from JComboBox
                 if ((Integer) abv.getAttackNumberOfTroops().getSelectedItem() != null) {
@@ -151,47 +152,47 @@ public class ActionBarController implements ActionListener, MapViewListener {
                             abv.setMessage(attackerTerritory.getOwner().getName() + ", failed to conquer " + defender.getName() + "'s territory, " + defenderTerritory.getName() + ".");
                         }
                         abv.removeAttackBar();
-                        state = "Default";
+                        state = State.DEFAULT;
                     } else { //missing fields for attack
                         abv.setMessage("All of the attack information has not yet been confirmed.");
                     }
                 }
                 break;
             case "backAttack":  //exits the attack info bar
-                state = "Default";
+                state = State.DEFAULT;
                 abv.removeAttackBar();
                 break;
             case "backDeploy":  //exits the deploy troops info bar
-                state = "Default";
+                state = State.DEFAULT;
                 abv.removeDeployTroopsBar();
                 break;
             case "fortify":  //Changes ActionBar to fortify
                 abv.fortifyTroops();
-                state = "currTerritory";
+                state = State.currTerritory;
                 break;
             case "lockMove1":
                 if (currTerritory != null) {
                     hasCurrConfirm = true;
-                    state = "moveTerritory";
+                    state = State.moveTerritory;
                 } else {
                     abv.setMessage("You must choose a valid territory to move troops from.");
                 }
                 break;
             case "cancelMove1":
                 hasCurrConfirm = false;
-                state = "currTerritory";
+                state = State.currTerritory;
                 break;
             case "lockMove2":
                 if (moveTerritory != null) {
                     hasMoveConfirm = true;
-                    state = "Default";
+                    state = State.DEFAULT;
                 } else {
                     abv.setMessage("You must choose a valid territory to move troops to.");
                 }
                 break;
             case "cancelMove2":
                 hasMoveConfirm = false;
-                state = "moveTerritory";
+                state = State.moveTerritory;
                 break;
             case "moveTroops": //move troop button
                 if (troopsMoved) {
@@ -235,7 +236,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
     public void handleMapUpdate(MapEvent e) {
         if (e instanceof MapTerritoryEvent) {
             removeMessageBar();
-            if (state.equals("Place")) { //current state is for placing troops
+            if (state==State.PLACE) { //current state is for placing troops
                 if (((MapTerritoryEvent) e).getMapTerritory().getOwner() == abm.getRiskModel().getActivePlayer()) { //checks that territory clicked is owned by the current turn player
                     hasTerritorySelected = true;
                     territory = ((MapTerritoryEvent) e).getMapTerritory(); //sets territory to clicked territory
@@ -245,7 +246,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
                 } else {
                     abv.setMessage(((MapTerritoryEvent) e).getMapTerritory().getName() + " does not belong to you.");
                 }
-            } else if (state.equals("Attacker")) {  //current state is Attacking
+            } else if (state==State.ATTACKER) {  //current state is Attacking
                 if (((MapTerritoryEvent) e).getMapTerritory().getOwner() == abm.getRiskModel().getActivePlayer()) {
                     attackerTerritory = ((MapTerritoryEvent) e).getMapTerritory(); //sets attacker territory to territory that is clicked
                     abv.setAttackerInfo(); //sets Gui attacker territory info
@@ -256,7 +257,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
                     abv.setAttackerInfo();
                     abv.setMessage(((MapTerritoryEvent) e).getMapTerritory().getName() + " does not belong to you. Choose a Territory you own occupied with at least 2 troops.");
                 }
-            } else if (state.equals("Defender")) { //current state is the defending territory for attack simulation
+            } else if (state==State.DEFENDER) { //current state is the defending territory for attack simulation
                 if(attackerTerritory != null) {
                 for (Territory ter : attackerTerritory.getNeighbours()) {
                     if (ter.equals(((MapTerritoryEvent) e).getMapTerritory())) {
@@ -279,7 +280,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
                 }else{
                     abv.setMessage("Choose the territory you want to attack with first!");
                 }
-            }else if(state.equals("currTerritory") && !troopsMoved){
+            }else if(state==State.currTerritory && !troopsMoved){
                 if (((MapTerritoryEvent) e).getMapTerritory().getOwner() == abm.getRiskModel().getActivePlayer()) {
                     currTerritory = ((MapTerritoryEvent) e).getMapTerritory();
                     abv.setNumberMoveTroopsRange();
@@ -290,7 +291,7 @@ public class ActionBarController implements ActionListener, MapViewListener {
                     }
                 }
                 abv.setCurrTerrInfo();
-            }else if(state.equals("moveTerritory") && !troopsMoved) {
+            }else if(state==State.moveTerritory && !troopsMoved) {
                 if (currTerritory != null) {
                     if (((MapTerritoryEvent) e).getMapTerritory().isNeighbour(currTerritory.getName())) {
                         if (((MapTerritoryEvent) e).getMapTerritory().getOwner() == abm.getRiskModel().getActivePlayer()) {
