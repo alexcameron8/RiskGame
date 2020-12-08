@@ -19,7 +19,7 @@ public class RiskModel implements Serializable {
     public static final int MIN_NUMBER_PLAYERS = 2;
     private ArrayList<Player> players;
     private int activePlayerID;
-    private Map map;
+    private Map map = null;
     private List<RiskViewListener> riskViewListeners;
     private Player winner = null;
     private Player eliminatedPlayer = null;
@@ -28,11 +28,18 @@ public class RiskModel implements Serializable {
      * This constructor initializes the world map, the list of players and creates a list of listeners
      */
     public RiskModel(){
-        MapImport mapImport = new MapImport(getClass().getResourceAsStream("resources/worldmap.json"));
-        players = new ArrayList<>();
+        players = new ArrayList<Player>();
         activePlayerID = 0;
-        map = mapImport.getMap();
         riskViewListeners = new ArrayList<>();
+    }
+
+    /**
+     * Load a map by its path
+     * @param mapPath Path of the map to load
+     */
+    public void loadMap(String mapPath){
+        MapImport mapImport = new MapImport(getClass().getResourceAsStream(mapPath));
+        map = mapImport.getMap();
     }
 
     /**

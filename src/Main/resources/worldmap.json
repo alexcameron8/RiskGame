@@ -1,6 +1,9 @@
 {
   "name": "World Map",
   "backgroundColor": [209, 246, 255],
+  "decorativeShapes": [
+
+  ],
   "waterCrossings": [
     "M 549.68504,63.878443 599.78721,64.439947",
     "M 9.3351158,54.1846 0.35406565,54.172045",

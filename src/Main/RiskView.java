@@ -98,6 +98,7 @@ public class RiskView extends JFrame implements RiskViewListener{
         welcomeScreen.dispose();
         InitializeView initializeGame = new InitializeView();
         JOptionPane.showConfirmDialog(this, initializeGame, "Initialize Game ", JOptionPane.OK_CANCEL_OPTION);
+        riskModel.loadMap(initializeGame.getMapPath());
         ArrayList<String> nameOfPlayers = initializeGame.getNameOfPlayers();
         ArrayList<Color> coloursOfPlayers = initializeGame.getPlayersColour();
         ArrayList<Boolean> isPlayerAI = initializeGame.getIsPlayerAI();
