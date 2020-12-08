@@ -29,6 +29,7 @@ public class RiskController implements ActionListener {
         }else if(e.getActionCommand().equals("newGame")){
             riskView.setupInit();
         }else if(e.getActionCommand().equals("start")){
+            riskView.setupPlayers();
             riskView.setupView();
         }else if(e.getActionCommand().equals("cancel")){
             riskView.disposeSetup();

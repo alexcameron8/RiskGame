@@ -23,6 +23,7 @@ public class RiskView extends JFrame implements RiskViewListener{
     private NotificationView notificationView;
     private MapView mapView;
     private RiskController rc;
+    private InitializeView initializeGame;
 
     /**
      * Initializes the JFrame containing all the different components.
@@ -114,10 +115,7 @@ public class RiskView extends JFrame implements RiskViewListener{
 
         initializeFrame = new JFrame("Initialize Game");
         initializeFrame.setLayout(new BorderLayout());
-        InitializeView initializeGame = new InitializeView();
-        JOptionPane.showConfirmDialog(this, initializeGame, "Initialize Game ", JOptionPane.OK_CANCEL_OPTION);
-
-
+        initializeGame = new InitializeView();
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
         JButton startGame = new JButton("Continue to Game");
@@ -144,6 +142,8 @@ public class RiskView extends JFrame implements RiskViewListener{
         initializeFrame.setLocationRelativeTo(null);
         initializeFrame.setVisible(true);
 
+    }
+    public void setupPlayers(){
         ArrayList<String> nameOfPlayers = initializeGame.getNameOfPlayers();
         ArrayList<Color> coloursOfPlayers = initializeGame.getPlayersColour();
         ArrayList<Boolean> isPlayerAI = initializeGame.getIsPlayerAI();
@@ -154,13 +154,12 @@ public class RiskView extends JFrame implements RiskViewListener{
             } else {
                 riskModel.addPlayer(new AIEasy(nameOfPlayers.get(i),coloursOfPlayers.get(i), this));
             }
-
         }
+        riskModel.loadMap(initializeGame.getMapPath());
     }
 
     public void setupView(){
         initializeFrame.dispose();
-        riskModel.loadMap(initializeGame.getMapPath());
         this.notificationView = new NotificationView();
         riskModel.play();
 
