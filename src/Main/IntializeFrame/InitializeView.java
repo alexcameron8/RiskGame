@@ -16,7 +16,6 @@ public class InitializeView extends JPanel implements InitializeViewListener {
 
     public static final String ACTION_MAP_SELECT = "mapSelectAction";
 
-    private JComboBox mapSelect;
     private JPanel[] playerConfigPanel;
     private JPanel playersConfigPanel;
     private final InitializeModel im;
@@ -43,6 +42,15 @@ public class InitializeView extends JPanel implements InitializeViewListener {
         im.addInitializeView(this);
         ic = new InitializeController(im);
 
+        createMapSelectRequest();
+        
+        createNumberOfPlayersRequest();
+
+        createPlayersInfoRequest();
+    }
+
+    private void createMapSelectRequest(){
+        JComboBox mapSelect;
         mapSelect = new JComboBox(InitializeModel.AVAILABLE_MAPS.keySet().toArray(new String[0]));
         mapSelect.setPreferredSize(new Dimension(this.getPreferredSize().width,this.getPreferredSize().height/(MAX_NUMBER_PLAYERS+1)));
         mapSelect.setBorder(BorderFactory.createTitledBorder("Select map:"));
@@ -50,10 +58,6 @@ public class InitializeView extends JPanel implements InitializeViewListener {
         mapSelect.setActionCommand(ACTION_MAP_SELECT);
         mapSelect.setSelectedItem(InitializeModel.DEFAULT_MAP);
         this.add(mapSelect);
-        
-        createNumberOfPlayersRequest();
-
-        createPlayersInfoRequest();
     }
 
     private void createPlayersInfoRequest(){
