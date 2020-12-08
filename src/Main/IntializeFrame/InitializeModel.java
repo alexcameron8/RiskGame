@@ -13,8 +13,16 @@ import static Main.RiskModel.MIN_NUMBER_PLAYERS;
  * @author Thomas
  */
 public class InitializeModel {
+    public static final String DEFAULT_MAP = "Standard";
 
     private List<InitializeView> initializeViews;
+
+    // Available game maps
+    public static final HashMap<String, String> AVAILABLE_MAPS = new HashMap<>()
+    {{
+        put("Standard", "resources/worldmap.json");
+        put("Space", "resources/spacemap.json");
+    }};
 
     //default colours for the players
     public static final HashMap<String, Color> COLOURS = new HashMap<>()
@@ -30,10 +38,13 @@ public class InitializeModel {
     private ArrayList<PlayerInfo> playersInfo;
     private int numberOfPlayers;
 
+    private String mapPath;
+
     /**
      * Constructor for InitializeModel
      */
     public InitializeModel(){
+        mapPath = AVAILABLE_MAPS.get(DEFAULT_MAP);
         initializeViews = new ArrayList<>();
         playersInfo = new ArrayList<>();
         for(int i = 0; i < MAX_NUMBER_PLAYERS; i++){
@@ -174,6 +185,22 @@ public class InitializeModel {
             }
         }
         return new ArrayList<>(namesOfPlayers.subList(0,numberOfPlayers));
+    }
+
+    /**
+     * Get the path of the currently selected map
+     * @return path of the selected map
+     */
+    public String getMapPath() {
+        return mapPath;
+    }
+
+    /**
+     * Set the mapPath to the path of a given map name
+     * @param map Map name to set path to
+     */
+    public void setMapPath(String map) {
+        this.mapPath = AVAILABLE_MAPS.get(map);
     }
 }
 
