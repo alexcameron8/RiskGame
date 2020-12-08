@@ -21,6 +21,7 @@ public class InitializeModel {
     public static final HashMap<String, String> AVAILABLE_MAPS = new HashMap<>() {{
         put("Standard", "resources/worldmap.json");
         put("Space", "resources/spacemap.json");
+        put("Standard America Unreachable", "resources/worldmapamericaunreachable.json");
     }};
 
     //default colours for the players

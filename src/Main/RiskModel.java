@@ -1,6 +1,8 @@
 package Main;
 
 import Main.IntializeFrame.InitializeModel;
+import Map.Exceptions.TerritoryHasNoNeighbourException;
+import Map.Exceptions.TerritoryIsDisconnectedException;
 import Map.Map;
 import Player.AI.AIEasy;
 import Player.Player;
@@ -46,7 +48,7 @@ public class RiskModel implements Serializable {
      * Load a map by its path
      * @param mapPath Path of the map to load
      */
-    public void loadMap(String mapPath){
+    public void loadMap(String mapPath) throws TerritoryHasNoNeighbourException, TerritoryIsDisconnectedException {
         MapImport mapImport = new MapImport(getClass().getResourceAsStream(mapPath));
         map = mapImport.getMap();
     }
