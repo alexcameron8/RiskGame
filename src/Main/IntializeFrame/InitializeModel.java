@@ -18,15 +18,13 @@ public class InitializeModel {
     private List<InitializeView> initializeViews;
 
     // Available game maps
-    public static final HashMap<String, String> AVAILABLE_MAPS = new HashMap<>()
-    {{
+    public static final HashMap<String, String> AVAILABLE_MAPS = new HashMap<>() {{
         put("Standard", "resources/worldmap.json");
         put("Space", "resources/spacemap.json");
     }};
 
     //default colours for the players
-    public static final HashMap<String, Color> COLOURS = new HashMap<>()
-    {{
+    public static final HashMap<String, Color> COLOURS = new HashMap<>() {{
         put("Red", new Color(255, 123, 144));
         put("Green", new Color(155, 234, 205));
         put("Blue", new Color(140, 186, 255));
@@ -39,15 +37,16 @@ public class InitializeModel {
     private int numberOfPlayers;
 
     private String mapPath;
+    private String mapName;
 
     /**
      * Constructor for InitializeModel
      */
-    public InitializeModel(){
+    public InitializeModel() {
         mapPath = AVAILABLE_MAPS.get(DEFAULT_MAP);
         initializeViews = new ArrayList<>();
         playersInfo = new ArrayList<>();
-        for(int i = 0; i < MAX_NUMBER_PLAYERS; i++){
+        for (int i = 0; i < MAX_NUMBER_PLAYERS; i++) {
             playersInfo.add(new PlayerInfo(null, null, false));
         }
         numberOfPlayers = MIN_NUMBER_PLAYERS;
@@ -58,7 +57,7 @@ public class InitializeModel {
      *
      * @param iv
      */
-    public void addInitializeView(InitializeView iv){
+    public void addInitializeView(InitializeView iv) {
         initializeViews.add(iv);
     }
 
@@ -67,9 +66,10 @@ public class InitializeModel {
      *
      * @param numberOfPlayers
      */
-    public void setPlayerNumbers(int numberOfPlayers){
+    public void setPlayerNumbers(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
-        for (InitializeView iv: initializeViews) iv.handleInitializeUpdate(new InitializeEvent(this,numberOfPlayers,null));
+        for (InitializeView iv : initializeViews)
+            iv.handleInitializeUpdate(new InitializeEvent(this, numberOfPlayers, null));
     }
 
     /**
@@ -78,8 +78,8 @@ public class InitializeModel {
      * @param playerNumber
      * @param playerName
      */
-    public void setPlayerName(int playerNumber, String playerName){
-        playersInfo.get(playerNumber-1).setName(playerName);
+    public void setPlayerName(int playerNumber, String playerName) {
+        playersInfo.get(playerNumber - 1).setName(playerName);
     }
 
     /**
@@ -88,8 +88,8 @@ public class InitializeModel {
      * @param playerNumber
      * @param playerColour
      */
-    public void setPlayerColour(int playerNumber, String playerColour){
-        playersInfo.get(playerNumber-1).setColor(COLOURS.get(playerColour));
+    public void setPlayerColour(int playerNumber, String playerColour) {
+        playersInfo.get(playerNumber - 1).setColor(COLOURS.get(playerColour));
     }
 
     /**
@@ -98,8 +98,8 @@ public class InitializeModel {
      * @param playerNumber
      * @param playerIsAI
      */
-    public void setPlayerisAI(int playerNumber, boolean playerIsAI){
-        playersInfo.get(playerNumber-1).setAI(playerIsAI);
+    public void setPlayerisAI(int playerNumber, boolean playerIsAI) {
+        playersInfo.get(playerNumber - 1).setAI(playerIsAI);
     }
 
     /**
@@ -107,7 +107,7 @@ public class InitializeModel {
      *
      * @return int
      */
-    public int getNumberOfPlayers(){
+    public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
@@ -116,12 +116,12 @@ public class InitializeModel {
      *
      * @return ArrayList<boolean>
      */
-    public ArrayList<Boolean> getPlayersIsAI(){
+    public ArrayList<Boolean> getPlayersIsAI() {
         ArrayList<Boolean> playersIsAI = new ArrayList<>();
-        for(PlayerInfo playerInfo: playersInfo){
+        for (PlayerInfo playerInfo : playersInfo) {
             playersIsAI.add(playerInfo.isAI());
         }
-        return new ArrayList<>(playersIsAI.subList(0,numberOfPlayers));
+        return new ArrayList<>(playersIsAI.subList(0, numberOfPlayers));
     }
 
     /**
@@ -129,28 +129,27 @@ public class InitializeModel {
      *
      * @return ArrayList<Color>
      */
-    public ArrayList<Color> getPlayersColours(){
+    public ArrayList<Color> getPlayersColours() {
         ArrayList<Color> playersColours = new ArrayList<>();
-        for(PlayerInfo playerInfo: playersInfo){
-            if(!playersColours.contains(playerInfo.getColor())) {
+        for (PlayerInfo playerInfo : playersInfo) {
+            if (!playersColours.contains(playerInfo.getColor())) {
                 playersColours.add(playerInfo.getColor());
-            }
-            else{
+            } else {
                 playersColours.add(null);
             }
         }
 
-        for(int i = 0; i < playersColours.size(); i++){
-            if(playersColours.get(i) == null){
-                for(Color colour: COLOURS.values()){
-                    if(!playersColours.contains(colour)){
+        for (int i = 0; i < playersColours.size(); i++) {
+            if (playersColours.get(i) == null) {
+                for (Color colour : COLOURS.values()) {
+                    if (!playersColours.contains(colour)) {
                         playersColours.set(i, colour);
                         break;
                     }
                 }
             }
         }
-        return new ArrayList<>(playersColours.subList(0,numberOfPlayers));
+        return new ArrayList<>(playersColours.subList(0, numberOfPlayers));
     }
 
     /**
@@ -160,113 +159,123 @@ public class InitializeModel {
      */
     public ArrayList<String> getNamesOfPlayers() {
         ArrayList<String> namesOfPlayers = new ArrayList<>();
-        for(PlayerInfo playerInfo: playersInfo){
-            if(playerInfo.getName() == null){
+        for (PlayerInfo playerInfo : playersInfo) {
+            if (playerInfo.getName() == null) {
                 namesOfPlayers.add("Player");
-            }
-            else
+            } else
                 namesOfPlayers.add(playerInfo.getName());
 
         }
 
-        for(String playerName: namesOfPlayers){
+        for (String playerName : namesOfPlayers) {
             ArrayList<Integer> positionOfSame = new ArrayList<>();
 
-            for(int i = 0; i < namesOfPlayers.size(); i++){
-                if(namesOfPlayers.get(i).equals(playerName)){
+            for (int i = 0; i < namesOfPlayers.size(); i++) {
+                if (namesOfPlayers.get(i).equals(playerName)) {
                     positionOfSame.add(i);
                 }
             }
 
-            if(positionOfSame.size()>1) {
+            if (positionOfSame.size() > 1) {
                 for (int i = 0; i < positionOfSame.size(); i++) {
                     namesOfPlayers.set(positionOfSame.get(i), namesOfPlayers.get(positionOfSame.get(i)) + " " + (i + 1));
                 }
             }
         }
-        return new ArrayList<>(namesOfPlayers.subList(0,numberOfPlayers));
+        return new ArrayList<>(namesOfPlayers.subList(0, numberOfPlayers));
     }
 
     /**
      * Get the path of the currently selected map
+     *
      * @return path of the selected map
      */
     public String getMapPath() {
         return mapPath;
     }
 
+    public void setMapName(String mapName){
+        this.mapName = mapName;
+    }
+    public String getMapName(){
+        return mapName;
+    }
     /**
      * Set the mapPath to the path of a given map name
+     *
      * @param map Map name to set path to
      */
     public void setMapPath(String map) {
         this.mapPath = AVAILABLE_MAPS.get(map);
     }
-}
 
-/**
- * this class is for the chosen info of a player
- * @author Thomas
- */
-class PlayerInfo{
-
-    private String name;
-    private Color color;
-    private boolean isAI;
 
     /**
-     * constructor for PlayerInfo
-     * @param name
-     * @param color
-     * @param isAI
-     */
-    public PlayerInfo(String name, Color color, boolean isAI){
-        this.color=color;
-        this.name=name;
-        this.isAI = isAI;
-    }
-
-    /**
-     * get the name of the player
+     * this class is for the chosen info of a player
      *
-     * @return
+     * @author Thomas
      */
-    public String getName() {
-        return name;
-    }
+    class PlayerInfo {
 
-    /**
-     * set the name of the player
-     *
-     * @param name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+        private String name;
+        private Color color;
+        private boolean isAI;
 
-    /**
-     * get the colour of the player
-     *
-     * @return
-     */
-    public Color getColor() {
-        return color;
-    }
+        /**
+         * constructor for PlayerInfo
+         *
+         * @param name
+         * @param color
+         * @param isAI
+         */
+        public PlayerInfo(String name, Color color, boolean isAI) {
+            this.color = color;
+            this.name = name;
+            this.isAI = isAI;
+        }
 
-    /**
-     * set the colour of the player
-     *
-     * @param color
-     */
-    public void setColor(Color color) {
-        this.color = color;
-    }
+        /**
+         * get the name of the player
+         *
+         * @return
+         */
+        public String getName() {
+            return name;
+        }
 
-    public boolean isAI() {
-        return isAI;
-    }
+        /**
+         * set the name of the player
+         *
+         * @param name
+         */
+        public void setName(String name) {
+            this.name = name;
+        }
 
-    public void setAI(boolean AI) {
-        isAI = AI;
+        /**
+         * get the colour of the player
+         *
+         * @return
+         */
+        public Color getColor() {
+            return color;
+        }
+
+        /**
+         * set the colour of the player
+         *
+         * @param color
+         */
+        public void setColor(Color color) {
+            this.color = color;
+        }
+
+        public boolean isAI() {
+            return isAI;
+        }
+
+        public void setAI(boolean AI) {
+            isAI = AI;
+        }
     }
 }
