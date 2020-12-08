@@ -6,19 +6,19 @@ import Player.Player;
 import Map.*;
 
 import java.awt.*;
+import java.io.*;
 import java.util.*;
 import java.util.List;
 /**
  * This class is the risk model which plays the risk game
  */
-public class RiskModel {
+public class RiskModel implements Serializable {
 
     public static final Color BACKGROUND =  new Color(163,214,255);
     public static final int MAX_NUMBER_PLAYERS = 6;
     public static final int MIN_NUMBER_PLAYERS = 2;
     private ArrayList<Player> players;
     private int activePlayerID;
-    private Turn currentTurn;
     private Map map = null;
     private List<RiskViewListener> riskViewListeners;
     private Player winner = null;
@@ -76,54 +76,69 @@ public class RiskModel {
             activePlayerID = 0;
         }
     }
+
     /**
      * This method creates a new Turn instance and changes which player is currently playing the game.
      */
     public void advanceTurn(){
-        if(currentTurn.isTurnComplete(getActivePlayer())){
-            for(Player player: players){
-                if(player.getListOfTerritories().size()==0){
-                    if(players.size() == 2){
-                        winner = getActivePlayer();
-                        for(RiskViewListener riskViewListener : riskViewListeners){
-                            riskViewListener.handleTurnUpdate(new RiskEvent (this,activePlayerID,players, currentTurn,winner,eliminatedPlayer));
-                        }
-                        return;
-                    }else {
-                        eliminatedPlayer = player;
-                        if (players.indexOf(player) <= activePlayerID) {
-                            activePlayerID--;
-                        }
-                        players.remove(eliminatedPlayer);
-                        break;
-                    }
-                }
-            }
-            if (activePlayerID + 1 < players.size()) {
-                activePlayerID++;
-                currentTurn = new Turn(players.get(activePlayerID));
-                if(getActivePlayer() instanceof AIEasy){
-                    currentTurn.setNumberOfReinforcements(0);
-                    ((AIEasy) getActivePlayer()).advanceTurn();
-                }
-            } else {
-                activePlayerID = 0;
-                currentTurn = new Turn(players.get(activePlayerID));
-                if(getActivePlayer() instanceof AIEasy){
-                    currentTurn.setNumberOfReinforcements(0);
-                    ((AIEasy) getActivePlayer()).advanceTurn();
-                }
-            }
+        //checks if a player has won or a player is eliminated.
+        isPlayerEvent();
 
+        if(activePlayerID + 1 < players.size()) {
+            activePlayerID++;
+            getActivePlayer().getReinforcement();
+            getActivePlayer().advanceTurn();
+        } else {
+            activePlayerID = 0;
+            getActivePlayer().getReinforcement();
+            getActivePlayer().advanceTurn();
         }
+
         for(RiskViewListener riskViewListener : riskViewListeners){
-            riskViewListener.handleTurnUpdate(new RiskEvent (this,activePlayerID,players, currentTurn,winner,eliminatedPlayer));
+            riskViewListener.handleTurnUpdate(new RiskEvent (this,activePlayerID,players,winner,eliminatedPlayer));
         }
         //if a player was eliminated last round clear the player before continuing
         if(eliminatedPlayer !=null){
             eliminatedPlayer = null;
         }
     }
+
+    public void hasWinner() {
+        if (players.size() == 2) { //if only 2 players left
+            winner = getActivePlayer();
+            for (RiskViewListener riskViewListener : riskViewListeners) { //update listeners
+                riskViewListener.handleTurnUpdate(new RiskEvent(this, activePlayerID, players, winner, eliminatedPlayer));
+            }
+            return;
+        }
+    }
+
+    public void hasElimination(Player player){
+        eliminatedPlayer = player;
+        if (players.indexOf(player) <= activePlayerID) {
+            activePlayerID--;
+        }
+        players.remove(eliminatedPlayer);
+    }
+
+    /**
+     * This method checks before the next turn is complete if a player has either won or a player has been eliminated
+     * by checking the size of each players list of territories. If a player has 0 territories that means that specific
+     * player is eliminated from the game or there is a winner crowned.
+     */
+    public void isPlayerEvent(){
+        if(getActivePlayer().isTurnComplete()){
+            for(Player player: players){
+                if(player.getListOfTerritories().size()==0){ //there is a winner of eliminated player because someone does not own any territories
+                    hasWinner();
+                    hasElimination(player);
+                    break;
+                }
+            }
+        }
+    }
+
+
     /**
      * This method gets the current player whos turn it is.
      * @return The current player who's turn it is.
@@ -159,7 +174,6 @@ public class RiskModel {
                 return player;
             }
         }
-
         return null;
     }
 
@@ -215,6 +229,49 @@ public class RiskModel {
 
     }
 
+    public void save(String fileName) {
+        File f = new File(fileName);
+        try {
+            FileOutputStream file = new FileOutputStream(fileName);
+            ObjectOutputStream out = new ObjectOutputStream(file);
+
+            out.writeObject(players);
+
+            out.close();
+            file.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public RiskModel load(String fileName){
+        try
+        {
+            FileInputStream file = new FileInputStream(fileName);
+            ObjectInputStream in = new ObjectInputStream(file);
+
+            RiskModel riskModel = (RiskModel) in.readObject();
+
+            in.close();
+            file.close();
+            return riskModel;
+        }
+
+        catch(IOException ex)
+        {
+            System.out.println("IOException is caught");
+            ex.printStackTrace();
+        }
+
+        catch(ClassNotFoundException ex)
+        {
+            System.out.println("ClassNotFoundException is caught");
+        }
+        return null;
+    }
+
+
+
     /**
      * This method plays the game and initializes the setup of the game.
      */
@@ -224,10 +281,7 @@ public class RiskModel {
         activePlayerID = r.nextInt(players.size());
         assignTroopsRandom();
 
-        currentTurn = new Turn(players.get(activePlayerID));
-        if(getActivePlayer() instanceof AIEasy){
-            currentTurn.setNumberOfReinforcements(0);
-            ((AIEasy) getActivePlayer()).advanceTurn();
-        }
+        getActivePlayer().getReinforcement();
+        getActivePlayer().advanceTurn();
     }
 }

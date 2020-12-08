@@ -412,8 +412,8 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         deployButton.setBackground(lighterBlue);
         deployButton.setEnabled(true);
         //adds the total possible troops to deploy to the JComboBox
-        if(riskModel.getActivePlayer().getReinforcements()>0) {
-            for (int i = 1; i <= riskModel.getActivePlayer().getReinforcements(); i++) {
+        if(riskModel.getActivePlayer().getRemainingReinforcements()>0) {
+            for (int i = 1; i <= riskModel.getActivePlayer().getRemainingReinforcements(); i++) {
                 numberOfTroops.addItem(i);
             }
         }else{ //if the total reinforcement is 0 then the deploy troops button is disabled
@@ -423,7 +423,7 @@ public class ActionBarView extends JPanel implements ActionBarListener {
         //gets images
         try {
             backImg = ImageIO.read(getClass().getResourceAsStream("resources/back.png")).getScaledInstance(20,20, Image.SCALE_DEFAULT);
-        }catch(IOException ex){
+        }catch(IOException ignored){
         }
         //creates back button
         JButton backButton = new JButton(new ImageIcon(backImg));

@@ -12,6 +12,7 @@ public class MenuBarView extends JMenuBar {
     private JMenu gameMenu;
     private JMenu helpMenu;
     private JMenu testMenu;
+    private JMenu fileMenu;
     private MenuBarController mbc;
 
     /**
@@ -31,28 +32,35 @@ public class MenuBarView extends JMenuBar {
      */
     public void initMenu(){
         //create new JMenus
+        fileMenu = new JMenu("File");
         gameMenu = new JMenu("Game Options");
         helpMenu = new JMenu("Help");
         testMenu = new JMenu("Testing");
 
         //Adding to JMenuBar
+        this.add(fileMenu);
         this.add(gameMenu);
         this.add(helpMenu);
         this.add(testMenu);
 
         //Creating JMenuItems
+        JMenuItem saveGame = new JMenuItem("Save Game");
         JMenuItem howToPlay = new JMenuItem("How To Play Risk");
         JMenuItem gameManual = new JMenuItem("Game Manual");
         JMenuItem newGame = new JMenuItem("New Game");
         JMenuItem transferAll = new JMenuItem("Transfer All");
 
         //Add JMenuItems to Menubar
+        fileMenu.add(saveGame);
         gameMenu.add(newGame);
         helpMenu.add(howToPlay);
         helpMenu.add(gameManual);
         testMenu.add(transferAll);
 
         //Adding actionlisteners
+
+        saveGame.addActionListener(mbc);
+        saveGame.setActionCommand("save");
         howToPlay.addActionListener(mbc);
         howToPlay.setActionCommand("howtoplay");
         gameManual.addActionListener(mbc);

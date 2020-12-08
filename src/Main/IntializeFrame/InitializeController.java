@@ -14,11 +14,9 @@ import java.awt.event.ActionListener;
 public class InitializeController implements ActionListener, DocumentListener {
 
     private InitializeModel im;
-    private InitializeView iv;
 
-    public InitializeController(InitializeModel im, InitializeView iv) {
+    public InitializeController(InitializeModel im) {
         this.im = im;
-        this.iv = iv;
     }
 
     /**
@@ -28,12 +26,11 @@ public class InitializeController implements ActionListener, DocumentListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        if (e.getActionCommand().equals("numPlayers")) {
+        if (e.getActionCommand().equals(InitializeView.NUMBER_PLAYERS_NAME)) {
             im.setPlayerNumbers((int) (((JComboBox) e.getSource()).getSelectedItem()));
-        } else if (e.getActionCommand().split(" ")[0].equals("colour")) {
+        } else if (e.getActionCommand().split(" ")[0].equals(InitializeView.COLOUR_NAME)) {
             im.setPlayerColour(Integer.parseInt(e.getActionCommand().split(" ")[1]), (String) ((JComboBox) e.getSource()).getSelectedItem());
-        } else if (e.getActionCommand().split(" ")[0].equals("isAI") && e.getSource() instanceof JCheckBox) {
+        } else if (e.getActionCommand().split(" ")[0].equals(InitializeView.AI_CHECKBOX_NAME) && e.getSource() instanceof JCheckBox) {
             im.setPlayerisAI(Integer.parseInt(e.getActionCommand().split(" ")[1]), ((JCheckBox) e.getSource()).isSelected());
         } else if (e.getActionCommand().equals(InitializeView.ACTION_MAP_SELECT) && e.getSource() instanceof JComboBox) {
             im.setMapPath((String)((JComboBox<String>) e.getSource()).getSelectedItem());

@@ -1,5 +1,6 @@
 package Map;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 /**
@@ -10,7 +11,7 @@ import java.util.HashMap;
  * 101115382
  */
 
-public class Map {
+public class Map{
 
     private HashMap<String, Continent> continents;
     private ArrayList<String> waterCrossings;

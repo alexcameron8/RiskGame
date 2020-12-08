@@ -6,6 +6,7 @@ import Map.Territory;
 import Player.*;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -32,12 +33,12 @@ public class AIEasy extends Player{
     /**
      * Simulates an AI taking their turn
      */
+    @Override
     public void advanceTurn(){
         AIPlaceTroops();
         AIAttack();
         AIMoveTroop();
     }
-
 
     /**
      * This method makes the AI place troops in the best spots
@@ -48,7 +49,7 @@ public class AIEasy extends Player{
 
         Continent targetContinent = targetContinent();
         if(targetContinent == null){
-            placeReinforcement(getListOfTerritories().get(0), getReinforcements());
+            placeReinforcement(getListOfTerritories().get(0), getRemainingReinforcements());
             return;
         }
         for(Territory terr: targetContinent.getTerritories()){
@@ -63,19 +64,19 @@ public class AIEasy extends Player{
                 }
             }
         }
-        if(getReinforcements() != 0){
+        if(getRemainingReinforcements() != 0){
             for(Territory terr : getListOfTerritories()){
                 if(!terr.getContinent().equals(targetContinent) && !hasContinent(terr.getContinent())){
                                         this.riskView.getNotificationView().notifyUser(
-                            this.name + " Placed " + getReinforcements() + " on " + terr,
+                            this.name + " Placed " + getRemainingReinforcements() + " on " + terr,
                             NotificationModel.NotificationType.INFO);
-                    placeReinforcement(terr, getReinforcements());
+                    placeReinforcement(terr, getRemainingReinforcements());
                     return;
                 }
             }
             for(Territory terr : getListOfTerritories()){
                 if(canTerritoryAttack(terr)){
-                    placeReinforcement(terr, getReinforcements());
+                    placeReinforcement(terr, getRemainingReinforcements());
                     break;
                 }
             }
