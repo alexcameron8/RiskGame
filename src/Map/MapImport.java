@@ -1,10 +1,14 @@
 package Map;
 
+import Map.Exceptions.TerritoryHasNoNeighbourException;
+import Map.Exceptions.TerritoryIsDisconnectedException;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * This class creates the map from a Json file
@@ -20,7 +24,7 @@ public class MapImport {
      * Constructor for MapImport which takes a path to a json file and makes the map
      * @param path
      */
-    public MapImport(InputStream path){
+    public MapImport(InputStream path) throws TerritoryHasNoNeighbourException, TerritoryIsDisconnectedException {
         this.territories = new ArrayList<>();
         this.continents = new ArrayList<>();
         this.path = path;
@@ -58,14 +62,94 @@ public class MapImport {
         return null;
     }
 
+    public void DFS(int source, LinkedList<Integer> adjList [], boolean[] visited){
+        visited[source] = true;
+        for(int i = 0; i < adjList[source].size(); i++){
+            int neighbour = adjList[source].get(i);
+            if(visited[neighbour]==false){
+                DFS(neighbour, adjList, visited);
+            }
+        }
+    }
+
+    /**
+     * Much of this method is based on work from
+     * https://algorithms.tutorialhorizon.com/check-if-given-undirected-graph-is-connected-or-not/
+     * and adapted to fit the need of validating an imported map.
+     *
+     * @param territories
+     * @param neighbours
+     * @return
+     */
+    private boolean isMapValid(ArrayList<MapModelTerritory> territories, ArrayList<ArrayList<String>> neighbours) throws TerritoryHasNoNeighbourException, TerritoryIsDisconnectedException {
+
+        // Build a list of territory IDs to be used by the graph
+        // Also check to ensure each territory has at least one neighbour
+        ArrayList<String> territoryIds = new ArrayList<>();
+        for(MapModelTerritory territory: territories){
+            boolean found = false;
+            for(ArrayList<String> pair: neighbours){
+                if(pair.contains(territory.getId())){
+                    found = true;
+                    break;
+                }
+            }
+            if(!found){
+                throw new TerritoryHasNoNeighbourException(territory.getName() + " has no neighbour.");
+            }
+            territoryIds.add(territory.getId());
+        }
+
+        int vertices = territories.size();
+
+        LinkedList<Integer> adjList [] = new LinkedList[vertices];
+        for(int i = 0; i < vertices; i++){
+            adjList[i] = new LinkedList<>();
+        }
+
+        for(ArrayList<String> pairs: neighbours){
+            // Add relation to graph in forward direction
+            adjList[territoryIds.indexOf(pairs.get(0))].addFirst(territoryIds.indexOf(pairs.get(1)));
+            // Add relation to graph in backwards direction
+            adjList[territoryIds.indexOf(pairs.get(1))].addFirst(territoryIds.indexOf(pairs.get(0)));
+        }
+
+        boolean[] visited = new boolean[vertices];
+
+        DFS(0, adjList, visited);
+
+        int count = 0;
+
+        for(int i = 0; i < visited.length; i++){
+            if(visited[i]){
+                count++;
+            } else {
+                throw new TerritoryIsDisconnectedException(territories.get(i).getName() + " is disconnected.");
+            }
+        }
+
+        if(vertices==count){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * create the map from a json file
      */
-    private void populate(){
+    private void populate() throws TerritoryIsDisconnectedException, TerritoryHasNoNeighbourException {
         Gson gson = new Gson();
         MapImportJSONModel mapImportJSONModel = null;
         JsonReader reader = new JsonReader(new InputStreamReader(path));
         mapImportJSONModel = gson.fromJson(reader, MapImportJSONModel.class);
+
+        // Validate Map
+        if(!isMapValid(mapImportJSONModel.getTerritories(), mapImportJSONModel.getNeighbours())){
+            map = null;
+            return;
+        }
+
         for(MapModelContinent mmc: mapImportJSONModel.getContinents()) {
             continents.add(new Continent(mmc.getName(), mmc.getId(), mmc.getNumberOfReinforcement(), mmc.getColor()));
         }
@@ -122,4 +206,5 @@ public class MapImport {
     public Map getMap(){
         return this.map;
     }
+
 }

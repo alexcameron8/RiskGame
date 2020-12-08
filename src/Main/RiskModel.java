@@ -1,6 +1,8 @@
 package Main;
 
 import Main.IntializeFrame.InitializeModel;
+import Map.Exceptions.TerritoryHasNoNeighbourException;
+import Map.Exceptions.TerritoryIsDisconnectedException;
 import Map.Map;
 import Player.AI.AIEasy;
 import Player.Player;
@@ -47,7 +49,7 @@ public class RiskModel implements Serializable {
      * Load a map by its path
      * @param mapPath Path of the map to load
      */
-    public void loadMap(String mapPath){
+    public void loadMap(String mapPath) throws TerritoryHasNoNeighbourException, TerritoryIsDisconnectedException {
         MapImport mapImport = new MapImport(getClass().getResourceAsStream(mapPath));
         map = mapImport.getMap();
     }
@@ -277,7 +279,13 @@ public class RiskModel implements Serializable {
         JsonReader reader = new JsonReader(new InputStreamReader(path));
         riskModelImportJSONModel = gson.fromJson(reader, RiskModelImportJSONModel.class);
         activePlayerID = riskModelImportJSONModel.getActivePlayerID();
-        loadMap(InitializeModel.AVAILABLE_MAPS.get(riskModelImportJSONModel.getCurrentMap()));
+        try {
+            loadMap(InitializeModel.AVAILABLE_MAPS.get(riskModelImportJSONModel.getCurrentMap()));
+        } catch (TerritoryHasNoNeighbourException e) {
+            e.printStackTrace();
+        } catch (TerritoryIsDisconnectedException e) {
+            e.printStackTrace();
+        }
         for(RiskModelPlayer rmp: riskModelImportJSONModel.getPlayers()){
             if(rmp.isAi()){
                 players.add(new AIEasy(rmp.getName(), new Color(rmp.getPlayerColorValue()),rv));

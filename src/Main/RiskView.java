@@ -5,6 +5,9 @@ import Main.IntializeFrame.InitializeView;
 import Main.Map.*;
 import Main.NotificationView.NotificationView;
 import Main.PlayerBar.*;
+import Map.Exceptions.TerritoryHasNoNeighbourException;
+import Map.Exceptions.TerritoryIsDisconnectedException;
+import Map.MapImport;
 import Player.AI.AIEasy;
 import Player.Player;
 
@@ -163,7 +166,13 @@ public class RiskView extends JFrame implements RiskViewListener{
                 riskModel.addPlayer(new AIEasy(nameOfPlayers.get(i),coloursOfPlayers.get(i), this));
             }
         }
-        riskModel.loadMap(initializeGame.getMapPath());
+        try {
+            riskModel.loadMap(initializeGame.getMapPath());
+        } catch (TerritoryHasNoNeighbourException e) {
+            e.printStackTrace();
+        } catch (TerritoryIsDisconnectedException e) {
+            e.printStackTrace();
+        }
         riskModel.setCurrentMap(initializeGame.getMapName());
     }
 
