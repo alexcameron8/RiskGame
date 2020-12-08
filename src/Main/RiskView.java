@@ -171,6 +171,9 @@ public class RiskView extends JFrame implements RiskViewListener{
         if(initializeFrame!=null) {
             initializeFrame.dispose();
         }
+        if(welcomeScreen !=null){
+            welcomeScreen.dispose();
+        }
         this.notificationView = new NotificationView();
         riskModel.play();
 
