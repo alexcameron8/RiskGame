@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class RiskModelImportJSONModel {
     private ArrayList<RiskModelPlayer> players = new ArrayList<RiskModelPlayer>();
     private int activePlayerID;
+    private String currentMap;
 
     public ArrayList<RiskModelPlayer> getPlayers(){
         return players;
@@ -13,6 +14,8 @@ public class RiskModelImportJSONModel {
     public int getActivePlayerID(){
         return activePlayerID;
     }
+
+    public String getCurrentMap(){return currentMap;}
 }
 
 class RiskModelPlayer{

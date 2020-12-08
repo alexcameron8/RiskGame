@@ -38,4 +38,3 @@ public class RiskController implements ActionListener {
         }
     }
 }
--

@@ -31,6 +31,7 @@ public class RiskModel implements Serializable {
     private List<RiskViewListener> riskViewListeners;
     private Player winner = null;
     private Player eliminatedPlayer = null;
+    @Expose
     private String currentMap;
 
     /**
@@ -276,7 +277,7 @@ public class RiskModel implements Serializable {
         JsonReader reader = new JsonReader(new InputStreamReader(path));
         riskModelImportJSONModel = gson.fromJson(reader, RiskModelImportJSONModel.class);
         activePlayerID = riskModelImportJSONModel.getActivePlayerID();
-        loadMap(InitializeModel.AVAILABLE_MAPS.get(map));
+        loadMap(InitializeModel.AVAILABLE_MAPS.get(riskModelImportJSONModel.getCurrentMap()));
         for(RiskModelPlayer rmp: riskModelImportJSONModel.getPlayers()){
             if(rmp.isAi()){
                 players.add(new AIEasy(rmp.getName(), new Color(rmp.getPlayerColorValue()),rv));
