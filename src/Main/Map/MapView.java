@@ -1,6 +1,7 @@
 package Main.Map;
 
 import Main.RiskModel;
+import Map.DecorativeShape;
 import Map.Territory;
 
 import javax.swing.*;
@@ -113,6 +114,7 @@ public class MapView extends JPanel implements MapViewListener{
      */
     private class DrawMap extends JComponent {
         private static final int STANDARD_MAP_WIDTH = 600;
+        private static final int STANDARD_MAP_HEIGHT = 400;
         private static final int SOLDIER_SIZE = 7;
         private static final double ZOOM = 1.0;
 
@@ -124,7 +126,19 @@ public class MapView extends JPanel implements MapViewListener{
         }
 
         double calculateScale(){
-            return (this.getWidth() / (double) STANDARD_MAP_WIDTH) * ZOOM;
+            return Math.min((this.getWidth() / (double) STANDARD_MAP_WIDTH) * ZOOM, (this.getHeight() / (double) STANDARD_MAP_HEIGHT) * ZOOM);
+        }
+
+        Color complementaryColor(Color source){
+            return new Color(255-source.getRed(), 255-source.getGreen(), 255-source.getBlue());
+        }
+
+        int calculateXTransform(){
+            return (this.getWidth() - (int) (STANDARD_MAP_WIDTH * calculateScale())) / 2;
+        }
+
+        int calculateYTransform(){
+            return (this.getHeight() - (int) (STANDARD_MAP_HEIGHT * calculateScale())) / 2;
         }
 
         /**
@@ -135,6 +149,7 @@ public class MapView extends JPanel implements MapViewListener{
         void mouseClickHandler(Point2D point){
             AffineTransform tx2 = new AffineTransform();
             Double scale = calculateScale();
+            tx2.translate(calculateXTransform(), calculateYTransform());
             tx2.scale(scale, scale);
 
             for(Territory terr: MapView.this.mapModel.getTerritoryList()){
@@ -164,11 +179,23 @@ public class MapView extends JPanel implements MapViewListener{
 
             AffineTransform tx2 = new AffineTransform();
             Double scale = calculateScale();
+            tx2.translate(calculateXTransform(), calculateYTransform());
             tx2.scale(scale, scale);
+
+            // Draw decorative shapes
+            for(DecorativeShape decorativeShape: MapView.this.getMapModel().getDecorativeShapes()){
+                graphics.setColor(new Color(
+                        decorativeShape.getColor().get(0),
+                        decorativeShape.getColor().get(1),
+                        decorativeShape.getColor().get(2)
+                ));
+                Shape transformedShape = tx2.createTransformedShape(decorativeShape.getShape());
+                graphics.fill(transformedShape);
+            }
 
 
             // Draw water crossing lines
-            graphics.setColor(Color.BLACK);
+            graphics.setColor(complementaryColor(MapView.this.mapModel.getBackgroundColor()));
             graphics.setStroke(new BasicStroke(2));
             for(Shape waterCrossing: MapView.this.getMapModel().getWaterCrossings()){
                 Shape waterCrossingScaledShape = tx2.createTransformedShape(waterCrossing);

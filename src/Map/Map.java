@@ -15,7 +15,7 @@ public class Map {
     private HashMap<String, Continent> continents;
     private ArrayList<String> waterCrossings;
     private ArrayList<Integer> backgroundColor;
-
+    private ArrayList<DecorativeShape> decorativeShapes;
 
 
     /**
@@ -25,6 +25,7 @@ public class Map {
     public Map() {
         continents = new HashMap<>();
         waterCrossings = new ArrayList<>();
+        decorativeShapes = new ArrayList<>();
         backgroundColor = new ArrayList<>(3);
     }
 
@@ -125,6 +126,14 @@ public class Map {
      */
     public void setBackgroundColor(ArrayList<Integer> backgroundColor){
         this.backgroundColor = backgroundColor;
+    }
+
+    public ArrayList<DecorativeShape> getDecorativeShapes() {
+        return decorativeShapes;
+    }
+
+    public void addDecorativeShapes(DecorativeShape decorativeShape) {
+        this.decorativeShapes.add(decorativeShape);
     }
 
 }
