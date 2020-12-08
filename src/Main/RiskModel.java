@@ -18,7 +18,6 @@ public class RiskModel {
     public static final int MIN_NUMBER_PLAYERS = 2;
     private ArrayList<Player> players;
     private int activePlayerID;
-    private Turn currentTurn;
     private Map map;
     private List<RiskViewListener> riskViewListeners;
     private Player winner = null;
@@ -77,24 +76,18 @@ public class RiskModel {
         //checks if a player has won or a player is eliminated.
         isPlayerEvent();
 
-        if (activePlayerID + 1 < players.size()) {
+        if(activePlayerID + 1 < players.size()) {
             activePlayerID++;
-            currentTurn = new Turn(players.get(activePlayerID));
-            if(getActivePlayer() instanceof AIEasy){
-                currentTurn.setNumberOfReinforcements(0);
-                ((AIEasy) getActivePlayer()).advanceTurn();
-            }
+            getActivePlayer().getReinforcement();
+            getActivePlayer().advanceTurn();
         } else {
             activePlayerID = 0;
-            currentTurn = new Turn(players.get(activePlayerID));
-            if(getActivePlayer() instanceof AIEasy){
-                currentTurn.setNumberOfReinforcements(0);
-                ((AIEasy) getActivePlayer()).advanceTurn();
-            }
+            getActivePlayer().getReinforcement();
+            getActivePlayer().advanceTurn();
         }
 
         for(RiskViewListener riskViewListener : riskViewListeners){
-            riskViewListener.handleTurnUpdate(new RiskEvent (this,activePlayerID,players, currentTurn,winner,eliminatedPlayer));
+            riskViewListener.handleTurnUpdate(new RiskEvent (this,activePlayerID,players,winner,eliminatedPlayer));
         }
         //if a player was eliminated last round clear the player before continuing
         if(eliminatedPlayer !=null){
@@ -106,7 +99,7 @@ public class RiskModel {
         if (players.size() == 2) { //if only 2 players left
             winner = getActivePlayer();
             for (RiskViewListener riskViewListener : riskViewListeners) { //update listeners
-                riskViewListener.handleTurnUpdate(new RiskEvent(this, activePlayerID, players, currentTurn, winner, eliminatedPlayer));
+                riskViewListener.handleTurnUpdate(new RiskEvent(this, activePlayerID, players, winner, eliminatedPlayer));
             }
             return;
         }
@@ -126,7 +119,7 @@ public class RiskModel {
      * player is eliminated from the game or there is a winner crowned.
      */
     public void isPlayerEvent(){
-        if(currentTurn.isTurnComplete(getActivePlayer())){
+        if(getActivePlayer().isTurnComplete()){
             for(Player player: players){
                 if(player.getListOfTerritories().size()==0){ //there is a winner of eliminated player because someone does not own any territories
                     hasWinner();
@@ -237,10 +230,7 @@ public class RiskModel {
         activePlayerID = r.nextInt(players.size());
         assignTroopsRandom();
 
-        currentTurn = new Turn(players.get(activePlayerID));
-        if(getActivePlayer() instanceof AIEasy){
-            currentTurn.setNumberOfReinforcements(0);
-            ((AIEasy) getActivePlayer()).advanceTurn();
-        }
+        getActivePlayer().getReinforcement();
+        getActivePlayer().advanceTurn();
     }
 }

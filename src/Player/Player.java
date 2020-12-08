@@ -377,4 +377,19 @@ public class Player {
         }
         return false;
     }
+
+    /**
+     * Checks if all reinforcements have been placed and turn is complete.
+     * @return true if turn is complete, false otherwise.
+     */
+    public boolean isTurnComplete(){
+        if(reinforcements==0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void advanceTurn(){
+    }
 }

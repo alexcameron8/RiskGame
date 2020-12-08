@@ -32,6 +32,7 @@ public class AIEasy extends Player{
     /**
      * Simulates an AI taking their turn
      */
+    @Override
     public void advanceTurn(){
         AIPlaceTroops();
         AIAttack();
