@@ -10,7 +10,6 @@ import Player.Player;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -116,6 +115,8 @@ public class RiskView extends JFrame implements RiskViewListener{
         initializeFrame = new JFrame("Initialize Game");
         initializeFrame.setLayout(new BorderLayout());
         InitializeView initializeGame = new InitializeView();
+        JOptionPane.showConfirmDialog(this, initializeGame, "Initialize Game ", JOptionPane.OK_CANCEL_OPTION);
+
 
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
@@ -159,6 +160,7 @@ public class RiskView extends JFrame implements RiskViewListener{
 
     public void setupView(){
         initializeFrame.dispose();
+        riskModel.loadMap(initializeGame.getMapPath());
         this.notificationView = new NotificationView();
         riskModel.play();
 

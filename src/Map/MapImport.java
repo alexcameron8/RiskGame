@@ -89,6 +89,9 @@ public class MapImport {
         for(String waterCrossingPath: mapImportJSONModel.getWaterCrossings()){
             map.addWaterCrossing(waterCrossingPath);
         }
+        for(MapDecorativeShape mds: mapImportJSONModel.getDecorativeShapes()){
+            map.addDecorativeShapes(new DecorativeShape(mds.getPathData(), mds.getColor()));
+        }
 
         map.setBackgroundColor(mapImportJSONModel.getBackgroundColor());
     }

@@ -3,6 +3,7 @@ package Main.IntializeFrame;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static Main.RiskModel.MAX_NUMBER_PLAYERS;
 import static Main.RiskModel.MIN_NUMBER_PLAYERS;
@@ -13,10 +14,13 @@ import static Main.RiskModel.MIN_NUMBER_PLAYERS;
  */
 public class InitializeView extends JPanel implements InitializeViewListener {
 
+    public static final String ACTION_MAP_SELECT = "mapSelectAction";
+
     private JPanel[] playerConfigPanel;
     private JPanel playersConfigPanel;
     private final InitializeModel im;
     private final InitializeController ic;
+
 
     private static final String[] COLOURS = {null, "Red", "Green", "Blue", "Yellow", "Orange", "Purple"};
     public static final int PREFERRED_WIDTH = 400;
@@ -31,16 +35,29 @@ public class InitializeView extends JPanel implements InitializeViewListener {
      */
     public InitializeView(){
         super();
-        this.setLayout(new BorderLayout());
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setPreferredSize(new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
 
         im = new InitializeModel();
         im.addInitializeView(this);
         ic = new InitializeController(im);
 
+        createMapSelectRequest();
+        
         createNumberOfPlayersRequest();
 
         createPlayersInfoRequest();
+    }
+
+    private void createMapSelectRequest(){
+        JComboBox mapSelect;
+        mapSelect = new JComboBox(InitializeModel.AVAILABLE_MAPS.keySet().toArray(new String[0]));
+        mapSelect.setPreferredSize(new Dimension(this.getPreferredSize().width,this.getPreferredSize().height/(MAX_NUMBER_PLAYERS+1)));
+        mapSelect.setBorder(BorderFactory.createTitledBorder("Select map:"));
+        mapSelect.addActionListener(ic);
+        mapSelect.setActionCommand(ACTION_MAP_SELECT);
+        mapSelect.setSelectedItem(InitializeModel.DEFAULT_MAP);
+        this.add(mapSelect);
     }
 
     private void createPlayersInfoRequest(){
@@ -110,7 +127,7 @@ public class InitializeView extends JPanel implements InitializeViewListener {
         for (int i=0; i < MIN_NUMBER_PLAYERS; i++) {
             playersConfigPanel.add(playerConfigPanel[i]);
         }
-        this.add(playersConfigPanel, BorderLayout.CENTER);
+        this.add(playersConfigPanel);
     }
 
     private void createNumberOfPlayersRequest(){
@@ -181,4 +198,10 @@ public class InitializeView extends JPanel implements InitializeViewListener {
     public int getNumberOfPlayers() {
         return im.getNumberOfPlayers();
     }
+
+    /**
+     * get the path of the selected map
+     * @return Path of the selected map
+     */
+    public String getMapPath() { return im.getMapPath(); }
 }

@@ -1,6 +1,7 @@
 package Main.Map;
 
 import Main.RiskModel;
+import Map.DecorativeShape;
 import Map.Territory;
 import org.apache.batik.parser.AWTPathProducer;
 import org.apache.batik.parser.PathParser;
@@ -48,6 +49,10 @@ public class MapModel {
             pathParser.parse(waterCrossingString);
             this.waterCrossings.add(pathProducer.getShape());
         }
+    }
+
+    public ArrayList<DecorativeShape> getDecorativeShapes(){
+        return this.riskModel.getMap().getDecorativeShapes();
     }
 
     /**

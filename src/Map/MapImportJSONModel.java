@@ -14,6 +14,7 @@ class MapImportJSONModel {
     private ArrayList<MapModelContinent> continents = new ArrayList<>();
     private ArrayList<String> waterCrossings = new ArrayList<>();
     private ArrayList<Integer> backgroundColor = new ArrayList<>(3);
+    private ArrayList<MapDecorativeShape> decorativeShapes = new ArrayList<>();
 
     /**
      * get the Name of the map from the Json file
@@ -61,6 +62,10 @@ class MapImportJSONModel {
      * @return
      */
     public ArrayList<Integer> getBackgroundColor(){ return backgroundColor; }
+
+    public ArrayList<MapDecorativeShape> getDecorativeShapes() {
+        return decorativeShapes;
+    }
 
 }
 
@@ -148,4 +153,21 @@ class MapModelContinent {
      * @return ArrayList<Integer>
      */
     public ArrayList<Integer> getColor(){ return color; }
+}
+
+class MapDecorativeShape {
+    private ArrayList<Integer> color = new ArrayList<>(3);
+    private String pathData;
+
+    public ArrayList<Integer> getColor() {
+        return color;
+    }
+
+    public String getPathData() {
+        return pathData;
+    }
+
+    public void setPathData(String pathData) {
+        this.pathData = pathData;
+    }
 }
