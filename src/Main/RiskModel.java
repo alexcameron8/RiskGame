@@ -275,8 +275,9 @@ public class RiskModel implements Serializable {
         JsonReader reader = new JsonReader(new InputStreamReader(path));
         riskModelImportJSONModel = gson.fromJson(reader, RiskModelImportJSONModel.class);
         activePlayerID = riskModelImportJSONModel.getActivePlayerID();
+        currentMap = riskModelImportJSONModel.getCurrentMap();
         try {
-            loadMap(InitializeModel.AVAILABLE_MAPS.get(riskModelImportJSONModel.getCurrentMap()));
+            loadMap(InitializeModel.AVAILABLE_MAPS.get(currentMap));
         } catch (TerritoryHasNoNeighbourException e) {
             e.printStackTrace();
         } catch (TerritoryIsDisconnectedException e) {
@@ -298,13 +299,20 @@ public class RiskModel implements Serializable {
     /**
      * This method plays the game and initializes the setup of the game.
      */
-    public void play(){
+    public void randomPlay(){
         Random r = new Random();
 
         activePlayerID = r.nextInt(players.size());
         assignTroopsRandom();
 
         getActivePlayer().getReinforcement();
+        getActivePlayer().advanceTurn();
+    }
+
+    /**
+     * This method plays the game and initializes the setup of the game.
+     */
+    public void loadPlay(){
         getActivePlayer().advanceTurn();
     }
 }

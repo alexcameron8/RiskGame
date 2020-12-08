@@ -51,10 +51,6 @@ public class AIEasy extends Player{
         ArrayList<Territory> territoriesAlreadyAttacking = new ArrayList<>();
 
         Continent targetContinent = targetContinent();
-        if(targetContinent == null){
-            placeReinforcement(getListOfTerritories().get(0), getRemainingReinforcements());
-            return;
-        }
         for(Territory terr: targetContinent.getTerritories()){
             if(!hasTerritory(terr)){
                 Territory attackingTerr = findAttackingTerritory(terr, territoriesAlreadyAttacking);
@@ -70,7 +66,7 @@ public class AIEasy extends Player{
         if(getRemainingReinforcements() != 0){
             for(Territory terr : getListOfTerritories()){
                 if(!terr.getContinent().equals(targetContinent) && !hasContinent(terr.getContinent())){
-                                        this.riskView.getNotificationView().notifyUser(
+                    this.riskView.getNotificationView().notifyUser(
                             this.name + " Placed " + getRemainingReinforcements() + " on " + terr,
                             NotificationModel.NotificationType.INFO);
                     placeReinforcement(terr, getRemainingReinforcements());
@@ -79,6 +75,9 @@ public class AIEasy extends Player{
             }
             for(Territory terr : getListOfTerritories()){
                 if(canTerritoryAttack(terr)){
+                    this.riskView.getNotificationView().notifyUser(
+                            this.name + " Placed " + getRemainingReinforcements() + " on " + terr,
+                            NotificationModel.NotificationType.INFO);
                     placeReinforcement(terr, getRemainingReinforcements());
                     break;
                 }
@@ -281,6 +280,7 @@ public class AIEasy extends Player{
      * @return number of soldiers needed
      */
     private int howManyToWin(Territory enemyTerritory, Territory aiTerritory){
+        //these number were found using a graph to find the optimal number of soldiers to attack with
         double requiredSoldiers = 1.2158*enemyTerritory.getSoldiers()+1.8842;
         return (int) (aiTerritory.getSoldiers() - Math.round(requiredSoldiers));
     }
@@ -293,6 +293,7 @@ public class AIEasy extends Player{
      * @return
      */
     private boolean canWinTerritory(Territory enemyTerritory, Territory aiTerritory){
+        //these number were found using a graph to find the optimal number of soldiers to attack with
         double requiredSoldiers = 1.2158*enemyTerritory.getSoldiers()+1.8842;
         return Math.round(requiredSoldiers) <= aiTerritory.getSoldiers();
     }
