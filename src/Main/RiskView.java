@@ -10,6 +10,7 @@ import Player.Player;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -17,7 +18,7 @@ import java.util.ArrayList;
  * RiskView class which is the swing components creating a GUI representing the risk game from risk model
  */
 public class RiskView extends JFrame implements RiskViewListener{
-    private JFrame welcomeScreen;
+    private JFrame welcomeScreen, initializeFrame;
     private RiskModel riskModel;
     private TerritoryInfoView territoryInfoView;
     private NotificationView notificationView;
@@ -57,7 +58,7 @@ public class RiskView extends JFrame implements RiskViewListener{
     public void welcomeScreen(){
 
         welcomeScreen = new JFrame("Risk Setup");
-        welcomeScreen.setLocationRelativeTo(null);
+
         ImageIcon riskPic = null;
         try {
             riskPic = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("resources/Risk.png")));
@@ -67,26 +68,41 @@ public class RiskView extends JFrame implements RiskViewListener{
 
         JLabel labelIcon = new JLabel(riskPic);
         JPanel panel = new JPanel(new GridBagLayout());
-
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        JPanel textPanel = new JPanel();
+        textPanel.setLayout(new BoxLayout(textPanel,BoxLayout.PAGE_AXIS));
         panel.add(labelIcon);
-        JLabel text = new JLabel("Welcome to Risk. Click OK to continue to game setup.");
+        JLabel title = new JLabel("SYSC3110: Final Project");
+        JLabel text = new JLabel("The Game of Risk");
+        title.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+        title.setFont(new Font("Ubuntu", Font.BOLD, 20));
         text.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         text.setFont(new Font("Ubuntu", Font.BOLD, 20));
 
         JButton loadGame = new JButton("Load Game");
         loadGame.setFocusPainted(false);
+        loadGame.setBackground(Color.white);
         JButton newGame = new JButton("New Game");
+        newGame.setBackground(Color.white);
+        newGame.setFocusPainted(false);
         JPanel panel2 = new JPanel();
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
+        textPanel.add(title);
+        textPanel.add(text);
+
+        panel2.add(textPanel);
         panel2.add(panel);
-        panel2.add(text);
-        panel2.add(newGame);
-        panel2.add(loadGame);
+        buttonPanel.add(newGame);
+        buttonPanel.add(loadGame);
+        panel2.add(buttonPanel);
 
+        welcomeScreen.setBackground(Color.LIGHT_GRAY);
         welcomeScreen.add(panel2);
+        welcomeScreen.pack();
+        welcomeScreen.setLocationRelativeTo(null);
         welcomeScreen.setVisible(true);
-        welcomeScreen.setSize(500,500);
-
+        welcomeScreen.setSize(500,300);
+        welcomeScreen.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         //adding actionlisteners
         loadGame.addActionListener(rc);
         loadGame.setActionCommand("load");
@@ -96,8 +112,37 @@ public class RiskView extends JFrame implements RiskViewListener{
     }
     public void setupInit(){
         welcomeScreen.dispose();
+
+        initializeFrame = new JFrame("Initialize Game");
+        initializeFrame.setLayout(new BorderLayout());
         InitializeView initializeGame = new InitializeView();
-        JOptionPane.showConfirmDialog(this, initializeGame, "Initialize Game ", JOptionPane.OK_CANCEL_OPTION);
+
+
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        JButton startGame = new JButton("Continue to Game");
+        startGame.setFocusPainted(false);
+        startGame.setBackground(Color.white);
+        JButton cancel = new JButton("Cancel");
+        cancel.setBackground(Color.white);
+        cancel.setFocusPainted(false);
+
+        buttonPanel.add(startGame);
+        buttonPanel.add(cancel);
+
+        //adding actionlisteners
+        startGame.addActionListener(rc);
+        startGame.setActionCommand("start");
+        cancel.addActionListener(rc);
+        cancel.setActionCommand("cancel");
+        initializeFrame.add(initializeGame, BorderLayout.CENTER);
+        initializeFrame.add(buttonPanel,BorderLayout.PAGE_END);
+
+        initializeFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        initializeFrame.setSize(400,400);
+        initializeFrame.pack();
+        initializeFrame.setLocationRelativeTo(null);
+        initializeFrame.setVisible(true);
+
         ArrayList<String> nameOfPlayers = initializeGame.getNameOfPlayers();
         ArrayList<Color> coloursOfPlayers = initializeGame.getPlayersColour();
         ArrayList<Boolean> isPlayerAI = initializeGame.getIsPlayerAI();
@@ -110,6 +155,10 @@ public class RiskView extends JFrame implements RiskViewListener{
             }
 
         }
+    }
+
+    public void setupView(){
+        initializeFrame.dispose();
         this.notificationView = new NotificationView();
         riskModel.play();
 
@@ -156,6 +205,7 @@ public class RiskView extends JFrame implements RiskViewListener{
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
     }
+
     public TerritoryInfoView getTerritoryInfoView(){
         return territoryInfoView;
     }
@@ -169,7 +219,9 @@ public class RiskView extends JFrame implements RiskViewListener{
     public MapView getMapView(){
         return mapView;
     }
-
+    public void disposeSetup(){
+        initializeFrame.dispose();
+    }
     @Override
     public void handleTurnUpdate(RiskEvent e) {
         this.mapView.handleMapUpdate(new MapRedrawEvent(this));

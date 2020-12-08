@@ -17,10 +17,21 @@ public class RiskController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("load")){
-            String fileName = JOptionPane.showInputDialog(riskView, "Enter Risk Game's name to load");
-            riskModel.load(fileName);
+            String fileName = "";
+            try {
+                fileName = JOptionPane.showInputDialog(riskView, "Enter Risk Game's name to load");
+            }catch (Exception exception){
+
+            }
+            if(fileName!=null && !fileName.equals("")) {
+                riskModel.load(fileName);
+            }
         }else if(e.getActionCommand().equals("newGame")){
             riskView.setupInit();
+        }else if(e.getActionCommand().equals("start")){
+            riskView.setupView();
+        }else if(e.getActionCommand().equals("cancel")){
+            riskView.disposeSetup();
         }
     }
 }
