@@ -279,7 +279,13 @@ public class RiskModel implements Serializable {
         JsonReader reader = new JsonReader(new InputStreamReader(path));
         riskModelImportJSONModel = gson.fromJson(reader, RiskModelImportJSONModel.class);
         activePlayerID = riskModelImportJSONModel.getActivePlayerID();
-        loadMap(InitializeModel.AVAILABLE_MAPS.get(riskModelImportJSONModel.getCurrentMap()));
+        try {
+            loadMap(InitializeModel.AVAILABLE_MAPS.get(riskModelImportJSONModel.getCurrentMap()));
+        } catch (TerritoryHasNoNeighbourException e) {
+            e.printStackTrace();
+        } catch (TerritoryIsDisconnectedException e) {
+            e.printStackTrace();
+        }
         for(RiskModelPlayer rmp: riskModelImportJSONModel.getPlayers()){
             if(rmp.isAi()){
                 players.add(new AIEasy(rmp.getName(), new Color(rmp.getPlayerColorValue()),rv));
