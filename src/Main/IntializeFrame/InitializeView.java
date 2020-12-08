@@ -13,19 +13,18 @@ import static Main.RiskModel.MIN_NUMBER_PLAYERS;
  */
 public class InitializeView extends JPanel implements InitializeViewListener {
 
-    private JComboBox numPlayers;
     private JPanel[] playerConfigPanel;
-    private JComboBox[] playerColour;
-    private JCheckBox[] playerIsAI;
-    private JLabel[] playerIsAILabel;
-    private JTextField[] nameOfPlayers;
     private JPanel playersConfigPanel;
-    private Integer[] numberOfPlayers;
-    private InitializeModel im;
+    private final InitializeModel im;
+    private final InitializeController ic;
 
     private static final String[] COLOURS = {null, "Red", "Green", "Blue", "Yellow", "Orange", "Purple"};
     public static final int PREFERRED_WIDTH = 400;
     public static final int PREFERRED_HEIGHT = 400;
+    public static final String NUMBER_PLAYERS_NAME = "numPlayers";
+    public static final String AI_CHECKBOX_NAME = "isAI";
+    public static final String COLOUR_NAME = "colour";
+    public static final String PLAYER_NAME = "name";
 
     /**
      * constructor for InitializeView that create teh GUI
@@ -37,33 +36,27 @@ public class InitializeView extends JPanel implements InitializeViewListener {
 
         im = new InitializeModel();
         im.addInitializeView(this);
-        InitializeController ic = new InitializeController(im, this);
+        ic = new InitializeController(im);
 
-        numberOfPlayers = new Integer[MAX_NUMBER_PLAYERS-1];
-        for(int i = MIN_NUMBER_PLAYERS; i <= MAX_NUMBER_PLAYERS; i++){
-            numberOfPlayers[i-MIN_NUMBER_PLAYERS]=i;
-        }
+        createNumberOfPlayersRequest();
 
-        numPlayers= new JComboBox(numberOfPlayers);
-        numPlayers.setPreferredSize(new Dimension(this.getPreferredSize().width,this.getPreferredSize().height/(MAX_NUMBER_PLAYERS+1)));
-        numPlayers.setBorder(BorderFactory.createTitledBorder("Select number of Players:"));
-        numPlayers.addActionListener(ic);
-        numPlayers.setActionCommand("numPlayers");
-        this.add(numPlayers, BorderLayout.PAGE_START);
+        createPlayersInfoRequest();
+    }
 
-        nameOfPlayers = new JTextField[MAX_NUMBER_PLAYERS];
+    private void createPlayersInfoRequest(){
+        JTextField[] nameOfPlayers = new JTextField[MAX_NUMBER_PLAYERS];
 
         playersConfigPanel = new JPanel();
         playersConfigPanel.setLayout(new BoxLayout(playersConfigPanel, BoxLayout.Y_AXIS));
         playersConfigPanel.setPreferredSize(new Dimension(this.getPreferredSize().width,this.getPreferredSize().height*MAX_NUMBER_PLAYERS/(MAX_NUMBER_PLAYERS+1)));
 
 
-        playerColour = new JComboBox[MAX_NUMBER_PLAYERS];
+        JComboBox[] playerColour = new JComboBox[MAX_NUMBER_PLAYERS];
         playerConfigPanel = new JPanel[MAX_NUMBER_PLAYERS];
 
-        playerIsAI = new JCheckBox[MAX_NUMBER_PLAYERS];
+        JCheckBox[] playerIsAI = new JCheckBox[MAX_NUMBER_PLAYERS];
 
-        playerIsAILabel = new JLabel[MAX_NUMBER_PLAYERS];
+        JLabel[] playerIsAILabel = new JLabel[MAX_NUMBER_PLAYERS];
 
         for (int i=0; i < MAX_NUMBER_PLAYERS; i++) {
             playerConfigPanel[i] = new JPanel();
@@ -76,7 +69,7 @@ public class InitializeView extends JPanel implements InitializeViewListener {
 
             nameOfPlayers[i]=new JTextField();
             nameOfPlayers[i].getDocument().addDocumentListener(ic);
-            nameOfPlayers[i].getDocument().putProperty("name",(i+1));
+            nameOfPlayers[i].getDocument().putProperty(PLAYER_NAME,(i+1));
             gridBagConstraints.gridx = 0;
             gridBagConstraints.gridy = 0;
             gridBagConstraints.weightx = 0.8;
@@ -85,7 +78,7 @@ public class InitializeView extends JPanel implements InitializeViewListener {
 
             playerColour[i] = new JComboBox(COLOURS);
             playerColour[i].addActionListener(ic);
-            playerColour[i].setActionCommand("colour "+(i+1));
+            playerColour[i].setActionCommand(COLOUR_NAME+" "+(i+1));
             gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = 1;
             gridBagConstraints.gridy = 0;
@@ -103,7 +96,7 @@ public class InitializeView extends JPanel implements InitializeViewListener {
             playerConfigPanel[i].add(playerIsAILabel[i], gridBagConstraints);
 
             playerIsAI[i] = new JCheckBox();
-            playerIsAI[i].setActionCommand("isAI "+(i+1));
+            playerIsAI[i].setActionCommand(AI_CHECKBOX_NAME +" "+ (i+1));
             playerIsAI[i].addActionListener(ic);
             gridBagConstraints = new GridBagConstraints();
             gridBagConstraints.gridx = 3;
@@ -118,6 +111,21 @@ public class InitializeView extends JPanel implements InitializeViewListener {
             playersConfigPanel.add(playerConfigPanel[i]);
         }
         this.add(playersConfigPanel, BorderLayout.CENTER);
+    }
+
+    private void createNumberOfPlayersRequest(){
+
+        Integer[] numberOfPlayers = new Integer[MAX_NUMBER_PLAYERS - 1];
+        for(int i = MIN_NUMBER_PLAYERS; i <= MAX_NUMBER_PLAYERS; i++){
+            numberOfPlayers[i-MIN_NUMBER_PLAYERS]=i;
+        }
+
+        JComboBox numPlayers = new JComboBox(numberOfPlayers);
+        numPlayers.setPreferredSize(new Dimension(this.getPreferredSize().width,this.getPreferredSize().height/(MAX_NUMBER_PLAYERS+1)));
+        numPlayers.setBorder(BorderFactory.createTitledBorder("Select number of Players:"));
+        numPlayers.addActionListener(ic);
+        numPlayers.setActionCommand(NUMBER_PLAYERS_NAME);
+        this.add(numPlayers, BorderLayout.PAGE_START);
     }
 
     /**
