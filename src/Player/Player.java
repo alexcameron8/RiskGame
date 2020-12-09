@@ -400,6 +400,9 @@ public class Player {
         }
     }
 
+    /**
+     * The player takes a turn
+     */
     public void advanceTurn(){
     }
 }
