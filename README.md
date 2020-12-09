@@ -99,12 +99,26 @@ Ben Munro
 ## Changes made since Milestone 2:
 A feature that was refactored in this milestone eliminated a few known issues from last milestone which was creating different phases (troop deployment phase, attack phase and troop movement phase) within the actionbar. In milestone 2, it was possible to do attacks before placing troops which is a bug that was fixed in this milestone. As well, last iteration we came across a bug where sometimes the panels containing attack/deploy information wouldn't display in the action bar because the territories were too long and were cut off by the screens size limitations. By creating the different phases of the action bar this bug is resolved because every possible combination can be displayed properly. On top of these changes, the action bar was improved to be more visually appealing. As well, in this iteration we implemented an AI player that uses strategic probability to determine the best possible moves to make. 
 
-## Roadmap
-
-### Milestone 4
-Met by: Monday, 7 December 2020
+## Milestone 4
+Met by: Wednesday, 9 December 2020
+Requirements:
 - Save/Load feature
 - Use custom maps in JSON or XML format
 
+### Authors:
+
+Alex Cameron
+- Redesigned Welcome and Setup Views to incorporate save/load features and fix bugs.
+- Refactored smelly code / eliminated magic numbers throughout the project
+- Java Docs
+
+Thomas Dunnigan
+-
+
+Ben Munro
+-
+
+## Changes made since Milestone 3:
+The major changes this milestone was the implementation of saving and loading Risk games and the option to import customizable maps. When the user saves a game the players territory information, current active turn and map nameare all saved to a JSON file where a user can then load this game in the welcome screen of the main menu. When the game is loaded it converts the data from the JSON file and sets the active turn player, the Map and state of each territory and adds all the players with their original colours and list of territories. As well, in this milestone our group focused a lot on trying to refactor smelly code and break up larger methods into smaller ones to be more easily understandable.
 
 
