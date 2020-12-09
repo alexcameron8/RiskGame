@@ -25,6 +25,7 @@ public class InitializeView extends JPanel implements InitializeViewListener {
     private static final String[] COLOURS = {null, "Red", "Green", "Blue", "Yellow", "Orange", "Purple"};
     public static final int PREFERRED_WIDTH = 400;
     public static final int PREFERRED_HEIGHT = 400;
+    //Actioncommand constants
     public static final String NUMBER_PLAYERS_NAME = "numPlayers";
     public static final String AI_CHECKBOX_NAME = "isAI";
     public static final String COLOUR_NAME = "colour";
@@ -49,6 +50,10 @@ public class InitializeView extends JPanel implements InitializeViewListener {
         createPlayersInfoRequest();
     }
 
+    /**
+     * This creates the JComboBox to the the initial view with a list of the available maps that are playable.
+     *
+     */
     private void createMapSelectRequest(){
         JComboBox mapSelect;
         mapSelect = new JComboBox(InitializeModel.AVAILABLE_MAPS.keySet().toArray(new String[0]));
@@ -60,6 +65,11 @@ public class InitializeView extends JPanel implements InitializeViewListener {
         this.add(mapSelect);
     }
 
+    /**
+     * This creates the panel with the player configurations. This is where players are created and specified whether they are
+     * an AI or not. As well, the list of possible player colours is there in a drop down menu.
+     *
+     */
     private void createPlayersInfoRequest(){
         JTextField[] nameOfPlayers = new JTextField[MAX_NUMBER_PLAYERS];
 
@@ -130,6 +140,10 @@ public class InitializeView extends JPanel implements InitializeViewListener {
         this.add(playersConfigPanel);
     }
 
+    /**
+     * Changes the total number of players to be created. For instance, there can be a minimum of 2 players in the
+     * game and a maximum of 6 players.
+     */
     private void createNumberOfPlayersRequest(){
 
         Integer[] numberOfPlayers = new Integer[MAX_NUMBER_PLAYERS - 1];
@@ -146,9 +160,9 @@ public class InitializeView extends JPanel implements InitializeViewListener {
     }
 
     /**
-     * display a number of player characteristics that is the number of players
+     * Display a number of player characteristics that is the number of players
      *
-     * @param e
+     * @param e The initializing event
      */
     @Override
     public void handleInitializeUpdate(InitializeEvent e) {
@@ -163,9 +177,9 @@ public class InitializeView extends JPanel implements InitializeViewListener {
     }
 
     /**
-     * get the final version of the player names
+     * Get the final version of the player names
      *
-     * @return ArrayList<String>
+     * @return ArrayList<String> Returns a list of all the names of the players being added
      */
     public ArrayList<String> getNameOfPlayers(){
         return im.getNamesOfPlayers();
@@ -174,16 +188,16 @@ public class InitializeView extends JPanel implements InitializeViewListener {
     /**
      * get the final version of the player colours
      *
-     * @return ArrayList<Color>
+     * @return ArrayList<Color> Returns an arraylist of the players colours
      */
     public ArrayList<Color> getPlayersColour(){
         return im.getPlayersColours();
     }
 
     /**
-     * get the final version of the player colours
+     * Gets the arraylist of of all players and if they are an Ai or not
      *
-     * @return ArrayList<Color>
+     * @return ArrayList<Boolean> Returns an arraylist of all the players and whether they are an AI or not.
      */
     public ArrayList<Boolean> getIsPlayerAI(){
         return im.getPlayersIsAI();
@@ -193,7 +207,7 @@ public class InitializeView extends JPanel implements InitializeViewListener {
     /**
      * get the final number of players
      *
-     * @return int
+     * @return int Returns the total number of players
      */
     public int getNumberOfPlayers() {
         return im.getNumberOfPlayers();

@@ -77,8 +77,8 @@ public class MapImport {
      * https://algorithms.tutorialhorizon.com/check-if-given-undirected-graph-is-connected-or-not/
      * and adapted to fit the need of validating an imported map.
      *
-     * @param territories
-     * @param neighbours
+     * @param territories The arraylist of territories in the map
+     * @param neighbours  The ArrayList of all neighbours of each other.
      * @return
      */
     private boolean isMapValid(ArrayList<MapModelTerritory> territories, ArrayList<ArrayList<String>> neighbours) throws TerritoryHasNoNeighbourException, TerritoryIsDisconnectedException {

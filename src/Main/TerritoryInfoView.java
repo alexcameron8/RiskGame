@@ -18,7 +18,7 @@ public class TerritoryInfoView extends JPanel implements MapViewListener {
     /**
      * constructor for TerritoryInfoView which creates the display with a default territory of Ontario
      *
-     * @param rm
+     * @param rm The current RiskModel
      */
     TerritoryInfoView(RiskModel rm){
         // JPanel Config
@@ -31,7 +31,7 @@ public class TerritoryInfoView extends JPanel implements MapViewListener {
     /**
      * Updates the display to show the current territories info
      *
-     * @param territory
+     * @param territory The Territory that the info is being set
      */
     public void setInfo(Territory territory){
         this.removeAll();

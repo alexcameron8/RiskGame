@@ -83,7 +83,7 @@ public class NotificationModel {
     }
 
     /**
-     * Notification
+     * Notification class which displays the AI's moves to notify user what the AI did.
      */
     public class Notification {
         private String message;

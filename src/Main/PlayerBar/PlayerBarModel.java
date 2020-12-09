@@ -14,7 +14,7 @@ public class PlayerBarModel {
 
     /**
      * Constructor for PlayerBarModel
-     * @param rm
+     * @param rm The current risk model
      */
     public PlayerBarModel(RiskModel rm){
         this.rm = rm;
@@ -23,7 +23,7 @@ public class PlayerBarModel {
 
     /**
      * add a playerBarView
-     * @param pbv
+     * @param pbv The player bar view
      */
     public void addPlayerBarModelViews(PlayerBarView pbv){
         playerBarViews.add(pbv);
@@ -31,7 +31,7 @@ public class PlayerBarModel {
 
     /**
      * remove a player bar view
-     * @param pbv
+     * @param pbv The player bar view
      */
     public void removePlayerBarModelViews(PlayerBarView pbv){
         playerBarViews.remove(pbv);
@@ -40,7 +40,7 @@ public class PlayerBarModel {
     /**
      * get the players
      *
-     * @return ArrayList<Player>
+     * @return ArrayList<Player> The ArrayList of all the list of players in RiskModel
      */
     public ArrayList<Player> getPlayers(){
         return rm.getPlayers();
@@ -49,7 +49,7 @@ public class PlayerBarModel {
     /**
      * get the current player who's turn it is
      *
-     * @return Player
+     * @return Player returns the player who is of the current turn
      */
     public Player getCurrentTurn(){
         return rm.getActivePlayer();

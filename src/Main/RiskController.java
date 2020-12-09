@@ -4,11 +4,19 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This is the RiskController which controls the RiskView buttons
+ */
 public class RiskController implements ActionListener {
 
     private RiskView riskView;
     private RiskModel riskModel;
 
+    /**
+     * The constructor for the RiskController
+     * @param riskModel The current RiskModel
+     * @param riskView The current RiskView
+     */
     public RiskController(RiskModel riskModel, RiskView riskView){
         this.riskModel = riskModel;
         this.riskView = riskView;

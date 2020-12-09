@@ -41,7 +41,7 @@ public class InitializeController implements ActionListener, DocumentListener {
     /**
      * when a new character is inserted into the JTextfield change the player name
      *
-     * @param e
+     * @param e the event where a new character is inserted
      */
     @Override
     public void insertUpdate(DocumentEvent e) {
@@ -51,7 +51,7 @@ public class InitializeController implements ActionListener, DocumentListener {
     /**
      * when a character is removed into the JTextfield change the player name
      *
-     * @param e
+     * @param e the event where a character is removed
      */
     @Override
     public void removeUpdate(DocumentEvent e) {
@@ -64,9 +64,9 @@ public class InitializeController implements ActionListener, DocumentListener {
     }
 
     /**
-     * change the name of the player
+     * Change the name of the players
      *
-     * @param documentEvent
+     * @param documentEvent the document to change players
      */
     private void addPlayerNames(DocumentEvent documentEvent) {
         Document source = documentEvent.getDocument();

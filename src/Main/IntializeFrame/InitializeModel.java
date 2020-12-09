@@ -56,7 +56,7 @@ public class InitializeModel {
     /**
      * add the view for InitializeModel
      *
-     * @param iv
+     * @param iv the views that will listen to initializeviews
      */
     public void addInitializeView(InitializeView iv) {
         initializeViews.add(iv);
@@ -65,7 +65,7 @@ public class InitializeModel {
     /**
      * set the number of players chosen by the user
      *
-     * @param numberOfPlayers
+     * @param numberOfPlayers The number of players in game
      */
     public void setPlayerNumbers(int numberOfPlayers) {
         this.numberOfPlayers = numberOfPlayers;
@@ -74,20 +74,20 @@ public class InitializeModel {
     }
 
     /**
-     * set the a player name
+     * This method sets the player name
      *
-     * @param playerNumber
-     * @param playerName
+     * @param playerNumber The player Number
+     * @param playerName The players name
      */
     public void setPlayerName(int playerNumber, String playerName) {
         playersInfo.get(playerNumber - 1).setName(playerName);
     }
 
     /**
-     * set a player color
+     * set a players color
      *
-     * @param playerNumber
-     * @param playerColour
+     * @param playerNumber The players number
+     * @param playerColour The players colour
      */
     public void setPlayerColour(int playerNumber, String playerColour) {
         playersInfo.get(playerNumber - 1).setColor(COLOURS.get(playerColour));
@@ -96,8 +96,8 @@ public class InitializeModel {
     /**
      * set if a player is an AI
      *
-     * @param playerNumber
-     * @param playerIsAI
+     * @param playerNumber The players number
+     * @param playerIsAI boolean value if a player is an AI or not
      */
     public void setPlayerisAI(int playerNumber, boolean playerIsAI) {
         playersInfo.get(playerNumber - 1).setAI(playerIsAI);
@@ -106,14 +106,14 @@ public class InitializeModel {
     /**
      * get the chosen number of players
      *
-     * @return int
+     * @return int The total number of players
      */
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
 
     /**
-     * get if each player is ai
+     * Getter method for each player that is ai
      *
      * @return ArrayList<boolean>
      */
@@ -128,7 +128,7 @@ public class InitializeModel {
     /**
      * get each player colour and if multiple or not chosen choose for the player
      *
-     * @return ArrayList<Color>
+     * @return ArrayList<Color> The colours selected for each player
      */
     public ArrayList<Color> getPlayersColours() {
         ArrayList<Color> playersColours = new ArrayList<>();
@@ -154,9 +154,10 @@ public class InitializeModel {
     }
 
     /**
-     * get each player name and if multiple add an identifier if not chosen name player Player
+     * get each player name and if multiple add an identifier if not chosen name player Player. This method
+     * will create automatic names for players if not specified in init setup.
      *
-     * @return ArrayList<String>
+     * @return ArrayList<String> Returns an arraylist of the names of the players
      */
     public ArrayList<String> getNamesOfPlayers() {
         ArrayList<String> namesOfPlayers = new ArrayList<>();
@@ -195,12 +196,22 @@ public class InitializeModel {
         return mapPath;
     }
 
+    /**
+     * Method sets the current map name
+     * @param mapName The String that contains the name of map played
+     */
     public void setMapName(String mapName){
         this.mapName = mapName;
     }
+
+    /**
+     * Returns the name of the current map
+     * @return The current map that is being played name
+     */
     public String getMapName(){
         return mapName;
     }
+
     /**
      * Set the mapPath to the path of a given map name
      *
@@ -238,7 +249,7 @@ public class InitializeModel {
         /**
          * get the name of the player
          *
-         * @return
+         * @return Returns the name of the player
          */
         public String getName() {
             return name;
@@ -247,7 +258,7 @@ public class InitializeModel {
         /**
          * set the name of the player
          *
-         * @param name
+         * @param name Sets the name of player
          */
         public void setName(String name) {
             this.name = name;
@@ -256,7 +267,7 @@ public class InitializeModel {
         /**
          * get the colour of the player
          *
-         * @return
+         * @return colour of player
          */
         public Color getColor() {
             return color;
@@ -265,16 +276,24 @@ public class InitializeModel {
         /**
          * set the colour of the player
          *
-         * @param color
+         * @param color colour of player to be set
          */
         public void setColor(Color color) {
             this.color = color;
         }
 
+        /**
+         * Checks if a player is an AI or not
+         * @return Boolean of true if AI and false otherwise
+         */
         public boolean isAI() {
             return isAI;
         }
 
+        /**
+         * If a player is an AI this sets the boolean to true if an AI
+         * @param AI True if player is AI and false otherwise
+         */
         public void setAI(boolean AI) {
             isAI = AI;
         }

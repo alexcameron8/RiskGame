@@ -115,7 +115,8 @@ public class RiskView extends JFrame implements RiskViewListener{
     }
 
     /**
-     *
+     *This method disposes of the Welcomescreen frame and opens the setup screen to configure the new game.
+     * This frame contains setup for players, the map that is chosen, colours for each player and number of AI's in the game.
      */
     public void setupInit(){
         welcomeScreen.dispose();
@@ -152,7 +153,8 @@ public class RiskView extends JFrame implements RiskViewListener{
     }
 
     /**
-     *
+     * This method takes the information from the setup frame and initializes the actual RiskView of the game with
+     * all player information.
      */
     public void setupPlayers(){
         ArrayList<String> nameOfPlayers = initializeGame.getNameOfPlayers();
@@ -176,6 +178,11 @@ public class RiskView extends JFrame implements RiskViewListener{
         riskModel.setCurrentMap(initializeGame.getMapName());
     }
 
+    /**
+     * This creates the View with all the neccesary tabs and different views in the overall frame such as the notificationview, the
+     * playerbarview, the mapview and the actionbarview. The setup is done here and the randomly assigned troops in each territory
+     * that is done automatically before the game begins occurs.
+     */
     public void setupView(){
         this.notificationView = new NotificationView();
         if(initializeFrame!=null) {
@@ -231,9 +238,14 @@ public class RiskView extends JFrame implements RiskViewListener{
         this.setVisible(true);
     }
 
+    /**
+     * This method gets the territory info view whenever a territory is selected.
+     * @return the information regarding the Territory
+     */
     public TerritoryInfoView getTerritoryInfoView(){
         return territoryInfoView;
     }
+
     /**
      * gets the current risk model
      * @return risk model
@@ -241,12 +253,27 @@ public class RiskView extends JFrame implements RiskViewListener{
     public RiskModel getRiskModel(){
         return riskModel;
     }
+
+    /**
+     * Gets the map view of current game.
+     * @return The mapview
+     */
     public MapView getMapView(){
         return mapView;
     }
+
+    /**
+     * Disposes of the setup screen. This method is used whenever the user chooses to
+     * load a game at the welcome screen rather than continuing to the setup screen.
+     */
     public void disposeSetup(){
         initializeFrame.dispose();
     }
+
+    /**
+     * This method handles updating the RiskView whenever a turn is finished.
+     * @param e event to handle
+     */
     @Override
     public void handleTurnUpdate(RiskEvent e) {
         this.mapView.handleMapUpdate(new MapRedrawEvent(this));

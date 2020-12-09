@@ -192,7 +192,7 @@ public class ActionBarView extends JPanel implements ActionBarListener {
 
     /**
      * This is the panel that contains the info regarding where the active player is moving troops from what territory
-     * to another territory. There is specfications for how many troops desired to move as well.
+     * to another territory. There is specifications for how many troops desired to move as well.
      */
     public void fortifyTroopsInfo(){
         fortifyInfo = new JPanel();
@@ -638,9 +638,15 @@ public class ActionBarView extends JPanel implements ActionBarListener {
             numberMoveTroops.addItem(i);
         }
     }
+
+    /**
+     * Gets the riskView
+     * @return the RiskView
+     */
     public RiskView getRiskView(){
         return riskView;
     }
+
     /**
      * Gets the boolean value if the place troops info bar is visible or not
      * @return True if the bar is visible, false otherwise

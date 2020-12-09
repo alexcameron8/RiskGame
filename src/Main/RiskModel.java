@@ -125,7 +125,7 @@ public class RiskModel implements Serializable {
             getActivePlayer().getReinforcement();
             getActivePlayer().advanceTurn();
         }
-
+        //updates the RiskViewListeners
         for(RiskViewListener riskViewListener : riskViewListeners){
             riskViewListener.handleTurnUpdate(new RiskEvent (this,activePlayerID,players,winner,eliminatedPlayer));
         }
@@ -135,6 +135,10 @@ public class RiskModel implements Serializable {
         }
     }
 
+    /**
+     * Checks if there is a winner when the advance turn checks if there are any players iwht 0 territories
+     * @return True if there is a winner and false otherwise
+     */
     public boolean hasWinner() {
         if (players.size() == 2) { //if only 2 players left
             winner = getActivePlayer();
@@ -146,6 +150,11 @@ public class RiskModel implements Serializable {
         return false;
     }
 
+    /**
+     * This method checks if a player has been eliminated and removes them from the list of players
+     * if a player has been eliminated
+     * @param player The player that is being check to see if they are eliminated
+     */
     public void hasElimination(Player player){
         eliminatedPlayer = player;
         if (players.indexOf(player) <= activePlayerID) {
@@ -221,6 +230,7 @@ public class RiskModel implements Serializable {
     public int getActivePlayerID() {
         return activePlayerID;
     }
+
     /**
      * This method is the auto-setup functionality of Risk where the players are
      */
@@ -247,6 +257,12 @@ public class RiskModel implements Serializable {
 
     }
 
+    /**
+     * This methods saves the current Risk Game that is in current play. The players, map name and
+     * who's current turn it is to a JSON file.
+     *
+     * @param path The file to where the JSON game file is saved to.
+     */
     public void save(String path) {
         GsonBuilder builder = new GsonBuilder();
         builder.excludeFieldsWithoutExposeAnnotation();
@@ -260,6 +276,12 @@ public class RiskModel implements Serializable {
         }
     }
 
+    /**
+     * This method loads a JSON file to resume the loaded game into the RiskView.
+     *
+     * @param fileName The file that is being loaded
+     * @param rv The RiskView that this file is being loaded into
+     */
     public void load(String fileName, RiskView rv){
         try {
             File f = new File(fileName);
@@ -269,6 +291,14 @@ public class RiskModel implements Serializable {
         }
     }
 
+    /**
+     * This method is called when loading a file into a game and it populates the RiskModel with the required data to be able
+     * to resume the saved game back into it's original state. The current active player, players (including their territories and
+     * continents they own) and the map name is recreated into the neccessary objects.
+     *
+     * @param path The file being read from
+     * @param rv The RiskView in which the file is being loaded to
+     */
     private void populate(FileInputStream path, RiskView rv) {
         Gson gson = new Gson();
         RiskModelImportJSONModel riskModelImportJSONModel = null;

@@ -27,7 +27,7 @@ public class AIEasy extends Player{
      * and continents controlled by the player
      *
      * @param name        Player name.
-     * @param playerColor
+     * @param playerColor The players colour
      */
     public AIEasy(String name, Color playerColor, RiskView riskView) {
         super(name, playerColor, riskView);
@@ -142,8 +142,8 @@ public class AIEasy extends Player{
     /**
      * returns true of a territory that is a neighbour of the input neighbours has an enemy neighbour false otherwise
      *
-     * @param territory
-     * @return boolean
+     * @param territory The territory being checked
+     * @return boolean True if territory has unknown neighbor and false otherwise.
      */
     private boolean hasUnownedNeighbour(Territory territory){
         for(Territory terr: territory.getNeighbours()){

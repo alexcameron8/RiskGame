@@ -23,7 +23,7 @@ public class PlayerBarView extends JPanel implements RiskViewListener {
     /**
      * constructor for PlayerBarView
      *
-     * @param rm
+     * @param rm The current RiskModel
      */
     public PlayerBarView(RiskModel rm){
         // JPanel Config
@@ -48,7 +48,7 @@ public class PlayerBarView extends JPanel implements RiskViewListener {
     }
 
     /**
-     * creates a panel that displays all the Names of the players and highlights which player starts
+     * Creates a panel that displays all the Names of the players and highlights which player starts
      */
     public void initPlayersList(){
         playerNamesPanel = new JPanel();
@@ -73,7 +73,7 @@ public class PlayerBarView extends JPanel implements RiskViewListener {
     /**
      * update the player Bar for when a player is eliminated or the current turn of a player
      *
-     * @param e
+     * @param e the RiskEvent to handle turn updates
      */
     @Override
     public void handleTurnUpdate(RiskEvent e){

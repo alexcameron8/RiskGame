@@ -79,6 +79,10 @@ public class MapView extends JPanel implements MapViewListener{
         }
     }
 
+    /**
+     * This class creates the view for the config bar which allows the user to toggle troop visible, player territory colours, troops in
+     * dots in territories and shows names of the territories.
+     */
     private class ConfigBar extends JPanel {
         ConfigBar(){
             this.setLayout(new FlowLayout());

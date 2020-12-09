@@ -24,7 +24,7 @@ public class InitializeEvent extends EventObject {
     /**
      * get the number of players chosen
      *
-     * @return int
+     * @return int returns the number of players
      */
     public int getNumberOfPlayer() {
         return NumberOfPlayer;
@@ -33,7 +33,7 @@ public class InitializeEvent extends EventObject {
     /**
      * get the chosen names of the players
      *
-     * @return ArrayList<String>
+     * @return ArrayList<String> The names of the players
      */
     public ArrayList<String> getNameOfPlayers(){ return  nameOfPlayers;}
 }

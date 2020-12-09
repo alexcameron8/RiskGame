@@ -51,6 +51,10 @@ public class MapModel {
         }
     }
 
+    /**
+     * Returns an ArrayList of the current maps shapes.
+     * @return ArrayList<DecorativeShape> An arraylist of the current maps shapes.
+     */
     public ArrayList<DecorativeShape> getDecorativeShapes(){
         return this.riskModel.getMap().getDecorativeShapes();
     }
@@ -119,7 +123,7 @@ public class MapModel {
     /**
      * set if the territory names are to be made visible
      *
-     * @param territoryNamesVisible
+     * @param territoryNamesVisible If territory names are set visible true, false otherwise
      */
     public void setTerritoryNamesVisible(boolean territoryNamesVisible) {
         this.territoryNamesVisible = territoryNamesVisible;
@@ -129,7 +133,7 @@ public class MapModel {
     /**
      * return if the territory troop dots are visible or not
      *
-     * @return boolean
+     * @return boolean If troops dots visible then true, false otherwise
      */
     public boolean isTroopDotsVisible() {
         return troopDotsVisible;
@@ -138,7 +142,7 @@ public class MapModel {
     /**
      * set if the territory troop dots are to be made visible
      *
-     * @param troopDotsVisible
+     * @param troopDotsVisible Boolean true if troop dots are made visible or not
      */
     public void setTroopDotsVisible(boolean troopDotsVisible) {
         this.troopDotsVisible = troopDotsVisible;
@@ -148,7 +152,7 @@ public class MapModel {
     /**
      * return if the territory troop count are visible or not
      *
-     * @return boolean
+     * @return boolean Returns true if the troop count is visible and false otherwise
      */
     public boolean isTroopCountVisible() {
         return troopCountVisible;
@@ -157,7 +161,7 @@ public class MapModel {
     /**
      * set if the territory troop count is to be made visible
      *
-     * @param troopCountVisible
+     * @param troopCountVisible True if troop count is true and false otherwise
      */
     public void setTroopCountVisible(boolean troopCountVisible) {
         this.troopCountVisible = troopCountVisible;
@@ -167,7 +171,7 @@ public class MapModel {
     /**
      * return if the territory colour is visible or not
      *
-     * @return
+     * @return Returns true if the player territory colours are visible and false otherwise
      */
     public boolean isPlayerTerritoryColorVisible() {
         return playerTerritoryColorVisible;
@@ -176,7 +180,7 @@ public class MapModel {
     /**
      * set if the territory colour is to be made visible
      *
-     * @param playerTerritoryColorVisible
+     * @param playerTerritoryColorVisible Boolean of true if player colours are to be visible or false otherwise
      */
     public void setPlayerTerritoryColorVisible(boolean playerTerritoryColorVisible) {
         this.playerTerritoryColorVisible = playerTerritoryColorVisible;
