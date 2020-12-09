@@ -62,6 +62,12 @@ public class MapImport {
         return null;
     }
 
+    /**
+     * Depth-First Search recursive method
+     * @param source Starting vertex index
+     * @param adjList Lists of adjacent nodes of each node
+     * @param visited Array of visited nodes
+     */
     public void DFS(int source, LinkedList<Integer> adjList [], boolean[] visited){
         visited[source] = true;
         for(int i = 0; i < adjList[source].size(); i++){
@@ -73,13 +79,13 @@ public class MapImport {
     }
 
     /**
-     * Much of this method is based on work from
+     * Much of this method is modeled on work from
      * https://algorithms.tutorialhorizon.com/check-if-given-undirected-graph-is-connected-or-not/
      * and adapted to fit the need of validating an imported map.
      *
      * @param territories The arraylist of territories in the map
      * @param neighbours  The ArrayList of all neighbours of each other.
-     * @return
+     * @return True if all territories are reachable
      */
     private boolean isMapValid(ArrayList<MapModelTerritory> territories, ArrayList<ArrayList<String>> neighbours) throws TerritoryHasNoNeighbourException, TerritoryIsDisconnectedException {
 
@@ -128,11 +134,7 @@ public class MapImport {
             }
         }
 
-        if(vertices==count){
-            return true;
-        } else {
-            return false;
-        }
+        return vertices==count;
     }
 
     /**

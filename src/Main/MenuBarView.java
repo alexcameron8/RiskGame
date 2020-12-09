@@ -1,6 +1,7 @@
 package Main;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 
 /**
@@ -59,8 +60,13 @@ public class MenuBarView extends JMenuBar {
 
         //Adding actionlisteners
 
-        saveGame.addActionListener(mbc);
-        saveGame.setActionCommand("save");
+        saveGame.addActionListener((e) -> {
+            JFileChooser fileChooser = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Risk Game Saves", "rgd");
+            fileChooser.setFileFilter(filter);
+            fileChooser.addActionListener(mbc);
+            fileChooser.showSaveDialog(this);
+        });
         howToPlay.addActionListener(mbc);
         howToPlay.setActionCommand("howtoplay");
         gameManual.addActionListener(mbc);

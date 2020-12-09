@@ -13,6 +13,7 @@ import Player.Player;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -107,8 +108,13 @@ public class RiskView extends JFrame implements RiskViewListener{
         welcomeScreen.setSize(500,300);
         welcomeScreen.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         //adding actionlisteners
-        loadGame.addActionListener(rc);
-        loadGame.setActionCommand("load");
+        loadGame.addActionListener((e) -> {
+            JFileChooser fileChooser = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Risk Game Saves", "rgd");
+            fileChooser.setFileFilter(filter);
+            fileChooser.addActionListener(rc);
+            fileChooser.showOpenDialog(this);
+        });
 
         newGame.addActionListener(rc);
         newGame.setActionCommand("newGame");

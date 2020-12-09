@@ -12,6 +12,7 @@ import java.net.URL;
  * @Author Alex Cameron
  */
 public class MenuBarController implements ActionListener {
+    private static final String RISK_GAME_DATA_EXTENSION = ".rgd";
     private RiskModel riskModel;
     private RiskView riskView;
 
@@ -45,9 +46,13 @@ public class MenuBarController implements ActionListener {
             riskModel.getActivePlayer().transferAllTerritory(riskModel.getPlayers().get(riskModel.getActivePlayerID()+1==riskModel.getPlayers().size()? 0:riskModel.getActivePlayerID()+1));
             riskView.repaint();
             riskView.revalidate();
-        }else if(e.getActionCommand().equals("save")){
-            String fileName = JOptionPane.showInputDialog(riskView, "Enter Risk Game's name");
-            riskModel.save(fileName);
+        } else if(e.getSource() instanceof JFileChooser && e.getActionCommand().equals(JFileChooser.APPROVE_SELECTION)){
+            JFileChooser source = (JFileChooser) e.getSource();
+            String path = source.getSelectedFile().getAbsolutePath();
+            if(!path.endsWith(RISK_GAME_DATA_EXTENSION)){
+                path += RISK_GAME_DATA_EXTENSION;
+            }
+            riskModel.save(path);
         }
     }
 }
