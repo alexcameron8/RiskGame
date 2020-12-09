@@ -180,11 +180,15 @@ public class RiskView extends JFrame implements RiskViewListener{
         } catch (TerritoryHasNoNeighbourException e) {
             JOptionPane.showMessageDialog(new JFrame(), "Map error " + e.getMessage(), "Map Error",
                     JOptionPane.ERROR_MESSAGE);
-            System.exit(1);
+            initializeFrame.dispose();
+            welcomeScreen();
+            return;
         } catch (TerritoryIsDisconnectedException e) {
             JOptionPane.showMessageDialog(new JFrame(), "Map error " + e.getMessage(), "Map Error",
                     JOptionPane.ERROR_MESSAGE);
-            System.exit(1);
+            initializeFrame.dispose();
+            welcomeScreen();
+            return;
         }
         riskModel.setCurrentMap(initializeGame.getMapName());
     }
