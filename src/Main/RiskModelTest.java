@@ -1,5 +1,8 @@
 package Main;
 
+import Main.IntializeFrame.InitializeModel;
+import Map.Exceptions.TerritoryHasNoNeighbourException;
+import Map.Exceptions.TerritoryIsDisconnectedException;
 import Map.Territory;
 import Player.Player;
 import org.junit.Test;
@@ -143,5 +146,25 @@ public class RiskModelTest {
         int previousNumberOfPlayers = rm.getPlayers().size();
         rm.advanceTurn();
         assertEquals(previousNumberOfPlayers-1,rm.getPlayers().size());
+    }
+
+    @Test
+    public void testSaveAndLoad(){
+        RiskModel rm1 = new RiskModel();
+        rm1.addPlayer(new Player("Thomas", Color.BLACK, null));
+        rm1.addPlayer(new Player("Alex", Color.RED, null));
+        try {
+            rm1.loadMap(InitializeModel.AVAILABLE_MAPS.get(InitializeModel.DEFAULT_MAP));
+        } catch (TerritoryHasNoNeighbourException e) {
+            e.printStackTrace();
+        } catch (TerritoryIsDisconnectedException e) {
+            e.printStackTrace();
+        }
+        rm1.setCurrentMap(InitializeModel.DEFAULT_MAP);
+        rm1.randomPlay();
+        rm1.save("testingGame");
+        RiskModel rm2 = new RiskModel();
+        rm2.load("testingGame", null);
+        assertEquals(rm2.getPlayers().get(0).getName(), "Thomas");
     }
 }
