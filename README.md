@@ -111,6 +111,7 @@ Alex Cameron
 - Redesigned Welcome and Setup Views to incorporate save/load features and fix bugs.
 - Refactored smelly code / eliminated magic numbers throughout the project
 - Java Docs
+- Sequence Diagram
 
 Thomas Dunnigan
 -
