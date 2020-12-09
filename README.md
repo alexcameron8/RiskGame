@@ -119,7 +119,9 @@ Thomas Dunnigan
 - Java Docs
 
 Ben Munro
--
+- Designed custom map "Space"
+- Implemented validation of custom maps
+- Updated user manual
 
 ## Changes made since Milestone 3:
 The major changes this milestone was the implementation of saving and loading Risk games and the option to import customizable maps. When the user saves a game the players territory information, current active turn and map nameare all saved to a JSON file where a user can then load this game in the welcome screen of the main menu. When the game is loaded it converts the data from the JSON file and sets the active turn player, the Map and state of each territory and adds all the players with their original colours and list of territories. As well, in this milestone our group focused a lot on trying to refactor smelly code and break up larger methods into smaller ones to be more easily understandable.
