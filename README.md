@@ -114,7 +114,9 @@ Alex Cameron
 - Sequence Diagram
 
 Thomas Dunnigan
--
+- Designed the save and load feature
+- Refactored smelly code / eliminated magic numbers throughout the project
+- Java Docs
 
 Ben Munro
 -
