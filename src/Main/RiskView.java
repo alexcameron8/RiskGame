@@ -15,6 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 /**
@@ -177,9 +178,13 @@ public class RiskView extends JFrame implements RiskViewListener{
         try {
             riskModel.loadMap(initializeGame.getMapPath());
         } catch (TerritoryHasNoNeighbourException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(new JFrame(), "Map error " + e.getMessage(), "Map Error",
+                    JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
         } catch (TerritoryIsDisconnectedException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(new JFrame(), "Map error " + e.getMessage(), "Map Error",
+                    JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
         }
         riskModel.setCurrentMap(initializeGame.getMapName());
     }
