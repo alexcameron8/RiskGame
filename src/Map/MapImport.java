@@ -114,10 +114,14 @@ public class MapImport {
         }
 
         for(ArrayList<String> pairs: neighbours){
-            // Add relation to graph in forward direction
-            adjList[territoryIds.indexOf(pairs.get(0))].addFirst(territoryIds.indexOf(pairs.get(1)));
-            // Add relation to graph in backwards direction
-            adjList[territoryIds.indexOf(pairs.get(1))].addFirst(territoryIds.indexOf(pairs.get(0)));
+            try {
+                // Add relation to graph in forward direction
+                adjList[territoryIds.indexOf(pairs.get(0))].addFirst(territoryIds.indexOf(pairs.get(1)));
+                // Add relation to graph in backwards direction
+                adjList[territoryIds.indexOf(pairs.get(1))].addFirst(territoryIds.indexOf(pairs.get(0)));
+            } catch (ArrayIndexOutOfBoundsException e){
+                System.out.println(pairs.get(0) + " " + pairs.get(1));
+            }
         }
 
         boolean[] visited = new boolean[vertices];
